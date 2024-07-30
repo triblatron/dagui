@@ -5,6 +5,7 @@
 
 #include "gtest/gtest.h"
 #include "core/Rectangle.h"
+#include "core/Container.h"
 
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, bool>>
 {
@@ -31,3 +32,15 @@ INSTANTIATE_TEST_SUITE_P(Rectangle, Rectangle_testIsInside, ::testing::Values(
         std::make_tuple(0.0, 0.0, 100.0, 100.0, 200.0, 200.0, false),
         std::make_tuple(0.0, 0.0, 100.0, 100.0, 50.0, 50.0, true)
         ));
+
+TEST(Container, testEachChild)
+{
+    auto* parent = new nfe::Container();
+    auto* child = new nfe::Widget();
+    parent->addChild(child);
+    std::size_t numChildren {0};
+    parent->eachChild([&numChildren](nfe::Widget* child) {
+       ++numChildren;
+    });
+    EXPECT_EQ(1,numChildren);
+}

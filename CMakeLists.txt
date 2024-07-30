@@ -3,10 +3,11 @@ PROJECT( nodefrontend )
 
 FIND_PACKAGE(GTest REQUIRED)
 FIND_PACKAGE(benchmark REQUIRED)
-FIND_PACKAGE(Lua 5.4.6 EXACT)
+FIND_PACKAGE(Lua 5.4.6 EXACT REQUIRED)
 
-SET( ALL_PUBLIC_HEADERS include/core/Rectangle.h include/core/Shape.h include/core/Widget.h )
-SET( NODEFRONTEND_SRC src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS} )
+SET( ALL_PUBLIC_HEADERS include/core/Container.h include/core/Rectangle.h include/core/Shape.h include/core/Widget.h )
+SET( NODEFRONTEND_SRC src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}
+        )
 SET(HEADERS_GROUP "Header Files")
 
 SOURCE_GROUP(
