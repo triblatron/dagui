@@ -13,9 +13,26 @@ namespace nfe
     class NFE_API Widget
     {
     public:
+        explicit Widget(Widget* parent= nullptr);
+
         virtual ~Widget() = default;
 
+        void setShape(Shape* shape)
+        {
+            _shape = shape;
+        }
+
+        Shape* shape()
+        {
+            return _shape;
+        }
+
+        const Shape* shape() const
+        {
+            return _shape;
+        }
     private:
+        Widget* _parent{nullptr};
         Shape* _shape{nullptr};
     };
 }
