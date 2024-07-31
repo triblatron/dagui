@@ -18,6 +18,8 @@ namespace nfe
     public:
         explicit Container(Widget* parent=nullptr);
 
+        ~Container() override;
+
         void addChild(Widget* child)
         {
             if (child != nullptr)

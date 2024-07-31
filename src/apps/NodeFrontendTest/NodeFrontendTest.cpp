@@ -43,4 +43,8 @@ TEST(Container, testEachChild)
        ++numChildren;
     });
     EXPECT_EQ(1,numChildren);
+
+    // Parent owns child and will delete it.
+    delete parent;
 }
+

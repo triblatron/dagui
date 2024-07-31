@@ -13,4 +13,11 @@ namespace nfe
     {
 
     }
+
+    Container::~Container()
+    {
+        eachChild([](Widget* child) {
+           delete child;
+        });
+    }
 }
