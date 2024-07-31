@@ -6,6 +6,7 @@
 #include "gtest/gtest.h"
 #include "core/Rectangle.h"
 #include "core/Container.h"
+#include "core/Circle.h"
 
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, bool>>
 {
@@ -31,6 +32,32 @@ TEST_P(Rectangle_testIsInside, testIsInside)
 INSTANTIATE_TEST_SUITE_P(Rectangle, Rectangle_testIsInside, ::testing::Values(
         std::make_tuple(0.0, 0.0, 100.0, 100.0, 200.0, 200.0, false),
         std::make_tuple(0.0, 0.0, 100.0, 100.0, 50.0, 50.0, true)
+        ));
+
+class Circle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, bool>>
+{
+
+};
+
+TEST_P(Circle_testIsInside, testIsInside)
+{
+    auto x = std::get<0>(GetParam());
+    auto y = std::get<1>(GetParam());
+    auto radius = std::get<2>(GetParam());
+    auto hitX = std::get<3>(GetParam());
+    auto hitY = std::get<4>(GetParam());
+    auto inside = std::get<5>(GetParam());
+
+    auto sut = new nfe::Circle();
+    sut->setPos(x,y);
+    sut->setRadius(radius);
+    EXPECT_EQ(inside, sut->isInside(hitX,hitY));
+    delete sut;
+}
+
+INSTANTIATE_TEST_SUITE_P(Cirlce, Circle_testIsInside, ::testing::Values(
+        std::make_tuple(0, 0, 10, 10, 10, false),
+        std::make_tuple(0, 0, 10, 0, 0, true)
         ));
 
 TEST(Container, testEachChild)

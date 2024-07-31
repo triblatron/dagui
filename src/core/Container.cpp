@@ -11,7 +11,7 @@ namespace nfe
 
     Container::Container(Widget *parent) : Widget(parent)
     {
-
+        // Do nothing.
     }
 
     Container::~Container()
