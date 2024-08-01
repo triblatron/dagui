@@ -35,6 +35,11 @@ namespace nfe
             return _height;
         }
 
+        void setCornerRadius(double radius)
+        {
+            _cornerRadius = radius;
+        }
+        
         void accept(ShapeVisitor& visitor) override;
 
         bool isInside(double x, double y) override;
@@ -43,5 +48,6 @@ namespace nfe
         double _y{0.0};
         double _width{0.0};
         double _height{0.0};
+        double _cornerRadius{0.0};
     };
 }
