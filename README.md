@@ -10,7 +10,7 @@
 * Layout managers with constraint based layout
 * Rounded rectangles
 * Bezier curves with handles
-* Host widgets at arbitrary points in the widget tree, such as children of rectangles, by allowing different shapes for windows
+* Host widgets at arbitrary points in the widget tree, such as children of rectangles, by allowing different shapes for widgets
 * Allow drawing circles outside the bounds of a rectangle to make a composite shape
 * Allow dragging of child windows without invoking drag and drop
 * Simple to integrate by rendering textured triangles
@@ -54,6 +54,9 @@
 * Activation events
 * Inherit visibility from parent
 * SVG shapes if parser supports translation to primitives
+* No code generation
+* No interference with the CMake configure and generate process.
+* One obvious place to change to add a new property, event, whatever.
 
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
@@ -61,3 +64,4 @@
 * VulkanSceneGraph for integration demos
 * md4c for markdown parsing
 * nanosvg for SVG parsing
+* nodebase for basic features such as Lua support, configuration and streams.
