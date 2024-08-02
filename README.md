@@ -4,6 +4,7 @@
 * User facing rather than quick throw-away debugging for developers
 * Easy to use API
 * User-friendly widgets
+* Support tables with alternating background colours
 * High performance < 1ms render time per frame on all platforms
   * Raspberry Pi 4 1920x1080@60
 * Testable headless to verify interactions and presence of widgets
