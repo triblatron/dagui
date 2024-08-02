@@ -5,7 +5,9 @@
 * Easy to use API
 * User-friendly widgets
 * High performance < 1ms render time per frame on all platforms
+  * Raspberry Pi 4 1920x1080@60
 * Testable headless to verify interactions and presence of widgets
+* Efficient text representation to avoid redundant state changes
 * Support tooltips with markdown
 * Layout managers with constraint based layout
 * Rounded rectangles
