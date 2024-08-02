@@ -57,6 +57,7 @@
 * No code generation
 * No interference with the CMake configure and generate process.
 * One obvious place to change to add a new property, event, whatever.
+* modular composable components
 
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
