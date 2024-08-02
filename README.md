@@ -41,7 +41,7 @@
 * Support searchable menus with completion
 * Support tutorial mode
 * Support rigid body transforms on widgets
-* Support integeration with VulkanSceneGraph
+* Support integration with VulkanSceneGraph
 * No programmer art
 * Support compound shapes as the bounds of a widget
 * Client area and system area on windows
@@ -57,12 +57,17 @@
 * No code generation
 * No interference with the CMake configure and generate process.
 * One obvious place to change to add a new property, event, whatever.
-* modular composable components
+* Modular composable components
+  * Widgets as nodes?
+* Render only changed areas of the view
+* Separate visual style from structure
+  * stylesheets?
+  * Skinnable
 
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
 * CMake for the build system
 * VulkanSceneGraph for integration demos
 * md4c for markdown parsing
-* nanosvg for SVG parsing
+* svgpp for SVG parsing
 * nodebase for basic features such as Lua support, configuration and streams.
