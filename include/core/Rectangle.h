@@ -49,5 +49,7 @@ namespace nfe
         double _width{0.0};
         double _height{0.0};
         double _cornerRadius{0.0};
+
+        bool isInCorner(double x, double y, double d, double d1);
     };
 }
