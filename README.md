@@ -66,6 +66,7 @@
 * Separate visual style from structure
   * stylesheets?
   * Skinnable
+* Designer using its own widgets
 
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
