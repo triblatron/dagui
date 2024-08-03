@@ -40,17 +40,24 @@ namespace nfe
 
     ConfigurationElement *ConfigurationElement::findElement(std::string path)
     {
-        if (path.find("$.") == 0)
+        if (path[0] == '$')
         {
             auto root = this;
-            while (root->parent() != nullptr)
+            while (root != nullptr && root->parent() != nullptr)
             {
                 root = root->parent();
             }
 
-            path = path.substr(2);
+            if (root != nullptr && path.find("$.")!=std::string::npos)
+            {
+                path = path.substr(2);
 
-            return root->findInChildren(path);
+                return root->findInChildren(path);
+            }
+            else
+            {
+                return root;
+            }
         }
         else
         {

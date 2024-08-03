@@ -117,6 +117,7 @@ TEST_P(ConfigurationElement_testFindElement, testFindFromRoot)
 }
 
 INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testFindElement, ::testing::Values(
+        std::make_tuple("root = {}", "$"),
         std::make_tuple("root = { foo = true }", "$.foo"),
         std::make_tuple("root = { foo = { wibble=1.0 } }", "$.foo.wibble"),
         std::make_tuple("root = { foo = true }", "foo"),
