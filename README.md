@@ -17,7 +17,10 @@
 * Allow drawing circles outside the bounds of a rectangle to make a composite shape
 * Allow dragging of child windows without invoking drag and drop
 * Simple to integrate by rendering textured triangles
-* Simple Lua based persistent format not xml or javascript
+* Simple Lua-based persistent format not xml or javascript
+* Support push buttons
+* Support checkboxes
+* Support radio buttons
 * Support disabled controls greying out
 * Support tabbing between controls
 * Support input validation
@@ -52,7 +55,7 @@
 * Texture atlas for interface elements such as system buttons and handles for collapsible panes
 * Property notification system with change events
 * Optional system controls and title bar
-* Hit detection of shapes
+* Hit detection of shapesSupport keyboard shortcuts
 * Possible boolean operations on shapes
 * Activation events
 * Inherit visibility from parent
@@ -70,6 +73,7 @@
 
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
+* Lua-5.4.x for the declarative format
 * CMake for the build system
 * VulkanSceneGraph for integration demos
 * md4c for markdown parsing
