@@ -120,6 +120,7 @@ INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testFindElem
         std::make_tuple("root = {}", "$"),
         std::make_tuple("root = { foo = true }", "$.foo"),
         std::make_tuple("root = { foo = { wibble=1.0 } }", "$.foo.wibble"),
+        std::make_tuple("root = { foo = { flibble={ spoo=3 } } }", "$.foo.flibble.spoo"),
         std::make_tuple("root = { foo = true }", "foo"),
         std::make_tuple("root = { foo = { bar=\"wibble\" } }", "foo.bar"),
         std::make_tuple("root = { foo = { bar={ baz=2 } } }", "foo.bar.baz")
