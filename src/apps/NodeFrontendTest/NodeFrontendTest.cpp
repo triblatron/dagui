@@ -7,6 +7,7 @@
 #include "core/Rectangle.h"
 #include "core/Container.h"
 #include "core/Circle.h"
+#include "core/ConfigurationElement.h"
 
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, double, bool>>
 {
@@ -99,3 +100,26 @@ TEST(Container, testEachChild)
     delete parent;
 }
 
+class ConfigurationElement_testFindElement : public ::testing::TestWithParam<std::tuple<const char*, const char*>>
+{
+
+};
+
+TEST_P(ConfigurationElement_testFindElement, testFindFromRoot)
+{
+    auto configStr = std::get<0>(GetParam());
+    auto name = std::get<1>(GetParam());
+
+    auto config = nfe::ConfigurationElement::fromString(configStr);
+    ASSERT_NE(nullptr, config);
+    auto actual = config->findElement(name);
+    ASSERT_NE(nullptr, actual);
+}
+
+INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testFindElement, ::testing::Values(
+        std::make_tuple("root = { foo = true }", "$.foo"),
+        std::make_tuple("root = { foo = { wibble=1.0 } }", "$.foo.wibble"),
+        std::make_tuple("root = { foo = true }", "foo"),
+        std::make_tuple("root = { foo = { bar=\"wibble\" } }", "foo.bar"),
+        std::make_tuple("root = { foo = { bar={ baz=2 } } }", "foo.bar.baz")
+        ));
