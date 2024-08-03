@@ -70,6 +70,7 @@
   * stylesheets?
   * Skinnable
 * Designer using its own widgets
+  * Generate declarative Lua config
 
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
