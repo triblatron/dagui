@@ -21,13 +21,34 @@ namespace nfe
     class NFE_API ConfigurationElement
     {
     public:
-        using ValueType = std::optional<std::variant<std::string, std::int64_t, double, bool>>;
+        enum Type
+        {
+            TYPE_BOOL,
+            TYPE_INTEGER,
+            TYPE_DOUBLE,
+            TYPE_STRING
+        };
+        using ValueType = std::optional<std::variant<bool, std::int64_t, double, std::string>>;
     public:
         explicit ConfigurationElement(std::string name);
-        ConfigurationElement(std::string name, ValueType::value_type value);
-        ConfigurationElement(std::int64_t index, ValueType::value_type value);
 
-        //ConfigurationElement(std::string name, bool value);
+        ConfigurationElement(std::string name, ValueType::value_type value)
+        :
+        _name(name),
+        _value(value)
+        {
+            // Do nothing.
+        }
+
+        ConfigurationElement(std::int64_t index, ValueType::value_type value)
+        :
+        _index(index),
+        _value(value)
+        {
+            // Do nothing.
+        }
+
+        ~ConfigurationElement();
 
         static ConfigurationElement* fromString(const char* str);
 
@@ -48,6 +69,54 @@ namespace nfe
         ConfigurationElement* parent()
         {
             return _parent;
+        }
+
+        std::int64_t asInteger(int64_t defaultValue=0) const
+        {
+            if (_value.has_value() && _value->index() == TYPE_INTEGER)
+            {
+                return std::get<TYPE_INTEGER>(_value.value());
+            }
+            else
+            {
+                return defaultValue;
+            }
+        }
+
+        double asDouble(double defaultValue=0.0) const
+        {
+            if (_value.has_value() && _value->index()==TYPE_DOUBLE)
+            {
+                return std::get<TYPE_DOUBLE>(_value.value());
+            }
+            else
+            {
+                return defaultValue;
+            }
+        }
+
+        bool asBool(bool defaultValue=false) const
+        {
+            if (_value.has_value() && _value->index()==TYPE_BOOL)
+            {
+                return std::get<TYPE_BOOL>(_value.value());
+            }
+            else
+            {
+                return defaultValue;
+            }
+        }
+
+        std::string asString(std::string defaultValue="") const
+        {
+            if (_value.has_value() && _value->index()==TYPE_STRING)
+            {
+                return std::get<TYPE_STRING>(_value.value());
+            }
+            else
+            {
+                return defaultValue;
+            }
         }
         ConfigurationElement* findElement(std::string path);
     private:

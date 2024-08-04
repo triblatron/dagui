@@ -115,6 +115,8 @@ TEST_P(ConfigurationElement_testFindElement, testFindFromRoot)
     auto actual = config->findElement(path);
     ASSERT_NE(nullptr, actual);
     ASSERT_EQ(name, actual->name());
+
+    delete config;
 }
 
 INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testFindElement, ::testing::Values(
@@ -138,4 +140,100 @@ INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testFindElem
         std::make_tuple("root = { { foo=true }, { tribble=1.0 } }", "$[1].tribble", "tribble"),
         std::make_tuple("root = { { foo=true }, { tribble=1.0 } }", "[1].tribble", "tribble"),
         std::make_tuple("root = { wibble={ { foo=true }, { tribble=1.0 }, } }", "wibble[1].tribble", "tribble")
+        ));
+
+class ConfigurationElement_testAsInteger : public ::testing::TestWithParam<std::tuple<const char*, const char*, std::int64_t>>
+{
+
+};
+
+TEST_P(ConfigurationElement_testAsInteger, testAsInteger)
+{
+    auto configStr = std::get<0>(GetParam());
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+
+    auto config = nfe::ConfigurationElement::fromString(configStr);
+    ASSERT_NE(nullptr, config);
+    auto element = config->findElement(path);
+    ASSERT_NE(nullptr, element);
+    EXPECT_EQ(value, element->asInteger());
+    delete config;
+}
+
+INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testAsInteger, ::testing::Values(
+        std::make_tuple("root={ foo=1 }", "foo", 1),
+        std::make_tuple("root={ foo={ 1 } }", "foo[0]", 1)
+        ));
+
+class ConfigurationElement_testAsDouble : public ::testing::TestWithParam<std::tuple<const char*, const char*, double>>
+{
+
+};
+
+TEST_P(ConfigurationElement_testAsDouble, testAsDouble)
+{
+    auto configStr = std::get<0>(GetParam());
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+
+    auto config = nfe::ConfigurationElement::fromString(configStr);
+    ASSERT_NE(nullptr, config);
+    auto element = config->findElement(path);
+    ASSERT_NE(nullptr, element);
+    EXPECT_EQ(value, element->asDouble());
+    delete config;
+}
+
+INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testAsDouble, ::testing::Values(
+        std::make_tuple("root={ foo=1.5 }", "foo", 1.5),
+        std::make_tuple("root={ foo= { 1.5 } }", "foo[0]", 1.5)
+        ));
+
+class ConfigurationElement_testAsBool : public ::testing::TestWithParam<std::tuple<const char*, const char*, bool>>
+{
+
+};
+
+TEST_P(ConfigurationElement_testAsBool, testAsBool)
+{
+    auto configStr = std::get<0>(GetParam());
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+
+    auto config = nfe::ConfigurationElement::fromString(configStr);
+    ASSERT_NE(nullptr, config);
+    auto element = config->findElement(path);
+    ASSERT_NE(nullptr, element);
+    EXPECT_EQ(value, element->asBool());
+    delete config;
+}
+
+INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testAsBool, ::testing::Values(
+        std::make_tuple("root={ foo=true }", "foo", true),
+        std::make_tuple("root={ foo= { true } }", "foo[0]", true)
+        ));
+
+class ConfigurationElement_testAsString : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*>>
+{
+
+};
+
+TEST_P(ConfigurationElement_testAsString, testAsString)
+{
+    auto configStr = std::get<0>(GetParam());
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+
+    auto config = nfe::ConfigurationElement::fromString(configStr);
+    ASSERT_NE(nullptr, config);
+    auto element = config->findElement(path);
+    ASSERT_NE(nullptr, element);
+    EXPECT_EQ(value, element->asString());
+    delete config;
+}
+
+INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testAsString, ::testing::Values(
+        std::make_tuple("root={ foo=\"true\" }", "foo", "true"),
+        std::make_tuple("root={ foo= { \"true\" } }", "foo[0]", "true")
         ));

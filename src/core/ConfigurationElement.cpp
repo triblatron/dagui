@@ -14,34 +14,10 @@ namespace nfe
 {
     ConfigurationElement::ConfigurationElement(std::string name)
     :
-    _name(name)
+    _name(std::move(name))
     {
         // Do nothing.
     }
-
-    ConfigurationElement::ConfigurationElement(std::string name, ValueType::value_type value)
-            :
-            _name(name),
-            _value(value)
-    {
-        // Do nothing.
-    }
-
-    ConfigurationElement::ConfigurationElement(std::int64_t index, ValueType::value_type value)
-            :
-            _index(index),
-            _value(value)
-    {
-        // Do nothing.
-    }
-
-//    ConfigurationElement::ConfigurationElement(std::string name, bool value)
-//            :
-//            _name(name),
-//            _value(value)
-//    {
-//        // Do nothing.
-//    }
 
     ConfigurationElement *ConfigurationElement::fromString(const char *str)
     {
@@ -216,9 +192,19 @@ namespace nfe
                 if (lua_isinteger(lua, -2))
                 {
                     std::int64_t index = lua_tointeger(lua, -2);
-                    if (lua_isboolean(lua, -1))
+                    if (lua_isinteger(lua, -1))
                     {
-                        child = new ConfigurationElement(index, lua_toboolean(lua, -1));
+                        child = new ConfigurationElement(index, lua_tointeger(lua, -1));
+                        parentStack.top()->addChild(child);
+                    }
+                    else if (lua_isnumber(lua, -1))
+                    {
+                        child = new ConfigurationElement(index, lua_tonumber(lua, -1));
+                        parentStack.top()->addChild(child);
+                    }
+                    else if (lua_isboolean(lua, -1))
+                    {
+                        child = new ConfigurationElement(index, bool(lua_toboolean(lua, -1)));
                         parentStack.top()->addChild(child);
                     }
                     else if (lua_isstring(lua, -1))
@@ -242,7 +228,7 @@ namespace nfe
                     }
                     else if (lua_isboolean(lua, -1))
                     {
-                        child = new ConfigurationElement(name, lua_toboolean(lua, -1));
+                        child = new ConfigurationElement(name, bool(lua_toboolean(lua, -1)));
                         parentStack.top()->addChild(child);
                     }
                     else if (lua_isstring(lua, -1))
@@ -261,5 +247,13 @@ namespace nfe
             });
         }
         return parent;
+    }
+
+    ConfigurationElement::~ConfigurationElement()
+    {
+        for (auto child : _children)
+        {
+            delete child;
+        }
     }
 }
