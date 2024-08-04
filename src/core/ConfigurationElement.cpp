@@ -8,23 +8,40 @@
 #include "core/LuaInterface.h"
 
 #include <stack>
+#include <cstdlib>
 
 namespace nfe
 {
     ConfigurationElement::ConfigurationElement(std::string name)
-            :
-            _name(name)
+    :
+    _name(name)
     {
         // Do nothing.
     }
 
-    ConfigurationElement::ConfigurationElement(std::string name, bool value)
+    ConfigurationElement::ConfigurationElement(std::string name, ValueType::value_type value)
             :
             _name(name),
             _value(value)
     {
         // Do nothing.
     }
+
+    ConfigurationElement::ConfigurationElement(std::int64_t index, ValueType::value_type value)
+            :
+            _index(index),
+            _value(value)
+    {
+        // Do nothing.
+    }
+
+//    ConfigurationElement::ConfigurationElement(std::string name, bool value)
+//            :
+//            _name(name),
+//            _value(value)
+//    {
+//        // Do nothing.
+//    }
 
     ConfigurationElement *ConfigurationElement::fromString(const char *str)
     {
@@ -38,7 +55,28 @@ namespace nfe
         return buildTree(lua);
     }
 
-    ConfigurationElement *ConfigurationElement::findElement(std::string path)
+    ConfigurationElement* ConfigurationElement::findInArray(size_t index, std::string path)
+    {
+        for (; index<path.length() && isdigit(path[index]); ++index);
+        char* end = nullptr;
+        size_t childIndex = std::strtoul(path.c_str(), &end, 10);
+        if (childIndex<_children.size() && index<path.size() && path[index] == ']')
+        {
+            ++index;
+            if (index < path.length()-1)
+            {
+                path = path.substr(index+1);
+                return findInChildren(path);
+            }
+            else
+            {
+                return _children[childIndex];
+            }
+        }
+        return nullptr;
+    }
+
+    ConfigurationElement* ConfigurationElement::findElement(std::string path)
     {
         if (path[0] == '$')
         {
@@ -54,7 +92,12 @@ namespace nfe
 
                 return root->findInChildren(path);
             }
-            else
+            else if (root != nullptr && path.length()>=4 && path[1] == '[')
+            {
+                path = path.substr(2);
+                return findInArray(0, path);
+            }
+            else if (path == "$")
             {
                 return root;
             }
@@ -63,6 +106,81 @@ namespace nfe
         {
             return findInChildren(path);
         }
+        return nullptr;
+    }
+
+    ConfigurationElement *ConfigurationElement::findInChildren(std::string path)
+    {
+        if (path.empty())
+        {
+            return this;
+        }
+
+        auto dotPos = path.find('.');
+        // Find position of subscript.
+        auto subPos = path.find('[');
+        if (subPos!=std::string::npos)
+        {
+            if (subPos == 0)
+            {
+                return findInArray(1, path);
+            }
+            else
+            {
+                size_t index=0;
+                for (index=0; index<path.length() && path[index] != ']';++index);
+                if (index<path.length() && path[index]==']')
+                {
+                    std::string childName = path.substr(0,subPos);
+
+                    return findInChildren(childName);
+                }
+            }
+        }
+        else if (dotPos != std::string::npos)
+        {
+            if (dotPos == 0 && path.length()>1)
+            {
+                size_t index = 0;
+                for (index=0; index < path.length() && path[index] != '.' && path[index] != '['; ++index);
+                std::string first = path.substr(1, dotPos);
+                std::string rest = path.substr(dotPos, index-dotPos);
+
+                for (auto child : _children)
+                {
+                    if (child->_name == first)
+                    {
+                        return child->findInChildren(rest);
+                    }
+                }
+            }
+            else
+            {
+                std::string first = path.substr(0,dotPos);
+                if (path.length()>dotPos)
+                {
+                    std::string rest = path.substr(dotPos+1);
+                    for (auto child : _children)
+                    {
+                        if (child->_name == first)
+                        {
+                            return child->findInChildren(rest);
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (auto child : _children)
+            {
+                if (child->_name == path)
+                {
+                    return child;
+                }
+            }
+        }
+
         return nullptr;
     }
 
@@ -81,7 +199,21 @@ namespace nfe
 
             trav([&parentStack](lua_State* lua, size_t level) {
                 ConfigurationElement* child = nullptr;
-                if (lua_isstring(lua, -2))
+                if (lua_isinteger(lua, -2))
+                {
+                    std::int64_t index = lua_tointeger(lua, -2);
+                    if (lua_isboolean(lua, -1))
+                    {
+                        child = new ConfigurationElement(index, lua_toboolean(lua, -1));
+                        parentStack.top()->addChild(child);
+                    }
+                    else if (lua_isstring(lua, -1))
+                    {
+                        child = new ConfigurationElement(index, lua_tostring(lua, -1));
+                        parentStack.top()->addChild(child);
+                    }
+                }
+                else if (lua_isstring(lua, -2))
                 {
                     std::string name = lua_tostring(lua, -2);
                     if (lua_isinteger(lua, -1))
@@ -115,37 +247,5 @@ namespace nfe
             });
         }
         return parent;
-    }
-
-    ConfigurationElement *ConfigurationElement::findInChildren(std::string path)
-    {
-        auto dotPos = path.find('.');
-        if (dotPos != std::string::npos)
-        {
-            std::string first = path.substr(0,dotPos);
-            if (path.length()>dotPos)
-            {
-                std::string rest = path.substr(dotPos+1);
-                for (auto child : _children)
-                {
-                    if (child->_name == first)
-                    {
-                        return child->findInChildren(rest);
-                    }
-                }
-            }
-        }
-        else
-        {
-            for (auto child : _children)
-            {
-                if (child->_name == path)
-                {
-                    return child;
-                }
-            }
-        }
-
-        return nullptr;
     }
 }

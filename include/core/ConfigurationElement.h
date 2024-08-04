@@ -10,6 +10,7 @@
 #include <variant>
 #include <cstdint>
 #include <vector>
+#include <optional>
 
 struct lua_State;
 
@@ -20,10 +21,13 @@ namespace nfe
     class NFE_API ConfigurationElement
     {
     public:
-        using ValueType = std::variant<std::string, std::int64_t, double, bool>;
+        using ValueType = std::optional<std::variant<std::string, std::int64_t, double, bool>>;
     public:
         explicit ConfigurationElement(std::string name);
-        ConfigurationElement(std::string name, bool value);
+        ConfigurationElement(std::string name, ValueType::value_type value);
+        ConfigurationElement(std::int64_t index, ValueType::value_type value);
+
+        //ConfigurationElement(std::string name, bool value);
 
         static ConfigurationElement* fromString(const char* str);
 
@@ -50,8 +54,10 @@ namespace nfe
             }
         }
         ConfigurationElement* findInChildren(std::string path);
+        ConfigurationElement* findInArray(size_t index, std::string path);
         ConfigurationElement* _parent{nullptr};
         std::string _name;
+        std::int64_t _index{0};
         ValueType _value;
         static ConfigurationElement* buildTree(Lua& lua);
         using Children = std::vector<ConfigurationElement*>;
