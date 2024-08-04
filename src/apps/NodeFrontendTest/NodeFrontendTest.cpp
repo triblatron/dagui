@@ -100,7 +100,7 @@ TEST(Container, testEachChild)
     delete parent;
 }
 
-class ConfigurationElement_testFindElement : public ::testing::TestWithParam<std::tuple<const char*, const char*>>
+class ConfigurationElement_testFindElement : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*>>
 {
 
 };
@@ -108,26 +108,29 @@ class ConfigurationElement_testFindElement : public ::testing::TestWithParam<std
 TEST_P(ConfigurationElement_testFindElement, testFindFromRoot)
 {
     auto configStr = std::get<0>(GetParam());
-    auto name = std::get<1>(GetParam());
-
+    auto path = std::get<1>(GetParam());
+    auto name = std::get<2>(GetParam());
     auto config = nfe::ConfigurationElement::fromString(configStr);
     ASSERT_NE(nullptr, config);
-    auto actual = config->findElement(name);
+    auto actual = config->findElement(path);
     ASSERT_NE(nullptr, actual);
+    ASSERT_EQ(name, actual->name());
 }
 
 INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testFindElement, ::testing::Values(
-        std::make_tuple("root = {}", "$"),
-        std::make_tuple("root = { foo = true }", "$.foo"),
-        std::make_tuple("root = { foo = { wibble=1.0 } }", "$.foo.wibble"),
-        std::make_tuple("root = { foo = { flibble={ spoo=3 } } }", "$.foo.flibble.spoo"),
-        std::make_tuple("root = { foo = true }", "foo"),
-        std::make_tuple("root = { foo = { bar=\"wibble\" } }", "foo.bar"),
-        std::make_tuple("root = { foo = { bar={ baz=2 } } }", "foo.bar.baz"),
-        std::make_tuple("root = { \"wibble\" }", "$[0]"),
-        std::make_tuple("root = { wibble={ true } }", "$.wibble[0]"),
-        std::make_tuple("root = { wibble={ { foo=true } } }", "$.wibble[0].foo"),
-        std::make_tuple("root = { wibble={ { foo={true} } } }", "$.wibble[0].foo[0]"),
-        std::make_tuple("root = { wibble={ foo={ true } } }", "$.wibble.foo[0]"),
-        std::make_tuple("root = { wibble={ foo={ { bar=1.0 } } } }", "$.wibble.foo[0].bar")
+        std::make_tuple("root = {}", "$", "root"),
+        std::make_tuple("root = { foo = true }", "$.foo", "foo"),
+        std::make_tuple("root = { foo = { wibble=1.0 } }", "$.foo.wibble", "wibble"),
+        std::make_tuple("root = { foo = { flibble={ spoo=3 } } }", "$.foo.flibble.spoo", "spoo"),
+        std::make_tuple("root = { foo = true }", "foo", "foo"),
+        std::make_tuple("root = { foo = { bar=\"wibble\" } }", "foo.bar", "bar"),
+        std::make_tuple("root = { foo = { bar={ baz=2 } } }", "foo.bar.baz", "baz"),
+        std::make_tuple("root = { \"wibble\" }", "$[0]", ""),
+        std::make_tuple("root = { wibble={ true } }", "$.wibble[0]", ""),
+        std::make_tuple("root = { wibble={ { foo=true } } }", "$.wibble[0].foo", "foo"),
+        std::make_tuple("root = { wibble={ { foo={true} } } }", "$.wibble[0].foo[0]", ""),
+        std::make_tuple("root = { wibble={ foo={ true } } }", "$.wibble.foo[0]", ""),
+        std::make_tuple("root = { wibble={ foo={ { bar=1.0 } } } }", "$.wibble.foo[0].bar", "bar"),
+        std::make_tuple("root = { wibble={ foo={ { bar=1.0 }, { baz=\"baz\" }, } } }", "$.wibble.foo[1].baz", "baz"),
+        std::make_tuple("root = { wibble={ foo={ true } }, flibble={ tribble=1.0 } }", "$.flibble.tribble", "tribble")
         ));

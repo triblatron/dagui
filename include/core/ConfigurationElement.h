@@ -31,6 +31,11 @@ namespace nfe
 
         static ConfigurationElement* fromString(const char* str);
 
+        const std::string& name() const
+        {
+            return _name;
+        }
+
         void addChild(ConfigurationElement* child)
         {
             if (child != nullptr)

@@ -119,7 +119,7 @@ namespace nfe
         auto dotPos = path.find('.');
         // Find position of subscript.
         auto subPos = path.find('[');
-        if (subPos!=std::string::npos)
+        if (subPos!=std::string::npos && subPos < dotPos)
         {
             if (subPos == 0)
             {
@@ -131,9 +131,17 @@ namespace nfe
                 for (index=0; index<path.length() && path[index] != ']';++index);
                 if (index<path.length() && path[index]==']')
                 {
-                    std::string childName = path.substr(0,subPos);
+                    std::string first = path.substr(0,subPos);
+                    std::string rest = path.substr(subPos);
 
-                    return findInChildren(childName);
+                    for (auto child : _children)
+                    {
+                        if (child->name() == first)
+                        {
+                            return child->findInChildren(rest);
+                        }
+
+                    }
                 }
             }
         }
@@ -199,6 +207,12 @@ namespace nfe
 
             trav([&parentStack](lua_State* lua, size_t level) {
                 ConfigurationElement* child = nullptr;
+
+                while (parentStack.size() - 1 > level)
+                {
+                    parentStack.pop();
+                }
+
                 if (lua_isinteger(lua, -2))
                 {
                     std::int64_t index = lua_tointeger(lua, -2);
