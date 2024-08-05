@@ -80,3 +80,6 @@
 * md4c for markdown parsing
 * svgpp for SVG parsing
 * nodebase for basic features such as Lua support, configuration and streams.
+
+## Tips
+* SWIG xml mode works only if we %define NFE_API %enddef, otherwise it just generaates code tags instead of the parse tree.
