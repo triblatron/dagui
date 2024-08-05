@@ -64,6 +64,7 @@
 * No interference with the CMake configure and generate process.
 * One obvious place to change to add a new property, event, whatever.
 * Modular composable components
+  * Entity-component system?
   * Widgets as nodes?
 * Render only changed areas of the view
 * Separate visual style from structure
@@ -71,6 +72,7 @@
   * Skinnable
 * Designer using its own widgets
   * Generate declarative Lua config
+* Messaging system similar to signal-slots without the MOC-related cruft.
 
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
