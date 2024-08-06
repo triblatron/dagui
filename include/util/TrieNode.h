@@ -15,22 +15,11 @@ namespace nfe
     class NFE_API TrieNode
     {
     public:
-        struct Link
-        {
-            char key;
-            TrieNode* child;
-
-            Link(char key, TrieNode* child) {
-                this->key = key;
-                this->child = child;
-            }
-        };
-    public:
         void addWord(const std::string& word)
         {
             if (word.empty())
             {
-                _children.insert(ChildMap::value_type ('*',new TrieNode::Link('*', nullptr)));
+                _children.insert(ChildMap::value_type ('*',nullptr));
                 return;
             }
             std::string first = word.substr(0,1);
@@ -40,9 +29,9 @@ namespace nfe
             }
             if (_children.find(first[0])==_children.end())
             {
-                this->_children.insert(ChildMap::value_type(first[0],new Link(first[0], new TrieNode())));
+                this->_children.insert(ChildMap::value_type(first[0],new TrieNode()));
             }
-            this->_children[first[0]]->child->addWord(rest);
+            this->_children[first[0]]->addWord(rest);
         }
 
         void search(std::string word, std::vector<std::string>& matches)
@@ -59,7 +48,7 @@ namespace nfe
                     {
                         if (p.first != '*')
                         {
-                            p.second->child->search(word, matches, partialMatch + p.second->key);
+                            p.second->search(word, matches, partialMatch + p.first);
                         }
                         else
                         {
@@ -74,22 +63,22 @@ namespace nfe
                 {
                     std::string rest = word.substr(1);
 
-                    it->second->child->search(rest, matches, partialMatch + it->second->key);
+                    it->second->search(rest, matches, partialMatch + it->first);
                 }
                 else {
                     for (auto p : _children)
                     {
-                        Link * link = p.second;
-                        if (link->key != '*')
+                        TrieNode * link = p.second;
+                        if (p.first != '*')
                         {
-                            link->child->search(word, matches, partialMatch + link->key);
+                            link->search(word, matches, partialMatch + p.first);
                         }
                     }
                 }
             }
     private:
 
-        using ChildMap = std::unordered_map<char, Link*>;
+        using ChildMap = std::unordered_map<char, TrieNode*>;
         ChildMap _children;
 
     };
