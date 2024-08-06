@@ -24,7 +24,8 @@ namespace nfe
             }
             std::string first = word.substr(0,1);
             std::string rest;
-            if (word.length()>1) {
+            if (word.length()>1)
+            {
                 rest = word.substr(1);
             }
             if (_children.find(first[0])==_children.end())
@@ -65,7 +66,8 @@ namespace nfe
 
                     it->second->search(rest, matches, partialMatch + it->first);
                 }
-                else {
+                else
+                {
                     for (auto p : _children)
                     {
                         TrieNode * link = p.second;
@@ -77,7 +79,6 @@ namespace nfe
                 }
             }
     private:
-
         using ChildMap = std::unordered_map<char, TrieNode*>;
         ChildMap _children;
 
