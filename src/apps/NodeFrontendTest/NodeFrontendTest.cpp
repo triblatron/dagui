@@ -8,6 +8,7 @@
 #include "core/Container.h"
 #include "core/Circle.h"
 #include "core/ConfigurationElement.h"
+#include "util/CompletionTrie.h"
 
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, double, bool>>
 {
@@ -237,3 +238,80 @@ INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testAsString
         std::make_tuple("root={ foo=\"true\" }", "foo", "true"),
         std::make_tuple("root={ foo= { \"true\" } }", "foo[0]", "true")
         ));
+
+//@ParameterizedTest
+//public void testAddWord(String word, String substring, String matchString) {
+//    CompletionTrie sut = new CompletionTrie();
+//    sut.addWord(word);
+//    assertEquals(1, sut.numWords());
+//    ArrayList<String> matches = new ArrayList<>();
+//    sut.search(substring, matches);
+//    assertFalse(matches.isEmpty());
+//    assertEquals(matchString, matches.get(0));
+//}
+//
+class CompletionTrie_testAddWord : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*>>
+{
+
+};
+
+TEST_P(CompletionTrie_testAddWord, testAddWord)
+{
+    auto word = std::get<0>(GetParam());
+    auto substring = std::get<1>(GetParam());
+    auto matchString = std::get<2>(GetParam());
+    nfe::CompletionTrie* sut = new nfe::CompletionTrie();
+    sut->addWord(word);
+    ASSERT_EQ(std::size_t{1}, sut->numWords());
+    std::vector<std::string> matches;
+    sut->search(substring, matches);
+    EXPECT_FALSE(matches.empty());
+    EXPECT_EQ(matchString, matches[0]);
+    delete sut;
+}
+//@CsvSource({"Graph,Gr,Graph","Graph|Add Node|Math|Trig,Add,Graph|Add Node|Math|Trig"})
+INSTANTIATE_TEST_SUITE_P(CompletionTrie, CompletionTrie_testAddWord, ::testing::Values(
+        std::make_tuple("Graph","Gr","Graph"),
+        std::make_tuple("Graph|Add Node|Math|Trig","Add","Graph|Add Node|Math|Trig")
+        ));
+
+//@ParameterizedTest
+//@CsvSource({
+//// Match at middle of multiple words
+//"a,6,cat",
+//"a,6,cab",
+//"a,6,cabin",
+//"b,2,cab",
+//"b,2,cabin",
+//"cat,2,cat",
+//"cat,2,catamaran",
+//"at,4,cat",
+//"at,4,catamaran",
+//"ta,1,catamaran",
+//// Match in middle
+//"Add,2,Node|Add|Math|Trig",
+//"Add,2,Node|Add|Math|RelOp",
+//// Match at end
+//"RelOp,1,Node|Add|Math|RelOp",
+//})
+//public void testSearchMultipleWords(String substring, int numMatches, String match) {
+//    CompletionTrie sut = new CompletionTrie();
+//
+//    addMultipleWords(sut);
+//    ArrayList<String> matches = new ArrayList<>();
+//    sut.search(substring, matches);
+//    assertEquals(numMatches, matches.size());
+//    assertTrue(matches.contains(match));
+//}
+//
+//@ParameterizedTest
+//@CsvSource({
+//"Vector"
+//})
+//public void testNoMatches(String substring) {
+//    CompletionTrie sut = new CompletionTrie();
+//    addNoMatches(sut);
+//    ArrayList<String> matches = new ArrayList<>();
+//    sut.search(substring, matches);
+//    assertEquals(0, matches.size());
+//}
