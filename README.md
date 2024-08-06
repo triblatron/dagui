@@ -1,4 +1,4 @@
-# A companion project to nodebackend that provides a GUI.
+# A companion project to nodebackend that provides a GUI
 
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
@@ -64,6 +64,7 @@
 * No interference with the CMake configure and generate process.
 * One obvious place to change to add a new property, event, whatever.
 * Modular composable components
+  * Entity-component system?
   * Widgets as nodes?
 * Render only changed areas of the view
 * Separate visual style from structure
@@ -71,6 +72,13 @@
   * Skinnable
 * Designer using its own widgets
   * Generate declarative Lua config
+  * self hosting: design the designer using the designer
+* Messaging system similar to signal-slots without the MOC-related cruft.
+  * thread safe
+  * no blocking of gui thread
+  * cannot use futurws since they are for sending values to another thread
+  * Could use coroutines if we bump to C++20
+  * It is unclea4 how to call a method in another thread safely
 
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
@@ -80,3 +88,6 @@
 * md4c for markdown parsing
 * svgpp for SVG parsing
 * nodebase for basic features such as Lua support, configuration and streams.
+
+## Tips
+* SWIG xml mode works only if we %define NFE_API %enddef, otherwise it just generaates code tags instead of the parse tree.
