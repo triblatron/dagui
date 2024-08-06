@@ -33,6 +33,12 @@ TARGET_INCLUDE_DIRECTORIES( nodefrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PR
 set_target_properties( nodefrontend PROPERTIES DEFINE_SYMBOL NODEFRONTEND_LIBRARY )
 
 add_subdirectory(src/apps/NodeFrontendTest)
+add_subdirectory(src/apps/BenchmarkNodeFrontend)
+
+FIND_PACKAGE(benchmark REQUIRED)
+#ADD_EXECUTABLE( BenchmarkNodeFrontend src/BenchmarkNodeFrontend.cpp include/Node.h include/Transfer.h include/SignalPathDef.h)
+#TARGET_INCLUDE_DIRECTORIES( BenchmarkNodeFrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${OSGDB_INCLUDE_DIR} ${ANTLR_Reptol_OUTPUT_DIR})
+
 
 INCLUDE( CheckIncludeFile )
 INCLUDE( CheckIncludeFileCXX )
