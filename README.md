@@ -72,7 +72,7 @@
   * Skinnable
 * Designer using its own widgets
   * Generate declarative Lua config
-  * swlf hosting: design the designer using the designer
+  * self hosting: design the designer using the designer
 * Messaging system similar to signal-slots without the MOC-related cruft.
   * thread safe
   * no blocking of gui thread
