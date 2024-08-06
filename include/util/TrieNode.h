@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <span>
 
 namespace nfe
 {
@@ -22,17 +23,19 @@ namespace nfe
                 _children.insert(ChildMap::value_type ('*',nullptr));
                 return;
             }
-            std::string first = word.substr(0,1);
+            char first = word[0];
             std::string rest;
             if (word.length()>1)
             {
                 rest = word.substr(1);
             }
-            if (_children.find(first[0])==_children.end())
+            auto it = _children.end();
+            if (_children.find(first)==_children.end())
             {
-                this->_children.insert(ChildMap::value_type(first[0],new TrieNode()));
+                auto p = this->_children.insert(ChildMap::value_type(first,new TrieNode()));
+                it = p.first;
             }
-            this->_children[first[0]]->addWord(rest);
+            it->second->addWord(rest);
         }
 
         void search(std::string word, std::vector<std::string>& matches)
