@@ -1,4 +1,4 @@
-# A companion project to nodebackend that provides a GUI.
+# A companion project to nodebackend that provides a GUI
 
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
@@ -72,7 +72,13 @@
   * Skinnable
 * Designer using its own widgets
   * Generate declarative Lua config
+  * swlf hosting: design the designer using the designer
 * Messaging system similar to signal-slots without the MOC-related cruft.
+  * thread safe
+  * no blocking of gui thread
+  * cannot use futurws since they are for sending values to another thread
+  * Could use coroutines if we bump to C++20
+  * It is unclea4 how to call a method in another thread safely
 
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
