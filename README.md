@@ -6,6 +6,7 @@
 * User-friendly widgets
 * ~~Support config tree for declarative layout of widgets~~
 * Support tables with alternating background colours
+* Support drag and drop modes including none to allow dragging of child windows
 * High performance < 1ms render time per frame on all platforms
   * Raspberry Pi 4 1920x1080@60
   * Windows/Linux/Mac Apple Silicon 4k@120Hz
