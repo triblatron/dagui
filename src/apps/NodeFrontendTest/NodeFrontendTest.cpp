@@ -4,6 +4,7 @@
 
 
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
 #include "core/Rectangle.h"
 #include "core/Container.h"
 #include "core/Circle.h"
@@ -11,6 +12,7 @@
 #include "util/CompletionTrie.h"
 #include "util/CompletionSubstring.h"
 #include "core/CompositeShape.h"
+#include "core/ShapeVisitor.h"
 
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, double, bool>>
 {
@@ -386,3 +388,36 @@ INSTANTIATE_TEST_SUITE_P(CompositeShape, CompositeShape_testIsInside, ::testing:
         std::make_tuple(49.0,100,true),
         std::make_tuple(51,100,true)
         ));
+
+class MockShape : public nfe::Shape
+{
+public:
+    MockShape()
+    {
+       // Do nothing.
+    }
+
+    MOCK_METHOD(void, accept, (nfe::ShapeVisitor&), (override));
+    MOCK_METHOD(bool, isInside, (double,double), (override));
+};
+
+class TestShapeVisitor : public nfe::ShapeVisitor
+{
+public:
+    void visitRectangle(nfe::Rectangle& rectangle) override
+    {
+        // Do nothing.
+    }
+};
+TEST(CompositeShape, testAccept)
+{
+    auto sut = new nfe::CompositeShape();
+    auto mockShape = new MockShape();
+
+    EXPECT_CALL(*mockShape, accept(::testing::_));
+    sut->addShape(mockShape);
+    TestShapeVisitor visitor;
+    sut->accept(visitor);
+    delete mockShape;
+    delete sut;
+}

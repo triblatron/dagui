@@ -1,5 +1,5 @@
 SET( NodeFrontendTest_SRC NodeFrontendTest.cpp )
 ADD_EXECUTABLE( NodeFrontendTest ${NodeFrontendTest_SRC} )
-SET( NodeFrontendTest_DEPS "nodefrontend;GTest::gtest;GTest::gtest_main" )
+SET( NodeFrontendTest_DEPS "nodefrontend;GTest::gmock;GTest::gtest;GTest::gtest_main" )
 TARGET_LINK_LIBRARIES( NodeFrontendTest ${NodeFrontendTest_DEPS} ${LUA_LIBRARIES})
 INSTALL(TARGETS NodeFrontendTest RUNTIME DESTINATION bin)

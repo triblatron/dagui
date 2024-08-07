@@ -11,7 +11,10 @@ namespace nfe
 
     void CompositeShape::accept(ShapeVisitor &visitor)
     {
-
+        for (auto shape : _shapes)
+        {
+            shape->accept(visitor);
+        }
     }
 
     bool CompositeShape::isInside(double x, double y)
