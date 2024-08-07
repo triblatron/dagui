@@ -79,7 +79,7 @@
   * no blocking of gui thread
   * cannot use futurws since they are for sending values to another thread
   * Could use coroutines if we bump to C++20
-  * It is unclea4 how to call a method in another thread safely
+  * It is unclear how to call a method in another thread safely
 
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
