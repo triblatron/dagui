@@ -9,7 +9,6 @@
 
 namespace nfe
 {
-
     void CompletionTrie::addWord(std::string word)
     {
         _root.addWord(word);
