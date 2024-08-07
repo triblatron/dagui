@@ -9,6 +9,7 @@
 #include "core/Circle.h"
 #include "core/ConfigurationElement.h"
 #include "util/CompletionTrie.h"
+#include "util/CompletionSubstring.h"
 
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, double, bool>>
 {
@@ -260,7 +261,7 @@ TEST_P(CompletionTrie_testAddWord, testAddWord)
     auto word = std::get<0>(GetParam());
     auto substring = std::get<1>(GetParam());
     auto matchString = std::get<2>(GetParam());
-    nfe::CompletionTrie* sut = new nfe::CompletionTrie();
+    auto sut = new nfe::CompletionTrie();
     sut->addWord(word);
     ASSERT_EQ(std::size_t{1}, sut->numWords());
     std::vector<std::string> matches;
@@ -271,6 +272,31 @@ TEST_P(CompletionTrie_testAddWord, testAddWord)
 }
 //@CsvSource({"Graph,Gr,Graph","Graph|Add Node|Math|Trig,Add,Graph|Add Node|Math|Trig"})
 INSTANTIATE_TEST_SUITE_P(CompletionTrie, CompletionTrie_testAddWord, ::testing::Values(
+        std::make_tuple("Graph","Gr","Graph"),
+        std::make_tuple("Graph|Add Node|Math|Trig","Add","Graph|Add Node|Math|Trig")
+        ));
+
+class CompletionSubstring_testAddWord : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*>>
+{
+
+};
+
+TEST_P(CompletionSubstring_testAddWord, testAddWord)
+{
+    auto word = std::get<0>(GetParam());
+    auto substring = std::get<1>(GetParam());
+    auto matchString = std::get<2>(GetParam());
+    auto sut = new nfe::CompletionSubstring();
+    sut->addWord(word);
+    ASSERT_EQ(std::size_t{1}, sut->numWords());
+    std::vector<std::string> matches;
+    sut->search(substring, matches);
+    EXPECT_FALSE(matches.empty());
+    EXPECT_EQ(matchString, matches[0]);
+    delete sut;
+}
+//@CsvSource({"Graph,Gr,Graph","Graph|Add Node|Math|Trig,Add,Graph|Add Node|Math|Trig"})
+INSTANTIATE_TEST_SUITE_P(CompletionSubstring, CompletionSubstring_testAddWord, ::testing::Values(
         std::make_tuple("Graph","Gr","Graph"),
         std::make_tuple("Graph|Add Node|Math|Trig","Add","Graph|Add Node|Math|Trig")
         ));
