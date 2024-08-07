@@ -4,6 +4,7 @@
 * User facing rather than quick throw-away debugging for developers
 * Easy to use API
 * User-friendly widgets
+* ~~Support config tree for declarative layout of widgets~~
 * Support tables with alternating background colours
 * High performance < 1ms render time per frame on all platforms
   * Raspberry Pi 4 1920x1080@60
@@ -12,6 +13,7 @@
 * Efficient representation to avoid redundant state changes
 * Support tooltips with markdown
 * Layout managers with constraint based layout
+  * Use well known algorithm suitable for GUIs
 * Rounded rectangles
 * Bezier curves with handles
 * Host widgets at arbitrary points in the widget tree, such as children of rectangles, by allowing different shapes for widgets
