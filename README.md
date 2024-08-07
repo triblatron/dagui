@@ -4,11 +4,16 @@
 * User facing rather than quick throw-away debugging for developers
 * Easy to use API
 * User-friendly widgets
+  * Provide help on why a widget is disabled/unavailable
+    * tooltips
 * ~~Support config tree for declarative layout of widgets~~
 * Support tables with alternating background colours
 * Support drag and drop modes including none to allow dragging of child windows
+  * Allow drag and drop of icons in a palette onto the work area to instantiate an object
+  * Allow dragging of child windows without triggering a transfer
 * High performance < 1ms render time per frame on all platforms
   * Raspberry Pi 4 1920x1080@60
+  * Raspberry Pi 5 1920x1080@120?
   * Windows/Linux/Mac Apple Silicon 4k@120Hz
   * Mac Intel 1920x1080@60Hz
 * Testable headless to verify interactions and presence of widgets
@@ -20,11 +25,11 @@
 * Bezier curves with handles
   * For signal paths
   * Multi-segment to support complex signal paths
+  * quadratic/one handle should be sufficient
 * Host widgets at arbitrary points in the widget tree, such as children of rectangles, by allowing different shapes for widgets
-* Allow drawing circles outside the bounds of a rectangle to make a composite shape
+* ~~Allow drawing circles outside the bounds of a rectangle to make a composite shape~~
   * should we allow 2D boolean operations?
     * would require a binary tree with operators at the nodes
-* Allow dragging of child windows without invoking drag and drop
 * Simple to integrate by rendering textured triangles
   * OpenGL for simplicity
   * Vulkan for performance
