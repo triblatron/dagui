@@ -7,6 +7,7 @@
 * Support tables with alternating background colours
 * High performance < 1ms render time per frame on all platforms
   * Raspberry Pi 4 1920x1080@60
+  * desktop 4k@120Hz
 * Testable headless to verify interactions and presence of widgets
 * Efficient representation to avoid redundant state changes
 * Support tooltips with markdown
