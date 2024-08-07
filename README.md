@@ -5,7 +5,7 @@
 * Easy to use API
 * User-friendly widgets
   * Provide help on why a widget is disabled/unavailable
-    * tooltips
+    * tooltips even when widget is disabled
 * ~~Support config tree for declarative layout of widgets~~
 * Support tables with alternating background colours
 * Support drag and drop modes including none to allow dragging of child windows
@@ -21,7 +21,8 @@
 * Support tooltips with markdown
 * Layout managers with constraint based layout
   * Use well known algorithm suitable for GUIs
-* Rounded rectangles
+* ~~Rounded rectangles~~
+* ~~Circles~~
 * Bezier curves with handles
   * For signal paths
   * Multi-segment to support complex signal paths
@@ -41,6 +42,8 @@
   * using colour manipulation or artist input
 * Support tabbing between controls
 * Support splitters
+* Support collapsible panes
+* Support trees
 * Support horizontal and vertical layout
 * Support grid layout 
 * Support input validation
@@ -49,7 +52,7 @@
 * Support high-quality text rendering
 * Support Windows 10,11
 * Support Linux Ubuntu 2204,2404
-* Support macOS Intel and Apple Silicon
+* Support macOS on Intel, Apple Silicon
 * Support Raspberry pi 4,5
 * Support reading mouse and keyboard events
 * Support Clean Architecture view model 
