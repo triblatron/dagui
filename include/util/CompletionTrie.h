@@ -7,11 +7,10 @@
 #include "config/Export.h"
 
 #include "util/Completion.h"
+#include "util/TrieNode.h"
 
 namespace nfe
 {
-    class TrieNode;
-
     class NFE_API CompletionTrie : public Completion
     {
     public:
@@ -23,7 +22,7 @@ namespace nfe
 
         void search(std::string substring, std::vector<std::string>& matches) override;
     private:
-        TrieNode* _root{nullptr};
+        TrieNode _root;
         std::size_t _numWords{0};
     };
 }

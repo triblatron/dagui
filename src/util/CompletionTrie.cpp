@@ -12,11 +12,8 @@ namespace nfe
 
     void CompletionTrie::addWord(std::string word)
     {
-        if (_root!=nullptr)
-        {
-            _root->addWord(word);
-            ++_numWords;
-        }
+        _root.addWord(word);
+        ++_numWords;
     }
 
     size_t CompletionTrie::numWords()
@@ -26,14 +23,11 @@ namespace nfe
 
     void CompletionTrie::search(std::string substring, std::vector<std::string> &matches)
     {
-        if (_root != nullptr)
-        {
-            _root->search(substring,matches);
-        }
+        _root.search(substring,matches);
     }
 
     CompletionTrie::CompletionTrie()
     {
-        _root = new TrieNode();
+        // Do nothing.
     }
 }
