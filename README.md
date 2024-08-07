@@ -16,6 +16,8 @@
   * Use well known algorithm suitable for GUIs
 * Rounded rectangles
 * Bezier curves with handles
+  * For signal paths
+  * Multi-segment to support complex signal paths
 * Host widgets at arbitrary points in the widget tree, such as children of rectangles, by allowing different shapes for widgets
 * Allow drawing circles outside the bounds of a rectangle to make a composite shape
 * Allow dragging of child windows without invoking drag and drop
@@ -25,6 +27,7 @@
 * Support checkboxes
 * Support radio buttons
 * Support disabled controls greying out
+  * using colour manipulation or artist input
 * Support tabbing between controls
 * Support input validation
 * Support keyboard shortcuts
@@ -38,6 +41,8 @@
 * Support Clean Architecture view model 
 * Support data binding with property change events without requiring the GUI to be visible
 * Support separation of visual logic from application logic
+  * visual logic goes in the code behind
+    * should we use nodes to evaluate the visual logic?
 * Support declarative creation of widgets using a simple file format
 * Focus and blur events
 * Support text effects such as bold and underline
@@ -48,10 +53,12 @@
 * Support actions to allow more than one way to invoke functionality
 * Support icons with text in menu items
 * Support searchable menus with completion
+  * Benchmark trie versus substring for partial matching
 * Support tutorial mode
 * Support rigid body transforms on widgets
 * Support integration with VulkanSceneGraph
 * No programmer art
+  * Need an artist to create visual snippets such as close icon and collapse handle
 * Support compound shapes as the bounds of a widget
 * Client area and system area on windows
 * Component system with composition over inheritance
