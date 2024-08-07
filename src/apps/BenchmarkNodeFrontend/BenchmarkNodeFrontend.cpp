@@ -78,7 +78,7 @@ void BM_CompletionSubstringSearch(benchmark::State& state)
 {
     nfe::CompletionSubstring sut;
     setup(sut);
-    sut.sort();
+//    sut.sort();
     std::vector<std::string> matches;
     for (auto _ : state)
     {

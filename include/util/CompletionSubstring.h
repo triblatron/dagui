@@ -13,10 +13,7 @@ namespace nfe
     class NFE_API CompletionSubstring : public Completion
     {
     public:
-        void addWord(std::string word) override
-        {
-            _words.push_back(word);
-        }
+        void addWord(std::string word) override;
 
         size_t numWords() override
         {
@@ -24,8 +21,6 @@ namespace nfe
         }
 
         void search(std::string substring, std::vector<std::string>& matches) override;
-
-        void sort();
     private:
         using WordArray = std::vector<std::string>;
         WordArray _words;

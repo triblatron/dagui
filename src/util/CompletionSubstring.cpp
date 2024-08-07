@@ -23,11 +23,9 @@ namespace nfe
         }
     }
 
-    void CompletionSubstring::sort()
+    void CompletionSubstring::addWord(std::string word)
     {
-        for (auto it=_words.begin(); it!=_words.end(); ++it)
-        {
-            std::sort(it->begin(), it->end());
-        }
+        std::sort(word.begin(), word.end());
+        _words.push_back(word);
     }
 }
