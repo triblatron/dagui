@@ -20,8 +20,11 @@
   * Multi-segment to support complex signal paths
 * Host widgets at arbitrary points in the widget tree, such as children of rectangles, by allowing different shapes for widgets
 * Allow drawing circles outside the bounds of a rectangle to make a composite shape
+  * should we allow 2D boolean operations?
 * Allow dragging of child windows without invoking drag and drop
 * Simple to integrate by rendering textured triangles
+  * OpenGL for simplicity
+  * Vulkan for performance
 * Simple Lua-based persistent format not xml or javascript
 * Support push buttons
 * Support checkboxes
@@ -29,6 +32,9 @@
 * Support disabled controls greying out
   * using colour manipulation or artist input
 * Support tabbing between controls
+* Support splitters
+* Support horizontal and vertical layout
+* Support grid layout 
 * Support input validation
 * Support keyboard shortcuts
 * Simple event system without code generation
