@@ -10,6 +10,7 @@
 #include "core/ConfigurationElement.h"
 #include "util/CompletionTrie.h"
 #include "util/CompletionSubstring.h"
+#include "core/CompositeShape.h"
 
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, double, bool>>
 {
@@ -341,3 +342,47 @@ INSTANTIATE_TEST_SUITE_P(CompletionSubstring, CompletionSubstring_testAddWord, :
 //    sut.search(substring, matches);
 //    assertEquals(0, matches.size());
 //}
+
+nfe::CompositeShape* createCompositeShape()
+{
+    auto parent = new nfe::CompositeShape();
+
+    auto rectangle = new nfe::Rectangle();
+    rectangle->setCornerRadius(10.0);
+    rectangle->setPos(50.0,50.0);
+    rectangle->setSize(100.0,100.0);
+    parent->addShape(rectangle);
+    auto leftPort = new nfe::Circle();
+    leftPort->setPos(50.0,100.0);
+    leftPort->setRadius(3.0);
+    parent->addShape(leftPort);
+    auto rightPort = new nfe::Circle();
+    rightPort->setPos(150.0, 100.0);
+    rightPort->setRadius(3.0);
+    parent->addShape(rightPort);
+
+    return parent;
+}
+
+class CompositeShape_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, bool>>
+{
+
+};
+
+TEST_P(CompositeShape_testIsInside, testIsInside)
+{
+    auto x = std::get<0>(GetParam());
+    auto y = std::get<1>(GetParam());
+    auto inside = std::get<2>(GetParam());
+    auto sut = createCompositeShape();
+
+    EXPECT_EQ(inside, sut->isInside(x,y));
+    delete sut;
+}
+
+INSTANTIATE_TEST_SUITE_P(CompositeShape, CompositeShape_testIsInside, ::testing::Values(
+        std::make_tuple(0, 0, false),
+        std::make_tuple(100,100,true),
+        std::make_tuple(49.0,100,true),
+        std::make_tuple(51,100,true)
+        ));
