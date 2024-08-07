@@ -21,6 +21,7 @@
 * Host widgets at arbitrary points in the widget tree, such as children of rectangles, by allowing different shapes for widgets
 * Allow drawing circles outside the bounds of a rectangle to make a composite shape
   * should we allow 2D boolean operations?
+    * would require a binary tree with operators at the nodes
 * Allow dragging of child windows without invoking drag and drop
 * Simple to integrate by rendering textured triangles
   * OpenGL for simplicity
