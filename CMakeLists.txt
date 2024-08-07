@@ -79,6 +79,19 @@ CHECK_INCLUDE_FILE_CXX( sstream HAVE_STD_SSTREAM DOC "")
 CHECK_INCLUDE_FILE_CXX( stdexcept HAVE_STD_EXCEPT )
 
 CONFIGURE_FILE( include/config/config.h.in ${PROJECT_BINARY_DIR}/include/config/config.h )
+IF ( UNIX AND NOT APPLE )
+    CONFIGURE_FILE( etc/setup.sh.in ${PROJECT_BINARY_DIR}/etc/setup.sh )
+ELSEIF ( APPLE )
+    CONFIGURE_FILE( etc/setup_macos.sh.in ${PROJECT_BINARY_DIR}/etc/setup.sh )
+ELSEIF ( WIN32 )
+    CONFIGURE_FILE( etc/setup.bat.in ${PROJECT_BINARY_DIR}/etc/setup.bat )
+ENDIF ( UNIX AND NOT APPLE )
+IF ( UNIX )
+    INSTALL( FILES ${PROJECT_BINARY_DIR}/etc/setup.sh DESTINATION . )
+ELSEIF ( WIN32 )
+    INSTALL( FILES ${PROJECT_BINARY_DIR}/etc/setup.bat DESTINATION . )
+ENDIF( UNIX )
+
 INSTALL( TARGETS nodefrontend
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
