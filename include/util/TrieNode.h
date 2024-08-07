@@ -20,7 +20,7 @@ namespace nfe
         {
             if (word.empty())
             {
-                _children.insert(ChildMap::value_type ('*',nullptr));
+                _children.insert(ChildMap::value_type ('*',TrieNode()));
                 return;
             }
             char first = word[0];
@@ -32,10 +32,10 @@ namespace nfe
             auto it = _children.end();
             if (_children.find(first)==_children.end())
             {
-                auto p = this->_children.insert(ChildMap::value_type(first,new TrieNode()));
+                auto p = this->_children.insert(ChildMap::value_type(first,TrieNode()));
                 it = p.first;
             }
-            it->second->addWord(rest);
+            it->second.addWord(rest);
         }
 
         void search(std::string word, std::vector<std::string>& matches)
@@ -52,7 +52,7 @@ namespace nfe
                     {
                         if (p.first != '*')
                         {
-                            p.second->search(word, matches, partialMatch + p.first);
+                            p.second.search(word, matches, partialMatch + p.first);
                         }
                         else
                         {
@@ -67,22 +67,21 @@ namespace nfe
                 {
                     std::string rest = word.substr(1);
 
-                    it->second->search(rest, matches, partialMatch + it->first);
+                    it->second.search(rest, matches, partialMatch + it->first);
                 }
                 else
                 {
                     for (auto p : _children)
                     {
-                        TrieNode * link = p.second;
                         if (p.first != '*')
                         {
-                            link->search(word, matches, partialMatch + p.first);
+                            p.second.search(word, matches, partialMatch + p.first);
                         }
                     }
                 }
             }
     private:
-        using ChildMap = std::unordered_map<char, TrieNode*>;
+        using ChildMap = std::unordered_map<char, TrieNode>;
         ChildMap _children;
 
     };
