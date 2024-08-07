@@ -1,4 +1,4 @@
-# A companion project to nodebackend that provides a GUI
+# A GUI for nodebackend
 
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
