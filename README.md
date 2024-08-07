@@ -1,28 +1,43 @@
-# A companion project to nodebackend that provides a GUI
+# A GUI for nodebackend
 
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
 * Easy to use API
 * User-friendly widgets
+* ~~Support config tree for declarative layout of widgets~~
 * Support tables with alternating background colours
+* Support drag and drop modes including none to allow dragging of child windows
 * High performance < 1ms render time per frame on all platforms
   * Raspberry Pi 4 1920x1080@60
+  * Windows/Linux/Mac Apple Silicon 4k@120Hz
+  * Mac Intel 1920x1080@60Hz
 * Testable headless to verify interactions and presence of widgets
 * Efficient representation to avoid redundant state changes
 * Support tooltips with markdown
 * Layout managers with constraint based layout
+  * Use well known algorithm suitable for GUIs
 * Rounded rectangles
 * Bezier curves with handles
+  * For signal paths
+  * Multi-segment to support complex signal paths
 * Host widgets at arbitrary points in the widget tree, such as children of rectangles, by allowing different shapes for widgets
 * Allow drawing circles outside the bounds of a rectangle to make a composite shape
+  * should we allow 2D boolean operations?
+    * would require a binary tree with operators at the nodes
 * Allow dragging of child windows without invoking drag and drop
 * Simple to integrate by rendering textured triangles
+  * OpenGL for simplicity
+  * Vulkan for performance
 * Simple Lua-based persistent format not xml or javascript
 * Support push buttons
 * Support checkboxes
 * Support radio buttons
 * Support disabled controls greying out
+  * using colour manipulation or artist input
 * Support tabbing between controls
+* Support splitters
+* Support horizontal and vertical layout
+* Support grid layout 
 * Support input validation
 * Support keyboard shortcuts
 * Simple event system without code generation
@@ -35,6 +50,8 @@
 * Support Clean Architecture view model 
 * Support data binding with property change events without requiring the GUI to be visible
 * Support separation of visual logic from application logic
+  * visual logic goes in the code behind
+    * should we use nodes to evaluate the visual logic?
 * Support declarative creation of widgets using a simple file format
 * Focus and blur events
 * Support text effects such as bold and underline
@@ -45,10 +62,12 @@
 * Support actions to allow more than one way to invoke functionality
 * Support icons with text in menu items
 * Support searchable menus with completion
+  * Benchmark trie versus substring for partial matching
 * Support tutorial mode
 * Support rigid body transforms on widgets
 * Support integration with VulkanSceneGraph
 * No programmer art
+  * Need an artist to create visual snippets such as close icon and collapse handle
 * Support compound shapes as the bounds of a widget
 * Client area and system area on windows
 * Component system with composition over inheritance
@@ -78,7 +97,7 @@
   * no blocking of gui thread
   * cannot use futurws since they are for sending values to another thread
   * Could use coroutines if we bump to C++20
-  * It is unclea4 how to call a method in another thread safely
+  * It is unclear how to call a method in another thread safely
 
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
