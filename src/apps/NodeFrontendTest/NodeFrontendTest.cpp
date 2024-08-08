@@ -294,7 +294,7 @@ TEST_P(CompletionSubstring_testAddWord, testAddWord)
     ASSERT_EQ(std::size_t{1}, sut->numWords());
     std::vector<std::string> matches;
     sut->search(substring, matches);
-    EXPECT_FALSE(matches.empty());
+    ASSERT_FALSE(matches.empty());
     EXPECT_EQ(matchString, matches[0]);
     delete sut;
 }

@@ -13,7 +13,7 @@ namespace nfe
 
     void CompletionSubstring::search(std::string substring, std::vector<std::string> &matches)
     {
-        std::sort(substring.begin(), substring.end());
+        //std::sort(substring.begin(), substring.end());
         for (auto it=_words.begin(); it!=_words.end(); ++it)
         {
             if (it->find(substring)!=std::string::npos)
@@ -25,7 +25,7 @@ namespace nfe
 
     void CompletionSubstring::addWord(std::string word)
     {
-        std::sort(word.begin(), word.end());
+        //std::sort(word.begin(), word.end());
         _words.push_back(word);
     }
 }
