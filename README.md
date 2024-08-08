@@ -15,6 +15,8 @@
   * draggable columns
   * custom sorting of data
 * Support trees
+  * expand node
+  * collapse node
   * expand all
   * collapse all
 * Support explorer style selection by meta key and click combinations or dragging
