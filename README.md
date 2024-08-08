@@ -6,11 +6,13 @@
 * User-friendly widgets
   * Provide help on why a widget is disabled/unavailable
     * tooltips even when widget is disabled
+    * hover events
 * ~~Support config tree for declarative layout of widgets~~
-* Support tables with alternating background colours
+* Support tables with configurable alternating background colours
 * Support drag and drop modes including none to allow dragging of child windows
   * Allow drag and drop of icons in a palette onto the work area to instantiate an object
   * Allow dragging of child windows without triggering a transfer
+* Allow dragging from any point on a child window
 * High performance < 1ms render time per frame on all platforms
   * Raspberry Pi 4 1920x1080@60
   * Raspberry Pi 5 1920x1080@120?
