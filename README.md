@@ -19,6 +19,8 @@
   * collapse node
   * expand all
   * collapse all
+* Support status bar
+* Support notifications
 * Support explorer style selection by meta key and click combinations or dragging
   * for all widgets that have a client area such as panes
 * Support drag and drop modes including none to allow dragging of child windows
@@ -85,7 +87,10 @@
 * Support icons with text in menu items
 * Support searchable menus with completion
   * Benchmark trie versus substring for partial matching
+    * substring wins by orders of magnitude, but still takes 1100ns on a representative set of Blender-style menu paths
 * Support tutorial mode
+  * Dynamic disabling of widgets to guide user
+  * Help notifications
 * Support rigid body transforms on widgets
 * Support integration with VulkanSceneGraph
 * No programmer art
