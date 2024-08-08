@@ -8,6 +8,8 @@
 
 #include "util/Completion.h"
 
+#include <unordered_map>
+
 namespace nfe
 {
     class NFE_API CompletionSubstring : public Completion
@@ -22,7 +24,7 @@ namespace nfe
 
         void search(std::string substring, std::vector<std::string>& matches) override;
     private:
-        using WordArray = std::vector<std::string>;
-        WordArray _words;
+        using WordMap = std::unordered_map<std::string, std::string>;
+        WordMap _words;
     };
 }

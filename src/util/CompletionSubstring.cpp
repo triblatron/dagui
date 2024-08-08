@@ -13,19 +13,23 @@ namespace nfe
 
     void CompletionSubstring::search(std::string substring, std::vector<std::string> &matches)
     {
-        //std::sort(substring.begin(), substring.end());
+        std::sort(substring.begin(), substring.end());
         for (auto it=_words.begin(); it!=_words.end(); ++it)
         {
-            if (it->find(substring)!=std::string::npos)
+            for (auto it2=substring.begin(); it2!=substring.end(); ++it2)
             {
-                matches.push_back(*it);
+                if (it->first.find(*it2)!=std::string::npos)
+                {
+                    matches.push_back(it->second);
+                }
             }
         }
     }
 
     void CompletionSubstring::addWord(std::string word)
     {
-        //std::sort(word.begin(), word.end());
-        _words.push_back(word);
+        std::string sorted = word;
+        std::sort(sorted.begin(), sorted.end());
+        _words.insert(WordMap::value_type (sorted, word));
     }
 }
