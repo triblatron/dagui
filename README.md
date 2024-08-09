@@ -22,7 +22,7 @@
 * Support status bar
 * Support notifications
 * Support explorer style selection by meta key and click combinations or dragging
-  * for all widgets that have a client area such as panes
+  * for all widgets that contain other widgets such as panes
 * Support drag and drop modes including none to allow dragging of child windows
   * Allow drag and drop of icons in a palette onto the work area to instantiate an object
   * Allow dragging of child windows without triggering a transfer
