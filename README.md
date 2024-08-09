@@ -33,6 +33,7 @@
   * Windows/Linux/Mac Apple Silicon 4k@120Hz
   * Mac Intel 1920x1080@60Hz
 * Testable headless to verify interactions and presence of widgets
+  * Use identifiers of widgets rather than positions to make tests robust to layout changes
 * Efficient representation to avoid redundant state changes
 * Support tooltips with markdown
 * Layout managers with constraint based layout
@@ -59,10 +60,11 @@
 * Support tabbing between controls
 * Support splitters
 * Support collapsible panes
-* Support trees
 * Support horizontal and vertical layout
 * Support grid layout 
 * Support input validation
+  * Restrict input to valid characters based on expected type and range
+  * give tooltip help on why an input is invalid
 * Support keyboard shortcuts
 * Simple event system without code generation
 * Support high-quality text rendering
