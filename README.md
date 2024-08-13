@@ -49,7 +49,8 @@
 * Host widgets at arbitrary points in the widget tree, such as children of rectangles, by allowing different shapes for widgets
 * ~~Allow drawing circles outside the bounds of a rectangle to make a composite shape~~
   * should we allow 2D boolean operations?
-    * would require a binary tree with operators at the nodes
+    * would require a binary tree with operators at the internal nodes and primitives at the leaf nodes
+    * can use an external library to solve drawing as long as it generates triangles
 * Simple to integrate by rendering textured triangles
   * OpenGL for simplicity
   * Vulkan for performance
