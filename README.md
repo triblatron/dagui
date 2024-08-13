@@ -67,7 +67,10 @@
 * Support input validation
   * Restrict input to valid characters based on expected type and range
   * give tooltip help on why an input is invalid
-* Support keyboard shortcuts
+* Support keyboard accelerators
+  * Modify menu item and label text to include shortcut
+  * Detect combination
+    * State machine e.g. Ctrl + Shift + C can be done in different orders like Shift + Ctrl + C so it is best thought of as a chord rather than a sequence
 * Simple event system without code generation
 * Support high-quality text rendering
 * Support Windows 10,11
