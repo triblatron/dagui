@@ -19,6 +19,8 @@
   * collapse node
   * expand all
   * collapse all
+* Support tabbed toolbar
+  * avoid design patent
 * Support status bar
 * Support notifications
 * Support explorer style selection by meta key and click combinations or dragging
