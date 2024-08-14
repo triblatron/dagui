@@ -37,6 +37,13 @@
 * Testable headless to verify interactions and presence of widgets
   * Use identifiers of widgets rather than positions to make tests robust to layout changes
 * Efficient representation to avoid redundant state changes
+  * Sort by texture to avoid swapping repeatedly
+  * Use texture atlases for fonts and icons to limit number of textures required
+  * Sort transparent polygons after opaque polygons to get correct rendering order.
+  * Generate whichever is more efficient: indexed triangles or triangle strips.
+    * Profile on target hardware, possibly change answer on discrete desktop GPU versus Pi 4.
+    * Selectable at runtime by passing different mode token in OpenGL or topology token in Vulkan.
+    * Might change based on what is being drawn: text versus widgets
 * Support tooltips with markdown
 * Layout managers with constraint based layout
   * Use well known algorithm suitable for GUIs
