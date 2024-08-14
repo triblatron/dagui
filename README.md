@@ -45,6 +45,8 @@
     * Selectable at runtime by passing different mode token in OpenGL or topology token in Vulkan.
     * Might change based on what is being drawn: text versus widgets
 * Support tooltips with markdown
+  * Allow Unicode codepoints such as emojis and small images as arbitrary icons.
+  * Allow rich content without the overhead of (X)HTML/CSS/Javascript.
 * Layout managers with constraint based layout
   * Use well known algorithm suitable for GUIs
 * ~~Rounded rectangles~~
