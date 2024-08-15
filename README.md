@@ -27,12 +27,18 @@
   * avoid design patent
 * Support status bar
 * Support notifications
+  * disappear after configurable period
+* Support user settings config
+  * Use same format
+  * generate settings dialogue
 * Support explorer style selection by meta key and click combinations or dragging
   * for all widgets that contain other widgets such as panes
 * Support drag and drop modes including none to allow dragging of child windows
   * Allow drag and drop of icons in a palette onto the work area to instantiate an object
   * Allow dragging of child windows without triggering a transfer
 * Allow dragging from any point on a child window
+* Support prototype pattern by clone()ing widgets from a library into a tree.
+  * be careful about which elements are deep copied
 * High performance < 1ms render time per frame on all platforms
   * Raspberry Pi 4 1920x1080@60
   * Raspberry Pi 5 1920x1080@120?
@@ -152,6 +158,8 @@
 * No code generation
   * At least C++, could allow Lua instead because it does not require explicit compilation
     * Supported in Lua persistent format
+    * might need to SWIG the C++ API to make this possible
+    * alternative is to have yielding to C++ when a service is required 
 * No interference with the CMake configure and generate process.
 * One obvious place to change to add a new property, event, whatever.
 * Modular composable components
@@ -183,6 +191,7 @@
 * md4c for markdown parsing
 * svgpp for SVG parsing
 * nodebase for basic features such as Lua support, configuration and streams.
+* math library with 2D, 3D vectors and 3x3 matrices
 
 ## Tips
 * SWIG xml mode works only if we %define NFE_API %enddef, otherwise it just generaates code tags instead of the parse tree.
