@@ -57,6 +57,12 @@
   * For signal paths
   * Multi-segment to support complex signal paths
   * quadratic/one handle should be sufficient
+  * optional
+* Support lines with handles as a simpler alternative to Bezier curves
+  * For signal paths
+  * Multi-segment to support complex signal paths
+  * one handle to change alignment
+  * required
 * Host widgets at arbitrary points in the widget tree, such as children of rectangles, by allowing different shapes for widgets
 * ~~Allow drawing circles outside the bounds of a rectangle to make a composite shape~~
   * should we allow 2D boolean operations?
@@ -66,12 +72,18 @@
   * OpenGL for simplicity
   * Vulkan for performance
 * Simple Lua-based persistent format not xml or javascript
+  * Allow widget callbacks in Lua
 * Support push buttons
 * Support checkboxes
 * Support radio buttons
 * Support disabled controls greying out
   * using colour manipulation or artist input
 * Support tabbing between controls
+  * Fires onblur as focus leaves a control
+  * Fires onfocus as focus enters a control
+  * Allow configurable tab order to increase convenience of using keyboard and accessibility
+    * Try to avoid dead-ends such as text areas where tab is interpreted as a tab character
+    * Provide a meta-key combination to toggle the interpretation of tab by a control between moving focus and control-specific
 * Support splitters
 * Support collapsible panes
 * Support horizontal and vertical layout
@@ -82,13 +94,13 @@
 * Support keyboard accelerators
   * Modify menu item and label text to include shortcut
   * Detect combination
-    * State machine e.g. Ctrl + Shift + C can be done in different orders like Shift + Ctrl + C so it is best thought of as a chord rather than a sequence
+    * State machine e.g. Ctrl + Shift + C can be done in different orders like Shift + Ctrl + C so it is best thought of as a chord followed by a character rather than a pure sequence
 * Simple event system without code generation
 * Support high-quality text rendering
 * Support Windows 10,11
 * Support Linux Ubuntu 2204,2404
 * Support macOS on Intel, Apple Silicon
-* Support Raspberry pi 4,5
+* Support Raspberry pi 4,5 Debian 12
 * Support reading mouse and keyboard events
 * Support Clean Architecture view model 
 * Support data binding with property change events without requiring the GUI to be visible
@@ -106,7 +118,7 @@
 * Support icons with text in menu items
 * Support searchable menus with completion
   * Benchmark trie versus substring for partial matching
-    * substring wins by orders of magnitude, but still takes 1100ns on a representative set of Blender-style menu paths
+    * substring wins by orders of magnitude, but still takes 1100ns to search on a representative set of Blender-style menu paths
 * Support tutorial mode
   * Dynamic disabling of widgets to guide user
   * Help notifications
@@ -126,6 +138,8 @@
 * Inherit visibility from parent
 * SVG shapes if parser supports translation to primitives
 * No code generation
+  * At least C++, could allow Lua instead because it does not require explicit compilation
+    * Supported in Lua persistent format
 * No interference with the CMake configure and generate process.
 * One obvious place to change to add a new property, event, whatever.
 * Modular composable components
@@ -138,11 +152,12 @@
 * Designer using its own widgets
   * Generate declarative Lua config
   * self hosting: design the designer using the designer
+    * might have head-explosion issues
 * Messaging system similar to signal-slots without the MOC-related cruft.
   * thread safe
   * no blocking of gui thread
-  * cannot use futurws since they are for sending values to another thread
-  * Could use coroutines if we bump to C++20
+  * cannot use futures since they are for sending values to another thread
+  * Could use coroutines if we bump to C++20 or use Boost or similar
   * It is unclear how to call a method in another thread safely
 
 ## Dependencies
