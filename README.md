@@ -3,6 +3,8 @@
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
 * Easy to use API
+  * basic tasks should be easy
+  * advanced tasks ahould be straightforward 
 * User-friendly widgets
   * Provide help on why a widget is disabled/unavailable
     * tooltips even when widget is disabled
@@ -74,8 +76,13 @@
 * Simple Lua-based persistent format not xml or javascript
   * Allow widget callbacks in Lua
 * Support push buttons
+  * default control
+  * click event handler
 * Support checkboxes
+  * individual or as items in another control
 * Support radio buttons
+  * individual or as items in another control
+  * exclusion groups
 * Support disabled controls greying out
   * using colour manipulation or artist input
 * Support tabbing between controls
@@ -107,13 +114,16 @@
 * Support separation of visual logic from application logic
   * visual logic goes in the code behind
     * should we use nodes to evaluate the visual logic?
+      * could connect clicked output on a button to enabled on another control
+      * more conplex scenarios would still require code behind so it might be more complexity for not much benefit
 * Support declarative creation of widgets using a simple file format
 * Focus and blur events
 * Support text effects such as bold and underline
-* Support default buttons
-* Support selection similar to Windows explorer
-* Support composing of widgets
+  * not as important because we will put the shortcut in a tooltip with a different font
 * Support prototype pattern
+  * by clone()ing widgets in a factory
+* Use modern C++ techniques to avoid memory bugs
+  * std::unique_ptr<> and std::make_unique() to automate memory management and avoid leaks, use after free, dangling pointers etc.
 * Support actions to allow more than one way to invoke functionality
 * Support icons with text in menu items
 * Support searchable menus with completion
@@ -122,6 +132,7 @@
 * Support tutorial mode
   * Dynamic disabling of widgets to guide user
   * Help notifications
+  * Highlighting of widgets
 * Support rigid body transforms on widgets
 * Support integration with VulkanSceneGraph
 * No programmer art
@@ -132,7 +143,8 @@
 * Texture atlas for interface elements such as system buttons and handles for collapsible panes
 * Property notification system with change events
 * Optional system controls and title bar
-* Hit detection of shapesSupport keyboard shortcuts
+* Hit detection of shapes
+* Support keyboard shortcuts
 * Possible boolean operations on shapes
 * Activation events
 * Inherit visibility from parent
@@ -154,11 +166,14 @@
   * self hosting: design the designer using the designer
     * might have head-explosion issues
 * Messaging system similar to signal-slots without the MOC-related cruft.
+  * put it behind an interface
   * thread safe
   * no blocking of gui thread
   * cannot use futures since they are for sending values to another thread
   * Could use coroutines if we bump to C++20 or use Boost or similar
+    * another dependency
   * It is unclear how to call a method in another thread safely
+  * locks but how do we make it work for an arbitrary method on an arbitrary object?
 
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
