@@ -8,6 +8,8 @@
     * tooltips even when widget is disabled
     * hover events
 * ~~Support config tree for declarative layout of widgets~~
+* Support MVC models
+  * ideally using property change notification without having to inherit framework classes
 * Support tables
   * configurable alternating background colours
   * tooltips to show full text of cells where it is truncated
