@@ -1,7 +1,5 @@
 # A GUI for nodebackend
 
-I cba with this
-
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
 * Easy to use API
@@ -12,6 +10,12 @@ I cba with this
     * tooltips even when widget is disabled
     * hover events
 * ~~Support config tree for declarative layout of widgets~~
+* Support concept of space occupied by a widget
+* Support animation of properties
+  * position
+  * rotation
+  * colour
+  * alpha
 * Support MVC models
   * ideally using property change notification without having to inherit framework classes
 * Support tables
