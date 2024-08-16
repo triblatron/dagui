@@ -16,6 +16,7 @@
   * rotation
   * colour
   * alpha
+  * spatial occupancy e.g. creation, deletion
 * Support MVC models
   * ideally using property change notification without having to inherit framework classes
 * Support tables
