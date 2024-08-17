@@ -29,6 +29,8 @@
   * colour
   * alpha
   * spatial occupancy e.g. creation makes room, deletion takes back space
+* Support menu bar
+  * menus accessible by mouse or keyboard
 * Support STL containers in widgets
   * std::list where insertion in middle is common
   * template parameter of container with sensible default
@@ -45,6 +47,10 @@
   * no indexing
 * Support MVC models
   * ideally using property change notification without having to inherit framework classes
+* Support markdown in text
+  * labels
+  * text fields
+  * tooltips
 * Support different mouse cursor
   * small image
 * Support tables
@@ -150,6 +156,7 @@
 * Support macOS on Intel, Apple Silicon
 * Support Raspberry pi 4,5 Debian 12
 * Support reading mouse and keyboard events
+  * abstraction of native events
 * Support Clean Architecture view model 
 * Support data binding with property change events without requiring the GUI to be visible
 * Support separation of visual logic from application logic
@@ -217,7 +224,12 @@
     * another dependency
   * It is unclear how to call a method in another thread safely
   * locks but how do we make it work for an arbitrary method on an arbitrary object?
-
+* Integration
+  * define interface to generate textured triangles
+  * define interface to generate text
+  * define interface to rasterise SVG
+  * they might be the same
+  * rasterising text is required of the Integration
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
 * Lua-5.4.x for the declarative format
