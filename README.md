@@ -175,8 +175,13 @@
   * not as important because we will put the shortcut in a tooltip with a different font
 * Support prototype pattern
   * by clone()ing widgets in a factory
-* Use modern C++ techniques to avoid memory bugs
-  * std::unique_ptr<> and std::make_unique() to automate memory management and avoid leaks, use after free, dangling pointers etc.
+* Use modern C++ techniques
+  * lamdas as callbacks
+  * std::thread, std::mutex and std::atomic<>
+  * range-based for
+  * for-scope local variables
+  * std::unique_ptr<> and std::make_unique<>() to automate memory management and avoid leaks, use after free, dangling pointers etc.
+    * be wary of performance overhead
 * Support actions to allow more than one way to invoke functionality
 * Support icons with text in menu items
 * Support searchable menus with completion
