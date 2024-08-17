@@ -7,12 +7,19 @@
   * advanced tasks ahould be straightforward 
 * User-friendly widgets
   * Make it obvious how to use them
+    * A clear small set of interactions
+    * consistency so that a particular interaction always has the same effect where available
     * no tutorial required 
     * no internet search required
   * Provide help on why a widget is disabled/unavailable
     * tooltips even when widget is disabled
     * hover events
 * ~~Support config tree for declarative layout of widgets~~
+* Support notion of nothing to do
+  * no events
+  * no redrawing
+  * no frames
+* Support scheduling of events
 * Support concept of space occupied by a widget
   * Reserve space on creation
   * Give back space on deletion
