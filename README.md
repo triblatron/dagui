@@ -6,6 +6,8 @@
   * basic tasks should be easy
   * advanced tasks ahould be straightforward 
 * User-friendly widgets
+  * Make it obvious how to use them
+    * no internet required
   * Provide help on why a widget is disabled/unavailable
     * tooltips even when widget is disabled
     * hover events
