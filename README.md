@@ -7,18 +7,35 @@
   * advanced tasks ahould be straightforward 
 * User-friendly widgets
   * Make it obvious how to use them
-    * no internet required
+    * no tutorial required 
+    * no internet search required
   * Provide help on why a widget is disabled/unavailable
     * tooltips even when widget is disabled
     * hover events
 * ~~Support config tree for declarative layout of widgets~~
 * Support concept of space occupied by a widget
+  * Reserve space on creation
+  * Give back space on deletion
 * Support animation of properties
   * position
   * rotation
   * colour
   * alpha
-  * spatial occupancy e.g. creation, deletion
+  * spatial occupancy e.g. creation makes room, deletion takes back space
+* Support STL containers in widgets
+  * std::list where insertion in middle is common
+  * template parameter of container with sensible default
+* Support dual-listbox widget
+  * available list
+  * active list
+  * transfer items between lists
+  * move items up and down lists
+  * use std::list and splicing operations
+  * explorer-style selection:
+    * Ctrl-click
+    * Shift-click
+    * Drag a box
+  * no indexing
 * Support MVC models
   * ideally using property change notification without having to inherit framework classes
 * Support tables
