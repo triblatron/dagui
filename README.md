@@ -19,6 +19,8 @@
   * no events
   * no redrawing
   * no frames
+* Support notion of time provider
+  * Allow faking of time to test time-dependent event dispatch 
 * Support scheduling of events
 * Support concept of space occupied by a widget
   * Reserve space on creation
@@ -46,7 +48,10 @@
     * Drag a box
   * no indexing
 * Support MVC models
-  * ideally using property change notification without having to inherit framework classes
+  * ideally using POD types without having to inherit framework classes
+* Support panes
+  * scrollable when required
+  * proportinoally sized scroll bars 
 * Support markdown in text
   * labels
   * text fields
