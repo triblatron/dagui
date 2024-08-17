@@ -38,6 +38,8 @@
   * no indexing
 * Support MVC models
   * ideally using property change notification without having to inherit framework classes
+* Support different mouse cursor
+  * small image
 * Support tables
   * configurable alternating background colours
   * tooltips to show full text of cells where it is truncated
