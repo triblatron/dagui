@@ -125,8 +125,6 @@
 * Simple to integrate by rendering textured triangles
   * OpenGL for simplicity
   * Vulkan for performance
-* Simple Lua-based persistent format not xml or javascript
-  * Allow widget callbacks in Lua
 * Support push buttons
   * default control
   * click event handler
@@ -173,8 +171,6 @@
 * Focus and blur events
 * Support text effects such as bold and underline
   * not as important because we will put the shortcut in a tooltip with a different font
-* Support prototype pattern
-  * by clone()ing widgets in a factory
 * Use modern C++ techniques
   * lamdas as callbacks
   * std::thread, std::mutex and std::atomic<>
@@ -209,9 +205,10 @@
 * SVG shapes if parser supports translation to primitives
 * No code generation
   * At least C++, could allow Lua instead because it does not require explicit compilation
-    * Supported in Lua persistent format
+    * Supported in Lua persistent format as Lua event handlers
     * might need to SWIG the C++ API to make this possible
-    * alternative is to have yielding to C++ when a service is required 
+    * alternative is to have yielding to C++ when a service is required.
+      * lightweight but possibly restrictive
 * No interference with the CMake configure and generate process.
 * One obvious place to change to add a new property, event, whatever.
 * Modular composable components
