@@ -10,15 +10,17 @@
   * scene graph with rigid body transforms
   * strict tree
   * rendering backend
+    * Use concept of painter?
+      * draw primitives such as Shape
     * Generate textured triangles
-    * provide interface to be implemented by integration
-    * agnostic to graphics API
+    * Provide interface to be implemented by integration
+    * Agnostic to graphics API
       * OpenGL
       * Vulkan
       * Metal
       * DirectX
-    * needs to be efficient
-      * submit batches of triangles rather than one vertex like in the days of old
+    * Needs to be efficient
+      * submit batches of triangles rather than one vertex per call like in the days of old
     * Generate text for rendering by integration
       * puts dependencies in integration
         * harfbuzz
@@ -32,7 +34,7 @@
   * use stack wrapping a vector
   * use index chasing end for queue
     * keeps memory so not suitable for large queues 
-  * use a pool allocator to improve locality of reference for lists
+  * use a pool allocator to improve locality of reference for std::list
   * use indexing because they are not invalidated by adding elements at the end
   * reserve() elements when we know how many will be added
   * chasing pointers causes cache misses with at least 10x slowdown
@@ -45,11 +47,23 @@
   * Provide help on why a widget is disabled/unavailable
     * tooltips even when widget is disabled
     * hover events
-* ~~Support config tree for declarative layout of widgets~
+* ~~Support config tree for declarative layout of widgets~~
 * Support notion of nothing to do
   * no events
   * no redrawing
   * no frames
+* Support canvas
+  * Grid with snap
+  * Zoom
+  * Scrollable infinitely
+  * Pan
+  * Fit to view
+    * Set bounds to show all content
+    * Orthographic projection matrix?
+      * Would need to be 4x4
+* Support pop-up menu
+    * searchable
+    * list matches as actions as for pull-down menus
 * Support scientific visualisation
   * graphs of signals against time
   * live capture
