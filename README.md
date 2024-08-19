@@ -25,11 +25,20 @@
   * Provide help on why a widget is disabled/unavailable
     * tooltips even when widget is disabled
     * hover events
-* ~~Support config tree for declarative layout of widgets~~
+* ~~Support config tree for declarative layout of widgets~
 * Support notion of nothing to do
   * no events
   * no redrawing
   * no frames
+* Support scientific visualisation
+  * graphs of signals against time
+  * live capture
+  * playback
+  * multiple plots on one graph
+  * multiple graphs
+  * easy splitting of view
+  * select signals
+  * same signal can appear on more than one plot
 * Support notion of time provider
   * Allow faking of time to test time-dependent event dispatch 
 * Support scheduling of events
