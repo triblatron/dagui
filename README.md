@@ -10,15 +10,17 @@
   * scene graph with rigid body transforms
   * strict tree
   * rendering backend
+    * Use concept of painter?
+      * draw primitives such as Shape
     * Generate textured triangles
-    * provide interface to be implemented by integration
-    * agnostic to graphics API
+    * Provide interface to be implemented by integration
+    * Agnostic to graphics API
       * OpenGL
       * Vulkan
       * Metal
       * DirectX
-    * needs to be efficient
-      * submit batches of triangles rather than one vertex like in the days of old
+    * Needs to be efficient
+      * submit batches of triangles rather than one vertex per call like in the days of old
     * Generate text for rendering by integration
       * puts dependencies in integration
         * harfbuzz
@@ -50,6 +52,18 @@
   * no events
   * no redrawing
   * no frames
+* Support canvas
+  * Grid with snap
+  * Zoom
+  * Scrollable infinitely
+  * Pan
+  * Fit to view
+    * Set bounds to show all content
+    * Orthographic projection matrix?
+      * Would need to be 4x4
+* Support pop-up menu
+    * searchable
+    * list matches as actions as for pull-down menus
 * Support scientific visualisation
   * graphs of signals against time
   * live capture
