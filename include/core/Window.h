@@ -21,7 +21,9 @@ namespace nfe
             MINIMISE_BIT = 1 << 1,
             MAXIMISE_BIT = 1 << 2,
             CLOSE_BIT = 1 << 3,
-            BORDER_BIT = 1 << 4
+            BORDER_BIT = 1 << 4,
+            RESIZEABLE_BIT = 1 << 5,
+            DEFAULT_FEATURES = TITLE_BIT | MINIMISE_BIT | MAXIMISE_BIT | CLOSE_BIT | BORDER_BIT | RESIZEABLE_BIT
         };
 
         enum Status : std::uint32_t
@@ -31,9 +33,9 @@ namespace nfe
             MAXIMISED_BIT = 1 << 2,
         };
     public:
-        Window(Widget* parent);
+        explicit Window(Widget* parent);
     private:
-        Features _features{ 0x0 };
+        Features _features{ DEFAULT_FEATURES };
         Status _status{ 0x0 };
     };
 }
