@@ -73,9 +73,14 @@
   * spatial occupancy e.g. creation makes room, deletion takes back space
 * Support menu bar
   * menus accessible by mouse or keyboard
+  * searchable with listing of matches as actions
 * Support STL containers in widgets
   * std::list where insertion in middle is common
   * template parameter of container with sensible default
+* track cursor position for events
+  * can be used to position child windows
+* Support child windows as first class citizens
+  * dragging happens automatically without having to compute coordinates in event handler
 * Support dual-listbox widget
   * available list
   * active list
@@ -98,6 +103,9 @@
   * tooltips
 * Support different mouse cursor
   * small image
+  * property of a widget
+* Support mouse enter and leave events
+  * start and stop operation
 * Support tables
   * configurable alternating background colours
   * tooltips to show full text of cells where it is truncated
