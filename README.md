@@ -45,7 +45,7 @@
   * Provide help on why a widget is disabled/unavailable
     * tooltips even when widget is disabled
     * hover events
-* ~~Support config tree for declarative layout of widgets~
+* ~~Support config tree for declarative layout of widgets~~
 * Support notion of nothing to do
   * no events
   * no redrawing
