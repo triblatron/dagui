@@ -32,7 +32,7 @@
   * use stack wrapping a vector
   * use index chasing end for queue
     * keeps memory so not suitable for large queues 
-* use a pool allocator to improve locality of reference for lists
+  * use a pool allocator to improve locality of reference for lists
   * use indexing because they are not invalidated by adding elements at the end
   * reserve() elements when we know how many will be added
   * chasing pointers causes cache misses with at least 10x slowdown
