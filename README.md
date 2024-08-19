@@ -2,9 +2,11 @@
 
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
+  * Use ImGUI for the latter
 * Easy to use API
   * basic tasks should be easy
   * advanced tasks ahould be straightforward
+* Exppse widget tree to user of API
 * Efficiency promoting API
   * Pass by value and allow optimiser to make it fast
   * check whether move constructor can be elided
