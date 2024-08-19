@@ -6,7 +6,24 @@
 * Easy to use API
   * basic tasks should be easy
   * advanced tasks ahould be straightforward
-* Exppse widget tree to user of API
+* Expose widget tree to user of API
+  * scene graph with rigid body transforms
+  * strict tree
+  * rendering backend
+    * Generate textured triangles
+    * provide interface to be implemented by integration
+    * agnostic to graphics API
+      * OpenGL
+      * Vulkan
+      * Metal
+      * DirectX
+    * needs to be efficient
+      * submit batches of triangles rather than one vertex like in the days of old
+    * Generate text for rendering by integration
+      * puts dependencies in integration
+        * harfbuzz
+        * pango
+        * freetype
 * Efficiency promoting API
   * Pass by value and allow optimiser to make it fast
   * check whether move constructor can be elided
