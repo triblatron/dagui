@@ -12,6 +12,9 @@
   * check whether move constructor can be elided
   * Use std::vector rather than std::list or std::map wherever possible to maximise cache usage.
   * roll our own based on std::vector
+  * use stack wrapping a vector
+  * use index chasing end for queue
+    * keeps memory so not suitable for large queues 
 * use a pool allocator to improve locality of reference for lists
   * use indexing because they are not invalidated by adding elements at the end
   * reserve() elements when we know how many will be added
