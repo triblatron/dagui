@@ -6,6 +6,8 @@
 
 #include "config/Export.h"
 
+#include <string>
+
 namespace nfe
 {
     class Shape;
@@ -16,6 +18,16 @@ namespace nfe
         explicit Widget(Widget* parent= nullptr);
 
         virtual ~Widget() = default;
+
+        void setId(const std::string& id)
+        {
+            _id = id;
+        }
+
+        const std::string& id() const
+        {
+            return _id;
+        }
 
         void setShape(Shape* shape)
         {
@@ -32,6 +44,7 @@ namespace nfe
             return _shape;
         }
     private:
+        std::string _id;
         Widget* _parent{nullptr};
         Shape* _shape{nullptr};
     };

@@ -9,7 +9,6 @@
 #include "core/Widget.h"
 
 #include <cstdint>
-#include <string>
 
 namespace nfe
 {
