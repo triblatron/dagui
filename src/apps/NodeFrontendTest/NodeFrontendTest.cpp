@@ -13,6 +13,9 @@
 #include "util/CompletionSubstring.h"
 #include "core/CompositeShape.h"
 #include "core/ShapeVisitor.h"
+#include "core/Window.h"
+
+#include <memory>
 
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, double, bool>>
 {
@@ -421,3 +424,55 @@ TEST(CompositeShape, testAccept)
     delete mockShape;
     delete sut;
 }
+
+TEST(Window, testAfterConstructionThenAllFeaturesAreAvailable)
+{
+    auto sut = std::make_unique<nfe::Window>(nullptr);
+
+    EXPECT_TRUE(sut->areFeaturesAvailable(nfe::Window::DEFAULT_FEATURES));
+}
+
+class Window_testFeaturesRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, nfe::Window::Features>>
+{
+
+};
+
+TEST_P(Window_testFeaturesRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto features = std::get<1>(GetParam());
+
+    EXPECT_EQ(str, nfe::Window::featuresName(features));
+    EXPECT_EQ(features, nfe::Window::parseFeatures(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(Window, Window_testFeaturesRoundTrip, ::testing::Values(
+        std::make_tuple("TITLE_BIT",nfe::Window::TITLE_BIT),
+        std::make_tuple("MINIMISE_BIT",nfe::Window::MINIMISE_BIT),
+        std::make_tuple("MAXIMISE_BIT",nfe::Window::MAXIMISE_BIT),
+        std::make_tuple("CLOSE_BIT",nfe::Window::CLOSE_BIT),
+        std::make_tuple("BORDER_BIT",nfe::Window::BORDER_BIT),
+        std::make_tuple("RESIZEABLE_BIT", nfe::Window::RESIZEABLE_BIT),
+        std::make_tuple("MOVEABLE_BIT",nfe::Window::MOVEABLE_BIT),
+        std::make_tuple("TITLE_BIT MINIMISE_BIT MAXIMISE_BIT CLOSE_BIT BORDER_BIT RESIZEABLE_BIT MOVEABLE_BIT", static_cast<nfe::Window::Features>(nfe::Window::DEFAULT_FEATURES))
+        ));
+
+class Window_testStatusRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, nfe::Window::Status>>
+{
+
+};
+
+TEST_P(Window_testStatusRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto status = std::get<1>(GetParam());
+
+    EXPECT_EQ(str, nfe::Window::statusName(status));
+    EXPECT_EQ(status, nfe::Window::parseStatus(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(Window, Window_testStatusRoundTrip, ::testing::Values(
+        std::make_tuple("VISIBLE_BIT", nfe::Window::VISIBLE_BIT),
+        std::make_tuple("MINIMISED_BIT", nfe::Window::MINIMISED_BIT),
+        std::make_tuple("MAXIMISED_BIT", nfe::Window::MAXIMISED_BIT)
+        ));
