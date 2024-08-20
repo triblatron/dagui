@@ -204,6 +204,7 @@
   * click event handler
 * Support checkboxes
   * individual or as items in another control
+  * tri-state, typically in a tree to indicate that some portion of an items children are selected
 * Support radio buttons
   * individual or as items in another control
   * exclusion groups
