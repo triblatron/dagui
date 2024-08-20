@@ -1,5 +1,17 @@
 # A GUI for nodebackend
 
+## Progress
+
+* Shapes hit test
+  * ~~Rounded rectangle~~
+  * ~~Circle~~
+  * ~~CompositeShape: union of Shape~~
+* Widget
+  * has-a Shape
+* ~~Config tree~~
+* Window
+  * round-tripping of features and status to string and back to flags
+
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
   * Use ImGUI for the latter
