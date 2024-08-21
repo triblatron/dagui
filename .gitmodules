@@ -1,6 +1,6 @@
 [submodule "md4c"]
-	path = md4c
+	path = ThirdParty/md4c
 	url = https://github.com/mity/md4c
 [submodule "svgpp"]
-	path = svgpp
+	path = ThirdParty/svgpp
 	url = https://github.com/svgpp/svgpp
