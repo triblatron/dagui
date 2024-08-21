@@ -16,5 +16,5 @@
 #define TEST_BIT(needle, haystack, mask) \
     if (haystack.find(#needle)!=std::string::npos) \
     {                              \
-        mask = static_cast<typeof(mask)>(mask | needle);            \
+        mask = static_cast<decltype(mask)>(mask | needle);            \
     }

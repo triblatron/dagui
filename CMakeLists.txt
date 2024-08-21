@@ -1,9 +1,9 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.28)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.22)
 PROJECT( nodefrontend )
 
 FIND_PACKAGE(GTest REQUIRED)
 FIND_PACKAGE(benchmark REQUIRED)
-FIND_PACKAGE(Lua 5.4.6 EXACT REQUIRED)
+FIND_PACKAGE(Lua 5.4 REQUIRED)
 
 SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include/util/dbc.h include/core/LuaInterface.h include/core/Circle.h include/core/Container.h include/core/Rectangle.h include/core/Shape.h include/core/Widget.h
         include/core/ConfigurationElement.h
