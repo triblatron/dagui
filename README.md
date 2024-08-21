@@ -372,8 +372,9 @@
 * math library with 2D, 3D vectors and 3x3 matrices
 
 ## Known working platforms
-* Ubuntu 2204
-* Ubuntu 2404
+* Ubuntu 20.04.6 LTS
+* Ubuntu 22.04 LTS
+* Ubuntu 24.04 LTS
 To qualify as working, a platform must:
 * build with no warnings in the nodefrontend code
 * provide at least the mininum version of each dependency in its package manager or build from source
