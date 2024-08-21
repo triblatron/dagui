@@ -1,5 +1,17 @@
 # A GUI for nodebackend
 
+## Progress
+
+* Shapes hit test
+  * ~~Rounded rectangle~~
+  * ~~Circle~~
+  * ~~CompositeShape: union of Shape~~
+* Widget
+  * ~~has-a Shape~~
+* ~~Config tree~~
+* Window
+  * ~~round-tripping of features and status to string and back to flags~~
+
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
   * Use ImGUI for the latter
@@ -34,20 +46,43 @@
   * use stack wrapping a vector
   * use index chasing end for queue
     * keeps memory so not suitable for large queues 
-  * use a pool allocator to improve locality of reference for std::list
+  * use region based allocator to improve locality of reference for std::list
   * use indexing because they are not invalidated by adding elements at the end
   * reserve() elements when we know how many will be added
   * chasing pointers causes cache misses with at least 10x slowdown
 * User-friendly widgets
-  * Make it obvious how to use them
+  * Make it intuitive how to use them
     * A clear small set of interactions
     * consistency so that a particular interaction always has the same effect where available
-    * no tutorial required 
+    * no tutorial required
+      * maybe an ideal
     * no internet search required
+      * probably won't find anything
+  * Avoid gratuitous switching between mouse and keyboard
+    * If already using the keyboard, provide a shortcut for the next action in the flow e.g. Ctrl-S to save
+    * Support context-specific shortcuts
+      * Submit a form (Ctrl-Enter to avoid confusion with a newline in a text area)
+      * Cancel a modal dialgoue box 
+    * Predictable/consistent behaviour to reduce cognitive load
+    * Put keyboard shortcuts in tooltips
   * Provide help on why a widget is disabled/unavailable
     * tooltips even when widget is disabled
+      * but not too much information to avoid overwhelming user
     * hover events
 * ~~Support config tree for declarative layout of widgets~~
+* Support tips
+  * context-dependent rather than overly generic
+    * align with frequently-performed actions
+  * track interaction with tips
+    * clicks
+    * dismissals
+    * refine over time
+  * easily dismissable
+  * do not interrupt mid-action
+    * given after action
+  * allow live shortcuts to actions in tips
+  * concise, actionable and easy to understand
+    * depends on app author
 * Support notion of nothing to do
   * no events
   * no redrawing
@@ -192,6 +227,7 @@
   * click event handler
 * Support checkboxes
   * individual or as items in another control
+  * tri-state, typically in a tree to indicate that some portion of an items children are selected
 * Support radio buttons
   * individual or as items in another control
   * exclusion groups
