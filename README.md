@@ -50,7 +50,7 @@
   * use region based allocator to improve locality of reference for std::list
   * use indexing because they are not invalidated by adding elements at the end
   * reserve() elements when we know how many will be added
-  * chasing pointers causes cache misses with at least 10x slowdown
+  * chasing pointers causes cache misses with at least 5x slowdown and can be 100x or more if accessing main memory.
 * User-friendly widgets
   * Make it intuitive how to use them
     * A clear small set of interactions
