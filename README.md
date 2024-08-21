@@ -58,8 +58,16 @@
       * maybe an ideal
     * no internet search required
       * probably won't find anything
+  * Avoid gratuitous switching between mouse and keyboard
+    * If already using the keyboard, provide a shortcut for the next action in the flow e.g. Ctrl-S to save
+    * Support context-specific shortcuts
+      * Submit a form (Ctrl-Enter to avoid confusion with a newline in a text area)
+      * Cancel a modal dialgoue box 
+    * Predictable/consistent behaviour to reduce cognitive load
+    * Put keyboard shortcuts in tooltips
   * Provide help on why a widget is disabled/unavailable
     * tooltips even when widget is disabled
+      * but not too much information to avoid overwhelming user
     * hover events
 * ~~Support config tree for declarative layout of widgets~~
 * Support tips
