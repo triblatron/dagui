@@ -287,7 +287,9 @@
 * Support declarative creation of widgets using a simple file format
 * Focus and blur events
 * Support text effects such as bold and underline
-  * not as important because we will put the shortcut in a tooltip with a different font
+  * not as important because we will put the shortcut in a tooltip with a differe
+triblatron/nodefrontend
+nt font
 * Use modern C++ techniques
   * lamdas as callbacks
   * std::thread, std::mutex and std::atomic<>
@@ -372,9 +374,10 @@
 * math library with 2D, 3D vectors and 3x3 matrices
 
 ## Known working platforms
-* Ubuntu 20.04.6 LTS
-* Ubuntu 22.04 LTS
-* Ubuntu 24.04 LTS
+* Ubuntu 20.04.6 LTS x64
+  * Requires buliding Lua from source [triblatron/lua](https://github.com/triblatron/lua)
+* Ubuntu 22.04 LTS x64
+* Ubuntu 24.04 LTS x64
 To qualify as working, a platform must:
 * build with no warnings in the nodefrontend code
 * provide at least the mininum version of each dependency in its package manager or build from source
