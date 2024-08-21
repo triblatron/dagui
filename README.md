@@ -15,7 +15,7 @@
 ~~Build on Ubuntu 2004~~
 
 ## Dependencies
-* C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
+* C++17 compiler (gcc 9.4+, clang16+, Visual Studio 2017+)
 * Lua-5.4.x for the declarative format
 * CMake 3.16+ for the build system
 * VulkanSceneGraph for integration demos
