@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.22)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 PROJECT( nodefrontend )
 
 FIND_PACKAGE(GTest REQUIRED)
@@ -39,7 +39,7 @@ ADD_LIBRARY( nodefrontend SHARED ${NODEFRONTEND_SRC} )
 TARGET_INCLUDE_DIRECTORIES( nodefrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR})
 
 set_target_properties( nodefrontend PROPERTIES DEFINE_SYMBOL NODEFRONTEND_LIBRARY )
-
+TARGET_LINK_LIBRARIES( nodefrontend ${LUA_LIBRARY} )
 add_subdirectory(src/apps/NodeFrontendTest)
 add_subdirectory(src/apps/BenchmarkNodeFrontend)
 

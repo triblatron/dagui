@@ -209,7 +209,7 @@ namespace nfe
                     }
                     else if (lua_isstring(lua, -1))
                     {
-                        child = new ConfigurationElement(index, lua_tostring(lua, -1));
+                        child = new ConfigurationElement(index, std::string(lua_tostring(lua, -1)));
                         parentStack.top()->addChild(child);
                     }
                 }
@@ -233,7 +233,7 @@ namespace nfe
                     }
                     else if (lua_isstring(lua, -1))
                     {
-                        child = new ConfigurationElement(name, lua_tostring(lua, -1));
+                        child = new ConfigurationElement(name, std::string(lua_tostring(lua, -1)));
                         parentStack.top()->addChild(child);
                     }
                     else if (lua_istable(lua, -1))

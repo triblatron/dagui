@@ -6,6 +6,10 @@
 
 #include "config/Export.h"
 
+extern "C" {
+#include <lua.h>
+}
+
 #include <string>
 #include <variant>
 #include <cstdint>
@@ -28,7 +32,7 @@ namespace nfe
             TYPE_DOUBLE,
             TYPE_STRING
         };
-        using ValueType = std::optional<std::variant<bool, std::int64_t, double, std::string>>;
+        using ValueType = std::optional<std::variant<bool, lua_Integer, double, std::string>>;
     public:
         explicit ConfigurationElement(std::string name);
 
