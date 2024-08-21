@@ -36,9 +36,9 @@
       * submit batches of triangles rather than one vertex per call like in the days of old
     * Generate text for rendering by integration
       * puts dependencies in integration
-        * harfbuzz
-        * pango
-        * freetype
+        * harfbuzz for text shaping
+        * pango to support underlining for keyboard shortcuts and error indication
+        * freetype for font metrics and rasterisation
 * Efficiency promoting API
   * Pass by value and allow optimiser to make it fast
   * check whether move constructor can be elided
