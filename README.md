@@ -51,15 +51,30 @@
   * reserve() elements when we know how many will be added
   * chasing pointers causes cache misses with at least 10x slowdown
 * User-friendly widgets
-  * Make it obvious how to use them
+  * Make it intuitive how to use them
     * A clear small set of interactions
     * consistency so that a particular interaction always has the same effect where available
-    * no tutorial required 
+    * no tutorial required
+      * maybe an ideal
     * no internet search required
+      * probably won't find anything
   * Provide help on why a widget is disabled/unavailable
     * tooltips even when widget is disabled
     * hover events
 * ~~Support config tree for declarative layout of widgets~~
+* Support tips
+  * context-dependent rather than overly generic
+    * align with frequently-performed actions
+  * track interaction with tips
+    * clicks
+    * dismissals
+    * refine over time
+  * easily dismissable
+  * do not interrupt mid-action
+    * given after action
+  * allow live shortcuts to actions in tips
+  * concise, actionable and easy to understand
+    * depends on app author
 * Support notion of nothing to do
   * no events
   * no redrawing
