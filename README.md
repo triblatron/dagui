@@ -12,6 +12,39 @@
 * Window
   * ~~round-tripping of features and status to string and back to flags~~
 ~~Build on Ubuntu 2204~~
+~~Build on Ubuntu 2004~~
+
+## Dependencies
+* C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
+* Lua-5.4.x for the declarative format
+* CMake 3.22+ for the build system
+* VulkanSceneGraph for integration demos
+* md4c for markdown parsing
+* svgpp for SVG parsing
+* nodebase for basic features such as Lua support, configuration and streams.
+* math library with 2D, 3D vectors and 3x3 matrices
+
+## Known working platforms
+* Ubuntu 20.04.6 LTS x64
+  * Requires buliding Lua from source [triblatron/lua](https://github.com/triblatron/lua)
+* Ubuntu 22.04 LTS x64
+* Ubuntu 24.04 LTS x64
+To qualify as working, a platform must:
+* build with no warnings in the nodefrontend code
+* provide at least the mininum version of each dependency in its package manager or build from source
+* pass all the tests
+  * unit tests
+  * integration tests
+  * performance tests
+  * manual usability tests
+
+So far, there are only unit tests but that will change in time.
+
+Eventually, there will be automated integration tests that typically assert the presence of particular widgets and calls of event handlers etc.
+
+There will also be automated performance tests that render to texture as a proxy for the screen.  Alongside these will be microbenchmarks that measure performance of various idioms used to implement the library.
+
+Finally there will be manual usability tests that require running the full system and a tester with some UX experience.
 
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
@@ -362,38 +395,6 @@ nt font
   * define interface to rasterise SVG
   * they might be the same
   * rasterising text is required of the Integration
-
-## Dependencies
-* C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
-* Lua-5.4.x for the declarative format
-* CMake 3.22+ for the build system
-* VulkanSceneGraph for integration demos
-* md4c for markdown parsing
-* svgpp for SVG parsing
-* nodebase for basic features such as Lua support, configuration and streams.
-* math library with 2D, 3D vectors and 3x3 matrices
-
-## Known working platforms
-* Ubuntu 20.04.6 LTS x64
-  * Requires buliding Lua from source [triblatron/lua](https://github.com/triblatron/lua)
-* Ubuntu 22.04 LTS x64
-* Ubuntu 24.04 LTS x64
-To qualify as working, a platform must:
-* build with no warnings in the nodefrontend code
-* provide at least the mininum version of each dependency in its package manager or build from source
-* pass all the tests
-  * unit tests
-  * integration tests
-  * performance tests
-  * manual usability tests
-
-So far, there are only unit tests but that will change in time.
-
-Eventually, there will be automated integration tests that typically assert the presence of particular widgets and calls of event handlers etc.
-
-There will also be automated performance tests that render to texture as a proxy for the screen.  Alongside these will be microbenchmarks that measure performance of various idioms used to implement the library.
-
-Finally there will be manual usability tests that require running the full system and a tester with some UX experience.
 
 ## Tips
 * SWIG xml mode works only if we %define NFE_API %enddef, otherwise it just generaates code tags instead of the parse tree.
