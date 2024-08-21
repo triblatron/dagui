@@ -238,9 +238,23 @@
   * Fires onfocus as focus enters a control
   * Allow configurable tab order to increase convenience of using keyboard and accessibility
     * Try to avoid dead-ends such as text areas where tab is interpreted as a tab character
-    * Provide a meta-key combination to toggle the interpretation of tab by a control between moving focus and control-specific
+    * Provide a meta-key combination to toggle the interpretation of tab by a control between moving focus and control-specific action
+* Support validation of inputs
+  * Provide information on why an input is invalid and highlight the input field
+    * tooltip, but avoid too much information
+  * Provide validators for basic types with ranges
+    * std::int_\*, std::uint_\*
+    * std::string
+    * enums
+  * Provide validators for enums
+    * Parse and convert to string
+    * choices
+    * bitmasks
 * Support splitters
+  * draggable
+    * need cursor to show when dragging is allowed
 * Support collapsible panes
+  * need icon to show state: expanded or collapsed
 * Support horizontal and vertical layout
 * Support grid layout 
 * Support input validation
@@ -285,10 +299,16 @@
   * Dynamic disabling of widgets to guide user
   * Help notifications
   * Highlighting of widgets
+  * Dynamic placement of widgets in flow of text
+    * extension of Markdown OR
+    * HTML?
 * Support rigid body transforms on widgets
 * Support integration with VulkanSceneGraph
 * No programmer art
   * Need an artist to create visual snippets such as close icon and collapse handle
+  * Typically SVG format
+  * Pre-render into an atlas at desired resolution
+    * need an SVG rasteriser
 * Support compound shapes as the bounds of a widget
 * Client area and system area on windows
 * Component system with composition over inheritance
@@ -308,7 +328,7 @@
     * alternative is to have yielding to C++ when a service is required.
       * lightweight but possibly restrictive
 * No interference with the CMake configure and generate process.
-* One obvious place to change to add a new property, event, whatever.
+* One intuitive place to change to add a new property, event, whatever.
 * Modular composable components
   * Entity-component system?
   * Widgets as nodes?
@@ -320,21 +340,22 @@
   * Generate declarative Lua config
   * self hosting: design the designer using the designer
     * might have head-explosion issues
-* Messaging system similar to signal-slots without the MOC-related cruft.
+* Messaging system similar to signal-slots without the MOC-related cruft
   * put it behind an interface
   * thread safe
   * no blocking of gui thread
   * cannot use futures since they are for sending values to another thread
-  * Could use coroutines if we bump to C++20 or use Boost or similar
+  * could use coroutines if we bump to C++20 or use Boost or similar
     * another dependency
-  * It is unclear how to call a method in another thread safely
-  * locks but how do we make it work for an arbitrary method on an arbitrary object?
+  * it is unclear how to call a method in another thread safely
+    * locks, but how do we make it work for an arbitrary method on an arbitrary object?
 * Integration
   * define interface to generate textured triangles
   * define interface to generate text
   * define interface to rasterise SVG
   * they might be the same
   * rasterising text is required of the Integration
+
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
 * Lua-5.4.x for the declarative format
