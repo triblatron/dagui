@@ -7,10 +7,10 @@
   * ~~Circle~~
   * ~~CompositeShape: union of Shape~~
 * Widget
-  * has-a Shape
+  * ~~has-a Shape~~
 * ~~Config tree~~
 * Window
-  * round-tripping of features and status to string and back to flags
+  * ~~round-tripping of features and status to string and back to flags~~
 
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
@@ -46,7 +46,7 @@
   * use stack wrapping a vector
   * use index chasing end for queue
     * keeps memory so not suitable for large queues 
-  * use a pool allocator to improve locality of reference for std::list
+  * use region based allocator to improve locality of reference for std::list
   * use indexing because they are not invalidated by adding elements at the end
   * reserve() elements when we know how many will be added
   * chasing pointers causes cache misses with at least 10x slowdown
