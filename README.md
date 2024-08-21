@@ -17,7 +17,7 @@
 ## Dependencies
 * C++17 compiler (gcc 11+, clang16+, Visual Studio 2017+)
 * Lua-5.4.x for the declarative format
-* CMake 3.22+ for the build system
+* CMake 3.16+ for the build system
 * VulkanSceneGraph for integration demos
 * md4c for markdown parsing
 * svgpp for SVG parsing
