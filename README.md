@@ -99,6 +99,10 @@
 * Support pop-up menu
     * searchable
     * list matches as actions as for pull-down menus
+* Support node graph browser
+  * navigation forward, backward, up and down
+  * drill into complex nodes to any depth
+  * show breadcrumb of current path with links to each parent graph
 * Support scientific visualisation
   * graphs of signals against time
   * live capture
