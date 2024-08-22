@@ -27,6 +27,15 @@
 * math library with 2D, 3D vectors and 4x4 matrices
   * required to do translation and rotation in one matrix multiplication
   * required to create an Orthographic projection
+* Packages for Linux
+  * g++
+  * cmake
+  * make
+  * libgtest-dev
+  * libgmock-dev
+  * libbenchmark-dev
+  * liblua5.4-dev
+  * git
 
 ## Known working platforms
 * Ubuntu 20.04.6 LTS x64 gcc 9
