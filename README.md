@@ -13,8 +13,16 @@
   * ~~round-tripping of features and status to string and back to flags~~
 * Validation
   * ~~Integer types~~
+
 ~~Build on Ubuntu 2204~~
 ~~Build on Ubuntu 2004~~
+
+## Next up
+
+* Render some text in OpenGL using pango and freetype
+* build on Raspberry Pi 5 32bit
+* build on Raspberry Pi 4 64bit
+* draw a window
 
 ## Dependencies
 * C++17 compiler (gcc 9.4+, clang16+, Visual Studio 2017+)
