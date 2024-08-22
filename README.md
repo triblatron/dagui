@@ -31,6 +31,7 @@
   * Requires buliding Lua from source [triblatron/lua](https://github.com/triblatron/lua)
 * Ubuntu 22.04 LTS x64
 * Ubuntu 24.04 LTS x64
+* Windows 11 Visual Studio 2022
 
 To qualify as working, a platform must:
 * provide at least the mininum version of each dependency in its package manager or build from source
