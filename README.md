@@ -14,16 +14,25 @@
 * Validation
   * ~~Integer types~~
 
-~~Build on Ubuntu 2204~~
-~~Build on Ubuntu 2004~~
+~~Build on Ubuntu 24.04~~
+
+~~Build on Ubuntu 22.04~~
+
+~~Build on Ubuntu 20.04~~
 
 ## Next up
 
 * Render some text in OpenGL using pango and freetype
+* Repeat for Vulkan
 * build on Raspberry Pi 5 32bit
 * build on Raspberry Pi 4 64bit
 * draw a window
-
+* design a renderer backend that can consume textured triangles and render to
+  * A texture
+  * the screen
+* implement backend for
+  * OpenGL 4.6
+  * Vulkan 1.3
 ## Dependencies
 * C++17 compiler (gcc 9.4+, clang16+, Visual Studio 2017+)
 * Lua-5.4.x for the declarative format
