@@ -14,8 +14,10 @@
 #include "core/CompositeShape.h"
 #include "core/ShapeVisitor.h"
 #include "core/Window.h"
+#include "core/ValidatorInt.h"
 
 #include <memory>
+#include <cstdint>
 
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, double, bool>>
 {
@@ -475,4 +477,31 @@ INSTANTIATE_TEST_SUITE_P(Window, Window_testStatusRoundTrip, ::testing::Values(
         std::make_tuple("VISIBLE_BIT", nfe::Window::VISIBLE_BIT),
         std::make_tuple("MINIMISED_BIT", nfe::Window::MINIMISED_BIT),
         std::make_tuple("MAXIMISED_BIT", nfe::Window::MAXIMISED_BIT)
+        ));
+
+class ValidatorInt_testRange : public ::testing::TestWithParam<std::tuple<std::int64_t, std::int64_t, const char*, nfe::ValidatorInt<std::int64_t>::Error>>
+{
+
+};
+
+TEST_P(ValidatorInt_testRange, testRange)
+{
+    auto minValue = std::get<0>(GetParam());
+    auto maxValue = std::get<1>(GetParam());
+    auto str = std::get<2>(GetParam());
+    auto error = std::get<3>(GetParam());
+
+    auto sut = std::make_unique<nfe::ValidatorInt<std::int64_t>>(minValue, maxValue);
+
+    nfe::ValidatorInt<std::int64_t>::Error actual =  sut->validate(str);
+
+    EXPECT_EQ(error, actual);
+}
+
+INSTANTIATE_TEST_SUITE_P(ValidatorInt, ValidatorInt_testRange, ::testing::Values(
+        std::make_tuple(0, 5, "0", nfe::ValidatorInt<std::int64_t>::ERR_OK),
+        std::make_tuple(0, 5, "5", nfe::ValidatorInt<std::int64_t>::ERR_OK),
+        std::make_tuple(0, 5, "2", nfe::ValidatorInt<std::int64_t>::ERR_OK),
+        std::make_tuple(0, 5, "10", nfe::ValidatorInt<std::int64_t>::ERR_TOO_HIGH),
+        std::make_tuple(0, 5, "-1", nfe::ValidatorInt<std::int64_t>::ERR_TOO_LOW)
         ));
