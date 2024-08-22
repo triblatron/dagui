@@ -24,13 +24,18 @@
 * md4c for markdown parsing
 * svgpp for SVG parsing
 * nodebase for basic features such as Lua support, configuration and streams.
-* math library with 2D, 3D vectors and 3x3 matrices
+* math library with 2D, 3D vectors and 4x4 matrices
+  * required to do translation and rotation in one matrix multiplication
+  * required to create an Orthographic projection
 
 ## Known working platforms
-* Ubuntu 20.04.6 LTS x64
+* Ubuntu 20.04.6 LTS x64 gcc 9
   * Requires buliding Lua from source [triblatron/lua](https://github.com/triblatron/lua)
-* Ubuntu 22.04 LTS x64
-* Ubuntu 24.04 LTS x64
+* Ubuntu 22.04 LTS x64 gcc 11.4.0
+* Ubuntu 24.04 LTS x64 gcc 13
+* Windows 11 23H2 Visual Studio Community 2022
+  * requires [triblatron/install](https://github.com/triblatron/install)
+* Ubuntu 22.04.4 LTS x64 on WSL gcc 11.4.0
 
 To qualify as working, a platform must:
 * provide at least the mininum version of each dependency in its package manager or build from source
