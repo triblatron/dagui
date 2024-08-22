@@ -130,6 +130,20 @@ Finally there will be manual usability tests that require running the full syste
     * Set bounds to show all content
     * Orthographic projection matrix?
       * Would need to be 4x4
+* Support validation
+  * primitive types out of range
+  * string type too long or too short
+  * prevent invalid input by restricting entry
+  * provide only one way to set data that needs validation
+    * prevent invalid values from entering the system
+    * give feedback on why the input cannot be modified
+      * changing would put the value out of range or too long
+      * be careful about disabling keys, typically only disallow confirmation or submission of the dialogue but allow change of focus because it might influence the invalid field
+* Support dependencies between controls in a dialogue
+  * combobox that changes later fields
+  * add all combinations and switch between them
+  * could cause a cascade of dependencies and resulting explosion of possibilities
+  * try to avoid this by deaign
 * Support pop-up menu
     * searchable
     * list matches as actions as for pull-down menus
