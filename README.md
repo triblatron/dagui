@@ -69,6 +69,9 @@ There will also be automated performance tests that render to texture as a proxy
 
 Finally there will be manual usability tests that require running the full system and a tester with some UX experience.
 
+## Caveats
+For some reason no tests are found on Windows unless we have an explicit main().  This is despite not needing one in other projects.  The issue seems to be related to order of linking libraries but is complicated by cmake or visual studio not honouring the order given in the CMakeLists file.
+
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
   * Use ImGUI for the latter
