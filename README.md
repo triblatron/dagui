@@ -11,6 +11,8 @@
 * ~~Config tree~~
 * Window
   * ~~round-tripping of features and status to string and back to flags~~
+* Validation
+  * ~~Integer types~~
 ~~Build on Ubuntu 2204~~
 ~~Build on Ubuntu 2004~~
 
