@@ -31,10 +31,11 @@
 ## Known working platforms
 * Ubuntu 20.04.6 LTS x64 gcc 9
   * Requires buliding Lua from source [triblatron/lua](https://github.com/triblatron/lua)
-* Ubuntu 22.04 LTS x64 gcc 11
+* Ubuntu 22.04 LTS x64 gcc 11.4.0
 * Ubuntu 24.04 LTS x64 gcc 13
-* Windows 11 Visual Studio 2022
-* Ubuntu 22.04.4 LTS x64 on WSL gcc 11
+* Windows 11 23H2 Visual Studio Community 2022
+  * requires [triblatron/install](https://github.com/triblatron/install)
+* Ubuntu 22.04.4 LTS x64 on WSL gcc 11.4.0
 
 To qualify as working, a platform must:
 * provide at least the mininum version of each dependency in its package manager or build from source
