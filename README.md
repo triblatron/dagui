@@ -27,15 +27,30 @@
 * math library with 2D, 3D vectors and 4x4 matrices
   * required to do translation and rotation in one matrix multiplication
   * required to create an Orthographic projection
+* Packages for Linux
+  * g++
+  * cmake
+  * make
+  * libgtest-dev
+  * libgmock-dev
+  * libbenchmark-dev
+  * liblua5.4-dev
+  * git
 
 ## Known working platforms
 * Ubuntu 20.04.6 LTS x64 gcc 9
   * Requires buliding Lua from source [triblatron/lua](https://github.com/triblatron/lua)
 * Ubuntu 22.04 LTS x64 gcc 11.4.0
 * Ubuntu 24.04 LTS x64 gcc 13
-* Windows 11 23H2 Visual Studio Community 2022
+* Windows 11 Home 22631.3880 23H2 Visual Studio Community 2022 17.10.0
   * requires [triblatron/install](https://github.com/triblatron/install)
 * Ubuntu 22.04.4 LTS x64 on WSL gcc 11.4.0
+
+## Known failing platforms
+* Windows 11 Home 22631.3880 23H2 Visual Studio Community 2019 16.11.39
+  * fails with unresolved symbol \_\_std\_find\_trivial\_1
+* Windows 11 Home 22631.3880 23H2 Visual Studio Community 2017 16.9.65
+  * fails with unresolved symbol \_\_std\_find\_trivial\_1 and several others in benchmark.lib
 
 To qualify as working, a platform must:
 * provide at least the mininum version of each dependency in its package manager or build from source
