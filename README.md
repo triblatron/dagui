@@ -47,8 +47,10 @@
 * Ubuntu 22.04.4 LTS x64 on WSL gcc 11.4.0
 
 ## Known failing platforms
-* Windows 11 23H2 Visual Studio Community 2019 16.11.39
+* Windows 11 Home 22631.3880 23H2 Visual Studio Community 2019 16.11.39
   * fails with unresolved symbol \_\_std\_find\_trivial\_1
+* Windows 11 Home 22631.3880 23H2 Visual Studio Community 2017 16.9.65
+  * fails with unresolved symbol \_\_std\_find\_trivial\_1 and several others in benchmark.lib
 
 To qualify as working, a platform must:
 * provide at least the mininum version of each dependency in its package manager or build from source
