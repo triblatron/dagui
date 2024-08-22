@@ -31,9 +31,10 @@
   * Requires buliding Lua from source [triblatron/lua](https://github.com/triblatron/lua)
 * Ubuntu 22.04 LTS x64
 * Ubuntu 24.04 LTS x64
+
 To qualify as working, a platform must:
-* build with no warnings in the nodefrontend code
 * provide at least the mininum version of each dependency in its package manager or build from source
+* build with no warnings in the nodefrontend code when compiled with -Wall and -Wextra
 * pass all the tests
   * unit tests
   * integration tests
@@ -74,6 +75,9 @@ Finally there will be manual usability tests that require running the full syste
         * harfbuzz for text shaping
         * pango to support underlining for keyboard shortcuts and error indication
         * freetype for font metrics and rasterisation
+          * Use GL_RED for fonts with greyscale
+            * GL_LUMINANCE is deprecated in modern OpenGL
+          * Use GL_RGB for fonts with sub-pixel hinting
 * Efficiency promoting API
   * Pass by value and allow optimiser to make it fast
   * check whether move constructor can be elided
