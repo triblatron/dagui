@@ -19,6 +19,14 @@
 #include <memory>
 #include <cstdint>
 
+int main()
+{
+    testing::InitGoogleTest();
+    testing::InitGoogleMock();
+
+    RUN_ALL_TESTS();
+}
+
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, double, bool>>
 {
 
