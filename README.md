@@ -20,6 +20,7 @@
 
 ~~Build on Ubuntu 20.04~~
 
+~~Build on Windows 11~~
 ## Next up
 
 * Render some text in OpenGL using pango and freetype
