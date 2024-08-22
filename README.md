@@ -76,8 +76,8 @@ For some reason no tests are found on Windows unless we have an explicit main().
 * User facing rather than quick throw-away debugging for developers
   * Use ImGUI for the latter
 * Easy to use API
-  * basic tasks should be easy
-  * advanced tasks ahould be straightforward
+  * basic tasks should be easy to achieve
+  * advanced tasks ahould be possible and have a straightforward set of steps
 * Expose widget tree to user of API
   * scene graph with rigid body transforms
   * strict tree
