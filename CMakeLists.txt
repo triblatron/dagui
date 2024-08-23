@@ -2,7 +2,18 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 PROJECT( nodefrontend )
 
 FIND_PACKAGE(GTest REQUIRED)
-FIND_PACKAGE(benchmark REQUIRED)
+#FIND_PACKAGE(benchmark REQUIRED)
+include(FetchContent)
+FetchContent_Declare(googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG v1.10.x)
+FetchContent_Declare(googlebenchmark
+        GIT_REPOSITORY https://github.com/google/benchmark.git
+        GIT_TAG main) # need main for benchmark::benchmark
+
+FetchContent_MakeAvailable(
+        googletest
+        googlebenchmark)
 FIND_PACKAGE(Lua 5.4 REQUIRED)
 SET(CMAKE_CXX_STANDARD 17)
 
