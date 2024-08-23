@@ -4,6 +4,9 @@
 
 * C++17 compiler (gcc 9.4+, clang16+, Visual Studio 2017+)
 * Lua-5.4.x for the declarative format
+* gtest for automated testing
+* gmock to allow mocking in tests
+* benchmark for microbenchmarking
 * CMake 3.16+ for the build system
 * VulkanSceneGraph for integration demos
 * md4c for markdown parsing
@@ -16,14 +19,6 @@
 ```
 sudo apt-get install g++ cmake make libgtest-dev libgmock-dev libbenchmark-dev liblua5.4-dev git
 ```
-  * g++
-  * cmake
-  * make
-  * libgtest-dev
-  * libgmock-dev
-  * libbenchmark-dev
-  * liblua5.4-dev
-  * git
 
 ## Build instructions 
 
