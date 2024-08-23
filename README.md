@@ -95,7 +95,7 @@ NodeFrontendTest
 * Ubuntu 22.04 LTS x64 gcc 11.4.0
 * Ubuntu 24.04 LTS x64 gcc 13
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2022 17.10.0
-  * requires [triblatron/install](https://github.com/triblatron/install)
+  * requires [triblatron/install](https://github.com/triblatron/install) branch x64-win64-vc17
 * Ubuntu 22.04.4 LTS x64 on WSL gcc 11.4.0
 * Raspberry Pi 5 Raspian 12 aarch64 gcc 12.2
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2019 16.11.39
