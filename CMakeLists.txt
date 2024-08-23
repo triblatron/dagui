@@ -4,6 +4,7 @@ PROJECT( nodefrontend )
 FIND_PACKAGE(GTest REQUIRED)
 FIND_PACKAGE(benchmark REQUIRED)
 FIND_PACKAGE(Lua 5.4 REQUIRED)
+SET(CMAKE_CXX_STANDARD 17)
 
 SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include/util/dbc.h include/core/LuaInterface.h include/core/Circle.h include/core/Container.h include/core/Rectangle.h include/core/Shape.h include/core/Widget.h
         include/core/ConfigurationElement.h
@@ -46,7 +47,6 @@ TARGET_LINK_LIBRARIES( nodefrontend ${LUA_LIBRARY} )
 add_subdirectory(src/apps/NodeFrontendTest)
 add_subdirectory(src/apps/BenchmarkNodeFrontend)
 
-FIND_PACKAGE(benchmark REQUIRED)
 #ADD_EXECUTABLE( BenchmarkNodeFrontend src/BenchmarkNodeFrontend.cpp include/Node.h include/Transfer.h include/SignalPathDef.h)
 #TARGET_INCLUDE_DIRECTORIES( BenchmarkNodeFrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${OSGDB_INCLUDE_DIR} ${ANTLR_Reptol_OUTPUT_DIR})
 
