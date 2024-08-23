@@ -35,7 +35,19 @@
   source setup.sh
   NodefrontendTest
 ```
-# Progress
+### Windows 
+```
+git clone https://github.com/triblatron/nodefrontend
+mkdir nodefrontend_Build
+cd nodefrontend_build
+cmake -S nodefrontend -B . DCMAKE_INSTALL_PREFIX=../nodefrontend_install
+cmake --build . --target install --config Release
+cd nodefrontend_install
+setup
+NodeFrontendTest
+```
+
+## Progress
 
 * Shapes hit test
   * ~~Rounded rectangle~~
