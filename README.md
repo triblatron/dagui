@@ -13,8 +13,30 @@
   * ~~round-tripping of features and status to string and back to flags~~
 * Validation
   * ~~Integer types~~
-~~Build on Ubuntu 2204~~
-~~Build on Ubuntu 2004~~
+
+~~Build on Ubuntu 24.04~~
+
+~~Build on Ubuntu 22.04~~
+
+~~Build on Ubuntu 20.04~~
+
+~~Build on Windows 11~~
+
+~~Build on Raspian 12~~
+
+## Next up
+
+* Render some text in OpenGL using pango and freetype
+* Repeat for Vulkan
+* ~~build on Raspberry Pi 5 64bit~~
+* build on Raspberry Pi 4 64bit
+* draw a window
+* design a renderer backend that can consume textured triangles and render to
+  * A texture
+  * the screen
+* implement backend for
+  * OpenGL 4.6
+  * Vulkan 1.3
 
 ## Dependencies
 * C++17 compiler (gcc 9.4+, clang16+, Visual Studio 2017+)
@@ -45,6 +67,7 @@
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2022 17.10.0
   * requires [triblatron/install](https://github.com/triblatron/install)
 * Ubuntu 22.04.4 LTS x64 on WSL gcc 11.4.0
+* Raspberry Pi 5 Raspian 12 aarch64 gcc 12.2
 
 ## Known failing platforms
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2019 16.11.39
@@ -69,12 +92,15 @@ There will also be automated performance tests that render to texture as a proxy
 
 Finally there will be manual usability tests that require running the full system and a tester with some UX experience.
 
+## Caveats
+For some reason no tests are found on Windows unless we have an explicit main().  This is despite not needing one in other projects.  The issue seems to be related to order of linking libraries but is complicated by cmake or visual studio not honouring the order given in the CMakeLists file.
+
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
   * Use ImGUI for the latter
 * Easy to use API
-  * basic tasks should be easy
-  * advanced tasks ahould be straightforward
+  * basic tasks should be easy to achieve
+  * advanced tasks ahould be possible and have a straightforward set of steps
 * Expose widget tree to user of API
   * scene graph with rigid body transforms
   * strict tree
