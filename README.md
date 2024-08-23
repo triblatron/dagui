@@ -69,10 +69,7 @@
 * Ubuntu 22.04.4 LTS x64 on WSL gcc 11.4.0
 * Raspberry Pi 5 Raspian 12 aarch64 gcc 12.2
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2019 16.11.39
-
-## Known failing platforms
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2017 16.9.65
-  * fails with unresolved symbol \_\_std\_find\_trivial\_1 and several others in benchmark.lib
 
 To qualify as working, a platform must:
 * provide at least the mininum version of each dependency in its package manager or build from source
@@ -91,9 +88,13 @@ There will also be automated performance tests that render to texture as a proxy
 
 Finally there will be manual usability tests that require running the full system and a tester with some UX experience.
 
+## Known failing platforms
+none
+
 ## Caveats
 For some reason no tests are found on Windows unless we have an explicit main().  This is despite not needing one in other projects.  The issue seems to be related to order of linking libraries but is complicated by cmake or visual studio not honouring the order given in the CMakeLists file.
 This has been fixed by tweaking the order in the CMakeLists.txt, which now ends up in Visual Studio.
+It is necesary to build benchmark from source to make a successful build on VS2017 and VS2019
 
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
