@@ -28,7 +28,7 @@
 ```
   git clone https://github.com/triblatron/nodefrontend
   mkdir nodefrontend_build && cd nodefrontend_build
-  cmake -S ../nodefrontend-B . -DCMAKE_INSTALL_PREFIX=/path/to/install
+  cmake -S ../nodefrontend -B . -DCMAKE_INSTALL_PREFIX=/path/to/install
   make
   make install
   cd /path/to/install
