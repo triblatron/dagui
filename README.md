@@ -49,7 +49,7 @@
 * math library with 2D, 3D vectors and 4x4 matrices
   * required to do translation and rotation in one matrix multiplication
   * required to create an Orthographic projection
-* Packages for Linux
+* Packages for Linux Debian based
   * g++
   * cmake
   * make
