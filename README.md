@@ -1,6 +1,41 @@
 # A GUI for nodebackend
 
-## Progress
+## Dependencies 
+
+* C++17 compiler (gcc 9.4+, clang16+, Visual Studio 2017+)
+* Lua-5.4.x for the declarative format
+* CMake 3.16+ for the build system
+* VulkanSceneGraph for integration demos
+* md4c for markdown parsing
+* svgpp for SVG parsing
+* nodebase for basic features such as Lua support, configuration and streams.
+* math library with 2D, 3D vectors and 4x4 matrices
+  * required to do translation and rotation in one matrix multiplication
+  * required to create an Orthographic projection
+* Packages for Linux Debian based
+  * g++
+  * cmake
+  * make
+  * libgtest-dev
+  * libgmock-dev
+  * libbenchmark-dev
+  * liblua5.4-dev
+  * git
+
+## Build instructions 
+
+### Linux
+```
+  git clone https://github.com/triblatron/nodefrontend
+  mkdir nodefrontend_build && cd nodefrontend_build
+  cmake -S ../nodefrontend-B . -DCMAKE_INSTALL_PREFIX=/path/to/install
+  make
+  make install
+  cd /path/to/install
+  source setup.sh
+  NodefrontendTest
+```
+# Progress
 
 * Shapes hit test
   * ~~Rounded rectangle~~
@@ -37,27 +72,6 @@
 * implement backend for
   * OpenGL 4.6
   * Vulkan 1.3
-
-## Dependencies
-* C++17 compiler (gcc 9.4+, clang16+, Visual Studio 2017+)
-* Lua-5.4.x for the declarative format
-* CMake 3.16+ for the build system
-* VulkanSceneGraph for integration demos
-* md4c for markdown parsing
-* svgpp for SVG parsing
-* nodebase for basic features such as Lua support, configuration and streams.
-* math library with 2D, 3D vectors and 4x4 matrices
-  * required to do translation and rotation in one matrix multiplication
-  * required to create an Orthographic projection
-* Packages for Linux Debian based
-  * g++
-  * cmake
-  * make
-  * libgtest-dev
-  * libgmock-dev
-  * libbenchmark-dev
-  * liblua5.4-dev
-  * git
 
 ## Known working platforms
 * Ubuntu 20.04.6 LTS x64 gcc 9
