@@ -68,10 +68,9 @@
   * requires [triblatron/install](https://github.com/triblatron/install)
 * Ubuntu 22.04.4 LTS x64 on WSL gcc 11.4.0
 * Raspberry Pi 5 Raspian 12 aarch64 gcc 12.2
+* Windows 11 Home 22631.3880 23H2 Visual Studio Community 2019 16.11.39
 
 ## Known failing platforms
-* Windows 11 Home 22631.3880 23H2 Visual Studio Community 2019 16.11.39
-  * fails with unresolved symbol \_\_std\_find\_trivial\_1
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2017 16.9.65
   * fails with unresolved symbol \_\_std\_find\_trivial\_1 and several others in benchmark.lib
 
