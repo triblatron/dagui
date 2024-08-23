@@ -78,6 +78,11 @@ NodeFrontendTest
 ## Next up
 
 * Render some text in OpenGL using pango and freetype
+  * image that can address individual pixels
+  * address windows within the image to allow use of one image for multiple glyphs
+  * specify format
+    * greyscale
+    * rgb
 * Repeat for Vulkan
 * ~~build on Raspberry Pi 5 64bit~~
 * build on Raspberry Pi 4 64bit
