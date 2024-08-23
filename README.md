@@ -21,11 +21,14 @@
 ~~Build on Ubuntu 20.04~~
 
 ~~Build on Windows 11~~
+
+~~Build on Raspian 12~~
+
 ## Next up
 
 * Render some text in OpenGL using pango and freetype
 * Repeat for Vulkan
-* build on Raspberry Pi 5 32bit
+* ~~build on Raspberry Pi 5 64bit~~
 * build on Raspberry Pi 4 64bit
 * draw a window
 * design a renderer backend that can consume textured triangles and render to
@@ -34,6 +37,7 @@
 * implement backend for
   * OpenGL 4.6
   * Vulkan 1.3
+
 ## Dependencies
 * C++17 compiler (gcc 9.4+, clang16+, Visual Studio 2017+)
 * Lua-5.4.x for the declarative format
@@ -63,6 +67,7 @@
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2022 17.10.0
   * requires [triblatron/install](https://github.com/triblatron/install)
 * Ubuntu 22.04.4 LTS x64 on WSL gcc 11.4.0
+* Raspberry Pi 5 Raspian 12 aarch64 gcc 12.2
 
 ## Known failing platforms
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2019 16.11.39
