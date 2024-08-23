@@ -94,6 +94,7 @@ Finally there will be manual usability tests that require running the full syste
 
 ## Caveats
 For some reason no tests are found on Windows unless we have an explicit main().  This is despite not needing one in other projects.  The issue seems to be related to order of linking libraries but is complicated by cmake or visual studio not honouring the order given in the CMakeLists file.
+This has been fixed by tweaking the order in the CMakeLists.txt, which now ends up in Visual Studio.
 
 ## Requirements
 * User facing rather than quick throw-away debugging for developers
