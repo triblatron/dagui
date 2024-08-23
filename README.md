@@ -13,6 +13,9 @@
   * required to do translation and rotation in one matrix multiplication
   * required to create an Orthographic projection
 * Packages for Linux Debian based
+```
+sudo apt-get install g++ cmake make libgtest-dev libgmock-dev libbenchmark-dev liblua5.4-dev git
+```
   * g++
   * cmake
   * make
@@ -28,19 +31,20 @@
 ```
   git clone https://github.com/triblatron/nodefrontend
   mkdir nodefrontend_build && cd nodefrontend_build
-  cmake -S ../nodefrontend -B . -DCMAKE_INSTALL_PREFIX=/path/to/install
+  cmake -S ../nodefrontend -B . -DCMAKE_INSTALL_PREFIX=../nodefrontend_install
   make
   make install
-  cd /path/to/install
+  cd ../nodefrontend_install
   source setup.sh
   NodefrontendTest
 ```
 ### Windows 
 ```
+git clone https://github.com/triblatron/install --branch x64-win64-vc17 --single-branch install
 git clone https://github.com/triblatron/nodefrontend
-mkdir nodefrontend_Build
+mkdir nodefrontend_build
 cd nodefrontend_build
-cmake -S nodefrontend -B . DCMAKE_INSTALL_PREFIX=../nodefrontend_install
+cmake -S nodefrontend -B . -DDEP_ROOT=../install -DCMAKE_INSTALL_PREFIX=../nodefrontend_install
 cmake --build . --target install --config Release
 cd nodefrontend_install
 setup
