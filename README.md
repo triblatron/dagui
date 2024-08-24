@@ -76,8 +76,9 @@ Build on macOS 10.15 Catalina
 * Render a full screen quad in a GLUT window
 * Create a texture of a solid colour
 * Render a glyph to a texture
-* Render a string to a texture
-* Render some text in OpenGL using pango and freetype
+* Render a font to a texture
+* Render some text using the font texture as a lookup
+* Render effects such as underline using pango
   * image that can address individual pixels
   * address windows within the image to allow use of one image for multiple glyphs
     * translate input coordinates by origin of window
