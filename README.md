@@ -22,6 +22,9 @@ Pull requests will be allowed at some point. There will be a coding style and pr
 * benchmark for microbenchmarking
 * CMake 3.16+ for the build system
 * VulkanSceneGraph for integration demos
+* freetype for text rasterisation
+* pango for text layout including underlining
+* freeglut for OpenGL text demo
 * md4c for markdown parsing
 * svgpp for SVG parsing
 * nodebase for basic features such as Lua support, configuration and streams.
@@ -30,7 +33,7 @@ Pull requests will be allowed at some point. There will be a coding style and pr
   * required to create an Orthographic projection
 * Packages for Linux Debian based
 ```
-sudo apt-get install g++ cmake make libgtest-dev libgmock-dev libbenchmark-dev liblua5.4-dev git
+sudo apt-get install g++ cmake make freeglut3-dev libfreetype-dev libpango1.0-dev libgtest-dev libgmock-dev libbenchmark-dev liblua5.4-dev git
 ```
 
 ## Build instructions 
