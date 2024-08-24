@@ -1,5 +1,18 @@
 # A GUI for nodebackend
 
+## License 
+
+Nodefrontend is BSD licensed but contains LGPL components.
+The understanding is that linking to these components is allowed as long as users of the library are furnished with their source code and rights to reverse engineer for debugging purposes.
+
+## Release schedule
+
+This library is developed in my spare time for fun.  As such, there is no release achedule except to say when I deem it ready.  Its primary purpose is to serve as the GUI for another side project so I am not overly concerned by timing of a release.
+
+## Collaboration
+
+Pull requests will be allowed at some point. There will be a coding style and probably automated linting which could be a barrier to contribution.
+
 ## Dependencies 
 
 * C++17 compiler (gcc 9.4+, clang16+, Visual Studio 2017+)
@@ -94,7 +107,7 @@ Build on macOS 10.15 Catalina
 * build on Raspberry Pi 4 64bit
 * draw a window
 * design a renderer backend that can consume textured triangles and render to
-  * A texture
+  * a texture
   * the screen
 * implement backend for
   * OpenGL 2.1
@@ -251,11 +264,13 @@ It is necesary to build benchmark from source to make a successful build on VS20
   * graphs of signals against time
   * live capture
   * playback
-  * multiple plots on one graph
+  * multiple plots on one set of axes
   * multiple graphs
   * easy splitting of view
   * select signals
   * same signal can appear on more than one plot
+  * units on each axis
+  * legend
 * Support notion of time provider
   * Allow faking of time to test time-dependent event dispatch 
 * Support scheduling of events
@@ -371,7 +386,7 @@ It is necesary to build benchmark from source to make a successful build on VS20
   * OpenGL for simplicity
   * Vulkan for performance
 * Support push buttons
-  * default control
+  * default control highlighting
   * click event handler
 * Support checkboxes
   * individual or as items in another control
@@ -387,6 +402,8 @@ It is necesary to build benchmark from source to make a successful build on VS20
   * Allow configurable tab order to increase convenience of using keyboard and accessibility
     * Try to avoid dead-ends such as text areas where tab is interpreted as a tab character
     * Provide a meta-key combination to toggle the interpretation of tab by a control between moving focus and control-specific action
+    * could use alternative to Tab for tab character in text area
+      * simpler
 * Support validation of inputs
   * Provide information on why an input is invalid and highlight the input field
     * tooltip, but avoid too much information
@@ -415,9 +432,9 @@ It is necesary to build benchmark from source to make a successful build on VS20
 * Simple event system without code generation
 * Support high-quality text rendering
 * Support Windows 10,11
-* Support Linux Ubuntu 2204,2404
+* Support Linux Ubuntu 20.04, 22.04,24.04
 * Support macOS on Intel, Apple Silicon
-* Support Raspberry pi 4,5 Debian 12
+* Support Raspberry pi 4,5 Raspian 12
 * Support reading mouse and keyboard events
   * abstraction of native events
 * Support Clean Architecture view model 
@@ -490,7 +507,11 @@ nt font
   * Generate declarative Lua config
   * self hosting: design the designer using the designer
     * might have head-explosion issues
-* Messaging system similar to signal-slots without the MOC-related cruft
+* allow event loop in any thread
+* allow rendering in any thread
+  * need an OpenGL context or whatever Vulkan uses
+  * can generate triagles in one thread and consume them in another
+* Messaging system similar to signal-slots without the MOC or similar
   * put it behind an interface
   * thread safe
   * no blocking of gui thread
