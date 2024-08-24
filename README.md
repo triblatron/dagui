@@ -525,7 +525,7 @@ nt font
   * define interface to generate text
   * define interface to rasterise SVG
   * they might be the same
-  * rasterising text is required of the Integration
+  * rasterising text is supported using freetype and pango
 
 ## Tips
 * SWIG xml mode works only if we %define NFE_API %enddef, otherwise it just generaates code tags instead of the parse tree.
