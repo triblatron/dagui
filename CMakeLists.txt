@@ -2,6 +2,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 PROJECT( nodefrontend )
 
 FIND_PACKAGE(GTest REQUIRED)
+FIND_PACKAGE(GLUT REQUIRED)
+FIND_PACKAGE(OpenGL COMPONENTS OpenGL REQUIRED)
 #FIND_PACKAGE(benchmark REQUIRED)
 include(FetchContent)
 FetchContent_Declare(googletest
@@ -34,6 +36,7 @@ SET( NODEFRONTEND_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaI
         src/util/CompletionSubstring.cpp
         src/core/CompositeShape.cpp
         src/core/Window.cpp
+        src/demos/demoText/demoText.cpp
 )
 SET(HEADERS_GROUP "Header Files")
 
@@ -54,9 +57,10 @@ ADD_LIBRARY( nodefrontend SHARED ${NODEFRONTEND_SRC} )
 TARGET_INCLUDE_DIRECTORIES( nodefrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR})
 
 set_target_properties( nodefrontend PROPERTIES DEFINE_SYMBOL NODEFRONTEND_LIBRARY )
-TARGET_LINK_LIBRARIES( nodefrontend ${LUA_LIBRARY} )
+TARGET_LINK_LIBRARIES( nodefrontend ${LUA_LIBRARY} GLUT::GLUT OpenGL::OpenGL)
 add_subdirectory(src/apps/NodeFrontendTest)
 add_subdirectory(src/apps/BenchmarkNodeFrontend)
+add_subdirectory(src/demos/demoText)
 
 #ADD_EXECUTABLE( BenchmarkNodeFrontend src/BenchmarkNodeFrontend.cpp include/Node.h include/Transfer.h include/SignalPathDef.h)
 #TARGET_INCLUDE_DIRECTORIES( BenchmarkNodeFrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${OSGDB_INCLUDE_DIR} ${ANTLR_Reptol_OUTPUT_DIR})
