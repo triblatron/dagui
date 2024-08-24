@@ -70,8 +70,13 @@ NodeFrontendTest
 
 ~~Build on Raspian 12~~
 
-## Next up
+Build on macOS 10.15 Catalina
 
+## Next up
+* Render a full screen quad in a GLUT window
+* Create a texture of a solid colour
+* Render a glyph to a texture
+* Render a string to a texture
 * Render some text in OpenGL using pango and freetype
   * image that can address individual pixels
   * address windows within the image to allow use of one image for multiple glyphs
@@ -91,6 +96,8 @@ NodeFrontendTest
   * A texture
   * the screen
 * implement backend for
+  * OpenGL 2.1
+  * OpenGL 3.3
   * OpenGL 4.6
   * Vulkan 1.3
 
