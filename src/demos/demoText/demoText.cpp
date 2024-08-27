@@ -4,7 +4,8 @@
 #include "config/config.h"
 
 #include <GL/glut.h>
-
+#include <ft2build.h>
+#include FT_FREETYPE_H
 #include <iostream>
 #include <cstdint>
 

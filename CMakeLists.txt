@@ -4,6 +4,7 @@ PROJECT( nodefrontend )
 FIND_PACKAGE(GTest REQUIRED)
 FIND_PACKAGE(GLUT REQUIRED)
 FIND_PACKAGE(OpenGL COMPONENTS OpenGL REQUIRED)
+FIND_PACKAGE(Freetype REQUIRED)
 #FIND_PACKAGE(benchmark REQUIRED)
 include(FetchContent)
 FetchContent_Declare(googletest
@@ -18,6 +19,7 @@ FetchContent_MakeAvailable(
         googlebenchmark)
 FIND_PACKAGE(Lua 5.4 REQUIRED)
 SET(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include/util/dbc.h include/core/LuaInterface.h include/core/Circle.h include/core/Container.h include/core/Rectangle.h include/core/Shape.h include/core/Widget.h
         include/core/ConfigurationElement.h
@@ -36,8 +38,8 @@ SET( NODEFRONTEND_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaI
         src/util/CompletionSubstring.cpp
         src/core/CompositeShape.cpp
         src/core/Window.cpp
-        src/demos/demoText/demoText.cpp
 )
+
 SET(HEADERS_GROUP "Header Files")
 
 SOURCE_GROUP(
@@ -54,10 +56,11 @@ SOURCE_GROUP(
 SET( DEP_ROOT CACHE PATH "Dependency root" )
 
 ADD_LIBRARY( nodefrontend SHARED ${NODEFRONTEND_SRC} )
+#INCLUDE_DIRECTORIES(PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
 TARGET_INCLUDE_DIRECTORIES( nodefrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR})
 
 set_target_properties( nodefrontend PROPERTIES DEFINE_SYMBOL NODEFRONTEND_LIBRARY )
-TARGET_LINK_LIBRARIES( nodefrontend ${LUA_LIBRARY} GLUT::GLUT OpenGL::OpenGL)
+TARGET_LINK_LIBRARIES( nodefrontend ${LUA_LIBRARY})
 add_subdirectory(src/apps/NodeFrontendTest)
 add_subdirectory(src/apps/BenchmarkNodeFrontend)
 add_subdirectory(src/demos/demoText)
