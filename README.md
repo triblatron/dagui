@@ -91,7 +91,7 @@ NodeFrontendTest
 * Build on macOS 10.15 Catalina
 * ~~Render a full screen quad in a GLUT window~~
 * ~~Create a texture of a solid colour~~
-* Render a glyph to a texture
+* ~~Render a glyph to a texture~~
 * Render a font to a texture
 * Render some text using the font texture as a lookup
 * Render effects such as underline using pango
