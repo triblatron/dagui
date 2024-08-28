@@ -532,3 +532,5 @@ nt font
 
 ## Tips
 * SWIG xml mode works only if we %define NFE_API %enddef, otherwise it just generaates code tags instead of the parse tree.
+* If a library contains a main, it seems that the target_include_directories() for the intended target that has that same main source will be ignored.
+  * This leads to includes not being found by the compiler, because they are not passed to the compile line by cmake.
