@@ -60,6 +60,22 @@ private:
 };
 
 static Image* texImage = new Image(512,512,4);
+static GLuint texName;
+static FT_Library  library;
+static FT_Face     face;      /* handle to face object */
+
+void copyGlyphToImage(FT_GlyphSlot glyph, Image* image)
+{
+    for (auto row = 0; row<glyph->bitmap.rows; ++row)
+    {
+        for (auto col=0; col<glyph->bitmap.width; ++col)
+        {
+            auto intensity = glyph->bitmap.buffer[row*glyph->bitmap.width+col];
+
+            image->set(glyph->bitmap.rows - 1 - row, col, intensity, intensity, intensity);
+        }
+    }
+}
 
 void createImage(Image* image)
 {
@@ -71,9 +87,10 @@ void createImage(Image* image)
             image->set(row,col,255,255,0);
         }
     }
+    FT_GlyphSlot slot = face->glyph;
+    copyGlyphToImage(slot, image);
 }
 
-static GLuint texName;
 
 void init()
 {
@@ -123,6 +140,65 @@ void onDisplay()
 
 int main(int argc, char *argv[])
 {
+    int error = FT_Init_FreeType( &library );
+    if ( error )
+    {
+        std::cerr << "Error initialising FreeType library, bailing\n";
+        return -1;
+    }
+    error = FT_New_Face( library,
+                         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+                         0,
+                         &face );
+    if ( error == FT_Err_Unknown_File_Format )
+    {
+        std::cerr << "Unsupported font format, bailing\n";
+
+        return -2;
+    }
+    else if ( error )
+    {
+        std::cerr << "Failed to open font file, bailing\n";
+
+        return -3;
+    }
+    std::cout << "Scalable:" << (face->face_flags & FT_FACE_FLAG_SCALABLE) << std::endl;
+    error = FT_Set_Char_Size(
+            face,    /* handle to face object         */
+            0,       /* char_width in 1/64 of points  */
+            16*64,   /* char_height in 1/64 of points */
+            300,     /* horizontal device resolution  */
+            300 );   /* vertical device resolution    */
+    auto glyph_index = FT_Get_Char_Index( face, 65 );
+    if (glyph_index==0)
+    {
+        std::cerr << "Failed to get glyph index, bailing\n";
+
+        return -4;
+    }
+    error = FT_Load_Glyph(
+            face,          /* handle to face object */
+            glyph_index,   /* glyph index           */
+            0x0 );  /* load flags, see below */
+    if (error)
+    {
+        std::cerr << "Error loading glyph\n";
+
+        return -5;
+    }
+    if (face->glyph->format != FT_GLYPH_FORMAT_BITMAP)
+    {
+        std::cout << "Rendering glyph\n";
+
+        error = FT_Render_Glyph( face->glyph,   /* glyph slot  */
+                                 FT_RENDER_MODE_NORMAL ); /* render mode */
+        if (error)
+        {
+            std::cerr << "Failed to render glyph, bailing\n";
+
+            return -6;
+        }
+    }
     glutInit(&argc, argv);
     glutInitWindowPosition(0,0);
     glutInitWindowSize(512,512);
