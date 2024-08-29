@@ -186,6 +186,7 @@ It is necesary to build benchmark from source to make a successful build on VS20
             * GL_LUMINANCE is deprecated in modern OpenGL
           * Use GL_RGB for fonts with sub-pixel hinting
 * Efficiency promoting API
+  * try to simplify code to facilitate optimisation
   * Pass by value and allow optimiser to make it fast
   * check whether move constructor can be elided
   * Use std::vector rather than std::list or std::map wherever possible to maximise cache usage.
