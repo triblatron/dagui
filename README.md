@@ -93,6 +93,7 @@ NodeFrontendTest
 * ~~Create a texture of a solid colour~~
 * ~~Render a glyph to a texture~~
 * Render a font to a texture
+  * be careful not to stretch the texture when a reshape of the window occurs
 * Render some text using the font texture as a lookup
 * Render effects such as underline using pango
   * image that can address individual pixels
