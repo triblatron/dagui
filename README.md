@@ -86,14 +86,14 @@ NodeFrontendTest
 
 ~~Build on Raspian 12~~
 
-
-## Next up
 * ~~Build on macOS 10.15 Catalina~~
-  * Not HEAD that requires GLUT and FreeType et al 
+  * ~~HEAD that requires GLUT and FreeType et al~~ 
 * ~~Render a full screen quad in a GLUT window~~
 * ~~Create a texture of a solid colour~~
 * ~~Render a glyph to a texture~~
   * ~~Avoid stretching when a reshape occurs~~
+
+## Next up
 * Render a font to a texture
   * Create a class FontAtlas
     * Render all glyphs
