@@ -111,6 +111,7 @@ void onReshape(int width, int height)
     glViewport(0,0,width,height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+    gluOrtho2D(0.0, width, 0.0, height);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
@@ -126,13 +127,13 @@ void onDisplay()
     glBegin(GL_QUADS);
     glColor3f(1.0f,1.0f,1.0f);
     glTexCoord2d(0.0, 0.0);
-    glVertex2d(-0.5, -0.5);
+    glVertex2d(0.0, 0.0);
     glTexCoord2d(1.0, 0.0);
-    glVertex2d(0.5,-0.5);
+    glVertex2d(512.0,0.0);
     glTexCoord2d(1.0,1.0);
-    glVertex2d(0.5,0.5);
+    glVertex2d(512.0,512.0);
     glTexCoord2d(0.0,1.0);
-    glVertex2d(-0.5,0.5);
+    glVertex2d(0.0,512.0);
     glEnd();
     glutSwapBuffers();
     glDisable(GL_TEXTURE_2D);
