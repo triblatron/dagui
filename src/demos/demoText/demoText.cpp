@@ -2,8 +2,11 @@
 // Created by tony on 24/08/24.
 //
 #include "config/config.h"
-
+#if defined(__linux__) || defined(_WIN32)
 #include <GL/glut.h>
+#else
+#include <glut.h>
+#endif // __linux__ || _WIN32
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include <iostream>
@@ -141,6 +144,12 @@ void onDisplay()
 
 int main(int argc, char *argv[])
 {
+    if (argc != 2)
+    {
+        std::cerr << "Usage: " << argv[0] << " <fontFilename>\n";
+
+        return -1;
+    }
     int error = FT_Init_FreeType( &library );
     if ( error )
     {
@@ -148,7 +157,7 @@ int main(int argc, char *argv[])
         return -1;
     }
     error = FT_New_Face( library,
-                         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+                         argv[1],
                          0,
                          &face );
     if ( error == FT_Err_Unknown_File_Format )

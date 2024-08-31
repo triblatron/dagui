@@ -5,7 +5,9 @@ FIND_PACKAGE(GTest REQUIRED)
 FIND_PACKAGE(GLUT REQUIRED)
 FIND_PACKAGE(OpenGL COMPONENTS OpenGL REQUIRED)
 FIND_PACKAGE(Freetype REQUIRED)
-#FIND_PACKAGE(benchmark REQUIRED)
+if (UNIX)
+FIND_PACKAGE(benchmark REQUIRED)
+else(UNIX)
 include(FetchContent)
 FetchContent_Declare(googletest
         GIT_REPOSITORY https://github.com/google/googletest.git
@@ -17,6 +19,7 @@ FetchContent_Declare(googlebenchmark
 FetchContent_MakeAvailable(
         googletest
         googlebenchmark)
+endif (UNIX)
 FIND_PACKAGE(Lua 5.4 REQUIRED)
 SET(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
