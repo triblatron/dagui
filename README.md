@@ -61,6 +61,21 @@ cd nodefrontend_install
 setup
 NodeFrontendTest
 ```
+### macOS X 10.15 Catalina
+```
+brew install googletest
+brew install googlebenchmark
+brew install cmake
+brew install llvm
+git clone https://github.com/triblatron/nodefrontend
+mkdir nodefrontend_build && cd nodefrontend_build
+cmake -S ../nodefrontend -B . -DCMAKE_INSTALL_PREFIX=../nodefrontend_install -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15
+make
+make install
+cd ../nodefrontend_install
+source setup.sh
+NodeFrontendTest
+```
 
 ## Progress
 
