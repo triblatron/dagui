@@ -92,6 +92,7 @@ NodeFrontendTest
 * ~~Render a full screen quad in a GLUT window~~
 * ~~Create a texture of a solid colour~~
 * ~~Render a glyph to a texture~~
+  * ~~Avoid stretching when a reshape occurs~~
 * Render a font to a texture
   * be careful not to stretch the texture when a reshape of the window occurs
 * Render some text using the font texture as a lookup
