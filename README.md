@@ -94,6 +94,10 @@ NodeFrontendTest
 * ~~Render a glyph to a texture~~
   * ~~Avoid stretching when a reshape occurs~~
 * Render a font to a texture
+  * Create a class FontAtlas
+    * Render all glyphs
+    * Maintain a map of where each glyph is located
+      * Store by character code to glyph index retrieved from FreeType
   * be careful not to stretch the texture when a reshape of the window occurs
 * Render some text using the font texture as a lookup
 * Render effects such as underline using pango
