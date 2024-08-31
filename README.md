@@ -15,7 +15,7 @@ Pull requests will be allowed at some point. There will be a coding style and pr
 
 ## Dependencies 
 
-* C++17 compiler (gcc 9.4+, clang16+, Visual Studio 2017+)
+* C++17 compiler (gcc 9.4+, clang16+, Apple clang 12+, Visual Studio 2017+)
 * Lua-5.4.x for the declarative format
 * gtest for automated testing
 * gmock to allow mocking in tests
@@ -88,7 +88,8 @@ NodeFrontendTest
 
 
 ## Next up
-* Build on macOS 10.15 Catalina
+* ~~Build on macOS 10.15 Catalina~~
+  * Not HEAD that requires GLUT and FreeType et al 
 * ~~Render a full screen quad in a GLUT window~~
 * ~~Create a texture of a solid colour~~
 * ~~Render a glyph to a texture~~
