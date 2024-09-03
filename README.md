@@ -115,7 +115,7 @@ NodeFrontendTest
     * Maintain a map of where each glyph is located
       * Store by character code to glyph index retrieved from FreeType
     * pack the glyphs into the image with low wastage and avoiding bleeding between glyphs
-      * an instance of 2D bin packing solvable effic8centlt using maxrects algorithm
+      * an instance of 2D bin packing solvable efficiently using maxrects algorithm
   * be careful not to stretch the texture when a reshape of the window occurs
 * Render some text using the font texture as a lookup
 * Render effects such as underline using pango
