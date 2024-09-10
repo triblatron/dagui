@@ -7,7 +7,7 @@
 #include "core/Window.h"
 #include "util/enums.h"
 
-namespace nfe
+namespace dagui
 {
     Window::Window(Widget *parent)
     :

@@ -19,11 +19,11 @@ extern "C" {
 #include <type_traits>
 #include <functional>
 
-namespace nfe
+namespace dagui
 {
     class ErrorHandler;
 
-    class NFE_API Function
+    class DAGUI_API Function
     {
     public:
         //! Push the function onto the stack if it exists.
@@ -55,7 +55,7 @@ namespace nfe
         bool _balance;
     };
 
-    class NFE_API TableTraversal
+    class DAGUI_API TableTraversal
     {
     public:
         explicit TableTraversal( lua_State * lua )
@@ -105,7 +105,7 @@ namespace nfe
         int _oldTop;
     };
 
-    class NFE_API Table
+    class DAGUI_API Table
     {
     public:
         Table(lua_State *L,const char *name, bool cleanup = true)
@@ -396,7 +396,7 @@ namespace nfe
         bool _cleanup;
     };
 
-    class NFE_API Lua
+    class DAGUI_API Lua
     {
     public:
         enum Error
@@ -506,7 +506,7 @@ namespace nfe
         static ErrorDescriptor _errors[NumErrors+1];
     };
 
-    class NFE_API Coroutine
+    class DAGUI_API Coroutine
     {
     public:
         //! @constructor From a parent thread.
@@ -558,5 +558,5 @@ namespace nfe
         int _funcRef{ LUA_NOREF };
     };
 
-    extern void NFE_API printStack(lua_State* L);
+    extern void DAGUI_API printStack(lua_State* L);
 }

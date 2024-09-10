@@ -2,7 +2,7 @@
 
 #include "util/errod.h"
 
-namespace nfe
+namespace dagui
 {
 
     static const char* Errod_descriptions[] = {

@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <sstream>
 
-namespace nfe
+namespace dagui
 {
     template<typename T>
     class ValidatorInt

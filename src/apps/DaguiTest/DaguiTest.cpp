@@ -35,7 +35,7 @@ TEST_P(Rectangle_testIsInside, testIsInside)
     auto hitY = std::get<6>(GetParam());
     auto inside = std::get<7>(GetParam());
 
-    nfe::Rectangle sut;
+    dagui::Rectangle sut;
     sut.setPos(x,y);
     sut.setSize(width,height);
     sut.setCornerRadius(cornerRadius);
@@ -83,7 +83,7 @@ TEST_P(Circle_testIsInside, testIsInside)
     auto hitY = std::get<4>(GetParam());
     auto inside = std::get<5>(GetParam());
 
-    auto sut = new nfe::Circle();
+    auto sut = new dagui::Circle();
     sut->setPos(x,y);
     sut->setRadius(radius);
     EXPECT_EQ(inside, sut->isInside(hitX,hitY));
@@ -97,11 +97,11 @@ INSTANTIATE_TEST_SUITE_P(Cirlce, Circle_testIsInside, ::testing::Values(
 
 TEST(Container, testEachChild)
 {
-    auto* parent = new nfe::Container();
-    auto* child = new nfe::Widget();
+    auto* parent = new dagui::Container();
+    auto* child = new dagui::Widget();
     parent->addChild(child);
     std::size_t numChildren {0};
-    parent->eachChild([&numChildren](nfe::Widget* child) {
+    parent->eachChild([&numChildren](dagui::Widget* child) {
        ++numChildren;
     });
     EXPECT_EQ(1,numChildren);
@@ -120,7 +120,7 @@ TEST_P(ConfigurationElement_testFindElement, testFindFromRoot)
     auto configStr = std::get<0>(GetParam());
     auto path = std::get<1>(GetParam());
     auto name = std::get<2>(GetParam());
-    auto config = nfe::ConfigurationElement::fromString(configStr);
+    auto config = dagui::ConfigurationElement::fromString(configStr);
     ASSERT_NE(nullptr, config);
     auto actual = config->findElement(path);
     ASSERT_NE(nullptr, actual);
@@ -163,7 +163,7 @@ TEST_P(ConfigurationElement_testAsInteger, testAsInteger)
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
 
-    auto config = nfe::ConfigurationElement::fromString(configStr);
+    auto config = dagui::ConfigurationElement::fromString(configStr);
     ASSERT_NE(nullptr, config);
     auto element = config->findElement(path);
     ASSERT_NE(nullptr, element);
@@ -187,7 +187,7 @@ TEST_P(ConfigurationElement_testAsDouble, testAsDouble)
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
 
-    auto config = nfe::ConfigurationElement::fromString(configStr);
+    auto config = dagui::ConfigurationElement::fromString(configStr);
     ASSERT_NE(nullptr, config);
     auto element = config->findElement(path);
     ASSERT_NE(nullptr, element);
@@ -211,7 +211,7 @@ TEST_P(ConfigurationElement_testAsBool, testAsBool)
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
 
-    auto config = nfe::ConfigurationElement::fromString(configStr);
+    auto config = dagui::ConfigurationElement::fromString(configStr);
     ASSERT_NE(nullptr, config);
     auto element = config->findElement(path);
     ASSERT_NE(nullptr, element);
@@ -235,7 +235,7 @@ TEST_P(ConfigurationElement_testAsString, testAsString)
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
 
-    auto config = nfe::ConfigurationElement::fromString(configStr);
+    auto config = dagui::ConfigurationElement::fromString(configStr);
     ASSERT_NE(nullptr, config);
     auto element = config->findElement(path);
     ASSERT_NE(nullptr, element);
@@ -269,7 +269,7 @@ TEST_P(CompletionTrie_testAddWord, testAddWord)
     auto word = std::get<0>(GetParam());
     auto substring = std::get<1>(GetParam());
     auto matchString = std::get<2>(GetParam());
-    auto sut = new nfe::CompletionTrie();
+    auto sut = new dagui::CompletionTrie();
     sut->addWord(word);
     ASSERT_EQ(std::size_t{1}, sut->numWords());
     std::vector<std::string> matches;
@@ -294,7 +294,7 @@ TEST_P(CompletionSubstring_testAddWord, testAddWord)
     auto word = std::get<0>(GetParam());
     auto substring = std::get<1>(GetParam());
     auto matchString = std::get<2>(GetParam());
-    auto sut = new nfe::CompletionSubstring();
+    auto sut = new dagui::CompletionSubstring();
     sut->addWord(word);
     ASSERT_EQ(std::size_t{1}, sut->numWords());
     std::vector<std::string> matches;
@@ -350,20 +350,20 @@ INSTANTIATE_TEST_SUITE_P(CompletionSubstring, CompletionSubstring_testAddWord, :
 //    assertEquals(0, matches.size());
 //}
 
-nfe::CompositeShape* createCompositeShape()
+dagui::CompositeShape* createCompositeShape()
 {
-    auto parent = new nfe::CompositeShape();
+    auto parent = new dagui::CompositeShape();
 
-    auto rectangle = new nfe::Rectangle();
+    auto rectangle = new dagui::Rectangle();
     rectangle->setCornerRadius(10.0);
     rectangle->setPos(50.0,50.0);
     rectangle->setSize(100.0,100.0);
     parent->addShape(rectangle);
-    auto leftPort = new nfe::Circle();
+    auto leftPort = new dagui::Circle();
     leftPort->setPos(50.0,100.0);
     leftPort->setRadius(3.0);
     parent->addShape(leftPort);
-    auto rightPort = new nfe::Circle();
+    auto rightPort = new dagui::Circle();
     rightPort->setPos(150.0, 100.0);
     rightPort->setRadius(3.0);
     parent->addShape(rightPort);
@@ -394,7 +394,7 @@ INSTANTIATE_TEST_SUITE_P(CompositeShape, CompositeShape_testIsInside, ::testing:
         std::make_tuple(51,100,true)
         ));
 
-class MockShape : public nfe::Shape
+class MockShape : public dagui::Shape
 {
 public:
     MockShape()
@@ -402,21 +402,21 @@ public:
        // Do nothing.
     }
 
-    MOCK_METHOD(void, accept, (nfe::ShapeVisitor&), (override));
+    MOCK_METHOD(void, accept, (dagui::ShapeVisitor&), (override));
     MOCK_METHOD(bool, isInside, (double,double), (override));
 };
 
-class TestShapeVisitor : public nfe::ShapeVisitor
+class TestShapeVisitor : public dagui::ShapeVisitor
 {
 public:
-    void visitRectangle(nfe::Rectangle& rectangle) override
+    void visitRectangle(dagui::Rectangle& rectangle) override
     {
         // Do nothing.
     }
 };
 TEST(CompositeShape, testAccept)
 {
-    auto sut = new nfe::CompositeShape();
+    auto sut = new dagui::CompositeShape();
     auto mockShape = new MockShape();
 
     EXPECT_CALL(*mockShape, accept(::testing::_));
@@ -429,12 +429,12 @@ TEST(CompositeShape, testAccept)
 
 TEST(Window, testAfterConstructionThenAllFeaturesAreAvailable)
 {
-    auto sut = std::make_unique<nfe::Window>(nullptr);
+    auto sut = std::make_unique<dagui::Window>(nullptr);
 
-    EXPECT_TRUE(sut->areFeaturesAvailable(nfe::Window::DEFAULT_FEATURES));
+    EXPECT_TRUE(sut->areFeaturesAvailable(dagui::Window::DEFAULT_FEATURES));
 }
 
-class Window_testFeaturesRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, nfe::Window::Features>>
+class Window_testFeaturesRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Window::Features>>
 {
 
 };
@@ -444,22 +444,22 @@ TEST_P(Window_testFeaturesRoundTrip, testRoundTrip)
     auto str = std::get<0>(GetParam());
     auto features = std::get<1>(GetParam());
 
-    EXPECT_EQ(str, nfe::Window::featuresName(features));
-    EXPECT_EQ(features, nfe::Window::parseFeatures(str));
+    EXPECT_EQ(str, dagui::Window::featuresName(features));
+    EXPECT_EQ(features, dagui::Window::parseFeatures(str));
 }
 
 INSTANTIATE_TEST_SUITE_P(Window, Window_testFeaturesRoundTrip, ::testing::Values(
-        std::make_tuple("TITLE_BIT",nfe::Window::TITLE_BIT),
-        std::make_tuple("MINIMISE_BIT",nfe::Window::MINIMISE_BIT),
-        std::make_tuple("MAXIMISE_BIT",nfe::Window::MAXIMISE_BIT),
-        std::make_tuple("CLOSE_BIT",nfe::Window::CLOSE_BIT),
-        std::make_tuple("BORDER_BIT",nfe::Window::BORDER_BIT),
-        std::make_tuple("RESIZEABLE_BIT", nfe::Window::RESIZEABLE_BIT),
-        std::make_tuple("MOVEABLE_BIT",nfe::Window::MOVEABLE_BIT),
-        std::make_tuple("TITLE_BIT MINIMISE_BIT MAXIMISE_BIT CLOSE_BIT BORDER_BIT RESIZEABLE_BIT MOVEABLE_BIT", static_cast<nfe::Window::Features>(nfe::Window::DEFAULT_FEATURES))
+        std::make_tuple("TITLE_BIT",dagui::Window::TITLE_BIT),
+        std::make_tuple("MINIMISE_BIT",dagui::Window::MINIMISE_BIT),
+        std::make_tuple("MAXIMISE_BIT",dagui::Window::MAXIMISE_BIT),
+        std::make_tuple("CLOSE_BIT",dagui::Window::CLOSE_BIT),
+        std::make_tuple("BORDER_BIT",dagui::Window::BORDER_BIT),
+        std::make_tuple("RESIZEABLE_BIT", dagui::Window::RESIZEABLE_BIT),
+        std::make_tuple("MOVEABLE_BIT",dagui::Window::MOVEABLE_BIT),
+        std::make_tuple("TITLE_BIT MINIMISE_BIT MAXIMISE_BIT CLOSE_BIT BORDER_BIT RESIZEABLE_BIT MOVEABLE_BIT", static_cast<dagui::Window::Features>(dagui::Window::DEFAULT_FEATURES))
         ));
 
-class Window_testStatusRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, nfe::Window::Status>>
+class Window_testStatusRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Window::Status>>
 {
 
 };
@@ -469,17 +469,17 @@ TEST_P(Window_testStatusRoundTrip, testRoundTrip)
     auto str = std::get<0>(GetParam());
     auto status = std::get<1>(GetParam());
 
-    EXPECT_EQ(str, nfe::Window::statusName(status));
-    EXPECT_EQ(status, nfe::Window::parseStatus(str));
+    EXPECT_EQ(str, dagui::Window::statusName(status));
+    EXPECT_EQ(status, dagui::Window::parseStatus(str));
 }
 
 INSTANTIATE_TEST_SUITE_P(Window, Window_testStatusRoundTrip, ::testing::Values(
-        std::make_tuple("VISIBLE_BIT", nfe::Window::VISIBLE_BIT),
-        std::make_tuple("MINIMISED_BIT", nfe::Window::MINIMISED_BIT),
-        std::make_tuple("MAXIMISED_BIT", nfe::Window::MAXIMISED_BIT)
+        std::make_tuple("VISIBLE_BIT", dagui::Window::VISIBLE_BIT),
+        std::make_tuple("MINIMISED_BIT", dagui::Window::MINIMISED_BIT),
+        std::make_tuple("MAXIMISED_BIT", dagui::Window::MAXIMISED_BIT)
         ));
 
-class ValidatorInt_testRange : public ::testing::TestWithParam<std::tuple<std::int64_t, std::int64_t, const char*, nfe::ValidatorInt<std::int64_t>::Error>>
+class ValidatorInt_testRange : public ::testing::TestWithParam<std::tuple<std::int64_t, std::int64_t, const char*, dagui::ValidatorInt<std::int64_t>::Error>>
 {
 
 };
@@ -491,17 +491,17 @@ TEST_P(ValidatorInt_testRange, testRange)
     auto str = std::get<2>(GetParam());
     auto error = std::get<3>(GetParam());
 
-    auto sut = std::make_unique<nfe::ValidatorInt<std::int64_t>>(minValue, maxValue);
+    auto sut = std::make_unique<dagui::ValidatorInt<std::int64_t>>(minValue, maxValue);
 
-    nfe::ValidatorInt<std::int64_t>::Error actual =  sut->validate(str);
+    dagui::ValidatorInt<std::int64_t>::Error actual =  sut->validate(str);
 
     EXPECT_EQ(error, actual);
 }
 
 INSTANTIATE_TEST_SUITE_P(ValidatorInt, ValidatorInt_testRange, ::testing::Values(
-        std::make_tuple(0, 5, "0", nfe::ValidatorInt<std::int64_t>::ERR_OK),
-        std::make_tuple(0, 5, "5", nfe::ValidatorInt<std::int64_t>::ERR_OK),
-        std::make_tuple(0, 5, "2", nfe::ValidatorInt<std::int64_t>::ERR_OK),
-        std::make_tuple(0, 5, "10", nfe::ValidatorInt<std::int64_t>::ERR_TOO_HIGH),
-        std::make_tuple(0, 5, "-1", nfe::ValidatorInt<std::int64_t>::ERR_TOO_LOW)
+        std::make_tuple(0, 5, "0", dagui::ValidatorInt<std::int64_t>::ERR_OK),
+        std::make_tuple(0, 5, "5", dagui::ValidatorInt<std::int64_t>::ERR_OK),
+        std::make_tuple(0, 5, "2", dagui::ValidatorInt<std::int64_t>::ERR_OK),
+        std::make_tuple(0, 5, "10", dagui::ValidatorInt<std::int64_t>::ERR_TOO_HIGH),
+        std::make_tuple(0, 5, "-1", dagui::ValidatorInt<std::int64_t>::ERR_TOO_LOW)
         ));

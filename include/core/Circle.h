@@ -8,9 +8,9 @@
 
 #include "core/Shape.h"
 
-namespace nfe
+namespace dagui
 {
-    class NFE_API Circle : public Shape
+    class DAGUI_API Circle : public Shape
     {
     public:
         void setPos(double x, double y)

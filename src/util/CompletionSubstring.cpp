@@ -8,7 +8,7 @@
 
 #include <algorithm>
 
-namespace nfe
+namespace dagui
 {
 
     void CompletionSubstring::search(std::string substring, std::vector<std::string> &matches)

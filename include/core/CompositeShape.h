@@ -8,9 +8,9 @@
 
 #include <vector>
 
-namespace nfe
+namespace dagui
 {
-    class NFE_API CompositeShape : Shape
+    class DAGUI_API CompositeShape : Shape
     {
     public:
         void accept(ShapeVisitor& visitor) override;

@@ -10,9 +10,9 @@
 #include <string>
 #include <vector>
 
-namespace nfe
+namespace dagui
 {
-    class NFE_API TrieNode
+    class DAGUI_API TrieNode
     {
     public:
         void addWord(const std::string& word)

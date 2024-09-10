@@ -9,9 +9,9 @@
 #include <string>
 #include <vector>
 
-namespace nfe
+namespace dagui
 {
-    class NFE_API Completion
+    class DAGUI_API Completion
     {
     public:
         virtual ~Completion() = default;

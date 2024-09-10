@@ -10,9 +10,9 @@
 
 #include <cstdint>
 
-namespace nfe
+namespace dagui
 {
-    class NFE_API Window : public Widget
+    class DAGUI_API Window : public Widget
     {
     public:
         //! Features of the window such as presence of certain items

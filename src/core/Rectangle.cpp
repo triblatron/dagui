@@ -7,7 +7,7 @@
 #include "core/Rectangle.h"
 #include "core/ShapeVisitor.h"
 
-namespace nfe
+namespace dagui
 {
     Rectangle::Rectangle()
     {

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstdarg>
 
-namespace nfe
+namespace dagui
 {
     std::mutex DefaultErrorHandler::_mut;
 

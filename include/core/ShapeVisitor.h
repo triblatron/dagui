@@ -6,11 +6,11 @@
 
 #include "config/Export.h"
 
-namespace nfe
+namespace dagui
 {
     class Rectangle;
 
-    class NFE_API ShapeVisitor
+    class DAGUI_API ShapeVisitor
     {
     public:
         virtual ~ShapeVisitor() = default;

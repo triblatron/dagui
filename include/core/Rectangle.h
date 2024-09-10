@@ -6,9 +6,9 @@
 
 #include "core/Shape.h"
 
-namespace nfe
+namespace dagui
 {
-    class NFE_API Rectangle : public Shape
+    class DAGUI_API Rectangle : public Shape
     {
     public:
         Rectangle();

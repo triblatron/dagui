@@ -6,7 +6,7 @@
 #include "util/CompletionTrie.h"
 #include "util/CompletionSubstring.h"
 
-void setup(nfe::Completion& sut)
+void setup(dagui::Completion& sut)
 {
     sut.addWord("Graph|Add Node|Math|Trig");
     sut.addWord("Graph|Add Node|Math|RelOp");
@@ -41,7 +41,7 @@ void BM_CompletionTrieAddWord(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        nfe::CompletionTrie sut;
+        dagui::CompletionTrie sut;
 
         sut.addWord("Graph|Add Node|Math|Trig");
     }
@@ -51,7 +51,7 @@ BENCHMARK(BM_CompletionTrieAddWord);
 
 void BM_CompletionTrieSearch(benchmark::State& state)
 {
-    nfe::CompletionTrie sut;
+    dagui::CompletionTrie sut;
     setup(sut);
     std::vector<std::string> matches;
     for (auto _ : state)
@@ -66,7 +66,7 @@ void BM_CompletionSubstringAddWord(benchmark::State& state)
 {
     for (auto _ : state)
     {
-        nfe::CompletionSubstring sut;
+        dagui::CompletionSubstring sut;
 
         sut.addWord("Graph|Add Node|Math|Trig");
     }
@@ -76,7 +76,7 @@ BENCHMARK(BM_CompletionSubstringAddWord);
 
 void BM_CompletionSubstringSearch(benchmark::State& state)
 {
-    nfe::CompletionSubstring sut;
+    dagui::CompletionSubstring sut;
     setup(sut);
 //    sut.sort();
     std::vector<std::string> matches;

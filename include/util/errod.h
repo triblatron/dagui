@@ -7,7 +7,7 @@
 #include <typeinfo>
 #include <sstream>
 
-namespace nfe
+namespace dagui
 {
     enum Errod
     {
@@ -185,7 +185,7 @@ namespace nfe
         LastError
     };
 
-    NFE_API const char * ErrorCodeToName( int code );
+    DAGUI_API const char * ErrorCodeToName( int code );
 
     #define CHECK_STAGE_OK( stage )                             \
     {                                                           \
@@ -213,7 +213,7 @@ namespace nfe
 
     #define END_ERROR_TABLE() }
 
-    struct NFE_API ErrorDescriptor
+    struct DAGUI_API ErrorDescriptor
     {
         int code;
         const char* name;

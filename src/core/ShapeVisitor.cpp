@@ -6,7 +6,7 @@
 
 #include "core/ShapeVisitor.h"
 
-namespace nfe
+namespace dagui
 {
 
 }

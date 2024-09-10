@@ -4,7 +4,7 @@
 
 #include "config/config.h"
 
-namespace nfe
+namespace dagui
 {
 
 }

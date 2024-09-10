@@ -4,7 +4,7 @@
 #include "util/dbc.h"
 #include "util/ErrorHandler.h"
 
-namespace nfe
+namespace dagui
 {
     void
         printStack(lua_State* L)
@@ -147,7 +147,7 @@ namespace nfe
         _thread = reinterpret_cast<lua_State*>(~0LL);
     }
 
-    int Coroutine::resume(nfe::ErrorHandler& errorHandler, int numArgs, int* numResults)
+    int Coroutine::resume(dagui::ErrorHandler& errorHandler, int numArgs, int* numResults)
     {
         //      SIM_REQUIRE( "Main function at top of stack", lua_isfunction( _thread, -1 ) );
 #if LUA_VERSION_NUM == 501

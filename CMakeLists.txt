@@ -1,5 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
-PROJECT( nodefrontend )
+PROJECT( Dagui )
 
 FIND_PACKAGE(GTest REQUIRED)
 FIND_PACKAGE(GLUT REQUIRED)
@@ -35,7 +35,7 @@ SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include
         include/util/enums.h
         include/core/ValidatorInt.h
 )
-SET( NODEFRONTEND_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaInterface.cpp src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}
+SET( DAGUI_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaInterface.cpp src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}
         src/core/ConfigurationElement.cpp
         src/util/CompletionTrie.cpp
         src/util/CompletionSubstring.cpp
@@ -58,19 +58,15 @@ SOURCE_GROUP(
 
 SET( DEP_ROOT CACHE PATH "Dependency root" )
 
-ADD_LIBRARY( nodefrontend SHARED ${NODEFRONTEND_SRC} )
+ADD_LIBRARY( dagui SHARED ${DAGUI_SRC} )
 #INCLUDE_DIRECTORIES(PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
-TARGET_INCLUDE_DIRECTORIES( nodefrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR})
+TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR})
 
-set_target_properties( nodefrontend PROPERTIES DEFINE_SYMBOL NODEFRONTEND_LIBRARY )
-TARGET_LINK_LIBRARIES( nodefrontend ${LUA_LIBRARY})
-add_subdirectory(src/apps/NodeFrontendTest)
-add_subdirectory(src/apps/BenchmarkNodeFrontend)
+set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
+TARGET_LINK_LIBRARIES( dagui ${LUA_LIBRARY})
+add_subdirectory(src/apps/DaguiTest)
+add_subdirectory(src/apps/BenchmarkDagui)
 add_subdirectory(src/demos/demoText)
-
-#ADD_EXECUTABLE( BenchmarkNodeFrontend src/BenchmarkNodeFrontend.cpp include/Node.h include/Transfer.h include/SignalPathDef.h)
-#TARGET_INCLUDE_DIRECTORIES( BenchmarkNodeFrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${OSGDB_INCLUDE_DIR} ${ANTLR_Reptol_OUTPUT_DIR})
-
 
 INCLUDE( CheckIncludeFile )
 INCLUDE( CheckIncludeFileCXX )
@@ -120,7 +116,7 @@ ELSEIF ( WIN32 )
     INSTALL( FILES ${PROJECT_BINARY_DIR}/etc/setup.bat DESTINATION . )
 ENDIF( UNIX )
 
-INSTALL( TARGETS nodefrontend
+INSTALL( TARGETS dagui
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib)

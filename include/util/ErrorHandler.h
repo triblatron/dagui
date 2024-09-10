@@ -7,10 +7,10 @@
 
 #include <mutex>
 
-namespace nfe
+namespace dagui
 {
 	//! Interface for error handlers.
-	class NFE_API ErrorHandler
+	class DAGUI_API ErrorHandler
 	{
 	public:
 		ErrorHandler() { }
@@ -21,7 +21,7 @@ namespace nfe
 	};
 	
 	//! Default implementation of ErrorHandler that prints errors to the console.
-	struct NFE_API DefaultErrorHandler : public ErrorHandler
+	struct DAGUI_API DefaultErrorHandler : public ErrorHandler
 	{
 		DefaultErrorHandler()
 		:

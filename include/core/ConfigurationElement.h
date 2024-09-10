@@ -18,11 +18,11 @@ extern "C" {
 
 struct lua_State;
 
-namespace nfe
+namespace dagui
 {
     class Lua;
 
-    class NFE_API ConfigurationElement
+    class DAGUI_API ConfigurationElement
     {
     public:
         enum Type

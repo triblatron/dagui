@@ -11,9 +11,9 @@
 #include <vector>
 #include <functional>
 
-namespace nfe
+namespace dagui
 {
-    class NFE_API Container : public Widget
+    class DAGUI_API Container : public Widget
     {
     public:
         explicit Container(Widget* parent=nullptr);

@@ -7,7 +7,7 @@
 #include "util/CompletionTrie.h"
 #include "util/TrieNode.h"
 
-namespace nfe
+namespace dagui
 {
     void CompletionTrie::addWord(std::string word)
     {

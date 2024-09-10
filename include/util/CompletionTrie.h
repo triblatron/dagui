@@ -9,9 +9,9 @@
 #include "util/Completion.h"
 #include "util/TrieNode.h"
 
-namespace nfe
+namespace dagui
 {
-    class NFE_API CompletionTrie : public Completion
+    class DAGUI_API CompletionTrie : public Completion
     {
     public:
         CompletionTrie();

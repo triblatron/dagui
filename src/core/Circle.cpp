@@ -6,7 +6,7 @@
 
 #include "core/Circle.h"
 
-namespace nfe
+namespace dagui
 {
     void Circle::accept(ShapeVisitor &visitor)
     {

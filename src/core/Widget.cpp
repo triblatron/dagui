@@ -6,7 +6,7 @@
 #include "core/Widget.h"
 
 
-namespace nfe
+namespace dagui
 {
     Widget::Widget(Widget *parent)
     :

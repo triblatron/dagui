@@ -10,7 +10,7 @@
 #include <stack>
 #include <cstdlib>
 
-namespace nfe
+namespace dagui
 {
     ConfigurationElement::ConfigurationElement(std::string name)
     :
@@ -21,7 +21,7 @@ namespace nfe
 
     ConfigurationElement *ConfigurationElement::fromString(const char *str)
     {
-        nfe::Lua lua;
+        dagui::Lua lua;
 
         if (str != nullptr)
         {

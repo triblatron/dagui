@@ -8,11 +8,11 @@
 
 #include <string>
 
-namespace nfe
+namespace dagui
 {
     class Shape;
 
-    class NFE_API Widget
+    class DAGUI_API Widget
     {
     public:
         explicit Widget(Widget* parent= nullptr);

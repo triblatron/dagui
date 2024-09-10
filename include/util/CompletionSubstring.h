@@ -8,9 +8,9 @@
 
 #include "util/Completion.h"
 
-namespace nfe
+namespace dagui
 {
-    class NFE_API CompletionSubstring : public Completion
+    class DAGUI_API CompletionSubstring : public Completion
     {
     public:
         void addWord(std::string word) override;

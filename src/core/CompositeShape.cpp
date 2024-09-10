@@ -6,7 +6,7 @@
 
 #include "core/CompositeShape.h"
 
-namespace nfe
+namespace dagui
 {
 
     void CompositeShape::accept(ShapeVisitor &visitor)

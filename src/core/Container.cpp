@@ -6,7 +6,7 @@
 
 #include "core/Container.h"
 
-namespace nfe
+namespace dagui
 {
 
     Container::Container(Widget *parent) : Widget(parent)
