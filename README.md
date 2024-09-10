@@ -27,7 +27,14 @@ Pull requests will be allowed at some point. There will be a coding style and pr
 * freeglut for OpenGL text demo
 * md4c for markdown parsing
 * svgpp for SVG parsing
-* nodebase for basic features such as Lua support, configuration and streams.
+* nodebackend for
+  * basic features such as Lua support, streams.
+  * the node graph support
+    * node base class
+    * ports
+    * nested graphs
+    * solving dependencies
+    * evaluation
 * math library with 2D, 3D vectors and 4x4 matrices
   * required to do translation and rotation in one matrix multiplication
   * required to create an Orthographic projection
