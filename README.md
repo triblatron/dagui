@@ -2,12 +2,12 @@
 
 ## License 
 
-Nodefrontend is BSD licensed but contains LGPL components.
+Dagui is BSD licensed but contains LGPL components.
 The understanding is that linking to these components is allowed as long as users of the library are furnished with their source code and rights to reverse engineer for debugging purposes.
 
 ## Release schedule
 
-This library is developed in my spare time for fun.  As such, there is no release achedule except to say when I deem it ready.  Its primary purpose is to serve as the GUI for another side project so I am not overly concerned by timing of a release.
+This library is developed in my spare time for fun.  As such, there is no release schedule except to say when I deem it ready.  Its primary purpose is to serve as the GUI for another side project so I am not overly concerned by timing of a release.
 
 ## Collaboration
 
@@ -47,26 +47,26 @@ sudo apt-get install g++ cmake make freeglut3-dev libfreetype-dev libpango1.0-de
 
 ### Linux
 ```
-  git clone https://github.com/triblatron/nodefrontend
-  mkdir nodefrontend_build && cd nodefrontend_build
-  cmake -S ../nodefrontend -B . -DCMAKE_INSTALL_PREFIX=../nodefrontend_install
+  git clone https://github.com/triblatron/dagui
+  mkdir dagui_build && cd dagui_build
+  cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install
   make
   make install
-  cd ../nodefrontend_install
+  cd ../dagui_install
   source setup.sh
-  NodefrontendTest
+  Test
 ```
 ### Windows 
 ```
 git clone https://github.com/triblatron/install --branch x64-win64-vc17 --single-branch install
-git clone https://github.com/triblatron/nodefrontend
-mkdir nodefrontend_build
-cd nodefrontend_build
-cmake -S nodefrontend -B . -DDEP_ROOT=../install -DCMAKE_INSTALL_PREFIX=../nodefrontend_install
+git clone https://github.com/triblatron/dagui
+mkdir dagui_build
+cd dagui_build
+cmake -S dagui -B . -DDEP_ROOT=../install -DCMAKE_INSTALL_PREFIX=../dagui_install
 cmake --build . --target install --config Release
-cd nodefrontend_install
+cd dagui_install
 setup
-NodeFrontendTest
+Test
 ```
 ### macOS X 10.15 Catalina
 ```
@@ -74,14 +74,14 @@ brew install googletest
 brew install googlebenchmark
 brew install cmake
 brew install llvm
-git clone https://github.com/triblatron/nodefrontend
-mkdir nodefrontend_build && cd nodefrontend_build
-cmake -S ../nodefrontend -B . -DCMAKE_INSTALL_PREFIX=../nodefrontend_install -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15
+git clone https://github.com/triblatron/dagui
+mkdir dagui_build && cd dagui_build
+cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15
 make
 make install
-cd ../nodefrontend_install
+cd ../dagui_install
 source setup.sh
-NodeFrontendTest
+Test
 ```
 
 ## Progress
@@ -114,6 +114,7 @@ NodeFrontendTest
 * ~~Create a texture of a solid colour~~
 * ~~Render a glyph to a texture~~
   * ~~Avoid stretching when a reshape occurs~~
+* ~~Name repo properly~~
 
 ## Next up
 * Render a font to a texture
@@ -163,7 +164,7 @@ NodeFrontendTest
 
 To qualify as working, a platform must:
 * provide at least the mininum version of each dependency in its package manager or build from source
-* build with no warnings in the nodefrontend code when compiled with -Wall and -Wextra
+* build with no warnings in the dagui code when compiled with -Wall and -Wextra
 * pass all the tests
   * unit tests
   * integration tests
@@ -482,9 +483,7 @@ It is necesary to build benchmark from source to make a successful build on VS20
 * Support declarative creation of widgets using a simple file format
 * Focus and blur events
 * Support text effects such as bold and underline
-  * not as important because we will put the shortcut in a tooltip with a differe
-triblatron/nodefrontend
-nt font
+  * not as important because we will put the shortcut in a tooltip with a different font
 * Use modern C++ techniques
   * lamdas as callbacks
   * std::thread, std::mutex and std::atomic<>
