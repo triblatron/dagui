@@ -249,6 +249,8 @@ It is necesary to build benchmark from source to make a successful build on VS20
       * but not too much information to avoid overwhelming user
     * hover events
 * ~~Support config tree for declarative layout of widgets~~
+* Support placeholders on text controls
+  * Simple description 
 * Support tips
   * context-dependent rather than overly generic
     * align with frequently-performed actions
