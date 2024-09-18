@@ -35,6 +35,8 @@ SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include
         include/util/enums.h
         include/core/ValidatorInt.h
         include/gfx/Image.h
+        include/gfx/ImageSource.h
+        include/gfx/FontImageSource.h
 )
 SET( NODEFRONTEND_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaInterface.cpp src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}
         src/core/ConfigurationElement.cpp
@@ -43,6 +45,8 @@ SET( NODEFRONTEND_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaI
         src/core/CompositeShape.cpp
         src/core/Window.cpp
         src/gfx/Image.cpp
+        src/gfx/ImageSource.cpp
+        src/gfx/FontImageSource.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")
@@ -62,7 +66,7 @@ SET( DEP_ROOT CACHE PATH "Dependency root" )
 
 ADD_LIBRARY( nodefrontend SHARED ${NODEFRONTEND_SRC} )
 #INCLUDE_DIRECTORIES(PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
-TARGET_INCLUDE_DIRECTORIES( nodefrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR})
+TARGET_INCLUDE_DIRECTORIES( nodefrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
 
 set_target_properties( nodefrontend PROPERTIES DEFINE_SYMBOL NODEFRONTEND_LIBRARY )
 TARGET_LINK_LIBRARIES( nodefrontend PRIVATE ${LUA_LIBRARY} GLUT::GLUT OpenGL::GL OpenGL::GLU Freetype::Freetype )
@@ -126,3 +130,4 @@ INSTALL( TARGETS nodefrontend
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib)
+INSTALL(DIRECTORY data DESTINATION .)

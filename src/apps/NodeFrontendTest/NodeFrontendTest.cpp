@@ -15,6 +15,11 @@
 #include "core/ShapeVisitor.h"
 #include "core/Window.h"
 #include "core/ValidatorInt.h"
+#include "gfx/FontImageSource.h"
+#include "gfx/Image.h"
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 #include <memory>
 #include <cstdint>
@@ -505,3 +510,70 @@ INSTANTIATE_TEST_SUITE_P(ValidatorInt, ValidatorInt_testRange, ::testing::Values
         std::make_tuple(0, 5, "10", nfe::ValidatorInt<std::int64_t>::ERR_TOO_HIGH),
         std::make_tuple(0, 5, "-1", nfe::ValidatorInt<std::int64_t>::ERR_TOO_LOW)
         ));
+
+class TextureAtlas_testPack : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::size_t>>
+{
+};
+
+TEST_P(TextureAtlas_testPack, testPack)
+{
+}
+
+INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testPack, ::testing::Values(
+	std::make_tuple("root = { }", 512u, 512u)
+));
+
+class FontImageSource_testNextItem : public ::testing::TestWithParam<std::tuple<const char*>>
+{
+};
+
+TEST_P(FontImageSource_testNextItem, testNextItem)
+{
+	auto fontFilename = std::get<0>(GetParam());
+	FT_Library library;
+	int error = FT_Init_FreeType( &library );
+    if ( error )
+    {
+        FAIL();
+	}
+
+	nfe::FontImageSource sut(library, fontFilename);
+	ASSERT_TRUE(sut.ok());
+	EXPECT_TRUE(sut.hasMore());
+	bool found = false;
+	ASSERT_TRUE(sut.ok());
+	while (sut.hasMore() && !found)
+	{
+		nfe::Image* item = sut.item();
+		ASSERT_NE(nullptr, item);
+		found = item->find(255,255,255);
+		delete item;
+		sut.nextItem();
+	}
+	EXPECT_TRUE(found);
+}
+
+INSTANTIATE_TEST_SUITE_P(FontImageSource, FontImageSource_testNextItem, ::testing::Values(
+	std::make_tuple("data/fonts/LiberationSans-Regular.ttf")
+));
+
+class FontImageSource_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, nfe::FontImageSource::Error>>
+{
+};
+
+TEST_P(FontImageSource_testRoundTrip, testRoundTrip)
+{
+	auto str = std::get<0>(GetParam());
+	auto err = std::get<1>(GetParam());
+	
+	EXPECT_STREQ(str, nfe::FontImageSource::errorToString(err));
+	EXPECT_EQ(err, nfe::FontImageSource::parseError(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(FontImageSource, FontImageSource_testRoundTrip, ::testing::Values(
+	std::make_tuple("ERR_OK", nfe::FontImageSource::ERR_OK),
+	std::make_tuple("ERR_UNSUPPORTED_FORMAT", nfe::FontImageSource::ERR_UNSUPPORTED_FORMAT),
+	std::make_tuple("ERR_FAILED_TO_OPEN_FONT", nfe::FontImageSource::ERR_FAILED_TO_OPEN_FONT),
+	std::make_tuple("ERR_LOADING_GLYPH", nfe::FontImageSource::ERR_LOADING_GLYPH),
+	std::make_tuple("ERR_FAILED_TO_RENDER_GLYPH", nfe::FontImageSource::ERR_FAILED_TO_RENDER_GLYPH)
+));

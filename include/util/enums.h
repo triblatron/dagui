@@ -13,8 +13,19 @@
         str += ' ';              \
     }
 
+#define ENUM_NAME(name) \
+	case (name): return #name;
+	
 #define TEST_BIT(needle, haystack, mask) \
     if (haystack.find(#needle)!=std::string::npos) \
     {                              \
         mask = static_cast<decltype(mask)>(mask | needle);            \
     }
+    
+
+#define TEST_ENUM(needle, haystack) \
+	if (std::strcmp(#needle, haystack)==0)\
+	{\
+		return needle;\
+	}
+

@@ -21,9 +21,15 @@ namespace nfe
 			_buffer = new GLubyte[height*width*numComponents];
 		}
 
+		//! Does not own the buffer.
+		Image(std::size_t width, std::size_t height, std::size_t numComponents, unsigned char* buffer);
+		
 		~Image()
 		{
-			delete [] _buffer;
+			if (_own)
+			{
+				delete [] _buffer;
+			}
 		}
 
 		size_t width() const
@@ -47,6 +53,23 @@ namespace nfe
 			}
 		}
 
+		void get(size_t row, size_t col, std::uint8_t* red, std::uint8_t* green, std::uint8_t* blue) const
+		{
+			if (row < _height && col < _width && red != nullptr && green != nullptr && blue != nullptr)
+			{
+				switch (_numComponents)
+				{
+					case 1:
+						*red = _buffer[row*_width+col];
+						*green = _buffer[row*_width+col];
+						*blue = _buffer[row*_width+col];
+						break;
+				}
+			}
+		}
+		
+		bool find(std::uint8_t red, std::uint8_t green, std::uint8_t blue) const;
+		
 		GLubyte* data()
 		{
 			return _buffer;
@@ -56,5 +79,6 @@ namespace nfe
 		size_t _height{0};
 		size_t _numComponents{0};
 		GLubyte* _buffer{nullptr};
+		bool _own{true};
 	};
 }
