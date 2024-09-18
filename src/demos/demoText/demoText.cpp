@@ -12,62 +12,14 @@
 #include <iostream>
 #include <cstdint>
 
+#include "gfx/Image.h"
 
-class Image
-{
-public:
-    Image(size_t width, size_t height, size_t numComponents)
-    :
-    _width(width),
-    _height(height),
-    _numComponents(numComponents)
-    {
-        _buffer = new GLubyte[height*width*numComponents];
-    }
-
-    ~Image()
-    {
-        delete [] _buffer;
-    }
-
-    size_t width() const
-    {
-        return _width;
-    }
-
-    size_t height() const
-    {
-        return _height;
-    }
-
-    void set(size_t row, size_t col, std::uint8_t red, std::uint8_t green, std::uint8_t blue)
-    {
-        if (row < _height && col < _width)
-        {
-            _buffer[row*_width*_numComponents+col*_numComponents+0] = red;
-            _buffer[row*_width*_numComponents+col*_numComponents+1] = green;
-            _buffer[row*_width*_numComponents+col*_numComponents+2] = blue;
-            _buffer[row*_width*_numComponents+col*_numComponents+3] = 255;
-        }
-    }
-
-    GLubyte* data()
-    {
-        return _buffer;
-    }
-private:
-    size_t _width{0};
-    size_t _height{0};
-    size_t _numComponents{0};
-    GLubyte* _buffer{nullptr};
-};
-
-static Image* texImage = new Image(512,512,4);
+static nfe::Image* texImage = new nfe::Image(512,512,4);
 static GLuint texName;
 static FT_Library  library;
 static FT_Face     face;      /* handle to face object */
 
-void copyGlyphToImage(FT_GlyphSlot glyph, Image* image)
+void copyGlyphToImage(FT_GlyphSlot glyph, nfe::Image* image)
 {
     for (auto row = 0; row<glyph->bitmap.rows; ++row)
     {
@@ -80,7 +32,7 @@ void copyGlyphToImage(FT_GlyphSlot glyph, Image* image)
     }
 }
 
-void createImage(Image* image)
+void createImage(nfe::Image* image)
 {
     for (size_t row=0; row<image->height(); ++row)
     {
