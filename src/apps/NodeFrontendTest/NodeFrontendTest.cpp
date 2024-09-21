@@ -487,11 +487,11 @@ INSTANTIATE_TEST_SUITE_P(Window, Window_testStatusRoundTrip, ::testing::Values(
 
 class ValidatorInt_testRange : public ::testing::TestWithParam<std::tuple<std::int64_t, std::int64_t, const char*, nfe::ValidatorInt<std::int64_t>::Error>>
 {
-
 };
 
 TEST_P(ValidatorInt_testRange, testRange)
 {
+
     auto minValue = std::get<0>(GetParam());
     auto maxValue = std::get<1>(GetParam());
     auto str = std::get<2>(GetParam());
@@ -512,12 +512,48 @@ INSTANTIATE_TEST_SUITE_P(ValidatorInt, ValidatorInt_testRange, ::testing::Values
         std::make_tuple(0, 5, "-1", nfe::ValidatorInt<std::int64_t>::ERR_TOO_LOW)
         ));
 
+class MockImageSource : public nfe::ImageSource
+{
+public:
+	MockImageSource()
+	{
+		ON_CALL(*this, item).WillByDefault([this]() {
+			nfe::Image* image = new nfe::Image(1u,1u,1u);
+			image->set(0,0,255,255,255);
+			return image;
+		});
+		ON_CALL(*this, hasMore).WillByDefault([this]() {
+			return _numImages == 0;
+		});
+		ON_CALL(*this, nextItem).WillByDefault([this]() {
+			++_numImages;
+		});
+	}
+	
+	MOCK_METHOD(bool, hasMore, (), (const,override));
+	MOCK_METHOD(void, nextItem, (), (override));
+	MOCK_METHOD(nfe::Image*, item, (), (override));
+private:
+	int _numImages{0};
+};
+
 class TextureAtlas_testPack : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::size_t>>
 {
 };
 
 TEST_P(TextureAtlas_testPack, testPack)
 {
+	auto configStr = std::get<0>(GetParam());
+	auto width = std::get<1>(GetParam());
+	auto height = std::get<2>(GetParam());
+	
+	auto sut = new nfe::TextureAtlas(width, height, 3);
+	auto source = new MockImageSource();
+	sut->setImageSource(source);
+	sut->pack();
+	EXPECT_TRUE(sut->image()->find(255,255,255));
+	delete source;
+	delete sut;
 }
 
 INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testPack, ::testing::Values(

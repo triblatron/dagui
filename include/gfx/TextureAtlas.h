@@ -3,11 +3,20 @@
 #include "config/Export.h"
 
 #include <cstdint>
+#include <vector>
 
 namespace nfe
 {
 	class Image;
 	class ImageSource;
+	
+	struct ImageBounds
+	{
+		std::size_t x{0};
+		std::size_t y{0};
+		std::size_t w{0};
+		std::size_t h{0};
+	};
 	
 	class NFE_API TextureAtlas
 	{
@@ -21,6 +30,8 @@ namespace nfe
 	public:
 		TextureAtlas(std::size_t width, std::size_t height, std::size_t numComponents);
 		
+		~TextureAtlas();
+		
 		Error error() const
 		{
 			return _errod;
@@ -29,6 +40,11 @@ namespace nfe
 		void setImageSource(ImageSource* source)
 		{
 			_source = source;
+		}
+		
+		nfe::Image* image()
+		{
+			return _binImage;
 		}
 		
 		void pack();
@@ -45,5 +61,7 @@ namespace nfe
 		Error _errod{ERR_UNKNOWN};
 		Image* _binImage{nullptr};
 		ImageSource* _source{nullptr};
+		using ImageBoundsMap = std::vector<std::pair<Image*, ImageBounds>>;
+		ImageBoundsMap _imageBounds;
 	};
 }

@@ -2,6 +2,8 @@
 
 #include "gfx/TextureAtlas.h"
 #include "util/enums.h"
+#include "gfx/Image.h"
+#include "gfx/ImageSource.h"
 
 #include <cstring>
 
@@ -17,11 +19,50 @@ namespace nfe
 			return;
 		}
 		
+		_binImage = new Image(width, height, numComponents);
+		
 		_errod = ERR_OK;
+	}
+	
+	TextureAtlas::~TextureAtlas()
+	{
+		delete _binImage;
 	}
 	
 	void TextureAtlas::pack()
 	{
+		if (_source != nullptr)
+		{
+			size_t nextX{0};
+			size_t nextY{0};
+			size_t maxHeightInThisShelf{0};
+			
+			while (_source->hasMore())
+			{
+				nfe::Image* inputImage = _source->item();
+				
+				if (_binImage!=nullptr && inputImage!=nullptr & nextX + inputImage->width() < _binImage->width() && nextY + inputImage->height() < _binImage->height())
+				{
+					// Update max height for current shelf
+					if (inputImage->height() > maxHeightInThisShelf)
+					{
+						maxHeightInThisShelf = inputImage->height();
+					}
+					// Copy input image
+					_binImage->copyFrom(nextY, nextX, inputImage);
+					// Update free space
+					nextX += inputImage->width();
+					if (nextX == _binImage->width())
+					{
+						nextX = 0u;
+						nextY += maxHeightInThisShelf;
+						maxHeightInThisShelf = 0u;
+					}
+				}
+							
+				_source->nextItem();
+			}
+		}
 	}
 	
 	const char* TextureAtlas::errorToString(Error error)

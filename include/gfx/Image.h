@@ -42,6 +42,11 @@ namespace nfe
 			return _height;
 		}
 
+		size_t numComponents() const
+		{
+			return _numComponents;
+		}
+		
 		void set(size_t row, size_t col, std::uint8_t red, std::uint8_t green, std::uint8_t blue)
 		{
 			if (row < _height && col < _width)
@@ -64,6 +69,11 @@ namespace nfe
 						*green = _buffer[row*_width+col];
 						*blue = _buffer[row*_width+col];
 						break;
+					case 3:
+						*red = _buffer[row*_width*_numComponents+col*_numComponents+0];
+						*green = _buffer[row*_width*_numComponents+col*_numComponents+1];
+						*blue = _buffer[row*_width*_numComponents+col*_numComponents+2];
+						break;
 				}
 			}
 		}
@@ -74,6 +84,8 @@ namespace nfe
 		{
 			return _buffer;
 		}
+		
+		void copyFrom(std::size_t destRow, std::size_t destCol, const nfe::Image* source);
 	private:
 		size_t _width{0};
 		size_t _height{0};
