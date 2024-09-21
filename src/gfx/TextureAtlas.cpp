@@ -20,6 +20,10 @@ namespace nfe
 		_errod = ERR_OK;
 	}
 	
+	void TextureAtlas::pack()
+	{
+	}
+	
 	const char* TextureAtlas::errorToString(Error error)
 	{
 		switch (error)
