@@ -17,6 +17,7 @@
 #include "core/ValidatorInt.h"
 #include "gfx/FontImageSource.h"
 #include "gfx/Image.h"
+#include "gfx/TextureAtlas.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -576,4 +577,43 @@ INSTANTIATE_TEST_SUITE_P(FontImageSource, FontImageSource_testRoundTrip, ::testi
 	std::make_tuple("ERR_FAILED_TO_OPEN_FONT", nfe::FontImageSource::ERR_FAILED_TO_OPEN_FONT),
 	std::make_tuple("ERR_LOADING_GLYPH", nfe::FontImageSource::ERR_LOADING_GLYPH),
 	std::make_tuple("ERR_FAILED_TO_RENDER_GLYPH", nfe::FontImageSource::ERR_FAILED_TO_RENDER_GLYPH)
+));
+
+class TextureAtlas_testDimensions : public ::testing::TestWithParam<std::tuple<std::size_t, std::size_t, nfe::TextureAtlas::Error>>
+{
+};
+
+TEST_P(TextureAtlas_testDimensions, testDimensions)
+{
+	auto width = std::get<0>(GetParam());
+	auto height = std::get<1>(GetParam());
+	auto err = std::get<2>(GetParam());
+	
+	nfe::TextureAtlas sut(width,height,3);
+	EXPECT_EQ(err, sut.error());
+}
+
+INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testDimensions, ::testing::Values(
+	std::make_tuple(512, 512, nfe::TextureAtlas::ERR_OK),
+	std::make_tuple(511, 512, nfe::TextureAtlas::ERR_NON_POWER_OF_TWO_DIMS),
+	std::make_tuple(512, 511, nfe::TextureAtlas::ERR_NON_POWER_OF_TWO_DIMS)
+));
+
+class TextureAtlas_testErrorRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, nfe::TextureAtlas::Error>>
+{
+};
+
+TEST_P(TextureAtlas_testErrorRoundTrip, testRoundTrip)
+{
+	auto str = std::get<0>(GetParam());
+	auto err = std::get<1>(GetParam());
+	
+	EXPECT_STREQ(str, nfe::TextureAtlas::errorToString(err));
+	EXPECT_EQ(err, nfe::TextureAtlas::parseError(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testErrorRoundTrip, ::testing::Values(
+	std::make_tuple("ERR_UNKNOWN", nfe::TextureAtlas::ERR_UNKNOWN),
+	std::make_tuple("ERR_OK", nfe::TextureAtlas::ERR_OK),
+	std::make_tuple("ERR_NON_POWER_OF_TWO_DIMS", nfe::TextureAtlas::ERR_NON_POWER_OF_TWO_DIMS)
 ));
