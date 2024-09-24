@@ -596,7 +596,8 @@ TEST_P(TextureAtlas_testPack, testPack)
 }
 
 INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testPack, ::testing::Values(
-	std::make_tuple("root = { [1]={width=512,height=512}, [2]={width=1,height=1} }", 512u, 512u, nfe::TextureAtlas::ERR_FAILED_TO_ALLOCATE, 1u)
+	std::make_tuple("root = { [1]={width=512,height=512}, [2]={width=1,height=1} }", 512u, 512u, nfe::TextureAtlas::ERR_FAILED_TO_ALLOCATE, 1u),
+	std::make_tuple("root = { [1]={width=256,height=256}, [2]={width=16,height=16} }", 512u, 512u, nfe::TextureAtlas::ERR_OK, 2u)
 ));
 
 class FontImageSource_testNextItem : public ::testing::TestWithParam<std::tuple<const char*>>
