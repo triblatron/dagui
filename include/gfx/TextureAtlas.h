@@ -25,6 +25,7 @@ namespace nfe
 		{
 			ERR_OK,
 			ERR_NON_POWER_OF_TWO_DIMS,
+			ERR_FAILED_TO_ALLOCATE,
 			ERR_UNKNOWN
 		};
 	public:
@@ -49,6 +50,11 @@ namespace nfe
 		
 		void pack();
 		
+		std::size_t numAllocations() const
+		{
+			return _numAllocations;
+		}
+		
 		static const char* errorToString(Error error);
 		
 		static Error parseError(const char* str);
@@ -63,5 +69,7 @@ namespace nfe
 		ImageSource* _source{nullptr};
 		using ImageBoundsMap = std::vector<std::pair<Image*, ImageBounds>>;
 		ImageBoundsMap _imageBounds;
+		void allocateImage(Image* inputImage, size_t* maxHeightInThisShelf, size_t* nextX, size_t* nextY);
+		std::size_t _numAllocations{0};
 	};
 }

@@ -41,27 +41,54 @@ namespace nfe
 			{
 				nfe::Image* inputImage = _source->item();
 				
-				if (_binImage!=nullptr && inputImage!=nullptr & nextX + inputImage->width() < _binImage->width() && nextY + inputImage->height() < _binImage->height())
+				if (_binImage!=nullptr && inputImage!=nullptr)
 				{
-					// Update max height for current shelf
-					if (inputImage->height() > maxHeightInThisShelf)
+					if ( nextX + inputImage->width() <= _binImage->width() && nextY + inputImage->height() <= _binImage->height())
 					{
-						maxHeightInThisShelf = inputImage->height();
+						allocateImage(inputImage, &maxHeightInThisShelf, &nextX, &nextY);
 					}
-					// Copy input image
-					_binImage->copyFrom(nextY, nextX, inputImage);
-					// Update free space
-					nextX += inputImage->width();
-					if (nextX == _binImage->width())
+					else
 					{
+						// Try next shelf
 						nextX = 0u;
 						nextY += maxHeightInThisShelf;
 						maxHeightInThisShelf = 0u;
+						if ( nextX + inputImage->width() <= _binImage->width() && nextY + inputImage->height() <= _binImage->height())
+						{
+							allocateImage(inputImage, &maxHeightInThisShelf, &nextX, &nextY);
+						}
+						else
+						{
+							_errod = ERR_FAILED_TO_ALLOCATE;
+							break;
+						}
 					}
 				}
-							
 				_source->nextItem();
 			}
+		}
+	}
+	
+	void TextureAtlas::allocateImage(Image* inputImage, size_t* maxHeightInThisShelf, size_t* nextX, size_t* nextY)
+	{
+		if (inputImage!=nullptr && maxHeightInThisShelf != nullptr && nextX != nullptr && nextY != nullptr)
+		{
+			// Update max height for current shelf
+			if (inputImage->height() > *maxHeightInThisShelf)
+			{
+				*maxHeightInThisShelf = inputImage->height();
+			}
+			// Copy input image
+			_binImage->copyFrom(*nextY, *nextX, inputImage);
+			// Update free space
+			*nextX += inputImage->width();
+			if (*nextX == _binImage->width())
+			{
+				*nextX = 0u;
+				*nextY += *maxHeightInThisShelf;
+				*maxHeightInThisShelf = 0u;
+			}
+			++_numAllocations;
 		}
 	}
 	
@@ -72,6 +99,7 @@ namespace nfe
 			ENUM_NAME(ERR_UNKNOWN)
 			ENUM_NAME(ERR_OK)
 			ENUM_NAME(ERR_NON_POWER_OF_TWO_DIMS)
+			ENUM_NAME(ERR_FAILED_TO_ALLOCATE)
 		}
 		
 		return "<error>";
@@ -82,6 +110,7 @@ namespace nfe
 		TEST_ENUM(ERR_UNKNOWN, str)
 		TEST_ENUM(ERR_OK, str)
 		TEST_ENUM(ERR_NON_POWER_OF_TWO_DIMS, str)
+		TEST_ENUM(ERR_FAILED_TO_ALLOCATE, str)
 		
 		return ERR_UNKNOWN;
 	}

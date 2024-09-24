@@ -518,15 +518,43 @@ public:
 	MockImageSource()
 	{
 		ON_CALL(*this, item).WillByDefault([this]() {
-			nfe::Image* image = new nfe::Image(1u,1u,1u);
-			image->set(0,0,255,255,255);
-			return image;
+			if (_imageIndex<_images.size())
+			{
+				return _images[_imageIndex];
+			}
+			else
+			{
+				return static_cast<nfe::Image*>(nullptr);
+			}
 		});
 		ON_CALL(*this, hasMore).WillByDefault([this]() {
-			return _numImages == 0;
+			return _imageIndex<_images.size();
 		});
 		ON_CALL(*this, nextItem).WillByDefault([this]() {
-			++_numImages;
+			++_imageIndex;
+		});
+	}
+
+	void configure(nfe::ConfigurationElement& config)
+	{
+		config.eachChild([this](nfe::ConfigurationElement& child) {
+			std::size_t width{0}, height{0};
+			
+			if (auto widthConfig = child.findElement("width"); widthConfig!=nullptr)
+			{
+				width = std::size_t(widthConfig->asInteger());
+			}
+			
+			if (auto heightConfig = child.findElement("height"); heightConfig!=nullptr)
+			{
+				height = std::size_t(heightConfig->asInteger());
+			}
+			
+			auto image = new nfe::Image(width, height, 1);
+			image->set(0,0,255,255,255);
+			_images.emplace_back(image);
+			
+			return true;
 		});
 	}
 	
@@ -534,10 +562,12 @@ public:
 	MOCK_METHOD(void, nextItem, (), (override));
 	MOCK_METHOD(nfe::Image*, item, (), (override));
 private:
-	int _numImages{0};
+	using ImageArray = std::vector<nfe::Image*>;
+	ImageArray _images;
+	std::size_t _imageIndex{0};
 };
 
-class TextureAtlas_testPack : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::size_t>>
+class TextureAtlas_testPack : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::size_t, nfe::TextureAtlas::Error, std::size_t>>
 {
 };
 
@@ -546,18 +576,27 @@ TEST_P(TextureAtlas_testPack, testPack)
 	auto configStr = std::get<0>(GetParam());
 	auto width = std::get<1>(GetParam());
 	auto height = std::get<2>(GetParam());
+	auto error = std::get<3>(GetParam());
+	auto numImagesAllocated = std::get<4>(GetParam());
+	auto config = nfe::ConfigurationElement::fromString(configStr);
 	
+	ASSERT_NE(nullptr, config);
 	auto sut = new nfe::TextureAtlas(width, height, 3);
 	auto source = new MockImageSource();
+	source->configure(*config);
 	sut->setImageSource(source);
+	EXPECT_CALL(*source, hasMore()).Times(::testing::AtLeast(1));
+	EXPECT_CALL(*source, item()).Times(::testing::AtLeast(1));
+	EXPECT_CALL(*source, nextItem()).Times(::testing::AtLeast(0));
 	sut->pack();
-	EXPECT_TRUE(sut->image()->find(255,255,255));
+	EXPECT_EQ(error, sut->error());
+	EXPECT_EQ(numImagesAllocated, sut->numAllocations());
 	delete source;
 	delete sut;
 }
 
 INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testPack, ::testing::Values(
-	std::make_tuple("root = { }", 512u, 512u)
+	std::make_tuple("root = { [1]={width=512,height=512}, [2]={width=1,height=1} }", 512u, 512u, nfe::TextureAtlas::ERR_FAILED_TO_ALLOCATE, 1u)
 ));
 
 class FontImageSource_testNextItem : public ::testing::TestWithParam<std::tuple<const char*>>
@@ -651,5 +690,6 @@ TEST_P(TextureAtlas_testErrorRoundTrip, testRoundTrip)
 INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testErrorRoundTrip, ::testing::Values(
 	std::make_tuple("ERR_UNKNOWN", nfe::TextureAtlas::ERR_UNKNOWN),
 	std::make_tuple("ERR_OK", nfe::TextureAtlas::ERR_OK),
-	std::make_tuple("ERR_NON_POWER_OF_TWO_DIMS", nfe::TextureAtlas::ERR_NON_POWER_OF_TWO_DIMS)
+	std::make_tuple("ERR_NON_POWER_OF_TWO_DIMS", nfe::TextureAtlas::ERR_NON_POWER_OF_TWO_DIMS),
+	std::make_tuple("ERR_FAILED_TO_ALLOCATE", nfe::TextureAtlas::ERR_FAILED_TO_ALLOCATE)
 ));
