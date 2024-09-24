@@ -15,6 +15,7 @@ extern "C" {
 #include <cstdint>
 #include <vector>
 #include <optional>
+#include <functional>
 
 struct lua_State;
 
@@ -35,7 +36,7 @@ namespace nfe
         using ValueType = std::optional<std::variant<bool, lua_Integer, double, std::string>>;
     public:
         explicit ConfigurationElement(std::string name);
-
+		
         ConfigurationElement(std::string name, ValueType::value_type value)
         :
         _name(name),
@@ -56,6 +57,11 @@ namespace nfe
 
         static ConfigurationElement* fromString(const char* str);
 
+		void setIndex(std::int64_t index)
+		{
+			_index = index;
+		}
+		
         const std::string& name() const
         {
             return _name;
@@ -123,6 +129,8 @@ namespace nfe
             }
         }
         ConfigurationElement* findElement(std::string path);
+        
+        void eachChild(std::function<bool (ConfigurationElement&)> f);
     private:
         void setParent(ConfigurationElement* parent)
         {

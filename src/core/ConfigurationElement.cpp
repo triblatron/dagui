@@ -18,7 +18,7 @@ namespace nfe
     {
         // Do nothing.
     }
-
+	
     ConfigurationElement *ConfigurationElement::fromString(const char *str)
     {
         nfe::Lua lua;
@@ -31,18 +31,21 @@ namespace nfe
         return buildTree(lua);
     }
 
-    ConfigurationElement* ConfigurationElement::findInArray(size_t index, std::string path)
+    ConfigurationElement* ConfigurationElement::findInArray(size_t startIndex, std::string path)
     {
-        for (; index<path.length() && isdigit(path[index]); ++index);
+        path = path.substr(startIndex);
+        size_t index=0;
+        for (index = 0; index<path.length() && isdigit(path[index]); ++index);
         char* end = nullptr;
         size_t childIndex = std::strtoul(path.c_str(), &end, 10);
         if (childIndex<_children.size() && index<path.size() && path[index] == ']')
         {
+			auto child = _children[childIndex];
             ++index;
             if (index < path.length()-1)
             {
                 path = path.substr(index+1);
-                return findInChildren(path);
+                return child->findInChildren(path);
             }
             else
             {
@@ -192,6 +195,8 @@ namespace nfe
                 if (lua_isinteger(lua, -2))
                 {
                     std::int64_t index = lua_tointeger(lua, -2);
+                    std::string name = std::string('[' + std::to_string(index) + ']');
+                    
                     if (lua_isinteger(lua, -1))
                     {
                         child = new ConfigurationElement(index, lua_tointeger(lua, -1));
@@ -212,6 +217,13 @@ namespace nfe
                         child = new ConfigurationElement(index, std::string(lua_tostring(lua, -1)));
                         parentStack.top()->addChild(child);
                     }
+                    else if (lua_istable(lua, -1))
+                    {
+                        child = new ConfigurationElement(name);
+                        child->setIndex(index);
+                        parentStack.top()->addChild(child);
+                        parentStack.push(child);
+					}
                 }
                 else if (lua_isstring(lua, -2))
                 {
@@ -256,4 +268,15 @@ namespace nfe
             delete child;
         }
     }
+    
+    void ConfigurationElement::eachChild(std::function<bool (ConfigurationElement&)> f)
+    {
+		for (auto child : _children)
+		{
+			if (std::invoke(f, *child) == false)
+			{
+				break;
+			}
+		}
+	}
 }
