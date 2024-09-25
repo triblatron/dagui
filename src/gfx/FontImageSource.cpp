@@ -6,6 +6,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#include "gfx/ImageDef.h"
 #include "gfx/Image.h"
 
 #include <iostream>
@@ -65,7 +66,7 @@ namespace nfe
 		}
 	}
 
-	Image* FontImageSource::item()
+	ImageDef* FontImageSource::item()
 	{
 		int error = FT_Load_Glyph(
 		_face,          /* handle to face object */
@@ -93,7 +94,7 @@ namespace nfe
 			}
 		}
 
-		Image* image = new Image(_face->glyph->bitmap.width, _face->glyph->bitmap.rows, 1, _face->glyph->bitmap.buffer);
+		auto* image = new ImageDef(_face->glyph->bitmap.width, _face->glyph->bitmap.rows);//, 1, _face->glyph->bitmap.buffer);
 		return image;
 	}
 	

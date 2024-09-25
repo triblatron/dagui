@@ -31,7 +31,7 @@ namespace nfe
 		
 		bool hasMore() const override;
 		
-		Image* item() override;
+		ImageDef* item() override;
 		
 		void nextItem() override;
 		

@@ -4,7 +4,7 @@
 
 namespace nfe
 {
-	class Image;
+	class ImageDef;
 	
 	class NFE_API ImageSource
 	{
@@ -12,7 +12,7 @@ namespace nfe
 		virtual ~ImageSource();
 		
 		virtual bool hasMore() const = 0;
-		virtual Image* item() = 0;
+		virtual ImageDef* item() = 0;
 		virtual void nextItem() = 0;
 	};
 }

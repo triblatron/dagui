@@ -8,6 +8,7 @@
 namespace nfe
 {
 	class Image;
+	class ImageDef;
 	class ImageSource;
 	
 	struct ImageBounds
@@ -43,7 +44,7 @@ namespace nfe
 			_source = source;
 		}
 		
-		nfe::Image* image()
+		nfe::ImageDef* image()
 		{
 			return _binImage;
 		}
@@ -65,11 +66,12 @@ namespace nfe
 		}
 	private:
 		Error _errod{ERR_UNKNOWN};
-		Image* _binImage{nullptr};
+		std::size_t _numComponents{0};
+		ImageDef* _binImage{nullptr};
 		ImageSource* _source{nullptr};
 		using ImageBoundsMap = std::vector<std::pair<Image*, ImageBounds>>;
 		ImageBoundsMap _imageBounds;
-		void allocateImage(Image* inputImage, size_t* maxHeightInThisShelf, size_t* nextX, size_t* nextY);
+		void allocateImage(ImageDef* inputImage, size_t* maxHeightInThisShelf, size_t* nextX, size_t* nextY);
 		std::size_t _numAllocations{0};
 	};
 }

@@ -4,6 +4,7 @@
 #include "util/enums.h"
 #include "gfx/Image.h"
 #include "gfx/ImageSource.h"
+#include "gfx/ImageDef.h"
 
 #include <cstring>
 
@@ -11,7 +12,8 @@ namespace nfe
 {
 	TextureAtlas::TextureAtlas(std::size_t width, std::size_t height, std::size_t numComponents)
 	:
-	_errod(ERR_UNKNOWN)
+	_errod(ERR_UNKNOWN),
+	_numComponents(numComponents)
 	{
 		if (!isPowerOfTwo(width) || !isPowerOfTwo(height))
 		{
@@ -19,7 +21,7 @@ namespace nfe
 			return;
 		}
 		
-		_binImage = new Image(width, height, numComponents);
+		_binImage = new ImageDef(width, height);//, numComponents);
 		
 		_errod = ERR_OK;
 	}
@@ -39,7 +41,7 @@ namespace nfe
 			
 			while (_source->hasMore())
 			{
-				nfe::Image* inputImage = _source->item();
+				nfe::ImageDef* inputImage = _source->item();
 				
 				if (_binImage!=nullptr && inputImage!=nullptr)
 				{
@@ -69,7 +71,7 @@ namespace nfe
 		}
 	}
 	
-	void TextureAtlas::allocateImage(Image* inputImage, size_t* maxHeightInThisShelf, size_t* nextX, size_t* nextY)
+	void TextureAtlas::allocateImage(ImageDef* inputImage, size_t* maxHeightInThisShelf, size_t* nextX, size_t* nextY)
 	{
 		if (inputImage!=nullptr && maxHeightInThisShelf != nullptr && nextX != nullptr && nextY != nullptr)
 		{
@@ -79,7 +81,7 @@ namespace nfe
 				*maxHeightInThisShelf = inputImage->height();
 			}
 			// Copy input image
-			_binImage->copyFrom(*nextY, *nextX, inputImage);
+			//_binImage->copyFrom(*nextY, *nextX, inputImage);
 			// Update free space
 			*nextX += inputImage->width();
 			if (*nextX == _binImage->width())
