@@ -4,10 +4,9 @@
 #include "util/enums.h"
 #include "gfx/Image.h"
 #include "gfx/ImageSource.h"
-#include "gfx/ImageDef.h"
+#include "gfx/BinImageDef.h"
 
 #include <cstring>
-
 namespace nfe
 {
 	TextureAtlas::TextureAtlas(std::size_t width, std::size_t height, std::size_t numComponents)
@@ -20,9 +19,8 @@ namespace nfe
 			_errod = ERR_NON_POWER_OF_TWO_DIMS;
 			return;
 		}
-		
-		_binImage = new ImageDef(width, height);//, numComponents);
-		
+
+		_binImageDef = new BinImageDef(width, height, numComponents);
 		_errod = ERR_OK;
 	}
 	
@@ -38,14 +36,16 @@ namespace nfe
 			size_t nextX{0};
 			size_t nextY{0};
 			size_t maxHeightInThisShelf{0};
-			
+
+			using ImageDefArray = std::vector<ImageDef*>;
+			ImageDefArray defs;;
 			while (_source->hasMore())
 			{
 				nfe::ImageDef* inputImage = _source->item();
 				
-				if (_binImage!=nullptr && inputImage!=nullptr)
+				if (_binImageDef!=nullptr && inputImage!=nullptr)
 				{
-					if ( nextX + inputImage->width() <= _binImage->width() && nextY + inputImage->height() <= _binImage->height())
+					if ( nextX + inputImage->width() <= _binImageDef->width() && nextY + inputImage->height() <= _binImageDef->height())
 					{
 						allocateImage(inputImage, &maxHeightInThisShelf, &nextX, &nextY);
 					}
@@ -55,7 +55,7 @@ namespace nfe
 						nextX = 0u;
 						nextY += maxHeightInThisShelf;
 						maxHeightInThisShelf = 0u;
-						if ( nextX + inputImage->width() <= _binImage->width() && nextY + inputImage->height() <= _binImage->height())
+						if ( nextX + inputImage->width() <= _binImageDef->width() && nextY + inputImage->height() <= _binImageDef->height())
 						{
 							allocateImage(inputImage, &maxHeightInThisShelf, &nextX, &nextY);
 						}
@@ -65,8 +65,22 @@ namespace nfe
 							break;
 						}
 					}
+					if (ok())
+					{
+						defs.emplace_back(inputImage);
+					}
 				}
 				_source->nextItem();
+			}
+
+			if (ok())
+			{
+				_binImage = _binImageDef->createImage();
+				for (auto def : defs)
+				{
+					Image* image = def->createImage();
+					_binImage->copyFrom(def->y(), def->x(), image);
+				}
 			}
 		}
 	}
@@ -83,8 +97,9 @@ namespace nfe
 			// Copy input image
 			//_binImage->copyFrom(*nextY, *nextX, inputImage);
 			// Update free space
+			inputImage->setPos(*nextX, *nextY);
 			*nextX += inputImage->width();
-			if (*nextX == _binImage->width())
+			if (*nextX == _binImageDef->width())
 			{
 				*nextX = 0u;
 				*nextY += *maxHeightInThisShelf;

@@ -16,7 +16,7 @@
 #include "core/Window.h"
 #include "core/ValidatorInt.h"
 #include "gfx/FontImageSource.h"
-#include "gfx/ImageDef.h"
+#include "gfx/BinImageDef.h"
 #include "gfx/Image.h"
 #include "gfx/TextureAtlas.h"
 
@@ -551,7 +551,7 @@ public:
 				height = std::size_t(heightConfig->asInteger());
 			}
 			
-			auto image = new nfe::ImageDef(width, height);//, 1);
+			auto image = new nfe::BinImageDef(width, height, 1);
 			//image->set(0,0,255,255,255);
 			_images.emplace_back(image);
 			

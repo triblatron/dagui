@@ -12,6 +12,8 @@
 #include <iostream>
 #include <cstring>
 
+#include "gfx/GlyphImageDef.h"
+
 namespace nfe
 {
 	FontImageSource::FontImageSource(FT_Library library, const char* filename)
@@ -79,6 +81,7 @@ namespace nfe
 			_errod = ERR_LOADING_GLYPH;
 			return nullptr;
 		}
+
 		if (_face->glyph->format != FT_GLYPH_FORMAT_BITMAP)
 		{
 			std::cout << "Rendering glyph\n";
@@ -89,12 +92,12 @@ namespace nfe
 			{
 				std::cerr << "Failed to render glyph, bailing\n";
 
-				_errod = ERR_FAILED_TO_RENDER_GLYPH;
+				// _errod = ERR_FAILED_TO_RENDER_GLYPH;
 				return nullptr;
 			}
 		}
 
-		auto* image = new ImageDef(_face->glyph->bitmap.width, _face->glyph->bitmap.rows);//, 1, _face->glyph->bitmap.buffer);
+		auto* image = new GlyphImageDef(_face->glyph->bitmap.width, _face->glyph->bitmap.rows, _face->glyph);//, 1, _face->glyph->bitmap.buffer);
 		return image;
 	}
 	

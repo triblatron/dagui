@@ -7,6 +7,7 @@
 
 namespace nfe
 {
+	class BinImageDef;
 	class Image;
 	class ImageDef;
 	class ImageSource;
@@ -38,15 +39,20 @@ namespace nfe
 		{
 			return _errod;
 		}
-		
+
+		bool ok() const
+		{
+			return _errod == ERR_OK;
+		}
+
 		void setImageSource(ImageSource* source)
 		{
 			_source = source;
 		}
 		
-		nfe::ImageDef* image()
+		nfe::BinImageDef* image()
 		{
-			return _binImage;
+			return _binImageDef;
 		}
 		
 		void pack();
@@ -67,7 +73,8 @@ namespace nfe
 	private:
 		Error _errod{ERR_UNKNOWN};
 		std::size_t _numComponents{0};
-		ImageDef* _binImage{nullptr};
+		BinImageDef* _binImageDef{nullptr};
+		Image* _binImage{nullptr};
 		ImageSource* _source{nullptr};
 		using ImageBoundsMap = std::vector<std::pair<Image*, ImageBounds>>;
 		ImageBoundsMap _imageBounds;

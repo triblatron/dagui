@@ -39,6 +39,8 @@ SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include
         include/gfx/FontImageSource.h
         include/gfx/TextureAtlas.h
         include/gfx/ImageDef.h
+        include/gfx/GlyphImageDef.h
+        include/gfx/BinImageDef.h
 )
 SET( NODEFRONTEND_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaInterface.cpp src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}
         src/core/ConfigurationElement.cpp
@@ -51,6 +53,8 @@ SET( NODEFRONTEND_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaI
         src/gfx/FontImageSource.cpp
         src/gfx/TextureAtlas.cpp
         src/gfx/ImageDef.cpp
+        src/gfx/GlyphImageDef.cpp
+        src/gfx/BinImageDef.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")

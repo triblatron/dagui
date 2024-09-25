@@ -17,6 +17,8 @@ namespace nfe
     public:
         ImageDef(std::size_t width, std::size_t height);
 
+        virtual ~ImageDef() = default;
+
         std::size_t width() const
         {
             return _width;
@@ -27,8 +29,26 @@ namespace nfe
             return _height;
         }
 
-        Image* createImage(std::size_t numComponents) const;
+        void setPos(std::size_t x, std::size_t y)
+        {
+            _x = x;
+            _y = y;
+        }
+
+        std::size_t x() const
+        {
+            return _x;
+        }
+
+        std::size_t y() const
+        {
+            return _y;
+        }
+
+        virtual Image* createImage() const = 0;
     private:
+        std::size_t _x{0};
+        std::size_t _y{0};
         std::size_t _width{0};
         std::size_t _height{0};
     };

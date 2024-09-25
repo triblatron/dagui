@@ -15,9 +15,4 @@ namespace nfe
     {
         // Do nothing.
     }
-
-    Image* ImageDef::createImage(std::size_t numComponents) const
-    {
-        return new Image(_width, _height, numComponents);
-    }
 }
