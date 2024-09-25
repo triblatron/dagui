@@ -21,6 +21,20 @@ namespace nfe
 
     Image* GlyphImageDef::createImage() const
     {
+        if (_glyph->format != FT_GLYPH_FORMAT_BITMAP)
+        {
+            std::cout << "Rendering glyph\n";
+
+            int error = FT_Render_Glyph( _glyph,   /* glyph slot  */
+                                     FT_RENDER_MODE_NORMAL ); /* render mode */
+            if (error)
+            {
+                std::cerr << "Failed to render glyph, bailing\n";
+
+                // _errod = ERR_FAILED_TO_RENDER_GLYPH;
+                return nullptr;
+            }
+        }
         auto image = new Image(width(), height(), 1, _glyph->bitmap.buffer);
 
         return image;

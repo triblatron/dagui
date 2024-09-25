@@ -82,20 +82,20 @@ namespace nfe
 			return nullptr;
 		}
 
-		if (_face->glyph->format != FT_GLYPH_FORMAT_BITMAP)
-		{
-			std::cout << "Rendering glyph\n";
-
-			error = FT_Render_Glyph( _face->glyph,   /* glyph slot  */
-									 FT_RENDER_MODE_NORMAL ); /* render mode */
-			if (error)
-			{
-				std::cerr << "Failed to render glyph, bailing\n";
-
-				// _errod = ERR_FAILED_TO_RENDER_GLYPH;
-				return nullptr;
-			}
-		}
+		// if (_face->glyph->format != FT_GLYPH_FORMAT_BITMAP)
+		// {
+		// 	std::cout << "Rendering glyph\n";
+		//
+		// 	error = FT_Render_Glyph( _face->glyph,   /* glyph slot  */
+		// 							 FT_RENDER_MODE_NORMAL ); /* render mode */
+		// 	if (error)
+		// 	{
+		// 		std::cerr << "Failed to render glyph, bailing\n";
+		//
+		// 		// _errod = ERR_FAILED_TO_RENDER_GLYPH;
+		// 		return nullptr;
+		// 	}
+		// }
 
 		auto* image = new GlyphImageDef(_face->glyph->bitmap.width, _face->glyph->bitmap.rows, _face->glyph);//, 1, _face->glyph->bitmap.buffer);
 		return image;

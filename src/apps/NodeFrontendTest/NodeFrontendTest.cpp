@@ -618,13 +618,15 @@ TEST_P(FontImageSource_testNextItem, testNextItem)
 	nfe::FontImageSource sut(library, fontFilename);
 	ASSERT_TRUE(sut.ok());
 	EXPECT_TRUE(sut.hasMore());
-	//bool found = false;
+	bool found = false;
 	ASSERT_TRUE(sut.ok());
-	while (sut.hasMore())
+	while (sut.hasMore() && !found)
 	{
 		nfe::ImageDef* item = sut.item();
 		ASSERT_NE(nullptr, item);
-		//found = item->find(255,255,255);
+		nfe::Image* image = item->createImage();
+		found = image->find(255,255,255);
+		delete image;
 		delete item;
 		sut.nextItem();
 	}
