@@ -19,12 +19,15 @@
 #include "gfx/BinImageDef.h"
 #include "gfx/Image.h"
 #include "gfx/TextureAtlas.h"
+#include "gfx/PackingStrategy.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 #include <memory>
 #include <cstdint>
+
+#include "gfx/ShelfPackingStrategy.h"
 
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, double, bool>>
 {
@@ -568,11 +571,11 @@ private:
 	std::size_t _imageIndex{0};
 };
 
-class TextureAtlas_testPack : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::size_t, nfe::TextureAtlas::Error, std::size_t>>
+class ShelfPackingStrategy_testPack : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::size_t, nfe::PackingStrategy::Error, std::size_t>>
 {
 };
 
-TEST_P(TextureAtlas_testPack, testPack)
+TEST_P(ShelfPackingStrategy_testPack, testPack)
 {
 	auto configStr = std::get<0>(GetParam());
 	auto width = std::get<1>(GetParam());
@@ -582,23 +585,24 @@ TEST_P(TextureAtlas_testPack, testPack)
 	auto config = nfe::ConfigurationElement::fromString(configStr);
 	
 	ASSERT_NE(nullptr, config);
-	auto sut = new nfe::TextureAtlas(width, height, 3);
+	auto sut = new nfe::ShelfPackingStrategy();
 	auto source = new MockImageSource();
+	sut->setBinRectangle(new nfe::BinImageDef(width, height, 3));
 	source->configure(*config);
-	sut->setImageSource(source);
+	sut->setInputSource(source);
 	EXPECT_CALL(*source, hasMore()).Times(::testing::AtLeast(1));
 	EXPECT_CALL(*source, item()).Times(::testing::AtLeast(1));
 	EXPECT_CALL(*source, nextItem()).Times(::testing::AtLeast(0));
-	sut->pack();
+	sut->makeItSo();
 	EXPECT_EQ(error, sut->error());
 	EXPECT_EQ(numImagesAllocated, sut->numAllocations());
 	delete source;
 	delete sut;
 }
 
-INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testPack, ::testing::Values(
-	std::make_tuple("root = { [1]={width=512,height=512}, [2]={width=1,height=1} }", 512u, 512u, nfe::TextureAtlas::ERR_FAILED_TO_ALLOCATE, 1u),
-	std::make_tuple("root = { [1]={width=256,height=256}, [2]={width=16,height=16} }", 512u, 512u, nfe::TextureAtlas::ERR_OK, 2u)
+INSTANTIATE_TEST_SUITE_P(ShelfPackingStrategy, ShelfPackingStrategy_testPack, ::testing::Values(
+	std::make_tuple("root = { [1]={width=512,height=512}, [2]={width=1,height=1} }", 512u, 512u, nfe::PackingStrategy::ERR_FAILED_TO_PACK, 1u),
+	std::make_tuple("root = { [1]={width=256,height=256}, [2]={width=16,height=16} }", 512u, 512u, nfe::PackingStrategy::ERR_OK, 2u)
 ));
 
 class FontImageSource_testNextItem : public ::testing::TestWithParam<std::tuple<const char*>>
@@ -678,22 +682,21 @@ INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testDimensions, ::testing::V
 	std::make_tuple(512, 511, nfe::TextureAtlas::ERR_NON_POWER_OF_TWO_DIMS)
 ));
 
-class TextureAtlas_testErrorRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, nfe::TextureAtlas::Error>>
+class PackingStrategy_testErrorRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, nfe::PackingStrategy::Error>>
 {
 };
 
-TEST_P(TextureAtlas_testErrorRoundTrip, testRoundTrip)
+TEST_P(PackingStrategy_testErrorRoundTrip, testRoundTrip)
 {
 	auto str = std::get<0>(GetParam());
 	auto err = std::get<1>(GetParam());
 	
-	EXPECT_STREQ(str, nfe::TextureAtlas::errorToString(err));
-	EXPECT_EQ(err, nfe::TextureAtlas::parseError(str));
+	EXPECT_STREQ(str, nfe::PackingStrategy::errorToString(err));
+	EXPECT_EQ(err, nfe::PackingStrategy::parseError(str));
 }
 
-INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testErrorRoundTrip, ::testing::Values(
-	std::make_tuple("ERR_UNKNOWN", nfe::TextureAtlas::ERR_UNKNOWN),
-	std::make_tuple("ERR_OK", nfe::TextureAtlas::ERR_OK),
-	std::make_tuple("ERR_NON_POWER_OF_TWO_DIMS", nfe::TextureAtlas::ERR_NON_POWER_OF_TWO_DIMS),
-	std::make_tuple("ERR_FAILED_TO_ALLOCATE", nfe::TextureAtlas::ERR_FAILED_TO_ALLOCATE)
+INSTANTIATE_TEST_SUITE_P(PackingStrategy, PackingStrategy_testErrorRoundTrip, ::testing::Values(
+	std::make_tuple("ERR_UNKNOWN", nfe::PackingStrategy::ERR_UNKNOWN),
+	std::make_tuple("ERR_OK", nfe::PackingStrategy::ERR_OK),
+	std::make_tuple("ERR_FAILED_TO_PACK", nfe::PackingStrategy::ERR_FAILED_TO_PACK)
 ));

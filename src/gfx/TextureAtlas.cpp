@@ -7,6 +7,7 @@
 #include "gfx/BinImageDef.h"
 
 #include <cstring>
+
 namespace nfe
 {
 	TextureAtlas::TextureAtlas(std::size_t width, std::size_t height, std::size_t numComponents)
