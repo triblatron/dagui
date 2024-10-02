@@ -20,6 +20,7 @@
 #include "gfx/Image.h"
 #include "gfx/TextureAtlas.h"
 #include "gfx/PackingStrategy.h"
+#include "core/SpaceTree.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -700,3 +701,34 @@ INSTANTIATE_TEST_SUITE_P(PackingStrategy, PackingStrategy_testErrorRoundTrip, ::
 	std::make_tuple("ERR_OK", nfe::PackingStrategy::ERR_OK),
 	std::make_tuple("ERR_FAILED_TO_PACK", nfe::PackingStrategy::ERR_FAILED_TO_PACK)
 ));
+
+class SpaceTree_testInsert : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::size_t, std::size_t, nfe::SpaceTree::Result>>
+{
+
+};
+
+TEST_P(SpaceTree_testInsert, testInsert)
+{
+	auto configStr = std::get<0>(GetParam());
+	auto width = std::get<1>(GetParam());
+	auto height = std::get<2>(GetParam());
+	auto numNodes = std::get<3>(GetParam());
+	auto result = std::get<4>(GetParam());
+	auto config = nfe::ConfigurationElement::fromString(configStr);
+	ASSERT_NE(nullptr, config);
+	auto sut = nfe::SpaceTree::fromConfig(*config);
+	ASSERT_NE(nullptr, sut);
+	std::size_t actualNumNodes {0};
+	sut->traversal([&actualNumNodes](nfe::SpaceTree* node)
+	{
+		actualNumNodes++;
+	});
+	ASSERT_EQ(numNodes, actualNumNodes);
+	nfe::SpaceTree::Result actualResult = sut->insert(width,height);
+	EXPECT_EQ(result, actualResult);
+}
+
+INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testInsert, ::testing::Values(
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, 1u, nfe::SpaceTree::RESULT_OK),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512, children = { { nodeType=\"TYPE_FREE\", width=256, height=256 } } }", 1024, 256, 2u, nfe::SpaceTree::RESULT_FAILED_TO_INSERT)
+	));
