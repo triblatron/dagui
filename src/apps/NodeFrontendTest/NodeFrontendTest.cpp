@@ -730,8 +730,8 @@ TEST_P(SpaceTree_testInsert, testInsert)
 
 INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testInsert, ::testing::Values(
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, 1u, nfe::SpaceTree::RESULT_OK),
-	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512, children = { { nodeType=\"TYPE_FREE\", width=256, height=256 } } }", 1024, 256, 2u, nfe::SpaceTree::RESULT_FAILED_TO_INSERT),
-	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 1024, 256, 5u, nfe::SpaceTree::RESULT_FAILED_TO_INSERT)
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512, children = { } }", 1024, 256, 1u, nfe::SpaceTree::RESULT_FAILED_TO_INSERT),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 256, 256, 5u, nfe::SpaceTree::RESULT_OK)
 	));
 
 class SpaceTreeType_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, nfe::SpaceTree::Type>>
