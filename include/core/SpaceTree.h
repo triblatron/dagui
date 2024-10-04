@@ -52,6 +52,10 @@ namespace nfe
         static SpaceTree* fromConfig(nfe::ConfigurationElement& config);
 
         Result insert(std::size_t width, std::size_t height);
+
+        static const char* typeToString(Type type);
+
+        static Type parseType(const char* str);
     private:
         SpaceTree* _parent{nullptr};
         std::size_t _width{0};
