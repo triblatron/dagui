@@ -44,6 +44,7 @@ SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include
         include/gfx/PackingStrategy.h
         include/gfx/ShelfPackingStrategy.h
         include/core/SpaceTree.h
+        src/util/Searchable.h
 )
 SET( NODEFRONTEND_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaInterface.cpp src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}
         src/core/ConfigurationElement.cpp

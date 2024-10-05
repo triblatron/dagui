@@ -11,14 +11,30 @@
 #include <cstring>
 #include <queue>
 
+#include "util/Searchable.h"
+
 namespace nfe
 {
-    SpaceTree::SpaceTree(SpaceTree* parent, std::size_t width, std::size_t height, Type type)
+    ConfigurationElement::ValueType Children::find(std::string path) const
+    {
+        ConfigurationElement::ValueType retval;
+
+        retval = findArray(path, a, &SpaceTree::find);
+        if (retval.has_value())
+        {
+            return retval;
+        }
+
+        return {};
+    }
+
+    SpaceTree::SpaceTree(SpaceTree* parent, std::size_t width, std::size_t height, Type type, Split split)
         :
     _parent(parent),
     _width(width),
     _height(height),
-    _type(type)
+    _type(type),
+    _split(split)
     {
         // Do nothing.
     }
@@ -27,7 +43,7 @@ namespace nfe
     {
         std::invoke(callback, this);
 
-        for (auto child : _children)
+        for (auto child : _children.a)
         {
             child->traversal(callback);
         }
@@ -44,7 +60,12 @@ namespace nfe
         {
             height = static_cast<size_t>(heightConfig->asInteger());
         }
-        auto root = new SpaceTree(nullptr, width, height, TYPE_FREE);
+        auto split = SPLIT_UNKNOWN;
+        if (auto splitConfig = config.findElement("split"); splitConfig)
+        {
+            split = parseSplit(splitConfig->asString().c_str());
+        }
+        auto root = new SpaceTree(nullptr, width, height, TYPE_FREE, split);
 
         using ConfigQueue = std::queue<ConfigurationElement*>;
         ConfigQueue configQueue;
@@ -77,7 +98,12 @@ namespace nfe
                     {
                         type = parseType(typeConfig->asString().c_str());
                     }
-                    auto child = new SpaceTree(nullptr, width, height, type);
+                    auto split = SPLIT_UNKNOWN;
+                    if (auto splitConfig = childConfig.findElement("split"); splitConfig)
+                    {
+                        split = parseSplit(splitConfig->asString().c_str());
+                    }
+                    auto child = new SpaceTree(nullptr, width, height, type, split);
 
                     parent->addChild(child);
                     configQueue.push(&childConfig);
@@ -96,6 +122,32 @@ namespace nfe
             return RESULT_FAILED_TO_INSERT;
         }
         return RESULT_OK;
+    }
+
+    ConfigurationElement::ValueType SpaceTree::find(std::string path) const
+    {
+        ConfigurationElement::ValueType retval {};
+
+        retval = findInternal(path, "children", _children, &Children::find);
+        if (retval.has_value())
+            return retval;
+        retval = findEndpoint(path, "nodeType", typeToString(_type));
+        if (retval.has_value())
+            return retval;
+
+        retval = findEndpoint(path, "width", (std::int64_t)_width);
+        if (retval.has_value())
+            return retval;
+
+        retval = findEndpoint(path, "height", (std::int64_t)_height);
+        if (retval.has_value())
+            return retval;
+
+        retval = findEndpoint(path, "split", splitToString(_split));
+        if (retval.has_value())
+            return retval;
+
+        return {};
     }
 
     const char* SpaceTree::typeToString(Type type)
@@ -119,5 +171,26 @@ namespace nfe
         TEST_ENUM(TYPE_FULL, str);
 
         return TYPE_UNKNOWN;
+    }
+
+    const char* SpaceTree::splitToString(Split split)
+    {
+        switch (split)
+        {
+            ENUM_NAME(SPLIT_UNKNOWN)
+            ENUM_NAME(SPLIT_HORIZONTAL)
+            ENUM_NAME(SPLIT_VERTICAL)
+        }
+
+        return "<error>";
+    }
+
+    SpaceTree::Split SpaceTree::parseSplit(const char* str)
+    {
+        TEST_ENUM(SPLIT_UNKNOWN, str);
+        TEST_ENUM(SPLIT_HORIZONTAL, str);
+        TEST_ENUM(SPLIT_VERTICAL, str);
+
+        return SPLIT_UNKNOWN;
     }
 }
