@@ -28,9 +28,11 @@ namespace nfe
         return {};
     }
 
-    SpaceTree::SpaceTree(std::size_t width, std::size_t height, Type type, Split split)
+    SpaceTree::SpaceTree(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Type type, Split split)
         :
     _parent(nullptr),
+    _x(x),
+    _y(y),
     _width(width),
     _height(height),
     _type(type),
@@ -51,7 +53,15 @@ namespace nfe
 
     SpaceTree* SpaceTree::createNode(ConfigurationElement& config)
     {
-        size_t width=0, height=0;
+        size_t x=0, y=0, width=0, height=0;
+        if (auto xConfig = config.findElement("x"); xConfig)
+        {
+            x = static_cast<size_t>(xConfig->asInteger());
+        }
+        if (auto yConfig = config.findElement("y"); yConfig)
+        {
+            y = static_cast<size_t>(yConfig->asInteger());
+        }
         if (auto widthConfig = config.findElement("width"); widthConfig)
         {
             width = static_cast<size_t>(widthConfig->asInteger());
@@ -70,7 +80,7 @@ namespace nfe
         {
             split = parseSplit(splitConfig->asString().c_str());
         }
-        return new SpaceTree(width, height, type, split);
+        return new SpaceTree(x, y, width, height, type, split);
     }
 
     SpaceTree* SpaceTree::fromConfig(nfe::ConfigurationElement& config)
@@ -106,11 +116,68 @@ namespace nfe
         return root;
     }
 
-    SpaceTree::Result SpaceTree::insert(std::size_t width, std::size_t height)
+    SpaceTree::Result SpaceTree::split(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Split split)
     {
-        if (width > _width || height > _height)
+        switch (_type)
         {
-            return RESULT_FAILED_TO_INSERT;
+        case TYPE_FREE:
+            {
+                _type = TYPE_INTERNAL;
+                _split = split;
+                switch (split)
+                {
+                case SPLIT_HORIZONTAL:
+                    {
+                        auto leftChild = new SpaceTree(_x, _y, width, _height, TYPE_FREE, SPLIT_UNKNOWN);
+                        addChild(leftChild);
+                        auto rightChild = new SpaceTree(_x+width, _y, _width-width, _height, TYPE_FREE, SPLIT_UNKNOWN);
+                        addChild(rightChild);
+                        break;
+                    }
+                case SPLIT_VERTICAL:
+                    {
+                        auto leftChild = new SpaceTree(_x, _y, width, height, TYPE_FREE, SPLIT_UNKNOWN);
+                        addChild(leftChild);
+                        auto rightChild = new SpaceTree(_x, _y+height, width, _height - height, TYPE_FREE, SPLIT_UNKNOWN);
+                        addChild(rightChild);
+                        break;
+                    }
+                default:
+                    return RESULT_FAILED_TO_SPLIT;
+                }
+            }
+        }
+        return RESULT_OK;
+    }
+
+    SpaceTree::Result SpaceTree::insert(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Heuristic heuristic)
+    {
+        // Try to fit according to the heuristic
+        switch (heuristic)
+        {
+        case NEXT_FIT:
+            // Find the next available large enough free space.
+            switch (_type)
+            {
+                case TYPE_UNKNOWN:
+                    break;
+                case TYPE_FREE:
+                    {
+                        if (width > _width || height > _height)
+                        {
+                            return RESULT_FAILED_TO_INSERT;
+                        }
+                        split(x, y, width, height, SPLIT_HORIZONTAL);
+                        child(0)->split(x, y, width, height, SPLIT_VERTICAL);
+                        return RESULT_OK;
+                    }
+                case TYPE_FULL:
+                    return RESULT_FAILED_TO_INSERT;
+                case TYPE_INTERNAL:
+                    // Recursively try to insert.
+                    break;
+            }
+            break;
         }
         return RESULT_OK;
     }
@@ -122,15 +189,24 @@ namespace nfe
         retval = findInternal(path, "children", _children, &Children::find);
         if (retval.has_value())
             return retval;
+
         retval = findEndpoint(path, "nodeType", typeToString(_type));
         if (retval.has_value())
             return retval;
 
-        retval = findEndpoint(path, "width", (std::int64_t)_width);
+        retval = findEndpoint(path, "x", static_cast<std::int64_t>(_x));
         if (retval.has_value())
             return retval;
 
-        retval = findEndpoint(path, "height", (std::int64_t)_height);
+        retval = findEndpoint(path, "y", static_cast<std::int64_t>(_y));
+        if (retval.has_value())
+            return retval;
+
+        retval = findEndpoint(path, "width", static_cast<std::int64_t>(_width));
+        if (retval.has_value())
+            return retval;
+
+        retval = findEndpoint(path, "height", static_cast<std::int64_t>(_height));
         if (retval.has_value())
             return retval;
 
@@ -183,5 +259,28 @@ namespace nfe
         TEST_ENUM(SPLIT_VERTICAL, str);
 
         return SPLIT_UNKNOWN;
+    }
+
+    const char* SpaceTree::resultToString(Result result)
+    {
+        switch (result)
+        {
+            ENUM_NAME(RESULT_OK)
+            ENUM_NAME(RESULT_UNKNOWN)
+            ENUM_NAME(RESULT_FAILED_TO_INSERT)
+            ENUM_NAME(RESULT_FAILED_TO_SPLIT)
+        }
+
+        return "<error>";
+    }
+
+    SpaceTree::Result SpaceTree::parseResult(const char* str)
+    {
+        TEST_ENUM(RESULT_OK, str);
+        TEST_ENUM(RESULT_UNKNOWN, str);
+        TEST_ENUM(RESULT_FAILED_TO_INSERT, str);
+        TEST_ENUM(RESULT_FAILED_TO_SPLIT, str);
+
+        return RESULT_UNKNOWN;
     }
 }

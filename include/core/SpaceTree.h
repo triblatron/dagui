@@ -31,7 +31,9 @@ namespace nfe
         enum Result
         {
             RESULT_OK,
-            RESULT_FAILED_TO_INSERT
+            RESULT_UNKNOWN,
+            RESULT_FAILED_TO_INSERT,
+            RESULT_FAILED_TO_SPLIT
         };
 
         enum Type
@@ -49,7 +51,12 @@ namespace nfe
             SPLIT_VERTICAL
         };
 
-        SpaceTree(std::size_t width, std::size_t height, Type type, Split split);
+        enum Heuristic
+        {
+            NEXT_FIT
+        };
+
+        SpaceTree(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Type type, Split split);
 
         void setParent(SpaceTree* parent)
         {
@@ -65,13 +72,24 @@ namespace nfe
             }
         }
 
+        SpaceTree* child(std::size_t index)
+        {
+            if (index<_children.a.size())
+            {
+                return _children.a[index];
+            }
+
+            return nullptr;
+        }
         void traversal(const std::function<void(SpaceTree*)>& callback);
 
         static SpaceTree* createNode(ConfigurationElement& config);
 
         static SpaceTree* fromConfig(nfe::ConfigurationElement& config);
 
-        Result insert(std::size_t width, std::size_t height);
+        Result split(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Split split);
+
+        Result insert(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Heuristic heuristic);
 
         ConfigurationElement::ValueType find(const std::string& path) const;
 
@@ -82,8 +100,14 @@ namespace nfe
         static const char* splitToString(Split split);
 
         static Split parseSplit(const char* str);
+
+        static const char* resultToString(Result result);
+
+        static Result parseResult(const char* str);
     private:
         SpaceTree* _parent{nullptr};
+        std::size_t _x{0};
+        std::size_t _y{0};
         std::size_t _width{0};
         std::size_t _height{0};
         Type  _type{TYPE_UNKNOWN};
