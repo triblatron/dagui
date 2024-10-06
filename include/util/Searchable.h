@@ -34,7 +34,9 @@ namespace nfe
 	}
 
 	template<typename T, typename U>
-	nfe::ConfigurationElement::ValueType findInternal(std::string path, const char* key, U obj, ConfigurationElement::ValueType (T::*func)(std::string) const)
+	auto findInternal(const std::string& path, const char* key, U obj,
+	                  ConfigurationElement::ValueType (T::*func)(const std::string&) const) ->
+		nfe::ConfigurationElement::ValueType
 	{
 		auto pos = path.find(key);
 
@@ -56,7 +58,7 @@ namespace nfe
 	}
 
 	template<typename T, typename U>
-	nfe::ConfigurationElement::ValueType findArray(std::string path, U obj, ConfigurationElement::ValueType (T::*func)(std::string) const)
+	nfe::ConfigurationElement::ValueType findArray(std::string path, U obj, ConfigurationElement::ValueType (T::*func)(const std::string&) const)
 	{
 		auto subPos = path.find('[');
 

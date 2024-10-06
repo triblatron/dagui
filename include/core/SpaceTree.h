@@ -22,7 +22,7 @@ namespace nfe
         using ChildArray = std::vector<SpaceTree*>;
         ChildArray a;
 
-        ConfigurationElement::ValueType find(std::string path) const;
+        ConfigurationElement::ValueType find(const std::string&) const;
     };
 
     class NFE_API SpaceTree
@@ -73,7 +73,7 @@ namespace nfe
 
         Result insert(std::size_t width, std::size_t height);
 
-        ConfigurationElement::ValueType find(std::string path) const;
+        ConfigurationElement::ValueType find(const std::string& path) const;
 
         static const char* typeToString(Type type);
 

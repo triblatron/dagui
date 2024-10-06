@@ -15,7 +15,7 @@
 
 namespace nfe
 {
-    ConfigurationElement::ValueType Children::find(std::string path) const
+    ConfigurationElement::ValueType Children::find(const std::string& path) const
     {
         ConfigurationElement::ValueType retval;
 
@@ -115,7 +115,7 @@ namespace nfe
         return RESULT_OK;
     }
 
-    ConfigurationElement::ValueType SpaceTree::find(std::string path) const
+    ConfigurationElement::ValueType SpaceTree::find(const std::string& path) const
     {
         ConfigurationElement::ValueType retval {};
 
