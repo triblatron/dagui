@@ -28,9 +28,9 @@ namespace nfe
         return {};
     }
 
-    SpaceTree::SpaceTree(SpaceTree* parent, std::size_t width, std::size_t height, Type type, Split split)
+    SpaceTree::SpaceTree(std::size_t width, std::size_t height, Type type, Split split)
         :
-    _parent(parent),
+    _parent(nullptr),
     _width(width),
     _height(height),
     _type(type),
@@ -49,7 +49,7 @@ namespace nfe
         }
     }
 
-    SpaceTree* SpaceTree::fromConfig(nfe::ConfigurationElement& config)
+    SpaceTree* SpaceTree::createNode(ConfigurationElement& config)
     {
         size_t width=0, height=0;
         if (auto widthConfig = config.findElement("width"); widthConfig)
@@ -60,12 +60,22 @@ namespace nfe
         {
             height = static_cast<size_t>(heightConfig->asInteger());
         }
+        auto type = TYPE_UNKNOWN;
+        if (auto typeConfig = config.findElement("nodeType"); typeConfig)
+        {
+            type = parseType(typeConfig->asString().c_str());
+        }
         auto split = SPLIT_UNKNOWN;
         if (auto splitConfig = config.findElement("split"); splitConfig)
         {
             split = parseSplit(splitConfig->asString().c_str());
         }
-        auto root = new SpaceTree(nullptr, width, height, TYPE_FREE, split);
+        return new SpaceTree(width, height, type, split);
+    }
+
+    SpaceTree* SpaceTree::fromConfig(nfe::ConfigurationElement& config)
+    {
+        auto root = createNode(config);
 
         using ConfigQueue = std::queue<ConfigurationElement*>;
         ConfigQueue configQueue;
@@ -84,26 +94,7 @@ namespace nfe
             {
                 childrenConfig->eachChild([&configQueue, &parentQueue, &parent](nfe::ConfigurationElement& childConfig)
                 {
-                    std::size_t width=0, height=0;
-                    if (auto widthConfig = childConfig.findElement("width"); widthConfig)
-                    {
-                        width = static_cast<std::size_t>(widthConfig->asInteger());
-                    }
-                    if (auto heightConfig = childConfig.findElement("height"); heightConfig)
-                    {
-                        height = static_cast<size_t>(heightConfig->asInteger());
-                    }
-                    auto type = TYPE_UNKNOWN;
-                    if (auto typeConfig = childConfig.findElement("nodeType"); typeConfig)
-                    {
-                        type = parseType(typeConfig->asString().c_str());
-                    }
-                    auto split = SPLIT_UNKNOWN;
-                    if (auto splitConfig = childConfig.findElement("split"); splitConfig)
-                    {
-                        split = parseSplit(splitConfig->asString().c_str());
-                    }
-                    auto child = new SpaceTree(nullptr, width, height, type, split);
+                    auto child = createNode(childConfig);
 
                     parent->addChild(child);
                     configQueue.push(&childConfig);

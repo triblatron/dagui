@@ -49,7 +49,7 @@ namespace nfe
             SPLIT_VERTICAL
         };
 
-        SpaceTree(SpaceTree* parent, std::size_t width, std::size_t height, Type type, Split split);
+        SpaceTree(std::size_t width, std::size_t height, Type type, Split split);
 
         void setParent(SpaceTree* parent)
         {
@@ -66,6 +66,8 @@ namespace nfe
         }
 
         void traversal(const std::function<void(SpaceTree*)>& callback);
+
+        static SpaceTree* createNode(ConfigurationElement& config);
 
         static SpaceTree* fromConfig(nfe::ConfigurationElement& config);
 
