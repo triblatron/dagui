@@ -26,7 +26,7 @@ namespace nfe
 	auto findInternal(std::string_view path, const char* key, const Ref& obj) ->
 		nfe::ConfigurationElement::ValueType
 	{
-		auto pos = path.find(key);
+		auto pos = path.compare(0, std::strlen(key), key);
 
 		if (pos == 0)
 		{
@@ -48,7 +48,7 @@ namespace nfe
 	template<typename Array>
 	nfe::ConfigurationElement::ValueType findArray(std::string_view path, const Array& obj)
 	{
-		auto subPos = path.find('[');
+		auto subPos = path.compare(0, 1, "[");
 
 		if (subPos == 0)
 		{
