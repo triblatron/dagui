@@ -21,14 +21,15 @@
 #include "gfx/TextureAtlas.h"
 #include "gfx/PackingStrategy.h"
 #include "core/SpaceTree.h"
+#include "gfx/ShelfPackingStrategy.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 #include <memory>
 #include <cstdint>
+#include <cstring>
 
-#include "gfx/ShelfPackingStrategy.h"
 
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, double, bool>>
 {
@@ -853,4 +854,24 @@ INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTreeResult_testRoundTrip, ::testing::Va
 	std::make_tuple("RESULT_UNKNOWN", nfe::SpaceTree::RESULT_UNKNOWN),
 	std::make_tuple("RESULT_FAILED_TO_INSERT", nfe::SpaceTree::RESULT_FAILED_TO_INSERT),
 	std::make_tuple("RESULT_FAILED_TO_SPLIT", nfe::SpaceTree::RESULT_FAILED_TO_SPLIT)
+	));
+
+class String_testFindPrefix : public ::testing::TestWithParam<std::tuple<const char*, const char*, bool>>
+{
+
+};
+
+TEST_P(String_testFindPrefix, testFindPrefix)
+{
+	std::string haystack = std::get<0>(GetParam());
+	auto needle = std::get<1>(GetParam());
+	auto result = std::get<2>(GetParam());
+
+	auto actual = haystack.compare(0, std::strlen(needle), needle) == 0;
+	EXPECT_EQ(result, actual);
+}
+
+INSTANTIATE_TEST_SUITE_P(String, String_testFindPrefix, ::testing::Values(
+	std::make_tuple("children[0].children[0[].children[0].x", "x", false),
+	std::make_tuple("children[0].children[0[].children[0].x", "children", true)
 	));
