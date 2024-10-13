@@ -11,23 +11,11 @@
 namespace nfe
 {
     template<typename T>
-	nfe::ConfigurationElement::ValueType findEndpoint(std::string path, const char* key, T value)
+	nfe::ConfigurationElement::ValueType findEndpoint(const std::string& path, const char* key, T value)
 	{
 		if (path == key)
 		{
 			return value;
-		}
-
-		return {};
-	}
-
-	//! The inline specifier is necessary to avoid multiple definition errors.
-	template<> inline
-		nfe::ConfigurationElement::ValueType findEndpoint(std::string path, const char* key, std::string value)
-	{
-		if (path == key)
-		{
-			return (value);
 		}
 
 		return {};
