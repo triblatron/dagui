@@ -7,11 +7,12 @@
 #include "config/Export.h"
 
 #include "core/ConfigurationElement.h"
+#include <string_view>
 
 namespace nfe
 {
     template<typename T>
-	nfe::ConfigurationElement::ValueType findEndpoint(const std::string& path, const char* key, T value)
+	nfe::ConfigurationElement::ValueType findEndpoint(std::string_view path, const char* key, T value)
 	{
 		if (path == key)
 		{
@@ -22,7 +23,7 @@ namespace nfe
 	}
 
 	template<typename Ref>
-	auto findInternal(const std::string& path, const char* key, const Ref& obj) ->
+	auto findInternal(std::string_view path, const char* key, const Ref& obj) ->
 		nfe::ConfigurationElement::ValueType
 	{
 		auto pos = path.find(key);
@@ -31,7 +32,7 @@ namespace nfe
 		{
 			auto dotPos = path.find('.');
 			auto subPos = path.find('[');
-			if (subPos != std::string::npos && subPos < dotPos)
+			if (subPos != std::string_view::npos && subPos < dotPos)
 			{
 				return std::invoke(&std::remove_pointer_t<Ref>::find, obj, path.substr(subPos));
 			}
@@ -45,7 +46,7 @@ namespace nfe
 	}
 
 	template<typename Array>
-	nfe::ConfigurationElement::ValueType findArray(const std::string& path, const Array& obj)
+	nfe::ConfigurationElement::ValueType findArray(std::string_view path, const Array& obj)
 	{
 		auto subPos = path.find('[');
 

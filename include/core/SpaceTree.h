@@ -6,9 +6,9 @@
 
 #include "config/Export.h"
 
-#include <cstdlib>
 #include <functional>
 #include <vector>
+#include <string_view>
 
 #include "ConfigurationElement.h"
 
@@ -22,7 +22,7 @@ namespace nfe
         using ChildArray = std::vector<SpaceTree*>;
         ChildArray a;
 
-        ConfigurationElement::ValueType find(const std::string&) const;
+        ConfigurationElement::ValueType find(std::string_view) const;
     };
 
     class NFE_API SpaceTree
@@ -91,7 +91,7 @@ namespace nfe
 
         Result insert(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Heuristic heuristic);
 
-        ConfigurationElement::ValueType find(const std::string& path) const;
+        ConfigurationElement::ValueType find(std::string_view path) const;
 
         static const char* typeToString(Type type);
 
