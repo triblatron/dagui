@@ -31,13 +31,13 @@ namespace nfe
         return buildTree(lua);
     }
 
-    ConfigurationElement* ConfigurationElement::findInArray(size_t startIndex, std::string path)
+    ConfigurationElement* ConfigurationElement::findInArray(size_t startIndex, std::string_view path)
     {
         path = path.substr(startIndex);
         size_t index=0;
         for (index = 0; index<path.length() && isdigit(path[index]); ++index);
         char* end = nullptr;
-        size_t childIndex = std::strtoul(path.c_str(), &end, 10);
+        size_t childIndex = std::strtoul(path.data(), &end, 10);
         if (childIndex<_children.size() && index<path.size() && path[index] == ']')
         {
 			auto child = _children[childIndex];
@@ -55,7 +55,7 @@ namespace nfe
         return nullptr;
     }
 
-    ConfigurationElement* ConfigurationElement::findElement(std::string path)
+    ConfigurationElement* ConfigurationElement::findElement(std::string_view path)
     {
         if (path[0] == '$')
         {
@@ -88,7 +88,7 @@ namespace nfe
         return nullptr;
     }
 
-    ConfigurationElement *ConfigurationElement::findInChildren(std::string path)
+    ConfigurationElement *ConfigurationElement::findInChildren(std::string_view path)
     {
         if (path.empty())
         {
@@ -110,8 +110,8 @@ namespace nfe
                 for (index=0; index<path.length() && path[index] != ']';++index);
                 if (index<path.length() && path[index]==']')
                 {
-                    std::string first = path.substr(0,subPos);
-                    std::string rest = path.substr(subPos);
+                    auto first = path.substr(0,subPos);
+                    auto  rest = path.substr(subPos);
 
                     for (auto child : _children)
                     {
@@ -130,8 +130,8 @@ namespace nfe
             {
                 size_t index = 0;
                 for (index=0; index < path.length() && path[index] != '.' && path[index] != '['; ++index);
-                std::string first = path.substr(1, dotPos);
-                std::string rest = path.substr(dotPos, index-dotPos);
+                auto  first = path.substr(1, dotPos);
+                auto  rest = path.substr(dotPos, index-dotPos);
 
                 for (auto child : _children)
                 {
@@ -143,10 +143,10 @@ namespace nfe
             }
             else
             {
-                std::string first = path.substr(0,dotPos);
+                auto first = path.substr(0,dotPos);
                 if (path.length()>dotPos)
                 {
-                    std::string rest = path.substr(dotPos+1);
+                    auto rest = path.substr(dotPos+1);
                     for (auto child : _children)
                     {
                         if (child->_name == first)

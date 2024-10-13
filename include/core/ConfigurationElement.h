@@ -39,7 +39,7 @@ namespace nfe
 		
         ConfigurationElement(std::string name, ValueType::value_type value)
         :
-        _name(name),
+        _name(std::move(name)),
         _value(value)
         {
             // Do nothing.
@@ -128,7 +128,7 @@ namespace nfe
                 return defaultValue;
             }
         }
-        ConfigurationElement* findElement(std::string path);
+        ConfigurationElement* findElement(std::string_view path);
         
         void eachChild(std::function<bool (ConfigurationElement&)> f);
     private:
@@ -139,8 +139,8 @@ namespace nfe
                 _parent = parent;
             }
         }
-        ConfigurationElement* findInChildren(std::string path);
-        ConfigurationElement* findInArray(size_t index, std::string path);
+        ConfigurationElement* findInChildren(std::string_view path);
+        ConfigurationElement* findInArray(size_t index, std::string_view path);
         ConfigurationElement* _parent{nullptr};
         std::string _name;
         std::int64_t _index{0};
