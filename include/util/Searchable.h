@@ -33,9 +33,8 @@ namespace nfe
 		return {};
 	}
 
-	template<typename T, typename U>
-	auto findInternal(const std::string& path, const char* key, U obj,
-	                  ConfigurationElement::ValueType (T::*func)(const std::string&) const) ->
+	template<typename Ref>
+	auto findInternal(const std::string& path, const char* key, const Ref& obj) ->
 		nfe::ConfigurationElement::ValueType
 	{
 		auto pos = path.find(key);
@@ -46,19 +45,19 @@ namespace nfe
 			auto subPos = path.find('[');
 			if (subPos != std::string::npos && subPos < dotPos)
 			{
-				return std::invoke(func, obj, path.substr(subPos));
+				return std::invoke(&std::remove_pointer_t<Ref>::find, obj, path.substr(subPos));
 			}
 			if (dotPos < path.length() - 1)
 			{
-				return std::invoke(func, obj, path.substr(dotPos + 1));
+				return std::invoke(&std::remove_pointer_t<Ref>::find, obj, path.substr(dotPos + 1));
 			}
 		}
 
 		return {};
 	}
 
-	template<typename T, typename U>
-	nfe::ConfigurationElement::ValueType findArray(std::string path, U obj, ConfigurationElement::ValueType (T::*func)(const std::string&) const)
+	template<typename Array>
+	nfe::ConfigurationElement::ValueType findArray(const std::string& path, const Array& obj)
 	{
 		auto subPos = path.find('[');
 
@@ -76,39 +75,11 @@ namespace nfe
 				auto dotPos = path.find('.');
 				if (dotPos < path.length() - 1)
 				{
-					return std::invoke(func, (obj)[index], path.substr(dotPos + 1));
+					return std::invoke(&std::remove_pointer_t<typename Array::value_type>::find, (obj)[index], path.substr(dotPos + 1));
 				}
 			}
 		}
 
 		return {};
 	}
-
-	template<typename T>
-	nfe::ConfigurationElement::ValueType findVector(std::string path, const T& a)
-	{
-		auto subPos = path.find('[');
-
-		if (subPos == 0)
-		{
-			std::size_t firstIndex = subPos + 1;
-			std::size_t index = 0;
-			char* endPtr = nullptr;
-			if (firstIndex < path.length())
-			{
-				index = strtoull(&path[firstIndex], &endPtr, 10);
-			}
-			if (index < (a).size())
-			{
-				auto dotPos = path.find('.');
-				if (dotPos < path.length() - 1)
-				{
-					return std::to_string(a[index]);
-				}
-			}
-		}
-
-		return {};
-	}
-    
 }

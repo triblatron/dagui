@@ -19,7 +19,7 @@ namespace nfe
     {
         ConfigurationElement::ValueType retval;
 
-        retval = findArray(path, a, &SpaceTree::find);
+        retval = findArray(path, a);
         if (retval.has_value())
         {
             return retval;
@@ -186,7 +186,7 @@ namespace nfe
     {
         ConfigurationElement::ValueType retval {};
 
-        retval = findInternal(path, "children", _children, &Children::find);
+        retval = findInternal(path, "children", _children);
         if (retval.has_value())
             return retval;
 
