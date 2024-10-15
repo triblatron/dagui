@@ -17,9 +17,8 @@ namespace nfe
 {
     ConfigurationElement::ValueType Children::find(std::string_view path) const
     {
-        ConfigurationElement::ValueType retval;
+        ConfigurationElement::ValueType retval = findArray(path, a);
 
-        retval = findArray(path, a);
         if (retval.has_value())
         {
             return retval;
@@ -28,7 +27,7 @@ namespace nfe
         return {};
     }
 
-    SpaceTree::SpaceTree(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Type type, Split split)
+    SpaceTree::SpaceTree(std::int32_t x, std::int32_t y, std::int32_t width, std::int32_t height, Type type, Split split)
         :
     _parent(nullptr),
     _x(x),
@@ -53,22 +52,22 @@ namespace nfe
 
     SpaceTree* SpaceTree::createNode(ConfigurationElement& config)
     {
-        size_t x=0, y=0, width=0, height=0;
+        std::int32_t x=0, y=0, width=0, height=0;
         if (auto xConfig = config.findElement("x"); xConfig)
         {
-            x = static_cast<size_t>(xConfig->asInteger());
+            x = static_cast<std::int32_t>(xConfig->asInteger());
         }
         if (auto yConfig = config.findElement("y"); yConfig)
         {
-            y = static_cast<size_t>(yConfig->asInteger());
+            y = static_cast<std::int32_t>(yConfig->asInteger());
         }
         if (auto widthConfig = config.findElement("width"); widthConfig)
         {
-            width = static_cast<size_t>(widthConfig->asInteger());
+            width = static_cast<std::int32_t>(widthConfig->asInteger());
         }
         if (auto heightConfig = config.findElement("height"); heightConfig)
         {
-            height = static_cast<size_t>(heightConfig->asInteger());
+            height = static_cast<std::int32_t>(heightConfig->asInteger());
         }
         auto type = TYPE_UNKNOWN;
         if (auto typeConfig = config.findElement("nodeType"); typeConfig)
@@ -116,7 +115,7 @@ namespace nfe
         return root;
     }
 
-    SpaceTree::Result SpaceTree::split(std::size_t width, std::size_t height, Split split)
+    SpaceTree::Result SpaceTree::split(std::int32_t width, std::int32_t height, Split split)
     {
         switch (_type)
         {
@@ -150,7 +149,7 @@ namespace nfe
         return RESULT_OK;
     }
 
-    SpaceTree::Result SpaceTree::insert(std::size_t width, std::size_t height, Heuristic heuristic)
+    SpaceTree::Result SpaceTree::insert(std::int32_t width, std::int32_t height, Heuristic heuristic)
     {
         // Try to fit according to the heuristic
         switch (heuristic)
@@ -178,6 +177,35 @@ namespace nfe
                     break;
             }
             break;
+        case FIT_BEST_SHORT_SIDE:
+            switch (_type)
+            {
+                case TYPE_UNKNOWN:
+                    break;
+                case TYPE_FREE:
+                    {
+                        std::size_t shortSide {0};
+
+                        if (_width < _height)
+                        {
+                            shortSide = std::abs(_width - width);
+                        }
+                        else
+                        {
+                            shortSide = std::abs(_height - height);
+                        }
+
+                        break;
+                    }
+                case TYPE_FULL:
+                    return RESULT_FAILED_TO_INSERT;
+                case TYPE_INTERNAL:
+
+                    break;
+            }
+            break;
+        default:
+            return RESULT_FAILED_TO_INSERT;
         }
         return RESULT_OK;
     }

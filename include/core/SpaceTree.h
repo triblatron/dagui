@@ -58,7 +58,7 @@ namespace nfe
             FIT_BEST_SHORT_SIDE
         };
 
-        SpaceTree(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Type type, Split split);
+        SpaceTree(std::int32_t x, std::int32_t y, std::int32_t width, std::int32_t height, Type type, Split split);
 
         void setParent(SpaceTree* parent)
         {
@@ -89,9 +89,9 @@ namespace nfe
 
         static SpaceTree* fromConfig(nfe::ConfigurationElement& config);
 
-        Result split(std::size_t width, std::size_t height, Split split);
+        Result split(std::int32_t width, std::int32_t height, Split split);
 
-        Result insert(std::size_t width, std::size_t height, Heuristic heuristic);
+        Result insert(std::int32_t width, std::int32_t height, Heuristic heuristic);
 
         ConfigurationElement::ValueType find(std::string_view path) const;
 
@@ -112,10 +112,10 @@ namespace nfe
         static Heuristic parseHeuristic(const char* str);
     private:
         SpaceTree* _parent{nullptr};
-        std::size_t _x{0};
-        std::size_t _y{0};
-        std::size_t _width{0};
-        std::size_t _height{0};
+        std::int32_t _x{0};
+        std::int32_t _y{0};
+        std::int32_t _width{0};
+        std::int32_t _height{0};
         Type  _type{TYPE_UNKNOWN};
         Split _split{SPLIT_UNKNOWN};
         Children _children;
