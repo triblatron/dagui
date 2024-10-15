@@ -116,7 +116,7 @@ namespace nfe
         return root;
     }
 
-    SpaceTree::Result SpaceTree::split(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Split split)
+    SpaceTree::Result SpaceTree::split(std::size_t width, std::size_t height, Split split)
     {
         switch (_type)
         {
@@ -150,12 +150,12 @@ namespace nfe
         return RESULT_OK;
     }
 
-    SpaceTree::Result SpaceTree::insert(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Heuristic heuristic)
+    SpaceTree::Result SpaceTree::insert(std::size_t width, std::size_t height, Heuristic heuristic)
     {
         // Try to fit according to the heuristic
         switch (heuristic)
         {
-        case NEXT_FIT:
+        case FIT_NEXT:
             // Find the next available large enough free space.
             switch (_type)
             {
@@ -167,8 +167,8 @@ namespace nfe
                         {
                             return RESULT_FAILED_TO_INSERT;
                         }
-                        split(x, y, width, height, SPLIT_HORIZONTAL);
-                        child(0)->split(x, y, width, height, SPLIT_VERTICAL);
+                        split(width, height, SPLIT_HORIZONTAL);
+                        child(0)->split(width, height, SPLIT_VERTICAL);
                         return RESULT_OK;
                     }
                 case TYPE_FULL:
@@ -282,5 +282,26 @@ namespace nfe
         TEST_ENUM(RESULT_FAILED_TO_SPLIT, str);
 
         return RESULT_UNKNOWN;
+    }
+
+    const char* SpaceTree::heuristicToString(Heuristic value)
+    {
+        switch (value)
+        {
+            ENUM_NAME(FIT_UNKNOWN)
+            ENUM_NAME(FIT_NEXT)
+            ENUM_NAME(FIT_BEST_SHORT_SIDE)
+        }
+
+        return "<error>";
+    }
+
+    SpaceTree::Heuristic SpaceTree::parseHeuristic(const char* str)
+    {
+        TEST_ENUM(FIT_UNKNOWN, str);
+        TEST_ENUM(FIT_NEXT, str);
+        TEST_ENUM(FIT_BEST_SHORT_SIDE, str);
+
+        return FIT_UNKNOWN;
     }
 }

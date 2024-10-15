@@ -53,7 +53,9 @@ namespace nfe
 
         enum Heuristic
         {
-            NEXT_FIT
+            FIT_UNKNOWN,
+            FIT_NEXT,
+            FIT_BEST_SHORT_SIDE
         };
 
         SpaceTree(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Type type, Split split);
@@ -87,9 +89,9 @@ namespace nfe
 
         static SpaceTree* fromConfig(nfe::ConfigurationElement& config);
 
-        Result split(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Split split);
+        Result split(std::size_t width, std::size_t height, Split split);
 
-        Result insert(std::size_t x, std::size_t y, std::size_t width, std::size_t height, Heuristic heuristic);
+        Result insert(std::size_t width, std::size_t height, Heuristic heuristic);
 
         ConfigurationElement::ValueType find(std::string_view path) const;
 
@@ -104,6 +106,10 @@ namespace nfe
         static const char* resultToString(Result result);
 
         static Result parseResult(const char* str);
+
+        static const char* heuristicToString(Heuristic value);
+
+        static Heuristic parseHeuristic(const char* str);
     private:
         SpaceTree* _parent{nullptr};
         std::size_t _x{0};
