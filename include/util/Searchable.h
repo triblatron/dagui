@@ -61,6 +61,7 @@ namespace nfe
 	//! \param[in] path : string_view The path that might start with a subscript [n] where n is an integer >= 0.
 	//! \note Array must implement value_type and size().
 	//! It is typically std::vector which fulfills these requirements.
+	//! \note Array::value_type must implement find().
 	//! \note We use std::invoke() to handle pointers and references uniformly.
 	//! \note We can avoid an initial string_view::find() because we are only interested in the first element of path.
 	template<typename Array>
