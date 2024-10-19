@@ -63,6 +63,11 @@ namespace nfe
             return _a[index];
         }
 
+        const SpaceTree* operator[](std::size_t index) const
+        {
+            return _a[index];
+        }
+
         ConfigurationElement::ValueType find(std::string_view) const;
     private:
         ChildArray _a{nullptr};
@@ -135,6 +140,21 @@ namespace nfe
         Type type() const
         {
             return _type;
+        }
+
+        Split split() const
+        {
+            return _split;
+        }
+
+        std::int32_t x() const
+        {
+            return _x;
+        }
+
+        std::int32_t y() const
+        {
+            return _y;
         }
 
         std::int32_t width() const
