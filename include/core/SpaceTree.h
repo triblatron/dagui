@@ -7,7 +7,7 @@
 #include "config/Export.h"
 
 #include <functional>
-#include <vector>
+#include <array>
 #include <string_view>
 
 #include "ConfigurationElement.h"
@@ -17,12 +17,46 @@ namespace nfe
     class ConfigurationElement;
     class SpaceTree;
 
-    struct NFE_API Children
+    class NFE_API Children
     {
-        using ChildArray = std::vector<SpaceTree*>;
-        ChildArray a;
+    public:
+        using ChildArray = std::array<SpaceTree*,2>;
+    public:
+        ChildArray::iterator begin()
+        {
+            return _a.begin();
+        }
+
+        ChildArray::iterator end()
+        {
+            return _a.end();
+        }
+
+        std::size_t size() const
+        {
+            return _nextIndex;
+        }
+
+        void addChild(SpaceTree* child)
+        {
+            if (child)
+            {
+                if (_nextIndex < _a.max_size())
+                {
+                    _a[_nextIndex++] = child;
+                }
+            }
+        }
+
+        SpaceTree* operator[](std::size_t index)
+        {
+            return _a[index];
+        }
 
         ConfigurationElement::ValueType find(std::string_view) const;
+    private:
+        ChildArray _a{nullptr};
+        std::size_t _nextIndex{0};
     };
 
     class NFE_API SpaceTree
@@ -70,20 +104,21 @@ namespace nfe
             if (child != nullptr)
             {
                 child->setParent(this);
-                _children.a.push_back(child);
+                _children.addChild(child);
             }
         }
 
         SpaceTree* child(std::size_t index)
         {
-            if (index<_children.a.size())
+            if (index<_children.size())
             {
-                return _children.a[index];
+                return _children[index];
             }
 
             return nullptr;
         }
-        void traversal(const std::function<void(SpaceTree*)>& callback);
+
+        void traversal(const std::function<bool(SpaceTree*)>& callback);
 
         static SpaceTree* createNode(ConfigurationElement& config);
 

@@ -719,6 +719,8 @@ TEST_P(SpaceTree_testFromConfig, testFromConfig)
 	sut->traversal([&actualNumNodes](nfe::SpaceTree* node)
 	{
 		actualNumNodes++;
+
+		return true;
 	});
 	ASSERT_EQ(numNodes, actualNumNodes);
 	EXPECT_EQ(value, sut->find(path));

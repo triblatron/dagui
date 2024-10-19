@@ -17,7 +17,7 @@ namespace nfe
 {
     ConfigurationElement::ValueType Children::find(std::string_view path) const
     {
-        ConfigurationElement::ValueType retval = findArray(path, a);
+        ConfigurationElement::ValueType retval = findArray(path, _a);
 
         if (retval.has_value())
         {
@@ -40,13 +40,17 @@ namespace nfe
         // Do nothing.
     }
 
-    void SpaceTree::traversal(const std::function<void(SpaceTree*)>& callback)
+    void SpaceTree::traversal(const std::function<bool(SpaceTree*)>& callback)
     {
-        std::invoke(callback, this);
-
-        for (auto child : _children.a)
+        if (!std::invoke(callback, this))
         {
-            child->traversal(callback);
+            return;
+        }
+
+        for (auto child : _children)
+        {
+            if (child)
+                child->traversal(callback);
         }
     }
 
