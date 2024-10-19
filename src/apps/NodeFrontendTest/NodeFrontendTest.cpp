@@ -716,7 +716,7 @@ TEST_P(SpaceTree_testFromConfig, testFromConfig)
 	auto sut = nfe::SpaceTree::fromConfig(*config);
 	ASSERT_NE(nullptr, sut);
 	std::size_t actualNumNodes {0};
-	sut->traversal([&actualNumNodes](nfe::SpaceTree* node)
+	sut->traversal([&actualNumNodes](const nfe::SpaceTree* node)
 	{
 		actualNumNodes++;
 
@@ -790,6 +790,44 @@ INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testInsert, ::testing::Values(
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].children[1].y", 256),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].children[1].width", 256),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].children[1].height", 256)
+	));
+
+class SpaceTree_testFindSpace : public ::testing::TestWithParam<std::tuple<
+		const char*, std::int32_t, std::int32_t, nfe::SpaceTree::Heuristic>>
+{
+public:
+	void SetUp() override
+	{
+		auto configStr = std::get<0>(GetParam());
+		auto config = nfe::ConfigurationElement::fromString(configStr);
+		_sut = nfe::SpaceTree::fromConfig(*config);
+		ASSERT_NE(nullptr, config);
+	}
+
+	void TearDown() override
+	{
+		delete _sut;
+	}
+protected:
+	nfe::SpaceTree* _sut{nullptr};
+};
+
+TEST_P(SpaceTree_testFindSpace, testFindSpace)
+{
+	auto width = std::get<1>(GetParam());
+	auto height = std::get<2>(GetParam());
+	auto heuristic = std::get<3>(GetParam());
+
+	auto actual = _sut->findSpace(width, height, heuristic);
+	ASSERT_NE(nullptr, actual);
+	EXPECT_EQ(nfe::SpaceTree::TYPE_FREE, actual->type());
+	EXPECT_GE(actual->width(), width);
+	EXPECT_GE(actual->height(), height);
+}
+
+INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testFindSpace, ::testing::Values(
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::FIT_NEXT),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 512, 512, nfe::SpaceTree::FIT_NEXT)
 	));
 
 class SpaceTreeType_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, nfe::SpaceTree::Type>>

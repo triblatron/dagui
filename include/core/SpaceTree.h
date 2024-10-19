@@ -32,6 +32,16 @@ namespace nfe
             return _a.end();
         }
 
+        ChildArray::const_iterator begin() const
+        {
+            return _a.begin();
+        }
+
+        ChildArray::const_iterator end() const
+        {
+            return _a.end();
+        }
+
         std::size_t size() const
         {
             return _nextIndex;
@@ -120,6 +130,23 @@ namespace nfe
 
         void traversal(const std::function<bool(SpaceTree*)>& callback);
 
+        void traversal(const std::function<bool(const SpaceTree*)>& callback) const;
+
+        Type type() const
+        {
+            return _type;
+        }
+
+        std::int32_t width() const
+        {
+            return _width;
+        }
+
+        std::int32_t height() const
+        {
+            return _height;
+        }
+
         static SpaceTree* createNode(ConfigurationElement& config);
 
         static SpaceTree* fromConfig(nfe::ConfigurationElement& config);
@@ -129,6 +156,8 @@ namespace nfe
         Result insert(std::int32_t width, std::int32_t height, Heuristic heuristic);
 
         ConfigurationElement::ValueType find(std::string_view path) const;
+
+        SpaceTree* findSpace(std::int32_t width, std::int32_t height, Heuristic heuristic);
 
         static const char* typeToString(Type type);
 

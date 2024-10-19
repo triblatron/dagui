@@ -54,6 +54,20 @@ namespace nfe
         }
     }
 
+    void SpaceTree::traversal(const std::function<bool(const SpaceTree*)>& callback) const
+    {
+        if (!std::invoke(callback, this))
+        {
+            return;
+        }
+
+        for (const auto* child : _children)
+        {
+            if (child)
+                child->traversal(callback);
+        }
+    }
+
     SpaceTree* SpaceTree::createNode(ConfigurationElement& config)
     {
         std::int32_t x=0, y=0, width=0, height=0;
@@ -148,7 +162,10 @@ namespace nfe
                 default:
                     return RESULT_FAILED_TO_SPLIT;
                 }
+                break;
             }
+        default:
+            return RESULT_FAILED_TO_SPLIT;
         }
         return RESULT_OK;
     }
@@ -247,6 +264,50 @@ namespace nfe
             return retval;
 
         return {};
+    }
+
+    SpaceTree* SpaceTree::findSpace(std::int32_t width, std::int32_t height, Heuristic heuristic)
+    {
+        SpaceTree* freeNode{nullptr};
+
+        switch (heuristic)
+        {
+            case FIT_NEXT:
+                {
+
+                    traversal([width, height, &freeNode] (SpaceTree* node)
+                    {
+                        switch(node->_type)
+                        {
+                        case TYPE_FREE:
+                            if (node->_width >= width && node->_height >= height)
+                            {
+                                freeNode = node;
+                                return false;
+                            }
+                            break;
+                        case TYPE_FULL:
+                            return true;
+                        case TYPE_INTERNAL:
+                            if (node->_width >= width && node->_height >= height)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        default:
+                            return true;
+                        };
+
+                        return true;
+                    });
+                }
+        default:
+            break;
+        }
+        return freeNode;
     }
 
     const char* SpaceTree::typeToString(Type type)
