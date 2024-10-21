@@ -793,7 +793,7 @@ INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testInsert, ::testing::Values(
 	));
 
 class SpaceTree_testFindSpace : public ::testing::TestWithParam<std::tuple<
-		const char*, std::int32_t, std::int32_t, nfe::SpaceTree::Heuristic>>
+		const char*, std::int32_t, std::int32_t, nfe::SpaceTree::Heuristic, const char *, nfe::ConfigurationElement::ValueType>>
 {
 public:
 	void SetUp() override
@@ -817,18 +817,26 @@ TEST_P(SpaceTree_testFindSpace, testFindSpace)
 	auto width = std::get<1>(GetParam());
 	auto height = std::get<2>(GetParam());
 	auto heuristic = std::get<3>(GetParam());
+	auto path = std::get<4>(GetParam());
+	auto value = std::get<5>(GetParam());
 
 	auto actual = _sut->findSpace(width, height, heuristic);
 	ASSERT_NE(nullptr, actual);
 	EXPECT_EQ(nfe::SpaceTree::TYPE_FREE, actual->type());
 	EXPECT_GE(actual->width(), width);
 	EXPECT_GE(actual->height(), height);
+	EXPECT_EQ(value, actual->find(path));
 }
 
 INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testFindSpace, ::testing::Values(
-	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::FIT_NEXT),
-	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 512, 512, nfe::SpaceTree::FIT_NEXT),
-	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", x=0, y=0, width=256, height=512, children={ { width=256, x=0, y=256, height=256, nodeType=\"TYPE_FREE\"}, { x=0, y=0, width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", x=256, y=0, width=256, height=512 } } }", 256, 256, nfe::SpaceTree::FIT_NEXT)
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::FIT_NEXT, "width", 512),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::FIT_NEXT, "height", 512),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 512, 512, nfe::SpaceTree::FIT_NEXT, "width", 512),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 512, 512, nfe::SpaceTree::FIT_NEXT, "height", 512),
+	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", x=0, y=0, width=256, height=512, children={ { width=256, x=0, y=256, height=256, nodeType=\"TYPE_FREE\"}, { x=0, y=0, width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", x=256, y=0, width=256, height=512 } } }", 256, 256, nfe::SpaceTree::FIT_NEXT, "width", 256),
+	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", x=0, y=0, width=256, height=512, children={ { width=256, x=0, y=256, height=256, nodeType=\"TYPE_FREE\"}, { x=0, y=0, width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", x=256, y=0, width=256, height=512 } } }", 256, 256, nfe::SpaceTree::FIT_NEXT, "height", 256),
+	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", x=0, y=0, width=256, height=512, children={ { width=256, x=0, y=256, height=256, nodeType=\"TYPE_FREE\"}, { x=0, y=0, width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", x=256, y=0, width=256, height=512 } } }", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "width", 256),
+	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", x=0, y=0, width=256, height=512, children={ { width=256, x=0, y=256, height=256, nodeType=\"TYPE_FREE\"}, { x=0, y=0, width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", x=256, y=0, width=256, height=512 } } }", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "height", 256)
 	));
 
 class SpaceTreeType_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, nfe::SpaceTree::Type>>

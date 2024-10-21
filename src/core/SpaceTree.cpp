@@ -9,6 +9,7 @@
 #include "util/enums.h"
 
 #include <cstring>
+#include <limits>
 #include <queue>
 
 #include "util/Searchable.h"
@@ -40,32 +41,38 @@ namespace nfe
         // Do nothing.
     }
 
-    void SpaceTree::traversal(const std::function<bool(SpaceTree*)>& callback)
+    bool SpaceTree::traversal(const std::function<bool(SpaceTree*)>& callback)
     {
         if (!std::invoke(callback, this))
         {
-            return;
+            return false;
         }
 
         for (auto child : _children)
         {
             if (child)
-                child->traversal(callback);
+                if (!child->traversal(callback))
+                    return false;
         }
+
+        return true;
     }
 
-    void SpaceTree::traversal(const std::function<bool(const SpaceTree*)>& callback) const
+    bool SpaceTree::traversal(const std::function<bool(const SpaceTree*)>& callback) const
     {
         if (!std::invoke(callback, this))
         {
-            return;
+            return false;
         }
 
         for (const auto* child : _children)
         {
             if (child)
-                child->traversal(callback);
+                if (!child->traversal(callback))
+                    return false;
         }
+
+        return true;
     }
 
     SpaceTree* SpaceTree::createNode(ConfigurationElement& config)
@@ -289,21 +296,56 @@ namespace nfe
                         case TYPE_FULL:
                             return true;
                         case TYPE_INTERNAL:
-                            if (node->_width >= width && node->_height >= height)
                             {
-                                return true;
-                            }
-                            else
-                            {
+                                if (node->_width >= width && node->_height >= height)
+                                {
+                                    return true;
+                                }
                                 return false;
                             }
                         default:
                             return true;
-                        };
+                        }
 
                         return true;
                     });
+                    break;
                 }
+        case FIT_BEST_SHORT_SIDE:
+                {
+                    std::int32_t shortSide {std::numeric_limits<std::int32_t>::max()};
+                    traversal([this, width, height, &freeNode, &shortSide] (SpaceTree* node)
+                    {
+                        switch (node->_type)
+                        {
+                        case TYPE_FREE:
+                            if (node->_width >= width && node->_height >= height)
+                            {
+                                std::int32_t side = std::min(std::abs(_width - width), std::abs(_height - height));
+                                // Determine if we have a better fit than the best so far.
+                                // In the case of a tie, fall back to the first fit.
+                                if (side < shortSide)
+                                {
+                                    shortSide = side;
+                                    freeNode = node;
+                                }
+                            }
+                            break;
+                        case TYPE_INTERNAL:
+                            {
+                                if (node->_width >= width && node->_height >= height)
+                                {
+                                    return true;
+                                }
+                                return false;
+                            }
+                        default:
+                            return true;
+                        }
+                        return true;
+                    });
+                }
+            break;
         default:
             break;
         }

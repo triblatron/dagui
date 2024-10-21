@@ -133,9 +133,9 @@ namespace nfe
             return nullptr;
         }
 
-        void traversal(const std::function<bool(SpaceTree*)>& callback);
+        bool traversal(const std::function<bool(SpaceTree*)>& callback);
 
-        void traversal(const std::function<bool(const SpaceTree*)>& callback) const;
+        bool traversal(const std::function<bool(const SpaceTree*)>& callback) const;
 
         Type type() const
         {
