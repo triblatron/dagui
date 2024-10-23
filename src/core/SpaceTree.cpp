@@ -179,63 +179,22 @@ namespace nfe
 
     SpaceTree::Result SpaceTree::insert(std::int32_t width, std::int32_t height, Heuristic heuristic)
     {
-        // Try to fit according to the heuristic
-        switch (heuristic)
+        auto freeNode = findSpace(width, height, heuristic);
+
+        if (freeNode!=nullptr)
         {
-        case FIT_NEXT:
-            // Find the next available large enough free space.
-            switch (_type)
+            if (freeNode->split(width, height, SPLIT_HORIZONTAL)==Result::RESULT_FAILED_TO_SPLIT)
             {
-                case TYPE_UNKNOWN:
-                    break;
-                case TYPE_FREE:
-                    {
-                        if (width > _width || height > _height)
-                        {
-                            return RESULT_FAILED_TO_INSERT;
-                        }
-                        split(width, height, SPLIT_HORIZONTAL);
-                        child(0)->split(width, height, SPLIT_VERTICAL);
-                        return RESULT_OK;
-                    }
-                case TYPE_FULL:
-                    return RESULT_FAILED_TO_INSERT;
-                case TYPE_INTERNAL:
-                    // Recursively try to insert.
-                    break;
+                return RESULT_FAILED_TO_SPLIT;
             }
-            break;
-        case FIT_BEST_SHORT_SIDE:
-            switch (_type)
+            if (freeNode->child(0)->split(width, height, SPLIT_VERTICAL)==Result::RESULT_FAILED_TO_SPLIT)
             {
-                case TYPE_UNKNOWN:
-                    break;
-                case TYPE_FREE:
-                    {
-                        std::size_t shortSide {0};
-
-                        if (_width < _height)
-                        {
-                            shortSide = std::abs(_width - width);
-                        }
-                        else
-                        {
-                            shortSide = std::abs(_height - height);
-                        }
-
-                        break;
-                    }
-                case TYPE_FULL:
-                    return RESULT_FAILED_TO_INSERT;
-                case TYPE_INTERNAL:
-
-                    break;
+                return RESULT_FAILED_TO_SPLIT;
             }
-            break;
-        default:
-            return RESULT_FAILED_TO_INSERT;
+            return RESULT_OK;
         }
-        return RESULT_OK;
+
+        return RESULT_FAILED_TO_INSERT;
     }
 
     ConfigurationElement::ValueType SpaceTree::find(std::string_view path) const

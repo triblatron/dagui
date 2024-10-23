@@ -789,7 +789,8 @@ INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testInsert, ::testing::Values(
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].children[1].x", 0),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].children[1].y", 256),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].children[1].width", 256),
-	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].children[1].height", 256)
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].children[1].height", 256),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 1024, 1024, nfe::SpaceTree::RESULT_FAILED_TO_INSERT, "nodeType", std::string(nfe::SpaceTree::typeToString(nfe::SpaceTree::TYPE_FREE)))
 	));
 
 class SpaceTree_testFindSpace : public ::testing::TestWithParam<std::tuple<
