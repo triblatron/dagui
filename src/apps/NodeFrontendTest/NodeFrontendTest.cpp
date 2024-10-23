@@ -633,11 +633,10 @@ TEST_P(FontImageSource_testNextItem, testNextItem)
 		delete item;
 		sut.nextItem();
 	}
-	//EXPECT_TRUE(found);
 }
 
 INSTANTIATE_TEST_SUITE_P(FontImageSource, FontImageSource_testNextItem, ::testing::Values(
-	std::make_tuple("data/fonts/LiberationSans-Regular.ttf")
+	std::make_tuple("data/liberation-fonts-ttf-2.1.5/LiberationSans-Regular.ttf")
 ));
 
 class FontImageSource_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, nfe::FontImageSource::Error>>
@@ -727,19 +726,19 @@ TEST_P(SpaceTree_testFromConfig, testFromConfig)
 }
 
 INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testFromConfig, ::testing::Values(
-	std::make_tuple("root = { nodeType=\"TYPE_FREE\", x=0, y=0, width=512, height=512 }", 1u, "nodeType", nfe::ConfigurationElement::ValueType("TYPE_FREE")),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", x=0, y=0, width=512, height=512 }", 1u, "nodeType", std::string("TYPE_FREE")),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", x=0, y=0, width=512, height=512, children = { } }", 1u, "x", std::int64_t(0)),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", x=0, y=0, width=512, height=512, children = { } }", 1u, "y", std::int64_t(0)),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", x=0, y=0, width=512, height=512, children = { } }", 1u, "width", std::int64_t(512)),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", x=0, y=0, width=512, height=512, children = { } }", 1u, "height", std::int64_t(512)),
-	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", x=0, y=0, width=256, height=512, children={ { width=256, x=0, y=256, height=256, nodeType=\"TYPE_FREE\"}, { x=0, y=0, width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", x=256, y=0, width=256, height=512 } } }", 5u, "split", "SPLIT_HORIZONTAL"),
+	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", x=0, y=0, width=256, height=512, children={ { width=256, x=0, y=256, height=256, nodeType=\"TYPE_FREE\"}, { x=0, y=0, width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", x=256, y=0, width=256, height=512 } } }", 5u, "split", std::string("SPLIT_HORIZONTAL")),
 	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", x=0, y=0, width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "children[0].x", std::int64_t(0)),
 	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", x=0, y=0, width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "children[0].y", std::int64_t(0)),
-	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "children[0].split", "SPLIT_VERTICAL"),
-	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "children[1].nodeType", "TYPE_FREE"),
-	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "children[1].split", "SPLIT_UNKNOWN"),
-	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "children[0].children[0].nodeType", "TYPE_FREE"),
-	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "children[0].children[1].nodeType", "TYPE_FULL"),
+	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "children[0].split", std::string("SPLIT_VERTICAL")),
+	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "children[1].nodeType", std::string("TYPE_FREE")),
+	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "children[1].split", std::string("SPLIT_UNKNOWN")),
+	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "children[0].children[0].nodeType", std::string("TYPE_FREE")),
+	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "children[0].children[1].nodeType", std::string("TYPE_FULL")),
 	std::make_tuple("root = { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_HORIZONTAL\", x=0, y=0, width=512, height=512, children = { { nodeType=\"TYPE_INTERNAL\", split=\"SPLIT_VERTICAL\", width=256, height=512, children={ { width=256, height=256, nodeType=\"TYPE_FREE\"}, { width=256, height=256, nodeType=\"TYPE_FULL\" } } }, { nodeType=\"TYPE_FREE\", width=256, height=512 } } }", 5u, "foo.bar.baz", nfe::ConfigurationElement::ValueType())
 	));
 
@@ -766,22 +765,22 @@ TEST_P(SpaceTree_testInsert, testInsert)
 }
 
 INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testInsert, ::testing::Values(
-	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "nodeType", "TYPE_INTERNAL"),
-	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "split", "SPLIT_HORIZONTAL"),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "nodeType", std::string("TYPE_INTERNAL")),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "split", std::string("SPLIT_HORIZONTAL")),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "x", std::int64_t(0)),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "y", std::int64_t(0)),
-	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].nodeType", "TYPE_INTERNAL"),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].nodeType", std::string("TYPE_INTERNAL")),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].x", std::int64_t(0)),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].y", std::int64_t(0)),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].width", std::int64_t(256)),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].height", std::int64_t(512)),
-	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].split", "SPLIT_VERTICAL"),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].split", std::string("SPLIT_VERTICAL")),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[1].x", std::int64_t(256)),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[1].y", std::int64_t(0)),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[1].width", std::int64_t(256)),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[1].height", std::int64_t(512)),
-	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[1].split", "SPLIT_UNKNOWN"),
-	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[1].nodeType", "TYPE_FREE"),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[1].split", std::string("SPLIT_UNKNOWN")),
+	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[1].nodeType", std::string("TYPE_FREE")),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].children[0].x", std::int64_t(0)),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].children[0].y", std::int64_t(0)),
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 256, 256, nfe::SpaceTree::RESULT_OK, "children[0].children[0].width", std::int64_t(256)),

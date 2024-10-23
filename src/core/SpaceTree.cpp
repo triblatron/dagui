@@ -205,7 +205,7 @@ namespace nfe
         if (retval.has_value())
             return retval;
 
-        retval = findEndpoint(path, "nodeType", typeToString(_type));
+        retval = findEndpoint(path, "nodeType", std::string(typeToString(_type)));
         if (retval.has_value())
             return retval;
 
@@ -225,7 +225,7 @@ namespace nfe
         if (retval.has_value())
             return retval;
 
-        retval = findEndpoint(path, "split", splitToString(_split));
+        retval = findEndpoint(path, "split", std::string(splitToString(_split)));
         if (retval.has_value())
             return retval;
 
