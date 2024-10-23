@@ -8,9 +8,10 @@
 #include "ImageDef.h"
 
 #include <ft2build.h>
-#include <benchmark/benchmark.h>
 
 #include FT_FREETYPE_H
+#include <cstdint>
+#include <cstdlib>
 
 namespace nfe
 {

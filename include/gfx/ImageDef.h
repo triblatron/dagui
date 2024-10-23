@@ -7,6 +7,7 @@
 #include "../config/Export.h"
 
 #include <cstdint>
+#include <cstdlib>
 
 namespace nfe
 {

@@ -2,6 +2,10 @@
 // Created by tony on 24/08/24.
 //
 #include "config/config.h"
+#include <cstdlib>
+#if defined(HAVE_WINDOWS_H)
+#include <Windows.h>
+#endif
 #if defined(__linux__) || defined(_WIN32)
 #include <GL/glut.h>
 #else

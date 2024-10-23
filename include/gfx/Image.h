@@ -4,8 +4,10 @@
 
 #include <cstdint>
 #include <cstdlib>
-
-#include <GL/gl.h>
+//#if defined(HAVE_WINDOWS_H)
+//#include <Windows.h>
+//#endif // HAVE_WINDOWS_H
+//#include <GL/gl.h>
 
 namespace nfe
 {
@@ -18,7 +20,7 @@ namespace nfe
 		_height(height),
 		_numComponents(numComponents)
 		{
-			_buffer = new GLubyte[height*width*numComponents];
+			_buffer = new std::uint8_t[height*width*numComponents];
 		}
 
 		//! Does not own the buffer.
@@ -80,7 +82,7 @@ namespace nfe
 		
 		bool find(std::uint8_t red, std::uint8_t green, std::uint8_t blue) const;
 		
-		GLubyte* data()
+		std::uint8_t* data()
 		{
 			return _buffer;
 		}
@@ -90,7 +92,7 @@ namespace nfe
 		size_t _width{0};
 		size_t _height{0};
 		size_t _numComponents{0};
-		GLubyte* _buffer{nullptr};
+		std::uint8_t* _buffer{nullptr};
 		bool _own{true};
 	};
 }
