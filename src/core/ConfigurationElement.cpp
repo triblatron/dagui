@@ -273,7 +273,7 @@ namespace nfe
     {
 		for (auto child : _children)
 		{
-			if (std::invoke(f, *child) == false)
+			if (f(*child) == false)
 			{
 				break;
 			}

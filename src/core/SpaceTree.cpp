@@ -43,7 +43,7 @@ namespace nfe
 
     bool SpaceTree::traversal(const std::function<bool(SpaceTree*)>& callback)
     {
-        if (!std::invoke(callback, this))
+        if (!callback(this))
         {
             return false;
         }
@@ -60,7 +60,7 @@ namespace nfe
 
     bool SpaceTree::traversal(const std::function<bool(const SpaceTree*)>& callback) const
     {
-        if (!std::invoke(callback, this))
+        if (!callback(this))
         {
             return false;
         }
