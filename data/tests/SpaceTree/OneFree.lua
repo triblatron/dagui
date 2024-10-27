@@ -1,0 +1,44 @@
+root = 
+{
+	nodeType="TYPE_INTERNAL", 
+	split="SPLIT_HORIZONTAL", 
+	x=0, 
+	y=0, 
+	width=512, 
+	height=512, 
+	children = 
+	{ 
+		{
+			nodeType="TYPE_INTERNAL", 
+			split="SPLIT_VERTICAL", 
+			x=0, 
+			y=0, 
+			width=256, 
+			height=512, 
+			children=
+			{
+				{
+					x=0, 
+					y=256, 
+					width=256, 
+					height=256, 
+					nodeType="TYPE_FULL"
+				}, 
+				{ 
+					x=0, 
+					y=0, 
+					width=256, 
+					height=256, 
+					nodeType="TYPE_FULL"
+				}
+			}
+		}, 
+		{ 
+			nodeType="TYPE_FREE", 
+			x=256, 
+			y=0, 
+			width=256, 
+			height=512
+		}
+	}
+}
