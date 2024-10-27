@@ -57,6 +57,8 @@ namespace nfe
 
         static ConfigurationElement* fromString(const char* str);
 
+        static ConfigurationElement* fromFile(const char* filename);
+
 		void setIndex(std::int64_t index)
 		{
 			_index = index;

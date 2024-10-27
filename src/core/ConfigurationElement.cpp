@@ -31,6 +31,18 @@ namespace nfe
         return buildTree(lua);
     }
 
+    ConfigurationElement* ConfigurationElement::fromFile(const char* filename)
+    {
+        nfe::Lua lua;
+
+        if (filename != nullptr)
+        {
+            lua.execute(filename);
+        }
+
+        return buildTree(lua);
+    }
+
     ConfigurationElement* ConfigurationElement::findInArray(size_t startIndex, std::string_view path)
     {
         path = path.substr(startIndex);
@@ -174,12 +186,12 @@ namespace nfe
     ConfigurationElement *ConfigurationElement::buildTree(Lua& lua)
     {
         using ParentStack = std::stack<ConfigurationElement*>;
-        ParentStack parentStack;
-        auto parent = new ConfigurationElement("root");
-        parentStack.push(parent);
 
         if (lua.tableExists("root"))
         {
+            ParentStack parentStack;
+            auto parent = new ConfigurationElement("root");
+            parentStack.push(parent);
             auto rootTable = lua.tableForName("root");
 
             TableTraversal trav(lua.get());
@@ -257,8 +269,9 @@ namespace nfe
                 }
                 return 0;
             });
+            return parent;
         }
-        return parent;
+        return nullptr;
     }
 
     ConfigurationElement::~ConfigurationElement()
