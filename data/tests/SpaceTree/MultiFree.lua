@@ -38,7 +38,7 @@ root =
 			x=256, 
 			y=0, 
 			width=256, 
-			height=512
+			height=512,
 		}
 	}
 }
