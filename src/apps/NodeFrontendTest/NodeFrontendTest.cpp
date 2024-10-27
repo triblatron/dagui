@@ -821,14 +821,13 @@ INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testInsert, ::testing::Values(
 typedef nfe::ConfigurationElement* (*BuildConfigFunc)(const char*);
 
 class SpaceTree_testFindSpace : public ::testing::TestWithParam<std::tuple<
-		BuildConfigFunc, const char*, std::int32_t, std::int32_t, nfe::SpaceTree::Heuristic, const char *, nfe::ConfigurationElement::ValueType>>
+		const char*, std::int32_t, std::int32_t, nfe::SpaceTree::Heuristic, const char *, nfe::ConfigurationElement::ValueType>>
 {
 public:
 	void SetUp() override
 	{
-		auto buildFunc = std::get<0>(GetParam());
-		auto configStr = std::get<1>(GetParam());
-		auto config = (*buildFunc)(configStr);
+		auto configStr = std::get<0>(GetParam());
+		auto config = nfe::ConfigurationElement::fromFile(configStr);
 		ASSERT_NE(nullptr, config);
 		_sut = nfe::SpaceTree::fromConfig(*config);
 	}
@@ -842,33 +841,33 @@ protected:
 };
 
 INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testFindSpace, ::testing::Values(
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/AllFree.lua", 256, 256, nfe::SpaceTree::FIT_NEXT, "width", std::int64_t(512)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/AllFree.lua", 256, 256, nfe::SpaceTree::FIT_NEXT, "height", std::int64_t(512)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/AllFree.lua", 512, 512, nfe::SpaceTree::FIT_NEXT, "width", std::int64_t(512)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/AllFree.lua", 512, 512, nfe::SpaceTree::FIT_NEXT, "height", std::int64_t(512)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/MultiFree.lua", 256, 256, nfe::SpaceTree::FIT_NEXT, "width", std::int64_t(256)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/MultiFree.lua", 256, 256, nfe::SpaceTree::FIT_NEXT, "height", std::int64_t(256)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/MultiFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "width", std::int64_t(256)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/MultiFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "height", std::int64_t(256)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/MultiFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "nodeType", std::string(nfe::SpaceTree::typeToString(nfe::SpaceTree::TYPE_FREE))),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/OneFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "x", std::int64_t(256)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/OneFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "y", std::int64_t(0)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/OneFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "width", std::int64_t(256)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/OneFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "height", std::int64_t(512)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/OneFree.lua", 64, 64, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "nodeType", std::string(nfe::SpaceTree::typeToString(nfe::SpaceTree::TYPE_FREE))),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/MultiFree.lua", 64, 64, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "x", std::int64_t(0)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/MultiFree.lua", 64, 64, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "y", std::int64_t(256)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/MultiFree.lua", 64, 64, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "width", std::int64_t(256)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/MultiFree.lua", 64, 64, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "height", std::int64_t(256)),
-	                         std::make_tuple(&nfe::ConfigurationElement::fromFile, "data/tests/SpaceTree/SmallInput.lua", 64, 64, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "nodeType", std::string(nfe::SpaceTree::typeToString(nfe::SpaceTree::TYPE_FREE)))
+	                         std::make_tuple("data/tests/SpaceTree/AllFree.lua", 256, 256, nfe::SpaceTree::FIT_NEXT, "width", std::int64_t(512)),
+	                         std::make_tuple("data/tests/SpaceTree/AllFree.lua", 256, 256, nfe::SpaceTree::FIT_NEXT, "height", std::int64_t(512)),
+	                         std::make_tuple("data/tests/SpaceTree/AllFree.lua", 512, 512, nfe::SpaceTree::FIT_NEXT, "width", std::int64_t(512)),
+	                         std::make_tuple("data/tests/SpaceTree/AllFree.lua", 512, 512, nfe::SpaceTree::FIT_NEXT, "height", std::int64_t(512)),
+	                         std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 256, 256, nfe::SpaceTree::FIT_NEXT, "width", std::int64_t(256)),
+	                         std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 256, 256, nfe::SpaceTree::FIT_NEXT, "height", std::int64_t(256)),
+	                         std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "width", std::int64_t(256)),
+	                         std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "height", std::int64_t(256)),
+	                         std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "nodeType", std::string(nfe::SpaceTree::typeToString(nfe::SpaceTree::TYPE_FREE))),
+	                         std::make_tuple("data/tests/SpaceTree/OneFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "x", std::int64_t(256)),
+	                         std::make_tuple("data/tests/SpaceTree/OneFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "y", std::int64_t(0)),
+	                         std::make_tuple("data/tests/SpaceTree/OneFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "width", std::int64_t(256)),
+	                         std::make_tuple("data/tests/SpaceTree/OneFree.lua", 256, 256, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "height", std::int64_t(512)),
+	                         std::make_tuple("data/tests/SpaceTree/OneFree.lua", 64, 64, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "nodeType", std::string(nfe::SpaceTree::typeToString(nfe::SpaceTree::TYPE_FREE))),
+	                         std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 64, 64, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "x", std::int64_t(0)),
+	                         std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 64, 64, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "y", std::int64_t(256)),
+	                         std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 64, 64, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "width", std::int64_t(256)),
+	                         std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 64, 64, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "height", std::int64_t(256)),
+	                         std::make_tuple("data/tests/SpaceTree/SmallInput.lua", 64, 64, nfe::SpaceTree::FIT_BEST_SHORT_SIDE, "nodeType", std::string(nfe::SpaceTree::typeToString(nfe::SpaceTree::TYPE_FREE)))
                          ));
 TEST_P(SpaceTree_testFindSpace, testFindSpace)
 {
-	auto width = std::get<2>(GetParam());
-	auto height = std::get<3>(GetParam());
-	auto heuristic = std::get<4>(GetParam());
-	auto path = std::get<5>(GetParam());
-	auto value = std::get<6>(GetParam());
+	auto width = std::get<1>(GetParam());
+	auto height = std::get<2>(GetParam());
+	auto heuristic = std::get<3>(GetParam());
+	auto path = std::get<4>(GetParam());
+	auto value = std::get<5>(GetParam());
 
 	auto actual = _sut->findSpace(width, height, heuristic);
 	ASSERT_NE(nullptr, actual);
