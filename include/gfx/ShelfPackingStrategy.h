@@ -9,6 +9,7 @@
 #include "gfx/PackingStrategy.h"
 
 #include <vector>
+#include <cstdlib>
 
 namespace nfe
 {
