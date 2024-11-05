@@ -18,7 +18,7 @@ namespace dagui
     {
         // Do nothing.
     }
-
+	
     ConfigurationElement *ConfigurationElement::fromString(const char *str)
     {
         dagui::Lua lua;
@@ -31,18 +31,33 @@ namespace dagui
         return buildTree(lua);
     }
 
-    ConfigurationElement* ConfigurationElement::findInArray(size_t index, std::string path)
+    ConfigurationElement* ConfigurationElement::fromFile(const char* filename)
     {
-        for (; index<path.length() && isdigit(path[index]); ++index);
+        dagui::Lua lua;
+
+        if (filename != nullptr)
+        {
+            lua.execute(filename);
+        }
+
+        return buildTree(lua);
+    }
+
+    ConfigurationElement* ConfigurationElement::findInArray(size_t startIndex, std::string_view path)
+    {
+        path = path.substr(startIndex);
+        size_t index=0;
+        for (index = 0; index<path.length() && isdigit(path[index]); ++index);
         char* end = nullptr;
-        size_t childIndex = std::strtoul(path.c_str(), &end, 10);
+        size_t childIndex = std::strtoul(path.data(), &end, 10);
         if (childIndex<_children.size() && index<path.size() && path[index] == ']')
         {
+			auto child = _children[childIndex];
             ++index;
             if (index < path.length()-1)
             {
                 path = path.substr(index+1);
-                return findInChildren(path);
+                return child->findInChildren(path);
             }
             else
             {
@@ -52,7 +67,7 @@ namespace dagui
         return nullptr;
     }
 
-    ConfigurationElement* ConfigurationElement::findElement(std::string path)
+    ConfigurationElement* ConfigurationElement::findElement(std::string_view path)
     {
         if (path[0] == '$')
         {
@@ -85,7 +100,7 @@ namespace dagui
         return nullptr;
     }
 
-    ConfigurationElement *ConfigurationElement::findInChildren(std::string path)
+    ConfigurationElement *ConfigurationElement::findInChildren(std::string_view path)
     {
         if (path.empty())
         {
@@ -107,8 +122,8 @@ namespace dagui
                 for (index=0; index<path.length() && path[index] != ']';++index);
                 if (index<path.length() && path[index]==']')
                 {
-                    std::string first = path.substr(0,subPos);
-                    std::string rest = path.substr(subPos);
+                    auto first = path.substr(0,subPos);
+                    auto  rest = path.substr(subPos);
 
                     for (auto child : _children)
                     {
@@ -127,8 +142,8 @@ namespace dagui
             {
                 size_t index = 0;
                 for (index=0; index < path.length() && path[index] != '.' && path[index] != '['; ++index);
-                std::string first = path.substr(1, dotPos);
-                std::string rest = path.substr(dotPos, index-dotPos);
+                auto  first = path.substr(1, dotPos);
+                auto  rest = path.substr(dotPos, index-dotPos);
 
                 for (auto child : _children)
                 {
@@ -140,10 +155,10 @@ namespace dagui
             }
             else
             {
-                std::string first = path.substr(0,dotPos);
+                auto first = path.substr(0,dotPos);
                 if (path.length()>dotPos)
                 {
-                    std::string rest = path.substr(dotPos+1);
+                    auto rest = path.substr(dotPos+1);
                     for (auto child : _children)
                     {
                         if (child->_name == first)
@@ -171,12 +186,12 @@ namespace dagui
     ConfigurationElement *ConfigurationElement::buildTree(Lua& lua)
     {
         using ParentStack = std::stack<ConfigurationElement*>;
-        ParentStack parentStack;
-        auto parent = new ConfigurationElement("root");
-        parentStack.push(parent);
 
         if (lua.tableExists("root"))
         {
+            ParentStack parentStack;
+            auto parent = new ConfigurationElement("root");
+            parentStack.push(parent);
             auto rootTable = lua.tableForName("root");
 
             TableTraversal trav(lua.get());
@@ -192,6 +207,8 @@ namespace dagui
                 if (lua_isinteger(lua, -2))
                 {
                     std::int64_t index = lua_tointeger(lua, -2);
+                    std::string name = std::string('[' + std::to_string(index) + ']');
+                    
                     if (lua_isinteger(lua, -1))
                     {
                         child = new ConfigurationElement(index, lua_tointeger(lua, -1));
@@ -212,6 +229,13 @@ namespace dagui
                         child = new ConfigurationElement(index, std::string(lua_tostring(lua, -1)));
                         parentStack.top()->addChild(child);
                     }
+                    else if (lua_istable(lua, -1))
+                    {
+                        child = new ConfigurationElement(name);
+                        child->setIndex(index);
+                        parentStack.top()->addChild(child);
+                        parentStack.push(child);
+					}
                 }
                 else if (lua_isstring(lua, -2))
                 {
@@ -245,8 +269,9 @@ namespace dagui
                 }
                 return 0;
             });
+            return parent;
         }
-        return parent;
+        return nullptr;
     }
 
     ConfigurationElement::~ConfigurationElement()
@@ -256,4 +281,15 @@ namespace dagui
             delete child;
         }
     }
+    
+    void ConfigurationElement::eachChild(std::function<bool (ConfigurationElement&)> f)
+    {
+		for (auto child : _children)
+		{
+			if (f(*child) == false)
+			{
+				break;
+			}
+		}
+	}
 }

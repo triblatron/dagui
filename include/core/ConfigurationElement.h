@@ -15,6 +15,7 @@ extern "C" {
 #include <cstdint>
 #include <vector>
 #include <optional>
+#include <functional>
 
 struct lua_State;
 
@@ -35,10 +36,10 @@ namespace dagui
         using ValueType = std::optional<std::variant<bool, lua_Integer, double, std::string>>;
     public:
         explicit ConfigurationElement(std::string name);
-
+		
         ConfigurationElement(std::string name, ValueType::value_type value)
         :
-        _name(name),
+        _name(std::move(name)),
         _value(value)
         {
             // Do nothing.
@@ -56,6 +57,13 @@ namespace dagui
 
         static ConfigurationElement* fromString(const char* str);
 
+        static ConfigurationElement* fromFile(const char* filename);
+
+		void setIndex(std::int64_t index)
+		{
+			_index = index;
+		}
+		
         const std::string& name() const
         {
             return _name;
@@ -122,7 +130,9 @@ namespace dagui
                 return defaultValue;
             }
         }
-        ConfigurationElement* findElement(std::string path);
+        ConfigurationElement* findElement(std::string_view path);
+        
+        void eachChild(std::function<bool (ConfigurationElement&)> f);
     private:
         void setParent(ConfigurationElement* parent)
         {
@@ -131,8 +141,8 @@ namespace dagui
                 _parent = parent;
             }
         }
-        ConfigurationElement* findInChildren(std::string path);
-        ConfigurationElement* findInArray(size_t index, std::string path);
+        ConfigurationElement* findInChildren(std::string_view path);
+        ConfigurationElement* findInArray(size_t index, std::string_view path);
         ConfigurationElement* _parent{nullptr};
         std::string _name;
         std::int64_t _index{0};

@@ -1,0 +1,8 @@
+SET( NodeFrontendTest_SRC NodeFrontendTest.cpp )
+ADD_EXECUTABLE( NodeFrontendTest ${NodeFrontendTest_SRC} )
+SET( NodeFrontendTest_DEPS "nodefrontend;${GTEST_BOTH_LIBRARIES}" )
+IF (UNIX)
+LIST(APPEND LUA_LIBRARIES dl)
+ENDIF(UNIX)
+TARGET_LINK_LIBRARIES( NodeFrontendTest nodefrontend;GTest::gtest_main;GTest::gtest;GTest::gmock Freetype::Freetype benchmark::benchmark)
+INSTALL(TARGETS NodeFrontendTest RUNTIME DESTINATION bin)

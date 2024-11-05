@@ -446,7 +446,10 @@ namespace dagui
 
                 if (errod != 0)
                 {
-                    raiseError(FailedToExecute) << '\"' << code << "\":" << lua_tostring(_lua, -1);
+                    std::ostringstream& str = raiseError(FailedToExecute);
+                    str << '\"' << code << "\":" << lua_tostring(_lua, -1);
+
+                    std::cerr << str.str() << '\n';
                 }
             }
         }
@@ -464,7 +467,9 @@ namespace dagui
 
             if (errod != 0)
             {
-                raiseError(FailedToExecute) <<  '\"' << filename << "\":" << lua_tostring(_lua,-1);
+                auto& str = raiseError(FailedToExecute);
+                str <<  '\"' << filename << "\":" << lua_tostring(_lua,-1);
+                std::cerr << str.str() << '\n';
             }
         }
 

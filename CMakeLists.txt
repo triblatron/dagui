@@ -34,6 +34,17 @@ SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include
         include/core/Window.h
         include/util/enums.h
         include/core/ValidatorInt.h
+        include/gfx/Image.h
+        include/gfx/ImageSource.h
+        include/gfx/FontImageSource.h
+        include/gfx/TextureAtlas.h
+        include/gfx/ImageDef.h
+        include/gfx/GlyphImageDef.h
+        include/gfx/BinImageDef.h
+        include/gfx/PackingStrategy.h
+        include/gfx/ShelfPackingStrategy.h
+        include/core/SpaceTree.h
+        include/util/Searchable.h
 )
 SET( DAGUI_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaInterface.cpp src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}
         src/core/ConfigurationElement.cpp
@@ -41,6 +52,16 @@ SET( DAGUI_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaInterfac
         src/util/CompletionSubstring.cpp
         src/core/CompositeShape.cpp
         src/core/Window.cpp
+        src/gfx/Image.cpp
+        src/gfx/ImageSource.cpp
+        src/gfx/FontImageSource.cpp
+        src/gfx/TextureAtlas.cpp
+        src/gfx/ImageDef.cpp
+        src/gfx/GlyphImageDef.cpp
+        src/gfx/BinImageDef.cpp
+        src/gfx/PackingStrategy.cpp
+        src/gfx/ShelfPackingStrategy.cpp
+        src/core/SpaceTree.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")
@@ -60,12 +81,18 @@ SET( DEP_ROOT CACHE PATH "Dependency root" )
 
 ADD_LIBRARY( dagui SHARED ${DAGUI_SRC} )
 #INCLUDE_DIRECTORIES(PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
-TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR})
+TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
 
 set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
-TARGET_LINK_LIBRARIES( dagui ${LUA_LIBRARY})
+TARGET_LINK_LIBRARIES( dagui PRIVATE ${LUA_LIBRARY} GLUT::GLUT OpenGL::GL OpenGL::GLU Freetype::Freetype )
 add_subdirectory(src/apps/DaguiTest)
 add_subdirectory(src/apps/BenchmarkDagui)
+#~ TARGET_INCLUDE_DIRECTORIES( nodefrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
+
+#~ set_target_properties( nodefrontend PROPERTIES DEFINE_SYMBOL NODEFRONTEND_LIBRARY )
+#~ TARGET_LINK_LIBRARIES( nodefrontend PRIVATE ${LUA_LIBRARY} GLUT::GLUT OpenGL::GL OpenGL::GLU Freetype::Freetype )
+#~ add_subdirectory(src/apps/NodeFrontendTest)
+#~ add_subdirectory(src/apps/BenchmarkNodeFrontend)
 add_subdirectory(src/demos/demoText)
 
 INCLUDE( CheckIncludeFile )
@@ -120,3 +147,4 @@ INSTALL( TARGETS dagui
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib)
+INSTALL(DIRECTORY data DESTINATION .)
