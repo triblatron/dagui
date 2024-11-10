@@ -40,13 +40,20 @@ Pull requests will be allowed at some point. There will be a coding style and pr
   * required to create an Orthographic projection
 * Packages for Linux Debian based
 ```
-sudo apt-get install g++ cmake make freeglut3-dev libfreetype-dev libpango1.0-dev libgtest-dev libgmock-dev libbenchmark-dev liblua5.4-dev git
+sudo apt-get install g++ cmake make freeglut3-dev libfreetype-dev libpango1.0-dev liblua5.4-dev git
 ```
-
+* Packages from Linux Red Hat based
+```
+su
+dnf config-manager --enable devel
+dnf install freetype-devel freeglut-devel lua-devel
+exit
+```
 ## Build instructions 
 
 ### Linux
 ```
+  sudo apt-get install libfreetype-dev 
   git clone https://github.com/triblatron/dagui
   mkdir dagui_build && cd dagui_build
   cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install
@@ -54,8 +61,9 @@ sudo apt-get install g++ cmake make freeglut3-dev libfreetype-dev libpango1.0-de
   make install
   cd ../dagui_install
   source setup.sh
-  Test
+  DaguiTest
 ```
+
 ### Windows 
 ```
 git clone https://github.com/triblatron/install --branch x64-win64-vc17 --single-branch install
@@ -66,7 +74,7 @@ cmake -S dagui -B . -DDEP_ROOT=../install -DCMAKE_INSTALL_PREFIX=../dagui_instal
 cmake --build . --target install --config Release
 cd dagui_install
 setup
-Test
+DaguiTest
 ```
 ### macOS X 10.15 Catalina
 ```
