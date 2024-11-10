@@ -84,15 +84,10 @@ ADD_LIBRARY( dagui SHARED ${DAGUI_SRC} )
 TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
 
 set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
+LINK_DIRECTORIES( ${DEP_ROOT}/lib )
 TARGET_LINK_LIBRARIES( dagui PRIVATE ${LUA_LIBRARY} GLUT::GLUT OpenGL::GL OpenGL::GLU Freetype::Freetype )
 add_subdirectory(src/apps/DaguiTest)
 add_subdirectory(src/apps/BenchmarkDagui)
-#~ TARGET_INCLUDE_DIRECTORIES( nodefrontend PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
-
-#~ set_target_properties( nodefrontend PROPERTIES DEFINE_SYMBOL NODEFRONTEND_LIBRARY )
-#~ TARGET_LINK_LIBRARIES( nodefrontend PRIVATE ${LUA_LIBRARY} GLUT::GLUT OpenGL::GL OpenGL::GLU Freetype::Freetype )
-#~ add_subdirectory(src/apps/NodeFrontendTest)
-#~ add_subdirectory(src/apps/BenchmarkNodeFrontend)
 add_subdirectory(src/demos/demoText)
 
 INCLUDE( CheckIncludeFile )
