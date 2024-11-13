@@ -195,6 +195,7 @@ namespace dagui
 
         static Heuristic parseHeuristic(const char* str);
     private:
+        Children _children;
         SpaceTree* _parent{nullptr};
         std::int32_t _x{0};
         std::int32_t _y{0};
@@ -202,6 +203,5 @@ namespace dagui
         std::int32_t _height{0};
         Type  _type{TYPE_UNKNOWN};
         Split _split{SPLIT_UNKNOWN};
-        Children _children;
     };
 }

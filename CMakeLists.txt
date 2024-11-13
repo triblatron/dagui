@@ -41,8 +41,6 @@ SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include
         include/gfx/ImageDef.h
         include/gfx/GlyphImageDef.h
         include/gfx/BinImageDef.h
-        include/gfx/PackingStrategy.h
-        include/gfx/ShelfPackingStrategy.h
         include/core/SpaceTree.h
         include/util/Searchable.h
 )
@@ -59,8 +57,6 @@ SET( DAGUI_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaInterfac
         src/gfx/ImageDef.cpp
         src/gfx/GlyphImageDef.cpp
         src/gfx/BinImageDef.cpp
-        src/gfx/PackingStrategy.cpp
-        src/gfx/ShelfPackingStrategy.cpp
         src/core/SpaceTree.cpp
 )
 

@@ -19,9 +19,7 @@
 #include "gfx/BinImageDef.h"
 #include "gfx/Image.h"
 #include "gfx/TextureAtlas.h"
-#include "gfx/PackingStrategy.h"
 #include "core/SpaceTree.h"
-#include "gfx/ShelfPackingStrategy.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -570,40 +568,6 @@ private:
 	std::size_t _imageIndex{0};
 };
 
-class ShelfPackingStrategy_testPack : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::size_t, dagui::PackingStrategy::Error, std::size_t>>
-{
-};
-
-TEST_P(ShelfPackingStrategy_testPack, testPack)
-{
-	auto configStr = std::get<0>(GetParam());
-	auto width = std::get<1>(GetParam());
-	auto height = std::get<2>(GetParam());
-	auto error = std::get<3>(GetParam());
-	auto numImagesAllocated = std::get<4>(GetParam());
-	auto config = dagui::ConfigurationElement::fromString(configStr);
-	
-	ASSERT_NE(nullptr, config);
-	auto sut = new dagui::ShelfPackingStrategy();
-	auto source = new MockImageSource();
-	sut->setBinRectangle(new dagui::BinImageDef(width, height, 3));
-	source->configure(*config);
-	sut->setInputSource(source);
-	EXPECT_CALL(*source, hasMore()).Times(::testing::AtLeast(1));
-	EXPECT_CALL(*source, item()).Times(::testing::AtLeast(1));
-	EXPECT_CALL(*source, nextItem()).Times(::testing::AtLeast(0));
-	sut->makeItSo();
-	EXPECT_EQ(error, sut->error());
-	EXPECT_EQ(numImagesAllocated, sut->numAllocations());
-	delete source;
-	delete sut;
-}
-
-INSTANTIATE_TEST_SUITE_P(ShelfPackingStrategy, ShelfPackingStrategy_testPack, ::testing::Values(
-	std::make_tuple("root = { [1]={width=512,height=512}, [2]={width=1,height=1} }", 512u, 512u, dagui::PackingStrategy::ERR_FAILED_TO_PACK, 1u),
-	std::make_tuple("root = { [1]={width=256,height=256}, [2]={width=16,height=16} }", 512u, 512u, dagui::PackingStrategy::ERR_OK, 2u)
-));
-
 class FontImageSource_testNextItem : public ::testing::TestWithParam<std::tuple<const char*>>
 {
 };
@@ -678,25 +642,6 @@ INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testDimensions, ::testing::V
 	std::make_tuple(512, 512, dagui::TextureAtlas::ERR_OK),
 	std::make_tuple(511, 512, dagui::TextureAtlas::ERR_NON_POWER_OF_TWO_DIMS),
 	std::make_tuple(512, 511, dagui::TextureAtlas::ERR_NON_POWER_OF_TWO_DIMS)
-));
-
-class PackingStrategy_testErrorRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::PackingStrategy::Error>>
-{
-};
-
-TEST_P(PackingStrategy_testErrorRoundTrip, testRoundTrip)
-{
-	auto str = std::get<0>(GetParam());
-	auto err = std::get<1>(GetParam());
-	
-	EXPECT_STREQ(str, dagui::PackingStrategy::errorToString(err));
-	EXPECT_EQ(err, dagui::PackingStrategy::parseError(str));
-}
-
-INSTANTIATE_TEST_SUITE_P(PackingStrategy, PackingStrategy_testErrorRoundTrip, ::testing::Values(
-	std::make_tuple("ERR_UNKNOWN", dagui::PackingStrategy::ERR_UNKNOWN),
-	std::make_tuple("ERR_OK", dagui::PackingStrategy::ERR_OK),
-	std::make_tuple("ERR_FAILED_TO_PACK", dagui::PackingStrategy::ERR_FAILED_TO_PACK)
 ));
 
 class SpaceTree_testFromConfig : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, const char*, dagui::ConfigurationElement::ValueType>>
