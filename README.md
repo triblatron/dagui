@@ -53,7 +53,6 @@ exit
 
 ### Linux
 ```
-  sudo apt-get install libfreetype-dev 
   git clone https://github.com/triblatron/dagui
   mkdir dagui_build && cd dagui_build
   cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install
