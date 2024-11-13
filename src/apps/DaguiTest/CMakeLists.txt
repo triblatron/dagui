@@ -1,4 +1,4 @@
-SET( DaguiTest_SRC DaguiTest.cpp )
+SET( DaguiTest_SRC DaguiTest.cpp RoundTripTest.cpp )
 ADD_EXECUTABLE( DaguiTest ${DaguiTest_SRC} )
 SET( DaguiTest_DEPS "dagui;${GTEST_BOTH_LIBRARIES}" )
 IF (UNIX)
