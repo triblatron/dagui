@@ -19,10 +19,8 @@ namespace dagui
         // Do nothing.
     }
 	
-    ConfigurationElement *ConfigurationElement::fromString(const char *str)
+    ConfigurationElement *ConfigurationElement::fromString(Lua &lua, const char *str)
     {
-        dagui::Lua lua;
-
         if (str != nullptr)
         {
             lua.eval(str);
@@ -31,10 +29,8 @@ namespace dagui
         return buildTree(lua);
     }
 
-    ConfigurationElement* ConfigurationElement::fromFile(const char* filename)
+    ConfigurationElement * ConfigurationElement::fromFile(Lua &lua, const char *filename)
     {
-        dagui::Lua lua;
-
         if (filename != nullptr)
         {
             lua.execute(filename);

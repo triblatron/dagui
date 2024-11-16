@@ -55,9 +55,9 @@ namespace dagui
 
         ~ConfigurationElement();
 
-        static ConfigurationElement* fromString(const char* str);
+        static ConfigurationElement *fromString(Lua &lua, const char *str);
 
-        static ConfigurationElement* fromFile(const char* filename);
+        static ConfigurationElement *fromFile(Lua &lua, const char *filename);
 
 		void setIndex(std::int64_t index)
 		{

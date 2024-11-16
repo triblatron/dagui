@@ -9,6 +9,7 @@
 #include "core/Container.h"
 #include "core/Circle.h"
 #include "core/ConfigurationElement.h"
+#include "core/LuaInterface.h"
 #include "util/CompletionTrie.h"
 #include "util/CompletionSubstring.h"
 #include "core/CompositeShape.h"
@@ -127,10 +128,11 @@ class ConfigurationElement_testFindElement : public ::testing::TestWithParam<std
 
 TEST_P(ConfigurationElement_testFindElement, testFindFromRoot)
 {
+    dagui::Lua lua;
     auto configStr = std::get<0>(GetParam());
     auto path = std::get<1>(GetParam());
     auto name = std::get<2>(GetParam());
-    auto config = dagui::ConfigurationElement::fromString(configStr);
+    auto config = dagui::ConfigurationElement::fromString(lua, configStr);
     ASSERT_NE(nullptr, config);
     auto actual = config->findElement(path);
     ASSERT_NE(nullptr, actual);
@@ -169,11 +171,12 @@ class ConfigurationElement_testAsInteger : public ::testing::TestWithParam<std::
 
 TEST_P(ConfigurationElement_testAsInteger, testAsInteger)
 {
+    dagui::Lua lua;
     auto configStr = std::get<0>(GetParam());
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
 
-    auto config = dagui::ConfigurationElement::fromString(configStr);
+    auto config = dagui::ConfigurationElement::fromString(lua, configStr);
     ASSERT_NE(nullptr, config);
     auto element = config->findElement(path);
     ASSERT_NE(nullptr, element);
@@ -193,11 +196,12 @@ class ConfigurationElement_testAsDouble : public ::testing::TestWithParam<std::t
 
 TEST_P(ConfigurationElement_testAsDouble, testAsDouble)
 {
+    dagui::Lua lua;
     auto configStr = std::get<0>(GetParam());
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
 
-    auto config = dagui::ConfigurationElement::fromString(configStr);
+    auto config = dagui::ConfigurationElement::fromString(lua, configStr);
     ASSERT_NE(nullptr, config);
     auto element = config->findElement(path);
     ASSERT_NE(nullptr, element);
@@ -217,11 +221,12 @@ class ConfigurationElement_testAsBool : public ::testing::TestWithParam<std::tup
 
 TEST_P(ConfigurationElement_testAsBool, testAsBool)
 {
+    dagui::Lua lua;
     auto configStr = std::get<0>(GetParam());
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
 
-    auto config = dagui::ConfigurationElement::fromString(configStr);
+    auto config = dagui::ConfigurationElement::fromString(lua, configStr);
     ASSERT_NE(nullptr, config);
     auto element = config->findElement(path);
     ASSERT_NE(nullptr, element);
@@ -241,11 +246,12 @@ class ConfigurationElement_testAsString : public ::testing::TestWithParam<std::t
 
 TEST_P(ConfigurationElement_testAsString, testAsString)
 {
+    dagui::Lua lua;
     auto configStr = std::get<0>(GetParam());
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
 
-    auto config = dagui::ConfigurationElement::fromString(configStr);
+    auto config = dagui::ConfigurationElement::fromString(lua, configStr);
     ASSERT_NE(nullptr, config);
     auto element = config->findElement(path);
     ASSERT_NE(nullptr, element);
@@ -586,11 +592,12 @@ class SpaceTree_testFromConfig : public ::testing::TestWithParam<std::tuple<cons
 
 TEST_P(SpaceTree_testFromConfig, testFromConfig)
 {
+    dagui::Lua lua;
 	auto configStr = std::get<0>(GetParam());
 	auto numNodes = std::get<1>(GetParam());
 	auto path = std::get<2>(GetParam());
 	auto value = std::get<3>(GetParam());
-	auto config = dagui::ConfigurationElement::fromFile(configStr);
+	auto config = dagui::ConfigurationElement::fromFile(lua, configStr);
 	ASSERT_NE(nullptr, config);
 	auto sut = dagui::SpaceTree::fromConfig(*config);
 	ASSERT_NE(nullptr, sut);
@@ -629,6 +636,7 @@ class SpaceTree_testInsert : public ::testing::TestWithParam<std::tuple<const ch
 
 TEST_P(SpaceTree_testInsert, testInsert)
 {
+    dagui::Lua lua;
 	auto configStr = std::get<0>(GetParam());
 	auto width = std::get<1>(GetParam());
 	auto height = std::get<2>(GetParam());
@@ -636,7 +644,7 @@ TEST_P(SpaceTree_testInsert, testInsert)
 	auto result = std::get<4>(GetParam());
 	auto path= std::get<5>(GetParam());
 	auto value = std::get<6>(GetParam());
-	auto config = dagui::ConfigurationElement::fromString(configStr);
+	auto config = dagui::ConfigurationElement::fromString(lua, configStr);
 	ASSERT_NE(nullptr, config);
 	auto sut = dagui::SpaceTree::fromConfig(*config);
 	ASSERT_NE(nullptr, sut);
@@ -712,12 +720,13 @@ protected:
 
 TEST_P(SpaceTree_testInsertMultiple, testInsert)
 {
+    dagui::Lua lua;
     auto inputStr = std::get<0>(GetParam());
     auto heuristic = std::get<1>(GetParam());
     auto result = std::get<2>(GetParam());
     auto path = std::get<3>(GetParam());
     auto value = std::get<4>(GetParam());
-    auto input = dagui::ConfigurationElement::fromString(inputStr);
+    auto input = dagui::ConfigurationElement::fromString(lua, inputStr);
     ASSERT_NE(nullptr, input);
     input->eachChild([this](dagui::ConfigurationElement& childConfig) {
         Rect rect;
@@ -774,7 +783,7 @@ public:
 	void SetUp() override
 	{
 		auto configStr = std::get<0>(GetParam());
-		auto config = dagui::ConfigurationElement::fromFile(configStr);
+		auto config = dagui::ConfigurationElement::fromFile(_lua, configStr);
 		ASSERT_NE(nullptr, config);
 		_sut = dagui::SpaceTree::fromConfig(*config);
 	}
@@ -784,6 +793,7 @@ public:
 		delete _sut;
 	}
 protected:
+    dagui::Lua _lua;
 	dagui::SpaceTree* _sut{nullptr};
 };
 
