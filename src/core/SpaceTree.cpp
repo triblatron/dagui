@@ -160,7 +160,7 @@ namespace dagui
                     }
                 case SPLIT_VERTICAL:
                     {
-                        auto leftChild = new SpaceTree(_x, _y, width, height, TYPE_FREE, SPLIT_UNKNOWN);
+                        auto leftChild = new SpaceTree(_x, _y, _width, height, TYPE_FREE, SPLIT_UNKNOWN);
                         addChild(leftChild);
                         auto rightChild = new SpaceTree(_x, _y+height, width, _height - height, TYPE_FREE, SPLIT_UNKNOWN);
                         addChild(rightChild);
@@ -191,6 +191,9 @@ namespace dagui
             {
                 return RESULT_FAILED_TO_SPLIT;
             }
+            if (freeNode->_children[0] != nullptr && freeNode->_children[0]->_children[0] != nullptr)
+                freeNode->_children[0]->_children[0]->_type = TYPE_FULL;
+
             return RESULT_OK;
         }
 
