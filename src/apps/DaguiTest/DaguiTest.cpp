@@ -21,6 +21,9 @@
 #include "gfx/Image.h"
 #include "gfx/TextureAtlas.h"
 #include "core/SpaceTree.h"
+#include "core/BinPackingStrategyFactory.h"
+#include "core/BinPackingStrategy.h"
+#include "core/Atlas.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -29,6 +32,7 @@
 #include <cstdint>
 #include <cstring>
 
+using testing::_;
 
 class Rectangle_testIsInside : public ::testing::TestWithParam<std::tuple<double, double, double, double, double, double, double, bool>>
 {
@@ -767,6 +771,8 @@ INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testInsertMultiple, ::testing::Val
     std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[0].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FULL))),
     std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_INTERNAL))),
     std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FULL))),
+    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].x", std::int64_t(0)),
+    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].y", std::int64_t(256)),
     std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].width", std::int64_t(64)),
     std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].height", std::int64_t(64)),
     std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[1].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FREE))),
@@ -850,3 +856,83 @@ INSTANTIATE_TEST_SUITE_P(String, String_testFindPrefix, ::testing::Values(
 	std::make_tuple("children[0].children[0[].children[0].x", "x", false),
 	std::make_tuple("children[0].children[0[].children[0].x", "children", true)
 	));
+
+class BinPackingStrategyFactory_testCreate : public ::testing::TestWithParam<std::tuple<const char*>>
+{
+
+};
+
+TEST_P(BinPackingStrategyFactory_testCreate, testCreate)
+{
+    auto className = std::get<0>(GetParam());
+    dagui::BinPackingStrategyFactory factory;
+    auto strategy = factory.createStrategy(className);
+    ASSERT_NE(nullptr, strategy);
+}
+
+INSTANTIATE_TEST_SUITE_P(BinPackingStrategyFactory, BinPackingStrategyFactory_testCreate, ::testing::Values(
+    std::make_tuple("Shelf"),
+    std::make_tuple("MaxRects")
+));
+
+class MockAtlas : public dagui::Atlas
+{
+public:
+    MockAtlas()
+    {
+        ON_CALL(*this, width).WillByDefault([]() {
+            return std::size_t{ 512 };
+            });
+        ON_CALL(*this, height).WillByDefault([]() {
+            return std::size_t{ 512 };
+            });
+
+    }
+
+    MOCK_METHOD(std::size_t, width, (), (const, override));
+    MOCK_METHOD(std::size_t, height, (), (const, override));
+    MOCK_METHOD(void, allocateImage, (dagui::ImageDef*, size_t*, size_t*, size_t*), (override));
+};
+
+class BinPackingStrategy_testPack : public ::testing::TestWithParam<std::tuple<const char*, const char*, std::size_t>>
+{
+public:
+
+    void SetUp()
+    {
+        _configStr = std::get<1>(GetParam());
+        _config = dagui::ConfigurationElement::fromString(_lua, _configStr);
+        _imageSource = new MockImageSource();
+        _imageSource->configure(*_config);
+        _atlas = new MockAtlas();
+    }
+
+    void TearDown()
+    {
+        delete _atlas;
+        delete _imageSource;
+    }
+protected:
+    dagui::Lua _lua;
+    const char* _configStr{ nullptr };
+    dagui::ConfigurationElement* _config{ nullptr };
+    MockImageSource* _imageSource{ nullptr };
+    MockAtlas* _atlas{ nullptr };
+};
+
+TEST_P(BinPackingStrategy_testPack, testPack)
+{
+    auto className = std::get<0>(GetParam());
+    auto configStr = std::get<1>(GetParam());
+    dagui::BinPackingStrategyFactory factory;
+    auto strategy = factory.createStrategy(className);
+    ASSERT_NE(nullptr, strategy);
+    EXPECT_CALL(*_imageSource, hasMore()).Times(::testing::AtLeast(1));
+    EXPECT_CALL(*_atlas, allocateImage(_, _, _, _)).Times(_config->numChildren());
+    strategy->pack(*_imageSource, *_atlas);
+}
+
+INSTANTIATE_TEST_SUITE_P(BinPackingStrategy, BinPackingStrategy_testPack, ::testing::Values(
+    std::make_tuple("Shelf", "root={ { width=256, height=256 } }", std::size_t{ 1 }),
+    std::make_tuple("MaxRects", "root={ { width=256, height=256 } }", std::size_t{ 1 })
+));

@@ -2,13 +2,15 @@
 
 #include "config/Export.h"
 
+#include "core/Atlas.h"
+#include "gfx/BinImageDef.h"
+
 #include <cstdint>
 #include <vector>
 #include <cstdlib>
 
 namespace dagui
 {
-	class BinImageDef;
 	class Image;
 	class ImageDef;
 	class ImageSource;
@@ -21,7 +23,7 @@ namespace dagui
 		std::size_t h{0};
 	};
 	
-	class DAGUI_API TextureAtlas
+	class DAGUI_API TextureAtlas : public Atlas
 	{
 	public:
 		enum Error
@@ -36,6 +38,16 @@ namespace dagui
 		
 		~TextureAtlas();
 		
+		std::size_t width() const override
+		{
+			return _binImageDef != nullptr ? _binImageDef->width() : std::size_t{ 0 };
+		}
+
+		std::size_t height() const override
+		{
+			return _binImageDef != nullptr ? _binImageDef->height() : std::size_t{ 0 };
+		}
+
 		Error error() const
 		{
 			return _errod;
@@ -62,7 +74,9 @@ namespace dagui
 		{
 			return _numAllocations;
 		}
-		
+
+		void allocateImage(ImageDef* inputImage, size_t* maxHeightInThisShelf, size_t* nextX, size_t* nextY) override;
+
 		static const char* errorToString(Error error);
 		
 		static Error parseError(const char* str);
@@ -79,7 +93,6 @@ namespace dagui
 		ImageSource* _source{nullptr};
 		using ImageBoundsMap = std::vector<std::pair<Image*, ImageBounds>>;
 		ImageBoundsMap _imageBounds;
-		void allocateImage(ImageDef* inputImage, size_t* maxHeightInThisShelf, size_t* nextX, size_t* nextY);
 		std::size_t _numAllocations{0};
 	};
 }

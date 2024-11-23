@@ -132,6 +132,11 @@ namespace dagui
         }
         ConfigurationElement* findElement(std::string_view path);
         
+        std::size_t numChildren() const
+        {
+            return _children.size();
+        }
+
         void eachChild(std::function<bool (ConfigurationElement&)> f);
     private:
         void setParent(ConfigurationElement* parent)

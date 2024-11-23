@@ -41,8 +41,14 @@ SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include
         include/gfx/ImageDef.h
         include/gfx/GlyphImageDef.h
         include/gfx/BinImageDef.h
+		include/gfx/BinPacking.h
         include/core/SpaceTree.h
+		include/core/BinPackingStrategy.h
+		include/core/Atlas.h
+		include/core/BinPackingStrategyFactory.h
         include/util/Searchable.h
+		include/core/ShelfBinPackingStrategy.h
+		include/core/MaxRectsBinPackingStrategy.h
 )
 SET( DAGUI_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaInterface.cpp src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}
         src/core/ConfigurationElement.cpp
@@ -58,6 +64,9 @@ SET( DAGUI_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaInterfac
         src/gfx/GlyphImageDef.cpp
         src/gfx/BinImageDef.cpp
         src/core/SpaceTree.cpp
+		src/core/BinPackingStrategyFactory.cpp
+		src/core/ShelfBinPackingStrategy.cpp
+		src/core/MaxRectsBinPackingStrategy.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")
