@@ -41,7 +41,6 @@ SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include
         include/gfx/ImageDef.h
         include/gfx/GlyphImageDef.h
         include/gfx/BinImageDef.h
-		include/gfx/BinPacking.h
         include/core/SpaceTree.h
 		include/core/BinPackingStrategy.h
 		include/core/Atlas.h
