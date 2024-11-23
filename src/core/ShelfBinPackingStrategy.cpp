@@ -40,7 +40,7 @@ namespace dagui
 					}
 					else
 					{
-						setResult(RESULT_FAILED_TO_ALLOCATE);
+						setResult(RESULT_FAILED_TO_FIND_SPACE);
 						break;
 					}
 				}
@@ -51,7 +51,7 @@ namespace dagui
 			}
 			imageSource.nextItem();
 		}
-		setResult(RESULT_OK);
-
+		if (result() == RESULT_UNKNOWN)
+			setResult(RESULT_OK);
 	}
 }

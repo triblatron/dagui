@@ -923,17 +923,24 @@ protected:
 TEST_P(BinPackingStrategy_testPack, testPack)
 {
     auto className = std::get<0>(GetParam());
+    auto numAllocations = std::get<2>(GetParam());
     auto result = std::get<3>(GetParam());
     dagui::BinPackingStrategyFactory factory;
     auto strategy = factory.createStrategy(className);
     ASSERT_NE(nullptr, strategy);
     EXPECT_CALL(*_imageSource, hasMore()).Times(::testing::AtLeast(1));
-    EXPECT_CALL(*_atlas, allocateImage(_, _, _, _)).Times(_config->numChildren());
+    EXPECT_CALL(*_imageSource, item).Times(::testing::AtLeast(1));
+    EXPECT_CALL(*_imageSource, nextItem).Times(::testing::AnyNumber());
+    EXPECT_CALL(*_atlas, allocateImage(_, _, _, _)).Times(numAllocations);
+    EXPECT_CALL(*_atlas, width).Times(::testing::AnyNumber());
+    EXPECT_CALL(*_atlas, height).Times(::testing::AnyNumber());
     strategy->pack(*_imageSource, *_atlas);
     EXPECT_EQ(result, strategy->result());
 }
 
 INSTANTIATE_TEST_SUITE_P(BinPackingStrategy, BinPackingStrategy_testPack, ::testing::Values(
     std::make_tuple("Shelf", "root={ { width=256, height=256 } }", std::size_t{ 1 }, dagui::BinPackingStrategy::RESULT_OK),
-    std::make_tuple("MaxRects", "root={ { width=256, height=256 } }", std::size_t{ 1 }, dagui::BinPackingStrategy::RESULT_OK)
+    std::make_tuple("Shelf", "root={ { width=1024, height=1024 } }", std::size_t{ 0 }, dagui::BinPackingStrategy::RESULT_FAILED_TO_FIND_SPACE),
+    std::make_tuple("MaxRects", "root={ { width=256, height=256 } }", std::size_t{ 1 }, dagui::BinPackingStrategy::RESULT_OK),
+    std::make_tuple("MaxRects", "root={ { width=1024, height=1024 } }", std::size_t{ 0 }, dagui::BinPackingStrategy::RESULT_FAILED_TO_FIND_SPACE)
 ));

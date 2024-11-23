@@ -31,7 +31,8 @@ namespace dagui
 			}
 			imageSource.nextItem();
 		}
-		setResult(RESULT_OK);
+		if (result() == RESULT_UNKNOWN)
+			setResult(RESULT_OK);
 		delete spaceTree;
 	}
 }
