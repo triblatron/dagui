@@ -11,7 +11,7 @@ namespace dagui
 	void MaxRectsBinPackingStrategy::pack(ImageSource& imageSource, Atlas& atlas)
 	{
 		SpaceTree* spaceTree = new SpaceTree(0, 0, std::int32_t(atlas.width()), std::int32_t(atlas.height()), SpaceTree::TYPE_FREE, SpaceTree::SPLIT_UNKNOWN);
-
+		setResult(RESULT_UNKNOWN);
 		while (imageSource.hasMore())
 		{
 			auto image = imageSource.item();
@@ -24,9 +24,14 @@ namespace dagui
 				{
 					atlas.allocateImage(image, nullptr, nullptr, nullptr);
 				}
+				else
+				{
+					setResult(RESULT_FAILED_TO_FIND_SPACE);
+				}
 			}
 			imageSource.nextItem();
 		}
+		setResult(RESULT_OK);
 		delete spaceTree;
 	}
 }

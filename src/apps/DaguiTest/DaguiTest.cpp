@@ -894,7 +894,7 @@ public:
     MOCK_METHOD(void, allocateImage, (dagui::ImageDef*, size_t*, size_t*, size_t*), (override));
 };
 
-class BinPackingStrategy_testPack : public ::testing::TestWithParam<std::tuple<const char*, const char*, std::size_t>>
+class BinPackingStrategy_testPack : public ::testing::TestWithParam<std::tuple<const char*, const char*, std::size_t, dagui::BinPackingStrategy::Result>>
 {
 public:
 
@@ -923,16 +923,17 @@ protected:
 TEST_P(BinPackingStrategy_testPack, testPack)
 {
     auto className = std::get<0>(GetParam());
-    auto configStr = std::get<1>(GetParam());
+    auto result = std::get<3>(GetParam());
     dagui::BinPackingStrategyFactory factory;
     auto strategy = factory.createStrategy(className);
     ASSERT_NE(nullptr, strategy);
     EXPECT_CALL(*_imageSource, hasMore()).Times(::testing::AtLeast(1));
     EXPECT_CALL(*_atlas, allocateImage(_, _, _, _)).Times(_config->numChildren());
     strategy->pack(*_imageSource, *_atlas);
+    EXPECT_EQ(result, strategy->result());
 }
 
 INSTANTIATE_TEST_SUITE_P(BinPackingStrategy, BinPackingStrategy_testPack, ::testing::Values(
-    std::make_tuple("Shelf", "root={ { width=256, height=256 } }", std::size_t{ 1 }),
-    std::make_tuple("MaxRects", "root={ { width=256, height=256 } }", std::size_t{ 1 })
+    std::make_tuple("Shelf", "root={ { width=256, height=256 } }", std::size_t{ 1 }, dagui::BinPackingStrategy::RESULT_OK),
+    std::make_tuple("MaxRects", "root={ { width=256, height=256 } }", std::size_t{ 1 }, dagui::BinPackingStrategy::RESULT_OK)
 ));

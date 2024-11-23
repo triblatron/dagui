@@ -17,6 +17,7 @@ namespace dagui
 
 		using ImageDefArray = std::vector<ImageDef*>;
 		ImageDefArray defs;;
+		setResult(RESULT_UNKNOWN);
 		while (imageSource.hasMore())
 		{
 			dagui::ImageDef* inputImage = imageSource.item();
@@ -50,6 +51,7 @@ namespace dagui
 			}
 			imageSource.nextItem();
 		}
+		setResult(RESULT_OK);
 
 	}
 }
