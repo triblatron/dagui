@@ -22,7 +22,7 @@ namespace dagui
 
 				if (freeNode != nullptr)
 				{
-					atlas.allocateImage(image, nullptr, nullptr, nullptr);
+					allocateImage(atlas, *image, *freeNode);
 				}
 				else
 				{
@@ -34,5 +34,11 @@ namespace dagui
 		if (result() == RESULT_UNKNOWN)
 			setResult(RESULT_OK);
 		delete spaceTree;
+	}
+
+	void MaxRectsBinPackingStrategy::allocateImage(Atlas& atlas, ImageDef& inputImage, SpaceTree& freeNode)
+	{
+		inputImage.setPos(freeNode.x(), freeNode.y());
+		++_numAllocations;
 	}
 }

@@ -931,7 +931,6 @@ TEST_P(BinPackingStrategy_testPack, testPack)
     EXPECT_CALL(*_imageSource, hasMore()).Times(::testing::AtLeast(1));
     EXPECT_CALL(*_imageSource, item).Times(::testing::AtLeast(1));
     EXPECT_CALL(*_imageSource, nextItem).Times(::testing::AnyNumber());
-    EXPECT_CALL(*_atlas, allocateImage(_, _, _, _)).Times(numAllocations);
     EXPECT_CALL(*_atlas, width).Times(::testing::AnyNumber());
     EXPECT_CALL(*_atlas, height).Times(::testing::AnyNumber());
     strategy->pack(*_imageSource, *_atlas);

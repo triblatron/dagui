@@ -26,7 +26,7 @@ namespace dagui
 			{
 				if (nextX + inputImage->width() <= atlas.width() && nextY + inputImage->height() <= atlas.height())
 				{
-					atlas.allocateImage(inputImage, &maxHeightInThisShelf, &nextX, &nextY);
+					allocateImage(atlas, inputImage, &maxHeightInThisShelf, &nextX, &nextY);
 				}
 				else
 				{
@@ -35,8 +35,8 @@ namespace dagui
 					nextY += maxHeightInThisShelf;
 					maxHeightInThisShelf = 0u;
 					if (nextX + inputImage->width() <= atlas.width() && nextY + inputImage->height() <= atlas.height())
-					{
-						atlas.allocateImage(inputImage, &maxHeightInThisShelf, &nextX, &nextY);
+					{						
+						allocateImage(atlas, inputImage, &maxHeightInThisShelf, &nextX, &nextY);
 					}
 					else
 					{
@@ -53,5 +53,29 @@ namespace dagui
 		}
 		if (result() == RESULT_UNKNOWN)
 			setResult(RESULT_OK);
+	}
+
+	void ShelfBinPackingStrategy::allocateImage(Atlas& atlas, ImageDef* inputImage, size_t* maxHeightInThisShelf, size_t* nextX, size_t* nextY)
+	{
+		if (inputImage != nullptr && maxHeightInThisShelf != nullptr && nextX != nullptr && nextY != nullptr)
+		{
+			// Update max height for current shelf
+			if (inputImage->height() > *maxHeightInThisShelf)
+			{
+				*maxHeightInThisShelf = inputImage->height();
+			}
+			// Copy input image
+			//_binImage->copyFrom(*nextY, *nextX, inputImage);
+			// Update free space
+			inputImage->setPos(*nextX, *nextY);
+			*nextX += inputImage->width();
+			if (*nextX == atlas.width())
+			{
+				*nextX = 0u;
+				*nextY += *maxHeightInThisShelf;
+				*maxHeightInThisShelf = 0u;
+			}
+			++_numAllocations;
+		}
 	}
 }

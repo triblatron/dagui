@@ -2,6 +2,8 @@
 
 #include "config/Export.h"
 
+#include <cstdlib>
+
 namespace dagui
 {
 	class Atlas;
@@ -44,5 +46,7 @@ namespace dagui
 		}
 	private:
 		Result _result{ RESULT_UNKNOWN };
+	protected:
+		std::size_t _numAllocations{ 0 };
 	};
 }
