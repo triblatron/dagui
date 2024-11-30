@@ -39,11 +39,11 @@ Pull requests will be allowed at some point. There will be a coding style and pr
   * required to do translation and rotation in one matrix multiplication
   * required to create an Orthographic projection
 * Packages for Linux Debian based
-```
+```bash
 sudo apt-get install g++ cmake make freeglut3-dev libfreetype-dev libpango1.0-dev liblua5.4-dev git
 ```
 * Packages from Linux Red Hat based
-```
+```bash
 su
 dnf config-manager --enable devel
 dnf install freetype-devel freeglut-devel lua-devel
@@ -52,7 +52,7 @@ exit
 ## Build instructions 
 
 ### Linux
-```
+```bash
   git clone https://github.com/triblatron/dagui
   mkdir dagui_build && cd dagui_build
   cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install
@@ -64,7 +64,7 @@ exit
 ```
 
 ### Windows 
-```
+```bat
 git clone https://github.com/triblatron/install --branch x64-win64-vc17 --single-branch install
 git clone https://github.com/triblatron/dagui
 mkdir dagui_build
@@ -76,7 +76,7 @@ setup
 DaguiTest
 ```
 ### macOS X 10.15 Catalina
-```
+```bash
 brew install googletest
 brew install googlebenchmark
 brew install cmake
