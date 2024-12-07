@@ -48,6 +48,7 @@ SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include
         include/util/Searchable.h
 		include/core/ShelfBinPackingStrategy.h
 		include/core/MaxRectsBinPackingStrategy.h
+		include/core/VectorMap.h
 )
 SET( DAGUI_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaInterface.cpp src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}
         src/core/ConfigurationElement.cpp

@@ -24,6 +24,7 @@
 #include "core/BinPackingStrategyFactory.h"
 #include "core/BinPackingStrategy.h"
 #include "core/Atlas.h"
+#include "core/VectorMap.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -943,3 +944,12 @@ INSTANTIATE_TEST_SUITE_P(BinPackingStrategy, BinPackingStrategy_testPack, ::test
     std::make_tuple("MaxRects", "root={ { width=256, height=256 } }", std::size_t{ 1 }, dagui::BinPackingStrategy::RESULT_OK),
     std::make_tuple("MaxRects", "root={ { width=1024, height=1024 } }", std::size_t{ 0 }, dagui::BinPackingStrategy::RESULT_FAILED_TO_FIND_SPACE)
 ));
+
+TEST(VectorMap, testInsert)
+{
+    dagui::VectorMap<int, int> m;
+    m.insert(dagui::VectorMap<int,int>::value_type(1, 1));
+    auto it = m.find(1);
+    ASSERT_NE(m.end(), it);
+    EXPECT_EQ(1, it->second);
+}
