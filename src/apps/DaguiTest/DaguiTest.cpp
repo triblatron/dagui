@@ -977,3 +977,14 @@ INSTANTIATE_TEST_SUITE_P(VectorMap, VectorMap_testInsert, ::testing::Values(
     std::make_tuple("root={ { 1, 1 } }", 1, 1),
     std::make_tuple("root={ { 2, 2 }, { 1, 1 } }", 2, 2)
 ));
+
+TEST(VectorMap, testRepeatedInsertion)
+{
+    IntVectorMap sut;
+
+    auto p = sut.insert(IntVectorMap::value_type(1, 1));
+    ASSERT_TRUE(p.second);
+    auto p2 = sut.insert(IntVectorMap::value_type(1, 2));
+    ASSERT_FALSE(p2.second);
+    ASSERT_EQ(p.first, p2.first);
+}

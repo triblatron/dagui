@@ -20,15 +20,25 @@ namespace dagui
 			}
 		};
 	public:
-		void insert(const value_type& value)
+		std::pair<iterator, bool> insert(const value_type& value)
 		{
-			_map.push_back(value);
-			std::sort<typename container::iterator>(_map.begin(), _map.end(), Compare());
+			auto it = find(value.first);
+			if (it == _map.end())
+			{
+				_map.push_back(value);
+				std::sort<typename container::iterator>(_map.begin(), _map.end(), Compare());
+
+				return std::make_pair(_map.end() - 1, true);
+			}
+			else
+			{
+				return std::make_pair(it, false);
+			}
 		}
 
 		iterator find(const Key& key)
 		{
-			return std::lower_bound(_map.begin(), _map.end(), value_type(key,0), Compare());
+			return std::lower_bound(_map.begin(), _map.end(), value_type(key,Value()), Compare());
 		}
 
 		iterator end()
