@@ -36,16 +36,8 @@ namespace dagui
 				if (!equalKey)
 				{
 					auto d = std::distance(_map.begin(), it);
-					if (d == 0)
-					{
-						_map.insert(it, value);
-						return std::make_pair(_map.begin(), true);
-					}
-					else
-					{
-						_map.insert(it, value);
-						return std::make_pair(_map.begin()+d, true);
-					}
+					_map.insert(it, value);
+					return std::make_pair(_map.begin()+d, true);
 				}
 				else
 				{
