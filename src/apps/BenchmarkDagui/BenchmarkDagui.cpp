@@ -5,6 +5,8 @@
 #include <benchmark/benchmark.h>
 #include "util/CompletionTrie.h"
 #include "util/CompletionSubstring.h"
+#include "core/VectorMap.h"
+#include <map>
 
 void setup(dagui::Completion& sut)
 {
@@ -87,5 +89,31 @@ void BM_CompletionSubstringSearch(benchmark::State& state)
 }
 
 BENCHMARK(BM_CompletionSubstringSearch);
+
+void BM_Map(benchmark::State& state)
+{
+    using IntToIntMap = std::map<std::int64_t, std::int64_t>;
+    for (auto _ : state)
+    {
+        IntToIntMap sut;
+
+        sut.insert(IntToIntMap::value_type(1, 1));
+    }
+}
+
+BENCHMARK(BM_Map);
+
+void BM_VectorMap(benchmark::State& state)
+{
+    using IntToIntMap = dagui::VectorMap<std::int64_t, std::int64_t>;
+    for (auto _ : state)
+    {
+        IntToIntMap sut;
+
+        sut.insert(IntToIntMap::value_type(1, 1));
+    }
+}
+
+BENCHMARK(BM_VectorMap);
 
 BENCHMARK_MAIN();

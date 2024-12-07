@@ -137,6 +137,16 @@ namespace dagui
             return _children.size();
         }
 
+        ConfigurationElement* child(std::size_t index)
+        {
+            return _children[index];
+        }
+
+        const ConfigurationElement* child(std::size_t index) const
+        {
+            return _children[index];
+        }
+
         void eachChild(std::function<bool (ConfigurationElement&)> f);
     private:
         void setParent(ConfigurationElement* parent)

@@ -945,11 +945,35 @@ INSTANTIATE_TEST_SUITE_P(BinPackingStrategy, BinPackingStrategy_testPack, ::test
     std::make_tuple("MaxRects", "root={ { width=1024, height=1024 } }", std::size_t{ 0 }, dagui::BinPackingStrategy::RESULT_FAILED_TO_FIND_SPACE)
 ));
 
-TEST(VectorMap, testInsert)
+class VectorMap_testInsert : public ::testing::TestWithParam<std::tuple<const char*, int, int>>
 {
-    dagui::VectorMap<int, int> m;
-    m.insert(dagui::VectorMap<int,int>::value_type(1, 1));
-    auto it = m.find(1);
-    ASSERT_NE(m.end(), it);
-    EXPECT_EQ(1, it->second);
+
+};
+
+using IntVectorMap = dagui::VectorMap<std::int64_t, std::int64_t>;
+
+TEST_P(VectorMap_testInsert, testInsert)
+{
+    auto configStr = std::get<0>(GetParam());
+    auto key = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+    IntVectorMap sut;
+    dagui::Lua lua;
+    auto config = dagui::ConfigurationElement::fromString(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    config->eachChild([&sut](dagui::ConfigurationElement& child) {
+        if (child.numChildren() == 2)
+        {
+            sut.insert(IntVectorMap::value_type(child.child(0)->asInteger(), child.child(1)->asInteger()));
+        }
+        return true;
+        });
+    auto it = sut.find(key);
+    ASSERT_NE(sut.end(), it);
+    EXPECT_EQ(value , it->second);
 }
+
+INSTANTIATE_TEST_SUITE_P(VectorMap, VectorMap_testInsert, ::testing::Values(
+    std::make_tuple("root={ { 1, 1 } }", 1, 1),
+    std::make_tuple("root={ { 2, 2 }, { 1, 1 } }", 2, 2)
+));
