@@ -24,15 +24,33 @@ namespace dagui
 		{
 			auto it = find(value.first);
 			if (it == _map.end())
-			{
-				_map.push_back(value);
-				std::sort<typename container::iterator>(_map.begin(), _map.end(), Compare());
+			{				
+				_map.insert(it, value);
 
 				return std::make_pair(_map.end() - 1, true);
 			}
 			else
 			{
-				return std::make_pair(it, false);
+				auto equalKey = it->first == value.first;
+				
+				if (!equalKey)
+				{
+					auto d = std::distance(_map.begin(), it);
+					if (d == 0)
+					{
+						_map.insert(it, value);
+						return std::make_pair(_map.begin(), true);
+					}
+					else
+					{
+						_map.insert(it, value);
+						return std::make_pair(_map.begin()+d, true);
+					}
+				}
+				else
+				{
+					return std::make_pair(it, false);
+				}
 			}
 		}
 

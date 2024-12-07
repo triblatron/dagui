@@ -961,24 +961,36 @@ TEST_P(VectorMap_testInsert, testInsert)
     dagui::Lua lua;
     auto config = dagui::ConfigurationElement::fromString(lua, configStr);
     ASSERT_NE(nullptr, config);
-    config->eachChild([&sut](dagui::ConfigurationElement& child) {
-        if (child.numChildren() == 2)
+    auto elements = config->findElement("elements");
+    ASSERT_NE(nullptr, elements);
+    auto results = config->findElement("results");
+    ASSERT_NE(nullptr, results);
+    ASSERT_EQ(elements->numChildren(), results->numChildren());
+    for (std::size_t childIndex = 0; childIndex < elements->numChildren(); ++childIndex)
+    {
+        auto insertion = elements->child(childIndex);
+        auto result = results->child(childIndex)->child(0)->asBool();
+        auto actual = sut.insert(IntVectorMap::value_type(insertion->child(0)->asInteger(), insertion->child(1)->asInteger()));
+        EXPECT_EQ(result, actual.second);
+        EXPECT_EQ(insertion->child(0)->asInteger(), actual.first->first);
+        if (result)
         {
-            sut.insert(IntVectorMap::value_type(child.child(0)->asInteger(), child.child(1)->asInteger()));
+            EXPECT_EQ(insertion->child(1)->asInteger(), actual.first->second);
         }
-        return true;
-        });
+    }
     auto it = sut.find(key);
     ASSERT_NE(sut.end(), it);
     EXPECT_EQ(value , it->second);
 }
 
 INSTANTIATE_TEST_SUITE_P(VectorMap, VectorMap_testInsert, ::testing::Values(
-    std::make_tuple("root={ { 1, 1 } }", 1, 1),
-    std::make_tuple("root={ { 2, 2 }, { 1, 1 } }", 2, 2)
+    std::make_tuple("root={ elements={ { 1, 1 } }, results={ { true } } }", 1, 1),
+    std::make_tuple("root={ elements={ { 2, 2 }, { 1, 1 } }, results={ { true }, { true } } }", 2, 2),
+    std::make_tuple("root={ elements={ { 1, 1 }, { 1, 2 } }, results={ { true }, { false } } }", 1, 1),
+    std::make_tuple("root={ elements={ { 3, 3 }, { 1, 1 }, { 2, 2 } }, results={ { true }, { true }, { true } } }", 1, 1)
 ));
 
-TEST(VectorMap, testRepeatedInsertion)
+TEST(VectorMap, testDuplicateKeysAreRejected)
 {
     IntVectorMap sut;
 
