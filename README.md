@@ -69,9 +69,9 @@ git clone https://github.com/triblatron/install --branch x64-win64-vc17 --single
 git clone https://github.com/triblatron/dagui
 mkdir dagui_build
 cd dagui_build
-cmake -S dagui -B . -DDEP_ROOT=../install -DCMAKE_INSTALL_PREFIX=../dagui_install -A x64
+cmake -C ..\dagui\Automation\Build\InitialCacheVisualStudio.txt -S ../dagui -B . -DCMAKE_INSTALL_PREFIX="..\dagui_install"  -DCMAKE_PREFIX_PATH="c:\tartings\cuhc++\install-x64-win64-vc17" -A x64
 cmake --build . --target install --config Release
-cd dagui_install
+cd ..\dagui_install
 setup
 DaguiTest
 ```
