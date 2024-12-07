@@ -152,11 +152,11 @@ Test
   * a texture
   * the screen
 * implement backend for
-  * OpenGL 2.1
-  * OpenGL 3.3
-  * OpenGL 4.6
-  * Vulkan 1.3
-  * Metal 2
+  * ~~OpenGL 2.1~~
+  * ~~OpenGL 3.3~~
+  * ~~OpenGL 4.6~~
+  * Vulkan 1.2
+  * ~~Metal 2~~
 ## Known working platforms
 * Ubuntu 20.04.6 LTS x64 gcc 9
   * Requires buliding Lua from source [triblatron/lua](https://github.com/triblatron/lua)
