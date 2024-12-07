@@ -98,6 +98,8 @@ void BM_Map(benchmark::State& state)
         IntToIntMap sut;
 
         sut.insert(IntToIntMap::value_type(1, 1));
+        sut.insert(IntToIntMap::value_type(1, 1));
+        sut.insert(IntToIntMap::value_type(2, 2));
     }
 }
 
@@ -110,7 +112,10 @@ void BM_VectorMap(benchmark::State& state)
     {
         IntToIntMap sut;
 
+        sut.reserve(3);
+        sut.insert(IntToIntMap::value_type(3, 3));
         sut.insert(IntToIntMap::value_type(1, 1));
+        sut.insert(IntToIntMap::value_type(2, 2));
     }
 }
 

@@ -20,6 +20,16 @@ namespace dagui
 			}
 		};
 	public:
+		void reserve(typename container::size_type n)
+		{
+			_map.reserve(n);
+		}
+		
+		void resize(typename container::size_type n)
+		{
+			_map.resize(n);
+		}
+
 		std::pair<iterator, bool> insert(const value_type& value)
 		{
 			auto it = find(value.first);
