@@ -58,7 +58,7 @@ namespace dagui
 
 		iterator find(const Key& key)
 		{
-			return std::lower_bound(_map.begin(), _map.end(), value_type(key,Value()), Compare());
+			return std::lower_bound(_map.begin(), _map.end(), value_type(key,Value()), _cmp);
 		}
 
 		iterator end()
@@ -67,5 +67,6 @@ namespace dagui
 		}
 	private:
 		container _map;
+		Compare _cmp;
 	};
 }
