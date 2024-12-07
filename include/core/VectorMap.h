@@ -32,27 +32,27 @@ namespace dagui
 
 		std::pair<iterator, bool> insert(const value_type& value)
 		{
-			auto it = find(value.first);
-			if (it == _map.end())
-			{				
-				_map.insert(it, value);
-
-				return std::make_pair(_map.end() - 1, true);
-			}
-			else
+			auto it = std::lower_bound(_map.begin(), _map.end(), value_type(value.first,Value()), _cmp);
+			if (it != _map.end())
 			{
 				auto equalKey = it->first == value.first;
 				
 				if (!equalKey)
 				{
 					auto d = std::distance(_map.begin(), it);
-					_map.insert(it, value);
+					_map.emplace(it, value);
 					return std::make_pair(_map.begin()+d, true);
 				}
 				else
 				{
 					return std::make_pair(it, false);
 				}
+			}
+			else
+			{				
+				_map.emplace(it, value);
+
+				return std::make_pair(_map.end() - 1, true);
 			}
 		}
 
