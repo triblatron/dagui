@@ -39,6 +39,7 @@ namespace dagui
 			size_t nextY{0};
 			size_t maxHeightInThisShelf{0};
 
+            _images.reserve(_source->estimateCount());
             strategy.pack(*_source, *this);
 
 			if (ok())

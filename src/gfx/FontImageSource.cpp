@@ -132,4 +132,9 @@ namespace dagui
 		
 		return ERR_UNKNOWN;
 	}
+
+    std::size_t FontImageSource::estimateCount() const
+    {
+        return _face->num_glyphs>=0?std::size_t(_face->num_glyphs):0;
+    }
 }

@@ -501,6 +501,9 @@ public:
 		ON_CALL(*this, nextItem).WillByDefault([this]() {
 			++_imageIndex;
 		});
+        ON_CALL(*this, estimateCount).WillByDefault([this]() {
+           return _images.size();
+        });
 	}
 
 	void configure(dagui::ConfigurationElement& config)
@@ -525,7 +528,8 @@ public:
 			return true;
 		});
 	}
-	
+
+    MOCK_METHOD(std::size_t, estimateCount, (), (const,override));
 	MOCK_METHOD(bool, hasMore, (), (const,override));
 	MOCK_METHOD(void, nextItem, (), (override));
 	MOCK_METHOD(dagui::ImageDef*, item, (), (override));

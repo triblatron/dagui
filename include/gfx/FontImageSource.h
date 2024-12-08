@@ -28,7 +28,9 @@ namespace dagui
 		{
 			return _errod == ERR_OK;
 		}
-		
+
+        std::size_t estimateCount() const override;
+
 		bool hasMore() const override;
 		
 		ImageDef* item() override;
