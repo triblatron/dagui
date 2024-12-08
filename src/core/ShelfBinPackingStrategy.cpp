@@ -68,6 +68,7 @@ namespace dagui
 			//_binImage->copyFrom(*nextY, *nextX, inputImage);
 			// Update free space
 			inputImage->setPos(*nextX, *nextY);
+            atlas.allocateImage(_numAllocations, inputImage);
 			*nextX += inputImage->width();
 			if (*nextX == atlas.width())
 			{

@@ -8,9 +8,11 @@
 #include <cstdint>
 #include <vector>
 #include <cstdlib>
+#include "core/VectorMap.h"
 
 namespace dagui
 {
+    class BinPackingStrategy;
 	class Image;
 	class ImageDef;
 	class ImageSource;
@@ -22,7 +24,7 @@ namespace dagui
 		std::size_t w{0};
 		std::size_t h{0};
 	};
-	
+
 	class DAGUI_API TextureAtlas : public Atlas
 	{
 	public:
@@ -36,7 +38,7 @@ namespace dagui
 	public:
 		TextureAtlas(std::size_t width, std::size_t height, std::size_t numComponents);
 		
-		~TextureAtlas();
+		~TextureAtlas() override;
 		
 		std::size_t width() const override
 		{
@@ -68,14 +70,14 @@ namespace dagui
 			return _binImageDef;
 		}
 		
-		void pack();
+		void pack(BinPackingStrategy& strategy);
 		
 		std::size_t numAllocations() const
 		{
 			return _numAllocations;
 		}
 
-		void allocateImage(ImageDef* inputImage, size_t* maxHeightInThisShelf, size_t* nextX, size_t* nextY) override;
+		void allocateImage(std::uint32_t id, ImageDef* inputImage) override;
 
 		static const char* errorToString(Error error);
 		
@@ -85,6 +87,7 @@ namespace dagui
 		{
 			return (value & (value-1))==0;
 		}
+
 	private:
 		Error _errod{ERR_UNKNOWN};
 		std::size_t _numComponents{0};
@@ -94,5 +97,7 @@ namespace dagui
 		using ImageBoundsMap = std::vector<std::pair<Image*, ImageBounds>>;
 		ImageBoundsMap _imageBounds;
 		std::size_t _numAllocations{0};
+        using ImageMap = VectorMap<std::uint32_t, ImageDef*>;
+        ImageMap _images;
 	};
 }

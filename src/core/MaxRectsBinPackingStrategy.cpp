@@ -39,6 +39,7 @@ namespace dagui
 	void MaxRectsBinPackingStrategy::allocateImage(Atlas& atlas, ImageDef& inputImage, SpaceTree& freeNode)
 	{
 		inputImage.setPos(freeNode.x(), freeNode.y());
+        atlas.allocateImage(_numAllocations, &inputImage);
 		++_numAllocations;
 	}
 }

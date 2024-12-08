@@ -892,10 +892,10 @@ public:
 
     MOCK_METHOD(std::size_t, width, (), (const, override));
     MOCK_METHOD(std::size_t, height, (), (const, override));
-    MOCK_METHOD(void, allocateImage, (dagui::ImageDef*, size_t*, size_t*, size_t*), (override));
+    MOCK_METHOD(void, allocateImage, (std::uint32_t, dagui::ImageDef*), (override));
 };
 
-class BinPackingStrategy_testPack : public ::testing::TestWithParam<std::tuple<const char*, const char*, std::size_t, dagui::BinPackingStrategy::Result>>
+class BinPackingStrategy_testPack : public ::testing::TestWithParam<std::tuple<const char*, const char*, int, dagui::BinPackingStrategy::Result>>
 {
 public:
 
@@ -934,6 +934,7 @@ TEST_P(BinPackingStrategy_testPack, testPack)
     EXPECT_CALL(*_imageSource, nextItem).Times(::testing::AnyNumber());
     EXPECT_CALL(*_atlas, width).Times(::testing::AnyNumber());
     EXPECT_CALL(*_atlas, height).Times(::testing::AnyNumber());
+    EXPECT_CALL(*_atlas, allocateImage).Times(numAllocations);
     strategy->pack(*_imageSource, *_atlas);
     EXPECT_EQ(result, strategy->result());
 }

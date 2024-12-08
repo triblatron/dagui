@@ -7,6 +7,7 @@
 #include "util/CompletionSubstring.h"
 #include "core/VectorMap.h"
 #include <map>
+#include <cstdint>
 
 void setup(dagui::Completion& sut)
 {

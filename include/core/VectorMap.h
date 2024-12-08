@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <utility>
+#include <algorithm>
 
 namespace dagui
 {
@@ -60,6 +61,11 @@ namespace dagui
 		{
 			return std::lower_bound(_map.begin(), _map.end(), value_type(key,Value()), _cmp);
 		}
+
+        iterator begin()
+        {
+            return _map.begin();
+        }
 
 		iterator end()
 		{

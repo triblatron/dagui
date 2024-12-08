@@ -3,6 +3,7 @@
 #include "config/Export.h"
 
 #include <cstdlib>
+#include <cstdint>
 
 namespace dagui
 {
@@ -17,6 +18,6 @@ namespace dagui
 
 		virtual std::size_t height() const = 0;
 
-		virtual void allocateImage(ImageDef* inputImage, size_t* maxHeightInThisShelf, size_t* nextX, size_t* nextY) = 0;
+		virtual void allocateImage(std::uint32_t id, ImageDef* inputImage) = 0;
 	};
 }

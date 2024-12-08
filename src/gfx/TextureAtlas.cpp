@@ -7,6 +7,7 @@
 #include "gfx/BinImageDef.h"
 
 #include <cstring>
+#include "core/BinPackingStrategy.h"
 
 namespace dagui
 {
@@ -30,7 +31,7 @@ namespace dagui
 		delete _binImage;
 	}
 	
-	void TextureAtlas::pack()
+	void TextureAtlas::pack(BinPackingStrategy& strategy)
 	{
 		if (_source != nullptr)
 		{
@@ -38,75 +39,26 @@ namespace dagui
 			size_t nextY{0};
 			size_t maxHeightInThisShelf{0};
 
-			using ImageDefArray = std::vector<ImageDef*>;
-			ImageDefArray defs;;
-			while (_source->hasMore())
-			{
-				dagui::ImageDef* inputImage = _source->item();
-				
-				if (_binImageDef!=nullptr && inputImage!=nullptr)
-				{
-					if ( nextX + inputImage->width() <= _binImageDef->width() && nextY + inputImage->height() <= _binImageDef->height())
-					{
-						allocateImage(inputImage, &maxHeightInThisShelf, &nextX, &nextY);
-					}
-					else
-					{
-						// Try next shelf
-						nextX = 0u;
-						nextY += maxHeightInThisShelf;
-						maxHeightInThisShelf = 0u;
-						if ( nextX + inputImage->width() <= _binImageDef->width() && nextY + inputImage->height() <= _binImageDef->height())
-						{
-							allocateImage(inputImage, &maxHeightInThisShelf, &nextX, &nextY);
-						}
-						else
-						{
-							_errod = ERR_FAILED_TO_ALLOCATE;
-							break;
-						}
-					}
-					if (ok())
-					{
-						defs.emplace_back(inputImage);
-					}
-				}
-				_source->nextItem();
-			}
+            strategy.pack(*_source, *this);
 
 			if (ok())
 			{
 				_binImage = _binImageDef->createImage();
-				for (auto def : defs)
+				for (auto def : _images)
 				{
-					Image* image = def->createImage();
-					_binImage->copyFrom(def->y(), def->x(), image);
+					Image* image = def.second->createImage();
+					_binImage->copyFrom(def.second->y(), def.second->x(), image);
 				}
 			}
 		}
 	}
 	
-	void TextureAtlas::allocateImage(ImageDef* inputImage, size_t* maxHeightInThisShelf, size_t* nextX, size_t* nextY)
+	void TextureAtlas::allocateImage(std::uint32_t id, ImageDef* inputImage)
 	{
-		if (inputImage!=nullptr && maxHeightInThisShelf != nullptr && nextX != nullptr && nextY != nullptr)
+		if (inputImage!=nullptr)
 		{
-			// Update max height for current shelf
-			if (inputImage->height() > *maxHeightInThisShelf)
-			{
-				*maxHeightInThisShelf = inputImage->height();
-			}
-			// Copy input image
-			//_binImage->copyFrom(*nextY, *nextX, inputImage);
-			// Update free space
-			inputImage->setPos(*nextX, *nextY);
-			*nextX += inputImage->width();
-			if (*nextX == _binImageDef->width())
-			{
-				*nextX = 0u;
-				*nextY += *maxHeightInThisShelf;
-				*maxHeightInThisShelf = 0u;
-			}
-			++_numAllocations;
+            _images.insert(ImageMap::value_type(id, inputImage));
+            ++_numAllocations;
 		}
 	}
 	
