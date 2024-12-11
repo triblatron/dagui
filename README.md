@@ -78,12 +78,13 @@ DaguiTest
 ### macOS Common Dependencies
 ```bash
 brew install googletest
-brew install googlebenchmark
+brew install google-benchmark
 brew install cmake
 brew install gcc
 brew install freetype
 brew install lua
 ```
+* Note that OpenGL and GLUT are included as part of the developer SDK.
 ### macOS X 10.15 Catalina Intel
 ```bash
 git clone https://github.com/triblatron/dagui
