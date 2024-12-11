@@ -75,13 +75,17 @@ cd ..\dagui_install
 setup
 DaguiTest
 ```
-### macOS X 10.15 Catalina Intel
+### macOS Common Dependencies
 ```bash
 brew install googletest
 brew install googlebenchmark
 brew install cmake
-brew install llvm
+brew install gcc
 brew install freetype
+brew install lua
+```
+### macOS X 10.15 Catalina Intel
+```bash
 git clone https://github.com/triblatron/dagui
 mkdir dagui_build && cd dagui_build
 cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_BUILD_TYPE=Release
@@ -93,11 +97,6 @@ DaguiTest
 ```
 ### macOS 15.1 Sequoia Apple Silicon
 ```bash
-brew install googletest
-brew install googlebenchmark
-brew install cmake
-brew install llvm
-brew install freetype
 git clone https://github.com/triblatron/dagui
 mkdir dagui_build && cd dagui_build
 cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install -DCMAKE_BUILD_TYPE=Release
