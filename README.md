@@ -75,20 +75,37 @@ cd ..\dagui_install
 setup
 DaguiTest
 ```
-### macOS X 10.15 Catalina
+### macOS Common Dependencies
 ```bash
 brew install googletest
-brew install googlebenchmark
+brew install google-benchmark
 brew install cmake
-brew install llvm
+brew install gcc
+brew install freetype
+brew install lua
+```
+* Note that OpenGL and GLUT are included as part of the developer SDK.
+### macOS X 10.15 Catalina Intel
+```bash
 git clone https://github.com/triblatron/dagui
 mkdir dagui_build && cd dagui_build
-cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15
+cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_BUILD_TYPE=Release
 make
 make install
 cd ../dagui_install
 source setup.sh
-Test
+DaguiTest
+```
+### macOS 15.1 Sequoia Apple Silicon
+```bash
+git clone https://github.com/triblatron/dagui
+mkdir dagui_build && cd dagui_build
+cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install -DCMAKE_BUILD_TYPE=Release
+make
+make install
+cd ../dagui_install
+source setup.sh
+DaguiTest
 ```
 
 ## Progress
@@ -116,12 +133,17 @@ Test
 ~~Build on Raspian 12~~
 
 * ~~Build on macOS 10.15 Catalina~~
-  * ~~HEAD that requires GLUT and FreeType et al~~ 
+  * ~~HEAD that requires GLUT and FreeType et al~~
 * ~~Render a full screen quad in a GLUT window~~
 * ~~Create a texture of a solid colour~~
 * ~~Render a glyph to a texture~~
   * ~~Avoid stretching when a reshape occurs~~
 * ~~Name repo properly~~
+* ~~BinPackingStrategy and implementations ShelfBinPackingStrategy, MaxRectsBinPackingStrategy~~
+* ~~SpaceTree to efficiently find free space in a bin~~
+* ~~VectorMap to efficiently store a sorted sequence especially when we know its eventual size~~
+  * ~~Use reserve() to avoid repeated memory allocation~~
+* ~~Build on macOS 15.1 Sequoia~~
 
 ## Next up
 * Render a font to a texture
