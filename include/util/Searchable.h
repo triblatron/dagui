@@ -16,7 +16,7 @@ namespace dagui
 	//! \param[in] key : const char* The key to check against.
 	//! \param[in] value : Value The value to return if the key is in the path.
     template<typename Value>
-	ConfigurationElement::ValueType findEndpoint(std::string_view path, const char* key, Value value)
+	dagbase::ConfigurationElement::ValueType findEndpoint(std::string_view path, const char* key, Value value)
 	{
 		if (path == key)
 		{
@@ -36,7 +36,7 @@ namespace dagui
 	//! \note We use std::invoke() to handle pointers and references uniformly.
 	template<typename Ref>
 	auto findInternal(std::string_view path, const char* key, const Ref& obj) ->
-		ConfigurationElement::ValueType
+		dagbase::ConfigurationElement::ValueType
 	{
 		auto pos = path.compare(0, std::strlen(key), key);
 
@@ -65,7 +65,7 @@ namespace dagui
 	//! \note We use std::invoke() to handle pointers and references uniformly.
 	//! \note We can avoid an initial string_view::find() because we are only interested in the first element of path.
 	template<typename Array>
-	ConfigurationElement::ValueType findArray(std::string_view path, const Array& obj)
+	dagbase::ConfigurationElement::ValueType findArray(std::string_view path, const Array& obj)
 	{
 		if (path.length()>1 && path[0]=='[')
 		{

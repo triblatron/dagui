@@ -5,7 +5,6 @@
 #include "config/config.h"
 
 #include "core/SpaceTree.h"
-#include "core/ConfigurationElement.h"
 #include "util/enums.h"
 
 #include <cstring>
@@ -16,9 +15,9 @@
 
 namespace dagui
 {
-    ConfigurationElement::ValueType Children::find(std::string_view path) const
+    dagbase::ConfigurationElement::ValueType Children::find(std::string_view path) const
     {
-        ConfigurationElement::ValueType retval = findArray(path, _a);
+        dagbase::ConfigurationElement::ValueType retval = findArray(path, _a);
 
         if (retval.has_value())
         {
@@ -75,7 +74,7 @@ namespace dagui
         return true;
     }
 
-    SpaceTree* SpaceTree::createNode(ConfigurationElement& config)
+    SpaceTree* SpaceTree::createNode(dagbase::ConfigurationElement& config)
     {
         std::int32_t x=0, y=0, width=0, height=0;
         if (auto xConfig = config.findElement("x"); xConfig)
@@ -107,11 +106,11 @@ namespace dagui
         return new SpaceTree(x, y, width, height, type, split);
     }
 
-    SpaceTree* SpaceTree::fromConfig(dagui::ConfigurationElement& config)
+    SpaceTree* SpaceTree::fromConfig(dagbase::ConfigurationElement& config)
     {
         auto root = createNode(config);
 
-        using ConfigQueue = std::queue<ConfigurationElement*>;
+        using ConfigQueue = std::queue<dagbase::ConfigurationElement*>;
         ConfigQueue configQueue;
         using ParentQueue = std::queue<SpaceTree*>;
         ParentQueue parentQueue;
@@ -126,7 +125,7 @@ namespace dagui
             parentQueue.pop();
             if (auto childrenConfig=topConfig->findElement("children"); childrenConfig)
             {
-                childrenConfig->eachChild([&configQueue, &parentQueue, &parent](dagui::ConfigurationElement& childConfig)
+                childrenConfig->eachChild([&configQueue, &parentQueue, &parent](dagbase::ConfigurationElement& childConfig)
                 {
                     auto child = createNode(childConfig);
 
@@ -200,9 +199,9 @@ namespace dagui
         return RESULT_FAILED_TO_INSERT;
     }
 
-    ConfigurationElement::ValueType SpaceTree::find(std::string_view path) const
+    dagbase::ConfigurationElement::ValueType SpaceTree::find(std::string_view path) const
     {
-        ConfigurationElement::ValueType retval {};
+        dagbase::ConfigurationElement::ValueType retval {};
 
         retval = findInternal(path, "children", _children);
         if (retval.has_value())

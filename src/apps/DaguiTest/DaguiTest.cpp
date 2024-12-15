@@ -126,148 +126,6 @@ TEST(Container, testEachChild)
     delete parent;
 }
 
-class ConfigurationElement_testFindElement : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*>>
-{
-
-};
-
-TEST_P(ConfigurationElement_testFindElement, testFindFromRoot)
-{
-    dagui::Lua lua;
-    auto configStr = std::get<0>(GetParam());
-    auto path = std::get<1>(GetParam());
-    auto name = std::get<2>(GetParam());
-    auto config = dagui::ConfigurationElement::fromString(lua, configStr);
-    ASSERT_NE(nullptr, config);
-    auto actual = config->findElement(path);
-    ASSERT_NE(nullptr, actual);
-    ASSERT_EQ(name, actual->name());
-
-    delete config;
-}
-
-INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testFindElement, ::testing::Values(
-        std::make_tuple("root = {}", "$", "root"),
-        std::make_tuple("root = { foo = true }", "$.foo", "foo"),
-        std::make_tuple("root = { foo = { wibble=1.0 } }", "$.foo.wibble", "wibble"),
-        std::make_tuple("root = { foo = { flibble={ spoo=3 } } }", "$.foo.flibble.spoo", "spoo"),
-        std::make_tuple("root = { foo = true }", "foo", "foo"),
-        std::make_tuple("root = { foo = { bar=\"wibble\" } }", "foo.bar", "bar"),
-        std::make_tuple("root = { foo = { bar={ baz=2 } } }", "foo.bar.baz", "baz"),
-        std::make_tuple("root = { \"wibble\" }", "$[0]", ""),
-        std::make_tuple("root = { wibble={ true } }", "$.wibble[0]", ""),
-        std::make_tuple("root = { wibble={ { foo=true } } }", "$.wibble[0].foo", "foo"),
-        std::make_tuple("root = { wibble={ { foo={true} } } }", "$.wibble[0].foo[0]", ""),
-        std::make_tuple("root = { wibble={ foo={ true } } }", "$.wibble.foo[0]", ""),
-        std::make_tuple("root = { wibble={ foo={ { bar=1.0 } } } }", "$.wibble.foo[0].bar", "bar"),
-        std::make_tuple("root = { wibble={ foo={ { bar=1.0 }, { baz=\"baz\" }, } } }", "$.wibble.foo[1].baz", "baz"),
-        std::make_tuple("root = { wibble={ foo={ true } }, flibble={ tribble=1.0 } }", "$.flibble.tribble", "tribble"),
-        std::make_tuple("root = { wibble={ foo={ true } }, flibble={ tribble=1.0 } }", "wibble.foo", "foo"),
-        std::make_tuple("root = { wibble={ { foo=true } }, { tribble=1.0 } }", "wibble[0].foo", "foo"),
-        std::make_tuple("root = { { foo=true }, { tribble=1.0 } }", "$[1].tribble", "tribble"),
-        std::make_tuple("root = { { foo=true }, { tribble=1.0 } }", "[1].tribble", "tribble"),
-        std::make_tuple("root = { wibble={ { foo=true }, { tribble=1.0 }, } }", "wibble[1].tribble", "tribble")
-        ));
-
-class ConfigurationElement_testAsInteger : public ::testing::TestWithParam<std::tuple<const char*, const char*, std::int64_t>>
-{
-
-};
-
-TEST_P(ConfigurationElement_testAsInteger, testAsInteger)
-{
-    dagui::Lua lua;
-    auto configStr = std::get<0>(GetParam());
-    auto path = std::get<1>(GetParam());
-    auto value = std::get<2>(GetParam());
-
-    auto config = dagui::ConfigurationElement::fromString(lua, configStr);
-    ASSERT_NE(nullptr, config);
-    auto element = config->findElement(path);
-    ASSERT_NE(nullptr, element);
-    EXPECT_EQ(value, element->asInteger());
-    delete config;
-}
-
-INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testAsInteger, ::testing::Values(
-        std::make_tuple("root={ foo=1 }", "foo", 1),
-        std::make_tuple("root={ foo={ 1 } }", "foo[0]", 1)
-        ));
-
-class ConfigurationElement_testAsDouble : public ::testing::TestWithParam<std::tuple<const char*, const char*, double>>
-{
-
-};
-
-TEST_P(ConfigurationElement_testAsDouble, testAsDouble)
-{
-    dagui::Lua lua;
-    auto configStr = std::get<0>(GetParam());
-    auto path = std::get<1>(GetParam());
-    auto value = std::get<2>(GetParam());
-
-    auto config = dagui::ConfigurationElement::fromString(lua, configStr);
-    ASSERT_NE(nullptr, config);
-    auto element = config->findElement(path);
-    ASSERT_NE(nullptr, element);
-    EXPECT_EQ(value, element->asDouble());
-    delete config;
-}
-
-INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testAsDouble, ::testing::Values(
-        std::make_tuple("root={ foo=1.5 }", "foo", 1.5),
-        std::make_tuple("root={ foo= { 1.5 } }", "foo[0]", 1.5)
-        ));
-
-class ConfigurationElement_testAsBool : public ::testing::TestWithParam<std::tuple<const char*, const char*, bool>>
-{
-
-};
-
-TEST_P(ConfigurationElement_testAsBool, testAsBool)
-{
-    dagui::Lua lua;
-    auto configStr = std::get<0>(GetParam());
-    auto path = std::get<1>(GetParam());
-    auto value = std::get<2>(GetParam());
-
-    auto config = dagui::ConfigurationElement::fromString(lua, configStr);
-    ASSERT_NE(nullptr, config);
-    auto element = config->findElement(path);
-    ASSERT_NE(nullptr, element);
-    EXPECT_EQ(value, element->asBool());
-    delete config;
-}
-
-INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testAsBool, ::testing::Values(
-        std::make_tuple("root={ foo=true }", "foo", true),
-        std::make_tuple("root={ foo= { true } }", "foo[0]", true)
-        ));
-
-class ConfigurationElement_testAsString : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*>>
-{
-
-};
-
-TEST_P(ConfigurationElement_testAsString, testAsString)
-{
-    dagui::Lua lua;
-    auto configStr = std::get<0>(GetParam());
-    auto path = std::get<1>(GetParam());
-    auto value = std::get<2>(GetParam());
-
-    auto config = dagui::ConfigurationElement::fromString(lua, configStr);
-    ASSERT_NE(nullptr, config);
-    auto element = config->findElement(path);
-    ASSERT_NE(nullptr, element);
-    EXPECT_EQ(value, element->asString());
-    delete config;
-}
-
-INSTANTIATE_TEST_SUITE_P(ConfigurationElement, ConfigurationElement_testAsString, ::testing::Values(
-        std::make_tuple("root={ foo=\"true\" }", "foo", "true"),
-        std::make_tuple("root={ foo= { \"true\" } }", "foo[0]", "true")
-        ));
 
 //@ParameterizedTest
 //public void testAddWord(String word, String substring, String matchString) {
@@ -506,9 +364,9 @@ public:
         });
 	}
 
-	void configure(dagui::ConfigurationElement& config)
+	void configure(dagbase::ConfigurationElement& config)
 	{
-		config.eachChild([this](dagui::ConfigurationElement& child) {
+		config.eachChild([this](dagbase::ConfigurationElement& child) {
 			std::size_t width{0}, height{0};
 			
 			if (auto widthConfig = child.findElement("width"); widthConfig!=nullptr)
@@ -594,19 +452,19 @@ INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testDimensions, ::testing::V
 	std::make_tuple(512, 511, dagui::TextureAtlas::ERR_NON_POWER_OF_TWO_DIMS)
 ));
 
-class SpaceTree_testFromConfig : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, const char*, dagui::ConfigurationElement::ValueType>>
+class SpaceTree_testFromConfig : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, const char*, dagbase::ConfigurationElement::ValueType>>
 {
 
 };
 
 TEST_P(SpaceTree_testFromConfig, testFromConfig)
 {
-    dagui::Lua lua;
+    dagbase::Lua lua;
 	auto configStr = std::get<0>(GetParam());
 	auto numNodes = std::get<1>(GetParam());
 	auto path = std::get<2>(GetParam());
 	auto value = std::get<3>(GetParam());
-	auto config = dagui::ConfigurationElement::fromFile(lua, configStr);
+	auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
 	ASSERT_NE(nullptr, config);
 	auto sut = dagui::SpaceTree::fromConfig(*config);
 	ASSERT_NE(nullptr, sut);
@@ -635,17 +493,17 @@ INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testFromConfig, ::testing::Values(
 	std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 5u, "children[1].split", std::string("SPLIT_UNKNOWN")),
 	std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 5u, "children[0].children[0].nodeType", std::string("TYPE_FREE")),
 	std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 5u, "children[0].children[1].nodeType", std::string("TYPE_FULL")),
-	std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 5u, "foo.bar.baz", dagui::ConfigurationElement::ValueType())
+	std::make_tuple("data/tests/SpaceTree/MultiFree.lua", 5u, "foo.bar.baz", dagbase::ConfigurationElement::ValueType())
 	));
 
-class SpaceTree_testInsert : public ::testing::TestWithParam<std::tuple<const char*, std::int32_t, std::int32_t, dagui::SpaceTree::Heuristic, dagui::SpaceTree::Result, const char*, dagui::ConfigurationElement::ValueType>>
+class SpaceTree_testInsert : public ::testing::TestWithParam<std::tuple<const char*, std::int32_t, std::int32_t, dagui::SpaceTree::Heuristic, dagui::SpaceTree::Result, const char*, dagbase::ConfigurationElement::ValueType>>
 {
 
 };
 
 TEST_P(SpaceTree_testInsert, testInsert)
 {
-    dagui::Lua lua;
+    dagbase::Lua lua;
 	auto configStr = std::get<0>(GetParam());
 	auto width = std::get<1>(GetParam());
 	auto height = std::get<2>(GetParam());
@@ -653,7 +511,7 @@ TEST_P(SpaceTree_testInsert, testInsert)
 	auto result = std::get<4>(GetParam());
 	auto path= std::get<5>(GetParam());
 	auto value = std::get<6>(GetParam());
-	auto config = dagui::ConfigurationElement::fromString(lua, configStr);
+	auto config = dagbase::ConfigurationElement::fromString(lua, configStr);
 	ASSERT_NE(nullptr, config);
 	auto sut = dagui::SpaceTree::fromConfig(*config);
 	ASSERT_NE(nullptr, sut);
@@ -715,7 +573,7 @@ INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testInsert, ::testing::Values(
 	std::make_tuple("root = { nodeType=\"TYPE_FREE\", width=512, height=512 }", 1024, 1024, dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_FAILED_TO_INSERT, "nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FREE)))
 	));
 
-class SpaceTree_testInsertMultiple : public ::testing::TestWithParam<std::tuple<const char*, dagui::SpaceTree::Heuristic, dagui::SpaceTree::Result, const char*, dagui::ConfigurationElement::ValueType>>
+class SpaceTree_testInsertMultiple : public ::testing::TestWithParam<std::tuple<const char*, dagui::SpaceTree::Heuristic, dagui::SpaceTree::Result, const char*, dagbase::ConfigurationElement::ValueType>>
 {
 protected:
     struct Rect
@@ -729,15 +587,15 @@ protected:
 
 TEST_P(SpaceTree_testInsertMultiple, testInsert)
 {
-    dagui::Lua lua;
+    dagbase::Lua lua;
     auto inputStr = std::get<0>(GetParam());
     auto heuristic = std::get<1>(GetParam());
     auto result = std::get<2>(GetParam());
     auto path = std::get<3>(GetParam());
     auto value = std::get<4>(GetParam());
-    auto input = dagui::ConfigurationElement::fromString(lua, inputStr);
+    auto input = dagbase::ConfigurationElement::fromString(lua, inputStr);
     ASSERT_NE(nullptr, input);
-    input->eachChild([this](dagui::ConfigurationElement& childConfig) {
+    input->eachChild([this](dagbase::ConfigurationElement& childConfig) {
         Rect rect;
         if (auto element = childConfig.findElement("width"); element)
         {
@@ -785,16 +643,16 @@ INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testInsertMultiple, ::testing::Val
     std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_INTERNAL)))
 ));
 
-typedef dagui::ConfigurationElement* (*BuildConfigFunc)(const char*);
+typedef dagbase::ConfigurationElement* (*BuildConfigFunc)(const char*);
 
 class SpaceTree_testFindSpace : public ::testing::TestWithParam<std::tuple<
-		const char*, std::int32_t, std::int32_t, dagui::SpaceTree::Heuristic, const char *, dagui::ConfigurationElement::ValueType>>
+		const char*, std::int32_t, std::int32_t, dagui::SpaceTree::Heuristic, const char *, dagbase::ConfigurationElement::ValueType>>
 {
 public:
 	void SetUp() override
 	{
 		auto configStr = std::get<0>(GetParam());
-		auto config = dagui::ConfigurationElement::fromFile(_lua, configStr);
+		auto config = dagbase::ConfigurationElement::fromFile(_lua, configStr);
 		ASSERT_NE(nullptr, config);
 		_sut = dagui::SpaceTree::fromConfig(*config);
 	}
@@ -804,7 +662,7 @@ public:
 		delete _sut;
 	}
 protected:
-    dagui::Lua _lua;
+    dagbase::Lua _lua;
 	dagui::SpaceTree* _sut{nullptr};
 };
 
@@ -906,7 +764,7 @@ public:
     void SetUp()
     {
         _configStr = std::get<1>(GetParam());
-        _config = dagui::ConfigurationElement::fromString(_lua, _configStr);
+        _config = dagbase::ConfigurationElement::fromString(_lua, _configStr);
         _imageSource = new MockImageSource();
         _imageSource->configure(*_config);
         _atlas = new MockAtlas();
@@ -918,9 +776,9 @@ public:
         delete _imageSource;
     }
 protected:
-    dagui::Lua _lua;
+    dagbase::Lua _lua;
     const char* _configStr{ nullptr };
-    dagui::ConfigurationElement* _config{ nullptr };
+    dagbase::ConfigurationElement* _config{ nullptr };
     MockImageSource* _imageSource{ nullptr };
     MockAtlas* _atlas{ nullptr };
 };
@@ -963,8 +821,8 @@ TEST_P(VectorMap_testInsert, testInsert)
     auto key = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
     IntVectorMap sut;
-    dagui::Lua lua;
-    auto config = dagui::ConfigurationElement::fromString(lua, configStr);
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromString(lua, configStr);
     ASSERT_NE(nullptr, config);
     auto elements = config->findElement("elements");
     ASSERT_NE(nullptr, elements);

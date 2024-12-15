@@ -10,11 +10,10 @@
 #include <array>
 #include <string_view>
 
-#include "ConfigurationElement.h"
+#include "core/ConfigurationElement.h"
 
 namespace dagui
 {
-    class ConfigurationElement;
     class SpaceTree;
 
     class DAGUI_API Children
@@ -68,7 +67,7 @@ namespace dagui
             return _a[index];
         }
 
-        ConfigurationElement::ValueType find(std::string_view) const;
+        dagbase::ConfigurationElement::ValueType find(std::string_view) const;
     private:
         ChildArray _a{nullptr};
         std::size_t _nextIndex{0};
@@ -167,15 +166,15 @@ namespace dagui
             return _height;
         }
 
-        static SpaceTree* createNode(ConfigurationElement& config);
+        static SpaceTree* createNode(dagbase::ConfigurationElement& config);
 
-        static SpaceTree* fromConfig(dagui::ConfigurationElement& config);
+        static SpaceTree* fromConfig(dagbase::ConfigurationElement& config);
 
         Result split(std::int32_t width, std::int32_t height, Split split);
 
         Result insert(std::int32_t width, std::int32_t height, Heuristic heuristic);
 
-        ConfigurationElement::ValueType find(std::string_view path) const;
+        dagbase::ConfigurationElement::ValueType find(std::string_view path) const;
 
         SpaceTree* findSpace(std::int32_t width, std::int32_t height, Heuristic heuristic);
 

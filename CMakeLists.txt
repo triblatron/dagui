@@ -15,17 +15,21 @@ FetchContent_Declare(googletest
 FetchContent_Declare(googlebenchmark
         GIT_REPOSITORY https://github.com/google/benchmark.git
         GIT_TAG main) # need main for benchmark::benchmark
-
+FetchContent_Declare(dagbase
+		GIT_REPOSITORY https://github.com/triblatron/dagbase.git
+		GIT_TAG main)
 FetchContent_MakeAvailable(
         googletest
-        googlebenchmark)
+        googlebenchmark
+		dagbase
+		)
+	
 #endif (UNIX)
 FIND_PACKAGE(Lua 5.4 REQUIRED)
 SET(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include/util/dbc.h include/core/LuaInterface.h include/core/Circle.h include/core/Container.h include/core/Rectangle.h include/core/Shape.h include/core/Widget.h
-        include/core/ConfigurationElement.h
+SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/core/Rectangle.h include/core/Shape.h include/core/Widget.h
         include/util/Completion.h
         include/util/CompletionTrie.h
         include/util/TrieNode.h
@@ -50,8 +54,7 @@ SET( ALL_PUBLIC_HEADERS include/util/errod.h include/util/ErrorHandler.h include
 		include/core/MaxRectsBinPackingStrategy.h
 		include/core/VectorMap.h
 )
-SET( DAGUI_SRC src/util/errod.cpp src/util/ErrorHandler.cpp src/core/LuaInterface.cpp src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}
-        src/core/ConfigurationElement.cpp
+SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
         src/util/CompletionSubstring.cpp
         src/core/CompositeShape.cpp
@@ -90,7 +93,7 @@ TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_B
 
 set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
 LINK_DIRECTORIES( ${DEP_ROOT}/lib )
-TARGET_LINK_LIBRARIES( dagui PRIVATE ${LUA_LIBRARY} GLUT::GLUT OpenGL::GL OpenGL::GLU Freetype::Freetype )
+TARGET_LINK_LIBRARIES( dagui PRIVATE dagbase ${LUA_LIBRARY} GLUT::GLUT OpenGL::GL OpenGL::GLU Freetype::Freetype )
 add_subdirectory(src/apps/DaguiTest)
 add_subdirectory(src/apps/BenchmarkDagui)
 add_subdirectory(src/demos/demoText)
