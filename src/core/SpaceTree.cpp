@@ -17,7 +17,7 @@ namespace dagui
 {
     dagbase::ConfigurationElement::ValueType Children::find(std::string_view path) const
     {
-        dagbase::ConfigurationElement::ValueType retval = findArray(path, _a);
+        dagbase::ConfigurationElement::ValueType retval = dagbase::findArray(path, _a);
 
         if (retval.has_value())
         {
@@ -203,31 +203,31 @@ namespace dagui
     {
         dagbase::ConfigurationElement::ValueType retval {};
 
-        retval = findInternal(path, "children", _children);
+        retval = dagbase::findInternal(path, "children", _children);
         if (retval.has_value())
             return retval;
 
-        retval = findEndpoint(path, "nodeType", std::string(typeToString(_type)));
+        retval = dagbase::findEndpoint(path, "nodeType", std::string(typeToString(_type)));
         if (retval.has_value())
             return retval;
 
-        retval = findEndpoint(path, "x", static_cast<std::int64_t>(_x));
+        retval = dagbase::findEndpoint(path, "x", static_cast<std::int64_t>(_x));
         if (retval.has_value())
             return retval;
 
-        retval = findEndpoint(path, "y", static_cast<std::int64_t>(_y));
+        retval = dagbase::findEndpoint(path, "y", static_cast<std::int64_t>(_y));
         if (retval.has_value())
             return retval;
 
-        retval = findEndpoint(path, "width", static_cast<std::int64_t>(_width));
+        retval = dagbase::findEndpoint(path, "width", static_cast<std::int64_t>(_width));
         if (retval.has_value())
             return retval;
 
-        retval = findEndpoint(path, "height", static_cast<std::int64_t>(_height));
+        retval = dagbase::findEndpoint(path, "height", static_cast<std::int64_t>(_height));
         if (retval.has_value())
             return retval;
 
-        retval = findEndpoint(path, "split", std::string(splitToString(_split)));
+        retval = dagbase::findEndpoint(path, "split", std::string(splitToString(_split)));
         if (retval.has_value())
             return retval;
 
