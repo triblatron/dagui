@@ -15,13 +15,9 @@ FetchContent_Declare(googletest
 FetchContent_Declare(googlebenchmark
         GIT_REPOSITORY https://github.com/google/benchmark.git
         GIT_TAG main) # need main for benchmark::benchmark
-FetchContent_Declare(dagbase
-		GIT_REPOSITORY https://github.com/triblatron/dagbase.git
-		GIT_TAG main)
 FetchContent_MakeAvailable(
         googletest
-        googlebenchmark
-		dagbase
+        googlebenchmark		
 		)
 	
 #endif (UNIX)
@@ -93,6 +89,7 @@ TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_B
 set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
 LINK_DIRECTORIES( ${DEP_ROOT}/lib )
 TARGET_LINK_LIBRARIES( dagui PRIVATE dagbase ${LUA_LIBRARY} GLUT::GLUT OpenGL::GL OpenGL::GLU Freetype::Freetype )
+add_subdirectory(ThirdParty/dagbase)
 add_subdirectory(src/apps/DaguiTest)
 add_subdirectory(src/apps/BenchmarkDagui)
 add_subdirectory(src/demos/demoText)
