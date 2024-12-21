@@ -1,4 +1,4 @@
-# A GUI for nodebackend
+# A User Interface for dag
 
 ## License 
 
@@ -27,7 +27,10 @@ Pull requests will be allowed at some point. There will be a coding style and pr
 * freeglut for OpenGL text demo
 * md4c for markdown parsing
 * svgpp for SVG parsing
-* nodebackend for
+* dagbase for
+  * A Lua interface
+  * A ConfigurationElement
+* dag for
   * basic features such as Lua support, streams.
   * the node graph support
     * node base class
@@ -65,16 +68,20 @@ exit
 
 ### Windows 
 ```bat
-git clone https://github.com/triblatron/install --branch x64-win64-vc17 --single-branch install
+git clone https://github.com/triblatron/dependencies-x64-windows-vc17
 git clone https://github.com/triblatron/dagui
 mkdir dagui_build
 cd dagui_build
-cmake -C ..\dagui\Automation\Build\InitialCacheVisualStudio.txt -S ../dagui -B . -DCMAKE_INSTALL_PREFIX="..\dagui_install"  -DCMAKE_PREFIX_PATH="c:\tartings\cuhc++\install-x64-win64-vc17" -A x64
+cmake -C ..\dagui\Automation\Build\InitialCacheVisualStudio.txt -S ..\dagui -B . -DCMAKE_INSTALL_PREFIX="..\dagui_install"  -A x64 -DCMAKE_PREFIX_PATH="\path\to\dependencies-x64-windows-vc17\"
 cmake --build . --target install --config Release
 cd ..\dagui_install
 setup
 DaguiTest
 ```
+* Note that the -A argument must precede the -DCMAKE_PREFIX_PATH otherwise dependencies will not be found.
+* Note that \path\to\install-x64-windows-vc17 is the path to the dependencies on your system
+* Note that you may have to add a -G <generator> where <generator> is something like "Visual Studio 15 2017"
+* Note that the -A x64 is mandatory because we don't support 32bit platforms.
 ### macOS Common Dependencies
 ```bash
 brew install googletest
