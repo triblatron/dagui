@@ -4,3 +4,6 @@
 [submodule "svgpp"]
 	path = ThirdParty/svgpp
 	url = https://github.com/svgpp/svgpp
+[submodule "ThirdParty/dagbase"]
+	path = ThirdParty/dagbase
+	url = https://github.com/triblatron/dagbase
