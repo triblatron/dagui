@@ -102,14 +102,15 @@ DaguiTest
 ```bash
 git clone https://github.com/triblatron/dagui
 mkdir dagui_build && cd dagui_build
-cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install -DCMAKE_BUILD_TYPE=Release -G Xcode
+cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install -DCMAKE_BUILD_TYPE=Release
 make
 make install
 cd ../dagui_install
 source setup.sh
 DaguiTest
 ```
-* Note that this generates an Xcode project, but it is possible to generate other build systems by varying the argument to -G.
+* Note that this generates UNIX makefiles, but it is possible to generate other build systems by varying the argument to -G.
+  * e.g. -G Xcode 
 
 ## Progress
 
