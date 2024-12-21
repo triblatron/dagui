@@ -79,7 +79,7 @@ setup
 DaguiTest
 ```
 * Note that the -A argument must precede the -DCMAKE_PREFIX_PATH otherwise dependencies will not be found.
-* Note that \path\to\install-x64-windows-vc17 is the path to the dependencies on your system
+* Note that \path\to\dependencies-x64-windows-vc17 is the path to the dependencies on your system
 * Note that you may have to add a -G <generator> where <generator> is something like "Visual Studio 15 2017"
 * Note that the -A x64 is mandatory because we don't support 32bit platforms.
 ### macOS Common Dependencies
