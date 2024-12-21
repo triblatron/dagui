@@ -191,6 +191,9 @@ DaguiTest
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2019 16.11.39
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2022 17.10.0
   * requires [triblatron/install](https://github.com/triblatron/install) branch x64-win64-vc17
+```cmd
+git clone https://github.com/triblatron/install --branch x64-win64-vc17 --single-branch
+```
 * Ubuntu 22.04.4 LTS x64 on WSL 2 gcc 11.4.0
 * Raspberry Pi 5 Raspian 12 aarch64 gcc 12.2
 
