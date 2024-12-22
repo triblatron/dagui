@@ -20,37 +20,19 @@ namespace dagui
 
         virtual ~ImageDef() = default;
 
-        std::size_t width() const
-        {
-            return _width;
-        }
-
-        std::size_t height() const
-        {
-            return _height;
-        }
-
-        void setPos(std::size_t x, std::size_t y)
-        {
-            _x = x;
-            _y = y;
-        }
-
-        std::size_t x() const
-        {
-            return _x;
-        }
-
-        std::size_t y() const
-        {
-            return _y;
-        }
-
         virtual Image* createImage() const = 0;
-    private:
-        std::size_t _x{0};
-        std::size_t _y{0};
-        std::size_t _width{0};
-        std::size_t _height{0};
+    public:
+        std::uint32_t x{0};
+        std::uint32_t y{0};
+        std::uint32_t width{0};
+        std::uint32_t height{0};
+        float u0{0.0f};
+        float v0{0.0f};
+        float u1{0.0f};
+        float v1{0.0f};
+        float u2{0.0f};
+        float v2{0.0f};
+        float u3{0.0f};
+        float v3{0.0f};
     };
 }

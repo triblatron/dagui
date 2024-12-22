@@ -18,7 +18,7 @@ namespace dagui
 
 			if (image != nullptr)
 			{
-				auto freeNode = spaceTree->findSpace(image->width(), image->height(), SpaceTree::FIT_BEST_SHORT_SIDE);
+				auto freeNode = spaceTree->findSpace(image->width, image->height, SpaceTree::FIT_BEST_SHORT_SIDE);
 
 				if (freeNode != nullptr)
 				{
@@ -38,7 +38,8 @@ namespace dagui
 
 	void MaxRectsBinPackingStrategy::allocateImage(Atlas& atlas, ImageDef& inputImage, SpaceTree& freeNode)
 	{
-		inputImage.setPos(freeNode.x(), freeNode.y());
+		inputImage.x = freeNode.x();
+		inputImage.y = freeNode.y();
         atlas.allocateImage(_numAllocations, &inputImage);
 		++_numAllocations;
 	}

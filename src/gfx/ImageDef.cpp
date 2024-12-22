@@ -8,10 +8,10 @@
 
 namespace dagui
 {
-    ImageDef::ImageDef(std::size_t width, std::size_t height)
+    ImageDef::ImageDef(std::size_t width_, std::size_t height_)
         :
-    _width(width),
-    _height(height)
+    width(width_),
+    height(height_)
     {
         // Do nothing.
     }

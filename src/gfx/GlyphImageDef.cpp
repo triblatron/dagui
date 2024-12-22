@@ -11,7 +11,7 @@
 
 namespace dagui
 {
-    GlyphImageDef::GlyphImageDef(std::size_t width, std::size_t height, FT_GlyphSlot glyphSlot)
+    GlyphImageDef::GlyphImageDef(std::uint32_t width, std::uint32_t height, FT_GlyphSlot glyphSlot)
         :
     ImageDef(width, height),
     _glyph(glyphSlot)
@@ -35,7 +35,7 @@ namespace dagui
                 return nullptr;
             }
         }
-        auto image = new Image(width(), height(), 1, _glyph->bitmap.buffer);
+        auto image = new Image(width, height, 1, _glyph->bitmap.buffer);
 
         return image;
     }

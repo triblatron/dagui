@@ -25,9 +25,9 @@ static FT_Face     face;      /* handle to face object */
 
 void copyGlyphToImage(FT_GlyphSlot glyph, dagui::Image* image)
 {
-    for (auto row = 0; row<glyph->bitmap.rows; ++row)
+    for (auto row = 0U; row<glyph->bitmap.rows; ++row)
     {
-        for (auto col=0; col<glyph->bitmap.width; ++col)
+        for (auto col=0U; col<glyph->bitmap.width; ++col)
         {
             auto intensity = glyph->bitmap.buffer[row*glyph->bitmap.width+col];
 

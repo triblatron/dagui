@@ -42,14 +42,16 @@ namespace dagui
 		
 		std::size_t width() const override
 		{
-			return _binImageDef != nullptr ? _binImageDef->width() : std::size_t{ 0 };
+			return _binImageDef != nullptr ? _binImageDef->width : std::uint32_t{ 0 };
 		}
 
 		std::size_t height() const override
 		{
-			return _binImageDef != nullptr ? _binImageDef->height() : std::size_t{ 0 };
+			return _binImageDef != nullptr ? _binImageDef->height : std::uint32_t{ 0 };
 		}
 
+        const ImageDef * imageForGlyphIndex(unsigned long glyphIndex) const override;
+        
 		Error error() const
 		{
 			return _errod;
@@ -77,7 +79,7 @@ namespace dagui
 			return _numAllocations;
 		}
 
-		void allocateImage(std::uint32_t id, ImageDef* inputImage) override;
+		void allocateImage(unsigned long id, ImageDef* inputImage) override;
 
 		static const char* errorToString(Error error);
 		
@@ -97,7 +99,7 @@ namespace dagui
 		using ImageBoundsMap = std::vector<std::pair<Image*, ImageBounds>>;
 		ImageBoundsMap _imageBounds;
 		std::size_t _numAllocations{0};
-        using ImageMap = VectorMap<std::uint32_t, ImageDef*>;
+        using ImageMap = VectorMap<unsigned long, ImageDef*>;
         ImageMap _images;
 	};
 }

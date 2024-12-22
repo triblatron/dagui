@@ -13,6 +13,7 @@ namespace dagui
 		typedef std::pair<Key, Value> value_type;
 		typedef std::vector<value_type> container;
 		typedef typename container::iterator iterator;
+		typedef typename container::const_iterator const_iterator;
 		struct Compare
 		{
 			bool operator()(const value_type& op1, const value_type& op2) const
@@ -62,12 +63,27 @@ namespace dagui
 			return std::lower_bound(_map.begin(), _map.end(), value_type(key,Value()), _cmp);
 		}
 
+		const_iterator find(const Key& key) const
+		{
+			return std::lower_bound(_map.begin(), _map.end(), value_type(key,Value()), _cmp);
+		}
+
         iterator begin()
         {
             return _map.begin();
         }
 
+		const_iterator begin() const
+		{
+			return _map.begin();
+		}
+
 		iterator end()
+		{
+			return _map.end();
+		}
+
+		const_iterator end() const
 		{
 			return _map.end();
 		}

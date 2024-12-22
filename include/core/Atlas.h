@@ -18,6 +18,8 @@ namespace dagui
 
 		virtual std::size_t height() const = 0;
 
-		virtual void allocateImage(std::uint32_t id, ImageDef* inputImage) = 0;
+		virtual void allocateImage(unsigned long id, ImageDef* inputImage) = 0;
+        
+        virtual const ImageDef* imageForGlyphIndex(unsigned long glyphIndex) const = 0;
 	};
 }

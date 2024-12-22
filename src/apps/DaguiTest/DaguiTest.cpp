@@ -749,12 +749,16 @@ public:
         ON_CALL(*this, height).WillByDefault([]() {
             return std::size_t{ 512 };
             });
-
+		ON_CALL(*this, imageForGlyphIndex).WillByDefault([](unsigned long) -> const dagui::ImageDef*
+		{
+			return nullptr;
+		});
     }
 
     MOCK_METHOD(std::size_t, width, (), (const, override));
     MOCK_METHOD(std::size_t, height, (), (const, override));
-    MOCK_METHOD(void, allocateImage, (std::uint32_t, dagui::ImageDef*), (override));
+    MOCK_METHOD(void, allocateImage, (unsigned long, dagui::ImageDef*), (override));
+	MOCK_METHOD(const dagui::ImageDef*, imageForGlyphIndex, (unsigned long), (const,override));
 };
 
 class BinPackingStrategy_testPack : public ::testing::TestWithParam<std::tuple<const char*, const char*, int, dagui::BinPackingStrategy::Result>>

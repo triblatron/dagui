@@ -3,6 +3,7 @@
 #include "core/Window.h"
 #include "gfx/FontImageSource.h"
 #include "core/SpaceTree.h"
+#include "gfx/TextureAtlas.h"
 
 #include <gtest/gtest.h>
 
@@ -153,3 +154,24 @@ INSTANTIATE_TEST_SUITE_P(Heuristic, Heuristic_testRoundTrip, ::testing::Values(
     std::make_tuple("FIT_NEXT", dagui::SpaceTree::FIT_NEXT),
     std::make_tuple("FIT_BEST_SHORT_SIDE", dagui::SpaceTree::FIT_BEST_SHORT_SIDE)
 ));
+
+class TextureAtlas_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::TextureAtlas::Error>>
+{
+
+};
+
+TEST_P(TextureAtlas_testRoundTrip, testRoundtrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto error = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::TextureAtlas::errorToString(error));
+    EXPECT_EQ(error, dagui::TextureAtlas::parseError(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testRoundTrip, ::testing::Values(
+    std::make_tuple("ERR_OK", dagui::TextureAtlas::ERR_OK),
+    std::make_tuple("ERR_NON_POWER_OF_TWO_DIMS", dagui::TextureAtlas::ERR_NON_POWER_OF_TWO_DIMS),
+    std::make_tuple("ERR_FAILED_TO_ALLOCATE", dagui::TextureAtlas::ERR_FAILED_TO_ALLOCATE),
+    std::make_tuple("ERR_UNKNOWN", dagui::TextureAtlas::ERR_UNKNOWN)
+    ));
