@@ -13,10 +13,10 @@ namespace dagui
     class DAGUI_API BinImageDef : public ImageDef
     {
     public:
-        BinImageDef(std::uint32_t width, std::uint32_t height, std::size_t numComponents);
+        BinImageDef(std::uint32_t width, std::uint32_t height, std::uint32_t numComponents);
 
         Image* createImage() const override;
-    private:
-        std::size_t _numComponents{0};
+
+        std::uint32_t numComponents{0};
     };
 }

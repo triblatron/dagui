@@ -18,7 +18,7 @@ namespace dagui
     class DAGUI_API GlyphImageDef : public ImageDef
     {
     public:
-        GlyphImageDef(std::size_t width, std::size_t height, FT_GlyphSlot glyphSlot);
+        GlyphImageDef(std::uint32_t width, std::uint32_t height, FT_GlyphSlot glyphSlot);
 
         Image* createImage() const override;
     private:

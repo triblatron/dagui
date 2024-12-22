@@ -6,7 +6,7 @@
 
 namespace dagui
 {
-	Image::Image(std::size_t width, std::size_t height, std::size_t numComponents, unsigned char* buffer)
+	Image::Image(std::uint32_t width, std::uint32_t height, std::uint32_t numComponents, unsigned char* buffer)
 	:
 	_width(width),
 	_height(height),
@@ -37,7 +37,7 @@ namespace dagui
 		return false;
 	}
 	
-	void Image::copyFrom(std::size_t destOriginRow, std::size_t destOriginCol, const dagui::Image* source)
+	void Image::copyFrom(std::uint32_t destOriginRow, std::uint32_t destOriginCol, const dagui::Image* source)
 	{
 		if (_buffer != nullptr && source != nullptr)
 		{

@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <cstdlib>
+#include <config/macos_config.h>
 //#if defined(HAVE_WINDOWS_H)
 //#include <Windows.h>
 //#endif // HAVE_WINDOWS_H
@@ -14,7 +15,7 @@ namespace dagui
 	class DAGUI_API Image
 	{
 	public:
-		Image(std::size_t width, std::size_t height, std::size_t numComponents)
+		Image(std::uint32_t width, std::uint32_t height, std::uint32_t numComponents)
 		:
 		_width(width),
 		_height(height),
@@ -24,7 +25,7 @@ namespace dagui
 		}
 
 		//! Does not own the buffer.
-		Image(std::size_t width, std::size_t height, std::size_t numComponents, unsigned char* buffer);
+		Image(std::uint32_t width, std::uint32_t height, std::uint32_t numComponents, unsigned char* buffer);
 		
 		~Image()
 		{
@@ -34,22 +35,22 @@ namespace dagui
 			}
 		}
 
-		size_t width() const
+		std::uint32_t width() const
 		{
 			return _width;
 		}
 
-		size_t height() const
+		std::uint32_t height() const
 		{
 			return _height;
 		}
 
-		size_t numComponents() const
+		std::uint32_t numComponents() const
 		{
 			return _numComponents;
 		}
 		
-		void set(size_t row, size_t col, std::uint8_t red, std::uint8_t green, std::uint8_t blue)
+		void set(std::uint32_t row, std::uint32_t col, std::uint8_t red, std::uint8_t green, std::uint8_t blue)
 		{
 			if (row < _height && col < _width)
 			{
@@ -60,7 +61,7 @@ namespace dagui
 			}
 		}
 
-		void get(size_t row, size_t col, std::uint8_t* red, std::uint8_t* green, std::uint8_t* blue) const
+		void get(std::uint32_t row, std::uint32_t col, std::uint8_t* red, std::uint8_t* green, std::uint8_t* blue) const
 		{
 			if (row < _height && col < _width && red != nullptr && green != nullptr && blue != nullptr)
 			{
@@ -87,11 +88,11 @@ namespace dagui
 			return _buffer;
 		}
 		
-		void copyFrom(std::size_t destRow, std::size_t destCol, const dagui::Image* source);
+		void copyFrom(std::uint32_t destRow, std::uint32_t destCol, const dagui::Image* source);
 	private:
-		size_t _width{0};
-		size_t _height{0};
-		size_t _numComponents{0};
+		std::uint32_t _width{0};
+		std::uint32_t _height{0};
+		std::uint32_t _numComponents{0};
 		std::uint8_t* _buffer{nullptr};
 		bool _own{true};
 	};
