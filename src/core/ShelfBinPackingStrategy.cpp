@@ -24,7 +24,7 @@ namespace dagui
 
 			if (inputImage != nullptr)
 			{
-				if (nextX + inputImage->width() <= atlas.width() && nextY + inputImage->height() <= atlas.height())
+				if (nextX + inputImage->width <= atlas.width() && nextY + inputImage->height <= atlas.height())
 				{
 					allocateImage(atlas, inputImage, &maxHeightInThisShelf, &nextX, &nextY);
 				}
@@ -34,7 +34,7 @@ namespace dagui
 					nextX = 0u;
 					nextY += maxHeightInThisShelf;
 					maxHeightInThisShelf = 0u;
-					if (nextX + inputImage->width() <= atlas.width() && nextY + inputImage->height() <= atlas.height())
+					if (nextX + inputImage->width <= atlas.width() && nextY + inputImage->height <= atlas.height())
 					{						
 						allocateImage(atlas, inputImage, &maxHeightInThisShelf, &nextX, &nextY);
 					}
@@ -60,16 +60,17 @@ namespace dagui
 		if (inputImage != nullptr && maxHeightInThisShelf != nullptr && nextX != nullptr && nextY != nullptr)
 		{
 			// Update max height for current shelf
-			if (inputImage->height() > *maxHeightInThisShelf)
+			if (inputImage->height > *maxHeightInThisShelf)
 			{
-				*maxHeightInThisShelf = inputImage->height();
+				*maxHeightInThisShelf = inputImage->height;
 			}
 			// Copy input image
 			//_binImage->copyFrom(*nextY, *nextX, inputImage);
 			// Update free space
-			inputImage->setPos(*nextX, *nextY);
+			inputImage->x = *nextX;
+			inputImage->y = *nextY;
             atlas.allocateImage(_numAllocations, inputImage);
-			*nextX += inputImage->width();
+			*nextX += inputImage->width;
 			if (*nextX == atlas.width())
 			{
 				*nextX = 0u;

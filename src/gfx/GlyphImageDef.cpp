@@ -35,7 +35,7 @@ namespace dagui
                 return nullptr;
             }
         }
-        auto image = new Image(width(), height(), 1, _glyph->bitmap.buffer);
+        auto image = new Image(width, height, 1, _glyph->bitmap.buffer);
 
         return image;
     }

@@ -47,7 +47,7 @@ namespace dagui {
 				for (auto def : _images)
 				{
 					Image* image = def.second->createImage();
-					_binImage->copyFrom(def.second->y(), def.second->x(), image);
+					_binImage->copyFrom(def.second->y, def.second->x, image);
 				}
 			}
 		}

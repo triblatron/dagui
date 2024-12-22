@@ -42,12 +42,12 @@ namespace dagui
 		
 		std::size_t width() const override
 		{
-			return _binImageDef != nullptr ? _binImageDef->width() : std::size_t{ 0 };
+			return _binImageDef != nullptr ? _binImageDef->width : std::uint32_t{ 0 };
 		}
 
 		std::size_t height() const override
 		{
-			return _binImageDef != nullptr ? _binImageDef->height() : std::size_t{ 0 };
+			return _binImageDef != nullptr ? _binImageDef->height : std::uint32_t{ 0 };
 		}
 
         const ImageDef * imageForGlyphIndex(unsigned long glyphIndex) const override;
