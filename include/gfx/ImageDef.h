@@ -5,6 +5,7 @@
 #pragma once
 
 #include "../config/Export.h"
+#include "core/Vec2f.h"
 
 #include <cstdint>
 #include <cstdlib>
@@ -16,6 +17,8 @@ namespace dagui
     class DAGUI_API ImageDef
     {
     public:
+        ImageDef() = default;
+
         ImageDef(std::size_t width, std::size_t height);
 
         virtual ~ImageDef() = default;
@@ -26,13 +29,9 @@ namespace dagui
         std::uint32_t y{0};
         std::uint32_t width{0};
         std::uint32_t height{0};
-        float u0{0.0f};
-        float v0{0.0f};
-        float u1{0.0f};
-        float v1{0.0f};
-        float u2{0.0f};
-        float v2{0.0f};
-        float u3{0.0f};
-        float v3{0.0f};
+        Vec2f p0;
+        Vec2f p1;
+        Vec2f p2;
+        Vec2f p3;
     };
 }

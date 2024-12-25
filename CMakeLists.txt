@@ -48,6 +48,9 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
 		include/core/ShelfBinPackingStrategy.h
 		include/core/MaxRectsBinPackingStrategy.h
 		include/core/VectorMap.h
+		include/gfx/Renderer.h
+		include/gfx/OpenGLRenderer.h
+		include/core/Vec2f.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -65,6 +68,7 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
 		src/core/BinPackingStrategyFactory.cpp
 		src/core/ShelfBinPackingStrategy.cpp
 		src/core/MaxRectsBinPackingStrategy.cpp
+		src/gfx/OpenGLRenderer.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")

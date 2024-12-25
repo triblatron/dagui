@@ -25,6 +25,8 @@
 #include "core/BinPackingStrategy.h"
 #include "core/Atlas.h"
 #include "core/VectorMap.h"
+#include "core/Vec2f.h"
+#include "gfx/OpenGLRenderer.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -32,6 +34,8 @@
 #include <memory>
 #include <cstdint>
 #include <cstring>
+
+#include "gfx/GlyphImageDef.h"
 
 using testing::_;
 
@@ -867,3 +871,50 @@ TEST(VectorMap, testDuplicateKeysAreRejected)
     ASSERT_FALSE(p2.second);
     ASSERT_EQ(p.first, p2.first);
 }
+
+class MockImageDef : public dagui::ImageDef
+{
+public:
+	MockImageDef()
+	{
+
+	}
+	MOCK_METHOD((dagui::Image*), createImage, (), (const, override));
+};
+
+class Renderer_testGenerateTextureCoordinates : public ::testing::TestWithParam<std::tuple<std::uint32_t, std::uint32_t, std::uint32_t, std::uint32_t, std::uint32_t, std::uint32_t, dagui::Vec2f, dagui::Vec2f, dagui::Vec2f, dagui::Vec2f>>
+{
+
+};
+
+TEST_P(Renderer_testGenerateTextureCoordinates, testGenerateTextureCoordinates)
+{
+	auto binWidth = std::get<0>(GetParam());
+	auto binHeight = std::get<1>(GetParam());
+	auto x = std::get<2>(GetParam());
+	auto y = std::get<3>(GetParam());
+	auto width = std::get<4>(GetParam());
+	auto height = std::get<5>(GetParam());
+	auto p0 = std::get<6>(GetParam());
+	auto p1 = std::get<7>(GetParam());
+	auto p2 = std::get<8>(GetParam());
+	auto p3 = std::get<9>(GetParam());
+
+	dagui::OpenGLRenderer sut;
+	MockImageDef def;
+	def.x = x;
+	def.y = y;
+	def.width = width;
+	def.height = height;
+	dagui::BinImageDef binImageDef(binWidth, binHeight, 1);
+
+	sut.generateTextureCoordinates(def, binImageDef);
+	EXPECT_EQ(p0, def.p0);
+	EXPECT_EQ(p1, def.p1);
+	EXPECT_EQ(p2, def.p2);
+	EXPECT_EQ(p3, def.p3);
+}
+
+INSTANTIATE_TEST_SUITE_P(Renderer, Renderer_testGenerateTextureCoordinates, ::testing::Values(
+	std::make_tuple(256, 256, 0, 0, 256, 256, dagui::Vec2f(0.0f, 0.0f), dagui::Vec2f(1.0f, 0.0f), dagui::Vec2f(1.0f,1.0f), dagui::Vec2f(0.0f,1.0f))
+	));
