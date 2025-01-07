@@ -20,6 +20,6 @@ namespace dagui
 
 		virtual void allocateImage(unsigned long id, ImageDef* inputImage) = 0;
         
-        virtual const ImageDef* imageForGlyphIndex(unsigned long glyphIndex) const = 0;
+        virtual ImageDef* imageForGlyphIndex(unsigned long glyphIndex) = 0;
 	};
 }

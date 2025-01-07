@@ -50,7 +50,7 @@ namespace dagui
 			return _binImageDef != nullptr ? _binImageDef->height : std::uint32_t{ 0 };
 		}
 
-        const ImageDef * imageForGlyphIndex(unsigned long glyphIndex) const override;
+		ImageDef* imageForGlyphIndex(unsigned long glyphIndex) override;
         
 		Error error() const
 		{
@@ -67,11 +67,16 @@ namespace dagui
 			_source = source;
 		}
 		
-		dagui::BinImageDef* image()
+		dagui::BinImageDef* binImageDef()
 		{
 			return _binImageDef;
 		}
-		
+
+		dagui::Image* binImage()
+		{
+			return _binImage;
+		}
+
 		void pack(BinPackingStrategy& strategy);
 		
 		std::size_t numAllocations() const

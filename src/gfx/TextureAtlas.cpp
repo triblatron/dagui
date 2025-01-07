@@ -74,7 +74,7 @@ namespace dagui {
 		return "<error>";
 	}
 
-	const ImageDef* TextureAtlas::imageForGlyphIndex(unsigned long glyphIndex) const
+	ImageDef* TextureAtlas::imageForGlyphIndex(unsigned long glyphIndex)
 	{
 		auto it = _images.find(glyphIndex);
 		if (it!=_images.end())
