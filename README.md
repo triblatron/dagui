@@ -31,7 +31,7 @@ Pull requests will be allowed at some point. There will be a coding style and pr
   * A Lua interface
   * A ConfigurationElement
 * dag for
-  * basic features such as Lua support, streams.
+  * basic features such as streams.
   * the node graph support
     * node base class
     * ports
