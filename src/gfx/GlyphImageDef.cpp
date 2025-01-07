@@ -11,21 +11,33 @@
 
 namespace dagui
 {
-    GlyphImageDef::GlyphImageDef(std::uint32_t width, std::uint32_t height, FT_GlyphSlot glyphSlot)
+    GlyphImageDef::GlyphImageDef(FT_Face face, FT_UInt glyphIndex, std::uint32_t width, std::uint32_t height)
         :
     ImageDef(width, height),
-    _glyph(glyphSlot)
+    _face(face),
+    _glyphIndex(glyphIndex)
     {
         // Do nothing
     }
 
     Image* GlyphImageDef::createImage() const
     {
-        if (_glyph->format != FT_GLYPH_FORMAT_BITMAP)
+        int error = FT_Load_Glyph(
+    _face,          /* handle to face object */
+    _glyphIndex,   /* glyph index           */
+    0x0 );  /* load flags, see below */
+        if (error)
+        {
+            std::cerr << "Error loading glyph\n";
+
+            return nullptr;
+        }
+
+        if (_face->glyph->format != FT_GLYPH_FORMAT_BITMAP)
         {
             std::cout << "Rendering glyph\n";
 
-            int error = FT_Render_Glyph( _glyph,   /* glyph slot  */
+            int error = FT_Render_Glyph( _face->glyph,   /* glyph slot  */
                                      FT_RENDER_MODE_NORMAL ); /* render mode */
             if (error)
             {
@@ -35,7 +47,7 @@ namespace dagui
                 return nullptr;
             }
         }
-        auto image = new Image(width, height, 1, _glyph->bitmap.buffer);
+        auto image = new Image(width, height, 1, _face->glyph->bitmap.buffer);
 
         return image;
     }

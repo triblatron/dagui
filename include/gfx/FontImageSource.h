@@ -5,7 +5,15 @@
 #include <string>
 
 #include <ft2build.h>
+
 #include FT_FREETYPE_H
+
+#include <vector>
+
+namespace dagbase
+{
+	class ConfigurationElement;
+}
 
 namespace dagui
 {
@@ -23,7 +31,9 @@ namespace dagui
 		};
 	public:
 		FontImageSource(FT_Library library, const char* filename);
-		
+
+		void configure(dagbase::ConfigurationElement& config);
+
 		bool ok() const
 		{
 			return _errod == ERR_OK;
@@ -45,5 +55,12 @@ namespace dagui
 		FT_Face _face{nullptr};
 		FT_UInt _glyphIndex{0};
 		FT_ULong _charcode{0};
+		using Ranges = std::vector<std::pair<std::uint32_t, std::uint32_t>>;
+		Ranges _ranges;
+		void addRange(std::uint32_t first, std::uint32_t last)
+		{
+			_ranges.emplace_back(std::make_pair(first, last));
+		}
+		size_t _rangeIndex{0};
 	};
 }

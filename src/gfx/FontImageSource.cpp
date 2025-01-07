@@ -14,6 +14,8 @@
 
 #include "gfx/GlyphImageDef.h"
 
+#include "core/ConfigurationElement.h"
+
 namespace dagui
 {
 	FontImageSource::FontImageSource(FT_Library library, const char* filename)
@@ -46,10 +48,43 @@ namespace dagui
 				16*64,   /* char_height in 1/64 of points */
 				300,     /* horizontal device resolution  */
 				300 );   /* vertical device resolution    */
-		_charcode = FT_Get_First_Char(_face, &_glyphIndex);
+		if (!_ranges.empty())
+		{
+			_charcode = _ranges[0].first;
+			_glyphIndex = FT_Get_Char_Index( _face, _charcode );
+		}
+		else
+		{
+			_charcode = FT_Get_First_Char(_face, &_glyphIndex);
+		}
 		_errod = ERR_OK;
 	}
-	
+
+	void FontImageSource::configure(dagbase::ConfigurationElement& config)
+	{
+		if (auto element = config.findElement("ranges"); element != nullptr)
+		{
+			for (auto i=0; i<element->numChildren(); ++i)
+			{
+				auto child = element->child(i);
+
+				std::uint32_t first=0, last=0;
+
+				if (auto firstConfig = child->findElement("first"); firstConfig != nullptr)
+				{
+					first = firstConfig->asInteger();
+				}
+
+				if (auto lastConfig = child->findElement("last"); lastConfig != nullptr)
+				{
+					last = lastConfig->asInteger();
+				}
+
+				addRange(first, last);
+			}
+		}
+	}
+
 	bool FontImageSource::hasMore() const
 	{
 		return _glyphIndex!=0;
@@ -97,13 +132,31 @@ namespace dagui
 		// 	}
 		// }
 
-		auto* image = new GlyphImageDef(_face->glyph->bitmap.width, _face->glyph->bitmap.rows, _face->glyph);//, 1, _face->glyph->bitmap.buffer);
+		auto* image = new GlyphImageDef(_face, _face->glyph->glyph_index, _face->glyph->bitmap.width, _face->glyph->bitmap.rows);//, 1, _face->glyph->bitmap.buffer);
 		return image;
 	}
 	
 	void FontImageSource::nextItem()
 	{
-		_charcode = FT_Get_Next_Char(_face, _charcode, &_glyphIndex);
+		if (!_ranges.empty() && _rangeIndex < _ranges.size())
+		{
+			++_charcode;
+			if (_charcode > _ranges[_rangeIndex].second)
+			{
+				++_rangeIndex;
+				if (_rangeIndex<_ranges.size())
+				{
+					_charcode = _ranges[_rangeIndex].first;
+				}
+				else
+				{
+					_charcode = 0;
+				}
+			}
+			_glyphIndex = FT_Get_Char_Index( _face, _charcode );
+		}
+		else if (_ranges.empty())
+			_charcode = FT_Get_Next_Char(_face, _charcode, &_glyphIndex);
 	}
 	
 	const char* FontImageSource::errorToString(Error err)

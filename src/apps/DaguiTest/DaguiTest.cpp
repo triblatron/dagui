@@ -401,13 +401,18 @@ private:
 	std::size_t _imageIndex{0};
 };
 
-class FontImageSource_testNextItem : public ::testing::TestWithParam<std::tuple<const char*>>
+class FontImageSource_testNextItem : public ::testing::TestWithParam<std::tuple<const char*, const char*, int>>
 {
 };
 
 TEST_P(FontImageSource_testNextItem, testNextItem)
 {
 	auto fontFilename = std::get<0>(GetParam());
+	auto configStr = std::get<1>(GetParam());
+	auto count = std::get<2>(GetParam());
+	dagbase::Lua lua;
+	auto config = dagbase::ConfigurationElement::fromString(lua,configStr);
+	ASSERT_NE(nullptr, config);
 	FT_Library library;
 	int error = FT_Init_FreeType( &library );
     if ( error )
@@ -416,24 +421,27 @@ TEST_P(FontImageSource_testNextItem, testNextItem)
 	}
 
 	dagui::FontImageSource sut(library, fontFilename);
+	sut.configure(*config);
+
 	ASSERT_TRUE(sut.ok());
 	EXPECT_TRUE(sut.hasMore());
 	bool found = false;
 	ASSERT_TRUE(sut.ok());
+	int actualCount = 0;
 	while (sut.hasMore() && !found)
 	{
 		dagui::ImageDef* item = sut.item();
 		ASSERT_NE(nullptr, item);
-		dagui::Image* image = item->createImage();
-		found = image->find(255,255,255);
-		delete image;
 		delete item;
 		sut.nextItem();
+		++actualCount;
 	}
+	EXPECT_EQ(count, actualCount);
+	FT_Done_FreeType( library );
 }
 
 INSTANTIATE_TEST_SUITE_P(FontImageSource, FontImageSource_testNextItem, ::testing::Values(
-	std::make_tuple("data/liberation-fonts-ttf-2.1.5/LiberationSans-Regular.ttf")
+	std::make_tuple("data/liberation-fonts-ttf-2.1.5/LiberationSans-Regular.ttf", "root = { ranges={ { first=32, last=32 }, { first=65, last=65+25 } } }", 27)
 ));
 
 class TextureAtlas_testDimensions : public ::testing::TestWithParam<std::tuple<std::size_t, std::size_t, dagui::TextureAtlas::Error>>
@@ -753,7 +761,7 @@ public:
         ON_CALL(*this, height).WillByDefault([]() {
             return std::size_t{ 512 };
             });
-		ON_CALL(*this, imageForGlyphIndex).WillByDefault([](unsigned long) -> const dagui::ImageDef*
+		ON_CALL(*this, imageForGlyphIndex).WillByDefault([](unsigned long) -> dagui::ImageDef*
 		{
 			return nullptr;
 		});
@@ -762,7 +770,7 @@ public:
     MOCK_METHOD(std::size_t, width, (), (const, override));
     MOCK_METHOD(std::size_t, height, (), (const, override));
     MOCK_METHOD(void, allocateImage, (unsigned long, dagui::ImageDef*), (override));
-	MOCK_METHOD(const dagui::ImageDef*, imageForGlyphIndex, (unsigned long), (const,override));
+	MOCK_METHOD(dagui::ImageDef*, imageForGlyphIndex, (unsigned long), (override));
 };
 
 class BinPackingStrategy_testPack : public ::testing::TestWithParam<std::tuple<const char*, const char*, int, dagui::BinPackingStrategy::Result>>
@@ -918,3 +926,4 @@ TEST_P(Renderer_testGenerateTextureCoordinates, testGenerateTextureCoordinates)
 INSTANTIATE_TEST_SUITE_P(Renderer, Renderer_testGenerateTextureCoordinates, ::testing::Values(
 	std::make_tuple(256, 256, 0, 0, 256, 256, dagui::Vec2f(0.0f, 0.0f), dagui::Vec2f(1.0f, 0.0f), dagui::Vec2f(1.0f,1.0f), dagui::Vec2f(0.0f,1.0f))
 	));
+
