@@ -16,12 +16,21 @@
 #include <iostream>
 #include <cstdint>
 
+#include "../../../ThirdParty/dagbase/include/core/ConfigurationElement.h"
+#include "core/BinPackingStrategy.h"
+#include "core/BinPackingStrategyFactory.h"
 #include "gfx/Image.h"
-
+#include "gfx/FontImageSource.h"
+#include "gfx/TextureAtlas.h"
+#include "gfx/OpenGLRenderer.h"
+#include "core/LuaInterface.h"
+#include "core/ConfigurationElement.h"
 static dagui::Image* texImage = new dagui::Image(512,512,4);
 static GLuint texName;
 static FT_Library  library;
 static FT_Face     face;      /* handle to face object */
+static dagui::TextureAtlas atlas(512, 512, 1);
+static dagui::OpenGLRenderer renderer;
 
 void copyGlyphToImage(FT_GlyphSlot glyph, dagui::Image* image)
 {
@@ -54,7 +63,7 @@ void createImage(dagui::Image* image)
 void init()
 {
     glClearColor(0.0f,0.0f,0.0f,1.0f);
-    createImage(texImage);
+    // createImage(texImage);
     glPixelStorei(GL_UNPACK_ALIGNMENT,1);
     glGenTextures(1,&texName);
     glBindTexture(GL_TEXTURE_2D, texName);
@@ -83,17 +92,18 @@ void onDisplay()
     glBindTexture(GL_TEXTURE_2D, texName);
 
     glMatrixMode(GL_MODELVIEW);
-    glBegin(GL_QUADS);
-    glColor3f(1.0f,1.0f,1.0f);
-    glTexCoord2d(0.0, 0.0);
-    glVertex2d(0.0, 0.0);
-    glTexCoord2d(1.0, 0.0);
-    glVertex2d(512.0,0.0);
-    glTexCoord2d(1.0,1.0);
-    glVertex2d(512.0,512.0);
-    glTexCoord2d(0.0,1.0);
-    glVertex2d(0.0,512.0);
-    glEnd();
+    renderer.drawText(face, atlas, "A");
+    // glBegin(GL_QUADS);
+    // glColor3f(1.0f,1.0f,1.0f);
+    // glTexCoord2d(0.0, 0.0);
+    // glVertex2d(0.0, 0.0);
+    // glTexCoord2d(1.0, 0.0);
+    // glVertex2d(512.0,0.0);
+    // glTexCoord2d(1.0,1.0);
+    // glVertex2d(512.0,512.0);
+    // glTexCoord2d(0.0,1.0);
+    // glVertex2d(0.0,512.0);
+    // glEnd();
     glutSwapBuffers();
     glDisable(GL_TEXTURE_2D);
 }
@@ -111,60 +121,41 @@ int main(int argc, char *argv[])
     {
         std::cerr << "Error initialising FreeType library, bailing\n";
         return -1;
+
     }
-    error = FT_New_Face( library,
-                         argv[1],
-                         0,
-                         &face );
-    if ( error == FT_Err_Unknown_File_Format )
+    auto* source = new dagui::FontImageSource(library);
+    dagbase::Lua lua;
+    auto sourceConfig = dagbase::ConfigurationElement::fromFile(lua, argv[1]);
+    if (!sourceConfig)
     {
-        std::cerr << "Unsupported font format, bailing\n";
+        std::cerr << "Failed to configure font image source\n";
 
-        return -2;
+        return -1;
     }
-    else if ( error )
-    {
-        std::cerr << "Failed to open font file, bailing\n";
+    source->configure(*sourceConfig);
+    dagui::BinPackingStrategyFactory factory;
 
-        return -3;
-    }
-    std::cout << "Scalable:" << (face->face_flags & FT_FACE_FLAG_SCALABLE) << std::endl;
-    error = FT_Set_Char_Size(
-            face,    /* handle to face object         */
-            0,       /* char_width in 1/64 of points  */
-            16*64,   /* char_height in 1/64 of points */
-            300,     /* horizontal device resolution  */
-            300 );   /* vertical device resolution    */
-    auto glyph_index = FT_Get_Char_Index( face, 65 );
-    if (glyph_index==0)
-    {
-        std::cerr << "Failed to get glyph index, bailing\n";
-
-        return -4;
-    }
-    error = FT_Load_Glyph(
-            face,          /* handle to face object */
-            glyph_index,   /* glyph index           */
-            0x0 );  /* load flags, see below */
-    if (error)
-    {
-        std::cerr << "Error loading glyph\n";
-
-        return -5;
-    }
-    if (face->glyph->format != FT_GLYPH_FORMAT_BITMAP)
-    {
-        std::cout << "Rendering glyph\n";
-
-        error = FT_Render_Glyph( face->glyph,   /* glyph slot  */
-                                 FT_RENDER_MODE_NORMAL ); /* render mode */
-        if (error)
-        {
-            std::cerr << "Failed to render glyph, bailing\n";
-
-            return -6;
-        }
-    }
+    auto binPacking = factory.createStrategy("MaxRects");
+    auto atlasConfigStr = "root = { width=512, height=512, numComponents=3 }";
+    auto atlasConfig = dagbase::ConfigurationElement::fromString(lua, atlasConfigStr);
+    atlas.configure(*atlasConfig);
+    atlas.setImageSource(source);
+    atlas.pack(*binPacking);
+    texImage = atlas.binImage();
+    //binPacking->pack(*source, atlas);
+    // if (face->glyph->format != FT_GLYPH_FORMAT_BITMAP)
+    // {
+    //     std::cout << "Rendering glyph\n";
+    //
+    //     error = FT_Render_Glyph( face->glyph,   /* glyph slot  */
+    //                              FT_RENDER_MODE_NORMAL ); /* render mode */
+    //     if (error)
+    //     {
+    //         std::cerr << "Failed to render glyph, bailing\n";
+    //
+    //         return -6;
+    //     }
+    // }
     glutInit(&argc, argv);
     glutInitWindowPosition(0,0);
     glutInitWindowSize(512,512);
