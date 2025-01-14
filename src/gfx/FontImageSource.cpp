@@ -20,48 +20,26 @@ namespace dagui
 {
 	FontImageSource::FontImageSource(FT_Library library, const char* filename)
 	:
-	_errod(ERR_UNKNOWN),
-	_face(nullptr)
+	_library(library)
 	{
-		int error = 0;
-		
-		error = FT_New_Face( library,
-							 filename,
-							 0,
-							 &_face );
-		if ( error == FT_Err_Unknown_File_Format )
-		{
-			std::cerr << "Unsupported font format, bailing\n";
-			_errod = ERR_UNSUPPORTED_FORMAT;
-			
-			return;
-		}
-		else if ( error )
-		{
-			std::cerr << "Failed to open font file, bailing\n";
-			_errod = ERR_FAILED_TO_OPEN_FONT;
-			return;
-		}
-		error = FT_Set_Char_Size(
-				_face,    /* handle to face object         */
-				0,       /* char_width in 1/64 of points  */
-				16*64,   /* char_height in 1/64 of points */
-				300,     /* horizontal device resolution  */
-				300 );   /* vertical device resolution    */
-		if (!_ranges.empty())
-		{
-			_charcode = _ranges[0].first;
-			_glyphIndex = FT_Get_Char_Index( _face, _charcode );
-		}
-		else
-		{
-			_charcode = FT_Get_First_Char(_face, &_glyphIndex);
-		}
-		_errod = ERR_OK;
+		init(library, filename);
+	}
+
+	FontImageSource::FontImageSource(FT_Library library)
+		:
+	_library(library)
+	{
+		// Do nothing.
 	}
 
 	void FontImageSource::configure(dagbase::ConfigurationElement& config)
 	{
+		std::string fontFilename;
+		if (auto element = config.findElement("fontFilename"); element)
+		{
+			fontFilename = element->asString();
+		}
+
 		if (auto element = config.findElement("ranges"); element != nullptr)
 		{
 			for (auto i=0; i<element->numChildren(); ++i)
@@ -83,6 +61,8 @@ namespace dagui
 				addRange(first, last);
 			}
 		}
+		if (!fontFilename.empty())
+			init(_library,fontFilename.c_str());
 	}
 
 	bool FontImageSource::hasMore() const
@@ -186,7 +166,46 @@ namespace dagui
 		return ERR_UNKNOWN;
 	}
 
-    std::size_t FontImageSource::estimateCount() const
+	void FontImageSource::init(FT_Library library, const char* filename)
+	{
+		int error = 0;
+
+		error = FT_New_Face( library,
+							 filename,
+							 0,
+							 &_face );
+		if ( error == FT_Err_Unknown_File_Format )
+		{
+			std::cerr << "Unsupported font format, bailing\n";
+			_errod = ERR_UNSUPPORTED_FORMAT;
+
+			return;
+		}
+		else if ( error )
+		{
+			std::cerr << "Failed to open font file, bailing\n";
+			_errod = ERR_FAILED_TO_OPEN_FONT;
+			return;
+		}
+		error = FT_Set_Char_Size(
+				_face,    /* handle to face object         */
+				0,       /* char_width in 1/64 of points  */
+				16*64,   /* char_height in 1/64 of points */
+				300,     /* horizontal device resolution  */
+				300 );   /* vertical device resolution    */
+		if (!_ranges.empty())
+		{
+			_charcode = _ranges[0].first;
+			_glyphIndex = FT_Get_Char_Index( _face, _charcode );
+		}
+		else
+		{
+			_charcode = FT_Get_First_Char(_face, &_glyphIndex);
+		}
+		_errod = ERR_OK;
+	}
+
+	std::size_t FontImageSource::estimateCount() const
     {
         return _face->num_glyphs>=0?std::size_t(_face->num_glyphs):0;
     }

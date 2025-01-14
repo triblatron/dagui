@@ -401,15 +401,14 @@ private:
 	std::size_t _imageIndex{0};
 };
 
-class FontImageSource_testNextItem : public ::testing::TestWithParam<std::tuple<const char*, const char*, int>>
+class FontImageSource_testNextItem : public ::testing::TestWithParam<std::tuple<const char*, int>>
 {
 };
 
 TEST_P(FontImageSource_testNextItem, testNextItem)
 {
-	auto fontFilename = std::get<0>(GetParam());
-	auto configStr = std::get<1>(GetParam());
-	auto count = std::get<2>(GetParam());
+	auto configStr = std::get<0>(GetParam());
+	auto count = std::get<1>(GetParam());
 	dagbase::Lua lua;
 	auto config = dagbase::ConfigurationElement::fromString(lua,configStr);
 	ASSERT_NE(nullptr, config);
@@ -420,7 +419,7 @@ TEST_P(FontImageSource_testNextItem, testNextItem)
         FAIL();
 	}
 
-	dagui::FontImageSource sut(library, fontFilename);
+	dagui::FontImageSource sut(library);
 	sut.configure(*config);
 
 	ASSERT_TRUE(sut.ok());
@@ -441,7 +440,7 @@ TEST_P(FontImageSource_testNextItem, testNextItem)
 }
 
 INSTANTIATE_TEST_SUITE_P(FontImageSource, FontImageSource_testNextItem, ::testing::Values(
-	std::make_tuple("data/liberation-fonts-ttf-2.1.5/LiberationSans-Regular.ttf", "root = { ranges={ { first=32, last=32 }, { first=65, last=65+25 } } }", 27)
+	std::make_tuple("root = { fontFilename=\"data/liberation-fonts-ttf-2.1.5/LiberationSans-Regular.ttf\", ranges={ { first=32, last=32 }, { first=65, last=65+25 } } }", 27)
 ));
 
 class TextureAtlas_testDimensions : public ::testing::TestWithParam<std::tuple<std::size_t, std::size_t, dagui::TextureAtlas::Error>>
@@ -927,3 +926,39 @@ INSTANTIATE_TEST_SUITE_P(Renderer, Renderer_testGenerateTextureCoordinates, ::te
 	std::make_tuple(256, 256, 0, 0, 256, 256, dagui::Vec2f(0.0f, 0.0f), dagui::Vec2f(1.0f, 0.0f), dagui::Vec2f(1.0f,1.0f), dagui::Vec2f(0.0f,1.0f))
 	));
 
+class TextureAtlas_testPack : public ::testing::TestWithParam<std::tuple<const char*, const char*>>
+{
+
+};
+
+TEST_P(TextureAtlas_testPack, testPack)
+{
+	auto configFilename = std::get<0>(GetParam());
+	dagbase::Lua lua;
+	auto config = dagbase::ConfigurationElement::fromFile(lua, configFilename);
+	ASSERT_NE(nullptr, config);
+	auto atlasConfig = config->findElement("atlas");
+	ASSERT_NE(nullptr, atlasConfig);
+	dagui::TextureAtlas sut;
+	sut.configure(*atlasConfig);
+	dagui::BinPackingStrategyFactory factory;
+	auto strategyClass = std::get<1>(GetParam());
+	auto strategy = factory.createStrategy(strategyClass);
+	ASSERT_NE(nullptr, strategy);
+	FT_Library library;
+	int error = FT_Init_FreeType( &library );
+	if ( error )
+	{
+		FAIL();
+	}
+	auto sourceConfig = config->findElement("source");
+	dagui::FontImageSource source(library);
+	source.configure(*sourceConfig);
+	sut.setImageSource(&source);
+	sut.pack(*strategy);
+	EXPECT_TRUE(sut.ok());
+}
+
+INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testPack, ::testing::Values(
+	std::make_tuple("data/tests/TextureAtlas/testPack.lua", "MaxRects")
+	));

@@ -10,6 +10,11 @@
 #include <cstdlib>
 #include "core/VectorMap.h"
 
+namespace dagbase
+{
+	class ConfigurationElement;
+}
+
 namespace dagui
 {
     class BinPackingStrategy;
@@ -36,10 +41,14 @@ namespace dagui
 			ERR_UNKNOWN
 		};
 	public:
+		TextureAtlas() = default;
+
 		TextureAtlas(std::size_t width, std::size_t height, std::size_t numComponents);
 		
 		~TextureAtlas() override;
-		
+
+		void configure(dagbase::ConfigurationElement& config);
+
 		std::size_t width() const override
 		{
 			return _binImageDef != nullptr ? _binImageDef->width : std::uint32_t{ 0 };

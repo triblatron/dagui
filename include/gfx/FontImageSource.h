@@ -31,6 +31,7 @@ namespace dagui
 		};
 	public:
 		FontImageSource(FT_Library library, const char* filename);
+		explicit FontImageSource(FT_Library library);
 
 		void configure(dagbase::ConfigurationElement& config);
 
@@ -62,5 +63,7 @@ namespace dagui
 			_ranges.emplace_back(std::make_pair(first, last));
 		}
 		size_t _rangeIndex{0};
+		void init(FT_Library library, const char* filename);
+		FT_Library _library;
 	};
 }

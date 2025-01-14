@@ -8,6 +8,7 @@
 
 #include <cstring>
 #include "core/BinPackingStrategy.h"
+#include "core/ConfigurationElement.h"
 
 namespace dagui {
 	TextureAtlas::TextureAtlas(std::size_t width, std::size_t height, std::size_t numComponents)
@@ -29,7 +30,26 @@ namespace dagui {
 	{
 		delete _binImage;
 	}
-	
+
+	void TextureAtlas::configure(dagbase::ConfigurationElement& config)
+	{
+		std::uint32_t width{0};
+		if (auto element = config.findElement("width"); element)
+		{
+			width = std::uint32_t(element->asInteger());
+		}
+		std::uint32_t height{0};
+		if (auto element = config.findElement("height"); element)
+		{
+			height = std::uint32_t(element->asInteger());
+		}
+		if (auto element = config.findElement("numComponents"); element)
+		{
+			_numComponents = std::uint32_t(element->asInteger());
+		}
+		_binImageDef = new BinImageDef(width, height, _numComponents);
+	}
+
 	void TextureAtlas::pack(BinPackingStrategy& strategy)
 	{
 		if (_source != nullptr)
@@ -41,7 +61,7 @@ namespace dagui {
 			_images.reserve(_source->estimateCount());
 			strategy.pack(*_source, *this);
 
-			if (ok())
+			if (strategy.ok())
 			{
 				_binImage = _binImageDef->createImage();
 				for (auto def : _images)
@@ -49,6 +69,7 @@ namespace dagui {
 					Image* image = def.second->createImage();
 					_binImage->copyFrom(def.second->y, def.second->x, image);
 				}
+				_errod = ERR_OK;
 			}
 		}
 	}
