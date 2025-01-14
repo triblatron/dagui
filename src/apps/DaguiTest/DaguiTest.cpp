@@ -957,8 +957,37 @@ TEST_P(TextureAtlas_testPack, testPack)
 	sut.setImageSource(&source);
 	sut.pack(*strategy);
 	EXPECT_TRUE(sut.ok());
+	FT_Done_FreeType(library);
 }
 
 INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testPack, ::testing::Values(
 	std::make_tuple("data/tests/TextureAtlas/testPack.lua", "MaxRects")
+	));
+
+class FontImageSource_testEstimateCount : public ::testing::TestWithParam<std::tuple<const char*, std::size_t>>
+{
+
+};
+
+TEST_P(FontImageSource_testEstimateCount, testEstimateCount)
+{
+	auto configFilename = std::get<0>(GetParam());
+	auto count = std::get<1>(GetParam());
+
+	FT_Library library;
+	int error = FT_Init_FreeType( &library );
+	if ( error )
+		FAIL();
+	dagui::FontImageSource source(library);
+	dagbase::Lua lua;
+	auto config = dagbase::ConfigurationElement::fromFile(lua, configFilename);
+	ASSERT_NE(nullptr, config);
+	dagui::FontImageSource sut(library);
+	sut.configure(*config);
+	EXPECT_EQ(count, sut.estimateCount());
+	FT_Done_FreeType( library );
+}
+
+INSTANTIATE_TEST_SUITE_P(FontImageSource, FontImageSource_testEstimateCount, ::testing::Values(
+	std::make_tuple("data/tests/FontImageSource/testEstimateCount.lua", 27)
 	));

@@ -207,6 +207,23 @@ namespace dagui
 
 	std::size_t FontImageSource::estimateCount() const
     {
-        return _face->num_glyphs>=0?std::size_t(_face->num_glyphs):0;
+		std::size_t count = 0;
+
+		if (_face)
+		{
+			if (!_ranges.empty())
+			{
+				for (auto r : _ranges)
+				{
+					count += r.second - r.first + 1;
+				}
+			}
+			else
+			{
+				count = _face->num_glyphs>=0?std::size_t(_face->num_glyphs):0;
+			}
+		}
+
+        return count;
     }
 }

@@ -1,0 +1,24 @@
+root=
+{
+	atlas=
+	{
+		width=512,
+		height=512,
+		numComponents=1,
+	},
+	source=
+	{
+		fontFilename="data/liberation-fonts-ttf-2.1.5/LiberationMono-Regular.ttf",
+		ranges=
+		{
+			{
+				first=32,
+				last=32
+			},
+			{
+				first=65,
+				last=65+25
+			}
+		}
+	}
+}
