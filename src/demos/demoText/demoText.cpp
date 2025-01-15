@@ -29,7 +29,7 @@ static dagui::Image* texImage = new dagui::Image(512,512,4);
 static GLuint texName;
 static FT_Library  library;
 static FT_Face     face;      /* handle to face object */
-static dagui::TextureAtlas atlas(512, 512, 1);
+static dagui::TextureAtlas atlas;//(512, 512, 1);
 static dagui::OpenGLRenderer renderer;
 
 void copyGlyphToImage(FT_GlyphSlot glyph, dagui::Image* image)
@@ -71,7 +71,7 @@ void init()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texImage->width(), texImage->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, texImage->data());
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texImage->width(), texImage->height(), 0, GL_RGB, GL_UNSIGNED_BYTE, texImage->data());
 }
 
 void onReshape(int width, int height)
@@ -92,18 +92,18 @@ void onDisplay()
     glBindTexture(GL_TEXTURE_2D, texName);
 
     glMatrixMode(GL_MODELVIEW);
-    renderer.drawText(face, atlas, "A");
-    // glBegin(GL_QUADS);
-    // glColor3f(1.0f,1.0f,1.0f);
-    // glTexCoord2d(0.0, 0.0);
-    // glVertex2d(0.0, 0.0);
-    // glTexCoord2d(1.0, 0.0);
-    // glVertex2d(512.0,0.0);
-    // glTexCoord2d(1.0,1.0);
-    // glVertex2d(512.0,512.0);
-    // glTexCoord2d(0.0,1.0);
-    // glVertex2d(0.0,512.0);
-    // glEnd();
+    //renderer.drawText(face, atlas, "A");
+    glBegin(GL_QUADS);
+    glColor3f(1.0f,1.0f,1.0f);
+    glTexCoord2d(0.0, 0.0);
+    glVertex2d(0.0, 0.0);
+    glTexCoord2d(1.0, 0.0);
+    glVertex2d(512.0,0.0);
+    glTexCoord2d(1.0,1.0);
+    glVertex2d(512.0,512.0);
+    glTexCoord2d(0.0,1.0);
+    glVertex2d(0.0,512.0);
+    glEnd();
     glutSwapBuffers();
     glDisable(GL_TEXTURE_2D);
 }

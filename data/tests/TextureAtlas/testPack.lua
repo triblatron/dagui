@@ -4,7 +4,7 @@ root=
 	{
 		width=512,
 		height=512,
-		numComponents=1,
+		numComponents=3,
 	},
 	source=
 	{

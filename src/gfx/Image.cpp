@@ -3,6 +3,7 @@
 #include "gfx/Image.h"
 
 #include <cstring>
+#include <iostream>
 
 namespace dagui
 {
@@ -11,10 +12,13 @@ namespace dagui
 	_width(width),
 	_height(height),
 	_numComponents(numComponents),
-	_buffer(buffer),
-	_own(false)
+	_own(true)
 	{
-		// Do nothing.
+		_buffer = new unsigned char[_width * _height * _numComponents];
+		for (std::size_t i=0; i<_width*_height*_numComponents; i++)
+		{
+			_buffer[i] = buffer[i];
+		}
 	}
 	
 	bool Image::find(std::uint8_t red, std::uint8_t green, std::uint8_t blue) const
@@ -36,13 +40,32 @@ namespace dagui
 		
 		return false;
 	}
-	
+
+	std::size_t Image::count(std::uint8_t red, std::uint8_t green, std::uint8_t blue) const
+	{
+		std::size_t retval{0};
+
+		for (auto row=0; row<_height; ++row)
+		{
+			for (auto col=0; col<_width; ++col)
+			{
+				std::uint8_t actualRed{0},actualGreen{0},actualBlue{0};
+				get(row, col, &actualRed, &actualGreen, &actualBlue);
+				if (red == actualRed && green == actualGreen && blue == actualBlue)
+					++retval;
+			}
+		}
+
+		return retval;
+	}
+
 	void Image::copyFrom(std::uint32_t destOriginRow, std::uint32_t destOriginCol, const dagui::Image* source)
 	{
 		if (_buffer != nullptr && source != nullptr)
 		{
 			size_t destRow{destOriginRow}, destCol{destOriginCol};
-			
+			std::cout << "Copying to row " << destOriginRow << " col " << destOriginCol << std::endl;
+			std::cout << "Source image has " << source->count(255,255,255) << " white pixels\n";
 			switch (_numComponents)
 			{
 			case 3:
@@ -68,9 +91,9 @@ namespace dagui
 					
 					break;
 				}
-				
 				break;
 			}
 		}
+		std::cout << "Destination image has " << this->count(255,255,255) << " white pixels\n";
 	}
 }

@@ -82,7 +82,9 @@ namespace dagui
 		}
 		
 		bool find(std::uint8_t red, std::uint8_t green, std::uint8_t blue) const;
-		
+
+		std::size_t count(std::uint8_t red, std::uint8_t green, std::uint8_t blue) const;
+
 		std::uint8_t* data()
 		{
 			return _buffer;

@@ -957,6 +957,9 @@ TEST_P(TextureAtlas_testPack, testPack)
 	sut.setImageSource(&source);
 	sut.pack(*strategy);
 	EXPECT_TRUE(sut.ok());
+
+	EXPECT_TRUE(sut.binImage()->find(255,255,255));
+	EXPECT_GT(sut.binImage()->count(255,255,255),100);
 	FT_Done_FreeType(library);
 }
 
