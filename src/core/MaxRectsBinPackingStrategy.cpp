@@ -18,7 +18,8 @@ namespace dagui
 
 			if (image != nullptr)
 			{
-				auto freeNode = spaceTree->findSpace(image->width, image->height, SpaceTree::FIT_BEST_SHORT_SIDE);
+				SpaceTree* freeNode = nullptr;
+				auto result = spaceTree->insert(image->width, image->height, SpaceTree::FIT_BEST_SHORT_SIDE, &freeNode);
 
 				if (freeNode != nullptr)
 				{

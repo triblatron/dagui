@@ -172,7 +172,7 @@ namespace dagui
 
         Result split(std::int32_t width, std::int32_t height, Split split);
 
-        Result insert(std::int32_t width, std::int32_t height, Heuristic heuristic);
+        Result insert(std::int32_t width, std::int32_t height, Heuristic heuristic, SpaceTree** freeNode = nullptr);
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const;
 

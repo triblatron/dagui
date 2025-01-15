@@ -176,7 +176,7 @@ namespace dagui
         return RESULT_OK;
     }
 
-    SpaceTree::Result SpaceTree::insert(std::int32_t width, std::int32_t height, Heuristic heuristic)
+    SpaceTree::Result SpaceTree::insert(std::int32_t width, std::int32_t height, Heuristic heuristic, SpaceTree** output)
     {
         auto freeNode = findSpace(width, height, heuristic);
 
@@ -195,6 +195,9 @@ namespace dagui
 
             return RESULT_OK;
         }
+
+        if (output!=nullptr)
+            *output = freeNode;
 
         return RESULT_FAILED_TO_INSERT;
     }
