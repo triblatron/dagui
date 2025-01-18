@@ -212,7 +212,6 @@ namespace dagui
             }
             else
             {
-                // TODO:Handle empty rectangle case
                 if (freeNode->split(width, height, SPLIT_HORIZONTAL)==Result::RESULT_FAILED_TO_SPLIT)
                 {
                     return RESULT_FAILED_TO_SPLIT;
