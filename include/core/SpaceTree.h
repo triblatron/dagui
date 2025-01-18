@@ -5,12 +5,17 @@
 #pragma once
 
 #include "config/Export.h"
+#include "core/ConfigurationElement.h"
 
 #include <functional>
 #include <array>
 #include <string_view>
 
-#include "core/ConfigurationElement.h"
+
+namespace dagbase
+{
+    class PrettyPrinter;
+}
 
 namespace dagui
 {
@@ -68,6 +73,8 @@ namespace dagui
         }
 
         dagbase::ConfigurationElement::ValueType find(std::string_view) const;
+
+        void print(dagbase::PrettyPrinter& printer) const;
     private:
         ChildArray _a{nullptr};
         std::size_t _nextIndex{0};
@@ -177,6 +184,10 @@ namespace dagui
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const;
 
         SpaceTree* findSpace(std::int32_t width, std::int32_t height, Heuristic heuristic);
+
+        void print(std::ostream& os) const;
+
+        void print(dagbase::PrettyPrinter& printer) const;
 
         static const char* typeToString(Type type);
 

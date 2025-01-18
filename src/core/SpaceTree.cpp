@@ -6,10 +6,12 @@
 
 #include "core/SpaceTree.h"
 #include "util/enums.h"
+#include "util/PrettyPrinter.h"
 
 #include <cstring>
 #include <limits>
 #include <queue>
+#include <iostream>
 
 #include "util/Searchable.h"
 
@@ -25,6 +27,17 @@ namespace dagui
         }
 
         return {};
+    }
+
+    void Children::print(dagbase::PrettyPrinter& printer) const
+    {
+        for (auto child : _a)
+        {
+            if (child)
+            {
+                child->print(printer);
+            }
+        }
     }
 
     SpaceTree::SpaceTree(std::int32_t x, std::int32_t y, std::int32_t width, std::int32_t height, Type type, Split split)
@@ -161,7 +174,7 @@ namespace dagui
                     {
                         auto leftChild = new SpaceTree(_x, _y, _width, height, TYPE_FREE, SPLIT_UNKNOWN);
                         addChild(leftChild);
-                        auto rightChild = new SpaceTree(_x, _y+height, width, _height - height, TYPE_FREE, SPLIT_UNKNOWN);
+                        auto rightChild = new SpaceTree(_x, _y+height, _width, _height - height, TYPE_FREE, SPLIT_UNKNOWN);
                         addChild(rightChild);
                         break;
                     }
@@ -182,22 +195,41 @@ namespace dagui
 
         if (freeNode!=nullptr)
         {
-            if (freeNode->split(width, height, SPLIT_HORIZONTAL)==Result::RESULT_FAILED_TO_SPLIT)
+            if (width != 0 && height != 0)
             {
-                return RESULT_FAILED_TO_SPLIT;
+                if (freeNode->split(width, height, SPLIT_HORIZONTAL)==Result::RESULT_FAILED_TO_SPLIT)
+                {
+                    return RESULT_FAILED_TO_SPLIT;
+                }
+                if (freeNode->child(0)->split(width, height, SPLIT_VERTICAL)==Result::RESULT_FAILED_TO_SPLIT)
+                {
+                    return RESULT_FAILED_TO_SPLIT;
+                }
+                if (freeNode->_children[0] != nullptr && freeNode->_children[0]->_children[0] != nullptr)
+                    freeNode->_children[0]->_children[0]->_type = TYPE_FULL;
+                if (output!=nullptr)
+                    *output = freeNode->child(0)->child(0);
             }
-            if (freeNode->child(0)->split(width, height, SPLIT_VERTICAL)==Result::RESULT_FAILED_TO_SPLIT)
+            else
             {
-                return RESULT_FAILED_TO_SPLIT;
+                // TODO:Handle empty rectangle case
+                if (freeNode->split(width, height, SPLIT_HORIZONTAL)==Result::RESULT_FAILED_TO_SPLIT)
+                {
+                    return RESULT_FAILED_TO_SPLIT;
+                }
+                if (freeNode->child(0) != nullptr)
+                {
+                    freeNode->child(0)->_type = TYPE_FULL;
+                }
+                if (output!=nullptr)
+                {
+                    *output = freeNode->child(0);
+                }
             }
-            if (freeNode->_children[0] != nullptr && freeNode->_children[0]->_children[0] != nullptr)
-                freeNode->_children[0]->_children[0]->_type = TYPE_FULL;
 
             return RESULT_OK;
         }
 
-        if (output!=nullptr)
-            *output = freeNode;
 
         return RESULT_FAILED_TO_INSERT;
     }
@@ -297,11 +329,7 @@ namespace dagui
                             break;
                         case TYPE_INTERNAL:
                             {
-                                if (node->_width >= width && node->_height >= height)
-                                {
-                                    return true;
-                                }
-                                return false;
+                                return true;
                             }
                         default:
                             return true;
@@ -314,6 +342,33 @@ namespace dagui
             break;
         }
         return freeNode;
+    }
+
+    void SpaceTree::print(std::ostream& os) const
+    {
+        dagbase::PrettyPrinter printer(os,2);
+
+        print(printer);
+    }
+
+    void SpaceTree::print(dagbase::PrettyPrinter& printer) const
+    {
+        printer.println("{");
+        printer.indent();
+        printer.println(std::string("type = ") + typeToString(_type) + ",");
+        printer.println(std::string("split = ") + splitToString(_split) + ",");
+        printer.println(std::string("x = ") + std::to_string(_x) + ",");
+        printer.println(std::string("y = ") + std::to_string(_y) + ",");
+        printer.println(std::string("width = ") + std::to_string(_width) + ",");
+        printer.println(std::string("height = ") + std::to_string(_height) + ",");
+        printer.println("children=");
+        printer.println("{");
+        printer.indent();
+        _children.print(printer);
+        printer.outdent();
+        printer.println("}");
+        printer.outdent();
+        printer.println("}");
     }
 
     const char* SpaceTree::typeToString(Type type)

@@ -619,14 +619,17 @@ TEST_P(SpaceTree_testInsertMultiple, testInsert)
         _rects.emplace_back(rect);
         return true;
         });
-    std::sort(_rects.begin(), _rects.end(), [](const Rect& op1, const Rect& op2) {
-        return op1.width * op1.height > op2.width * op2.height;
-        });
+    // std::sort(_rects.begin(), _rects.end(), [](const Rect& op1, const Rect& op2) {
+    //     return op1.width * op1.height > op2.width * op2.height;
+    //     });
     Rect available;
     auto sut = new dagui::SpaceTree(0, 0, 512, 512, dagui::SpaceTree::TYPE_FREE, dagui::SpaceTree::SPLIT_UNKNOWN);
     for (auto r : _rects)
     {
-        auto actualResult = sut->insert(r.width, r.height, dagui::SpaceTree::FIT_BEST_SHORT_SIDE);
+    	dagui::SpaceTree* freeNode = nullptr;
+        auto actualResult = sut->insert(r.width, r.height, dagui::SpaceTree::FIT_BEST_SHORT_SIDE, &freeNode);
+    	//sut->print(std::cout);
+    	ASSERT_NE(nullptr, freeNode);
         EXPECT_EQ(result, actualResult);
     }
     auto actualValue = sut->find(path);
@@ -634,24 +637,25 @@ TEST_P(SpaceTree_testInsertMultiple, testInsert)
 }
 
 INSTANTIATE_TEST_SUITE_P(SpaceTree, SpaceTree_testInsertMultiple, ::testing::Values(
+    std::make_tuple("root = { { width=0, height=0 }, { width=41, height=44 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_INTERNAL))),
     std::make_tuple("root = { { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[0].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FULL))),
     std::make_tuple("root = { { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[0].width", std::int64_t(256)),
     std::make_tuple("root = { { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[0].height", std::int64_t(256)),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_INTERNAL))),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "split", std::string(dagui::SpaceTree::splitToString(dagui::SpaceTree::SPLIT_HORIZONTAL))),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_INTERNAL))),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].split", std::string(dagui::SpaceTree::splitToString(dagui::SpaceTree::SPLIT_VERTICAL))),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[1].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FREE))),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[0].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FULL))),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_INTERNAL))),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FULL))),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].x", std::int64_t(0)),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].y", std::int64_t(256)),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].width", std::int64_t(64)),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].height", std::int64_t(64)),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[1].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FREE))),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[1].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FREE))),
-    std::make_tuple("root = { { width=64, height=64 }, { width=256, height=256 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_INTERNAL)))
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_INTERNAL))),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "split", std::string(dagui::SpaceTree::splitToString(dagui::SpaceTree::SPLIT_HORIZONTAL))),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_INTERNAL))),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].split", std::string(dagui::SpaceTree::splitToString(dagui::SpaceTree::SPLIT_VERTICAL))),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[1].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FREE))),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[0].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FULL))),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_INTERNAL))),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FULL))),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].x", std::int64_t(0)),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].y", std::int64_t(256)),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].width", std::int64_t(64)),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[0].height", std::int64_t(64)),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[0].children[1].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FREE))),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].children[1].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_FREE))),
+    std::make_tuple("root = { { width=256, height=256 }, { width=64, height=64 } }", dagui::SpaceTree::FIT_BEST_SHORT_SIDE, dagui::SpaceTree::RESULT_OK, "children[0].children[1].nodeType", std::string(dagui::SpaceTree::typeToString(dagui::SpaceTree::TYPE_INTERNAL)))
 ));
 
 typedef dagbase::ConfigurationElement* (*BuildConfigFunc)(const char*);
@@ -956,7 +960,7 @@ TEST_P(TextureAtlas_testPack, testPack)
 	source.configure(*sourceConfig);
 	sut.setImageSource(&source);
 	sut.pack(*strategy);
-	EXPECT_TRUE(sut.ok());
+	ASSERT_TRUE(sut.ok());
 
 	EXPECT_TRUE(sut.binImage()->find(255,255,255));
 	EXPECT_GT(sut.binImage()->count(255,255,255),100);
