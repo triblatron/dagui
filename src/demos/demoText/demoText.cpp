@@ -93,7 +93,7 @@ void onDisplay()
     glBindTexture(GL_TEXTURE_2D, texName);
 
     glMatrixMode(GL_MODELVIEW);
-    renderer.drawText(face, atlas, "A");
+    renderer.drawText(face, atlas, "HELLO WORLD");
     // glBegin(GL_QUADS);
     // glColor3f(1.0f,1.0f,1.0f);
     // glTexCoord2d(0.0, 0.0);
