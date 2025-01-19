@@ -47,7 +47,7 @@ namespace dagui
                 return nullptr;
             }
         }
-        auto image = new Image(width, height, 1, _face->glyph->bitmap.buffer);
+        auto image = new Image(width, height, 1, Image::ORIGIN_TOP_LEFT, _face->glyph->bitmap.buffer);
         std::cout << "Image has " << image->count(255,255,255) << " white pixels\n";
         return image;
     }

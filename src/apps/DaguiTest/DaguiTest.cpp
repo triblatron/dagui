@@ -998,3 +998,35 @@ TEST_P(FontImageSource_testEstimateCount, testEstimateCount)
 INSTANTIATE_TEST_SUITE_P(FontImageSource, FontImageSource_testEstimateCount, ::testing::Values(
 	std::make_tuple("data/tests/FontImageSource/testEstimateCount.lua", 27)
 	));
+
+class Image_testCopyFrom : public ::testing::TestWithParam<std::tuple<std::uint32_t, std::uint32_t, std::uint32_t, dagui::Image::Origin, std::uint8_t, std::uint8_t, std::uint8_t>>
+{
+
+};
+
+TEST_P(Image_testCopyFrom, testCopyFrom)
+{
+	auto width = std::get<0>(GetParam());
+	auto height = std::get<1>(GetParam());
+	auto numComponents = std::get<2>(GetParam());
+	auto origin = std::get<3>(GetParam());
+	auto red = std::get<4>(GetParam());
+	auto green = std::get<5>(GetParam());
+	auto blue = std::get<6>(GetParam());
+	dagui::Image* sut = new dagui::Image(width, height, numComponents, origin);
+	dagui::Image* source = new dagui::Image(width, height, 1, dagui::Image::ORIGIN_TOP_LEFT);
+	source->set(0, 0, 255,	255, 255);
+	sut->copyFrom(0, 0, source);
+	std::uint8_t actualRed{0}, actualGreen{0}, actualBlue{0};
+	sut->get(0, 0, &actualRed, &actualGreen, &actualBlue);
+	EXPECT_EQ(red, actualRed);
+	EXPECT_EQ(green, actualGreen);
+	EXPECT_EQ(blue, actualBlue);
+	delete source;
+	delete sut;
+}
+
+INSTANTIATE_TEST_SUITE_P(Image, Image_testCopyFrom, ::testing::Values(
+	std::make_tuple(1, 2, 3, dagui::Image::ORIGIN_BOTTOM_LEFT, 0, 0, 0),
+	std::make_tuple(1, 2, 3, dagui::Image::ORIGIN_TOP_LEFT, 255, 255, 255)
+	));

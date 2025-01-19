@@ -4,7 +4,8 @@
 
 #include <cstdint>
 #include <cstdlib>
-#include <config/macos_config.h>
+#include <cstdint>
+
 //#if defined(HAVE_WINDOWS_H)
 //#include <Windows.h>
 //#endif // HAVE_WINDOWS_H
@@ -15,17 +16,25 @@ namespace dagui
 	class DAGUI_API Image
 	{
 	public:
-		Image(std::uint32_t width, std::uint32_t height, std::uint32_t numComponents)
+		enum Origin :  std::uint32_t
+		{
+			ORIGIN_UNKNOWN,
+			ORIGIN_BOTTOM_LEFT,
+			ORIGIN_TOP_LEFT
+		};
+	public:
+		Image(std::uint32_t width, std::uint32_t height, std::uint32_t numComponents, Origin origin = ORIGIN_BOTTOM_LEFT)
 		:
 		_width(width),
 		_height(height),
-		_numComponents(numComponents)
+		_numComponents(numComponents),
+		_origin(origin)
 		{
-			_buffer = new std::uint8_t[height*width*numComponents];
+			_buffer = new std::uint8_t[height*width*numComponents]{0};
 		}
 
-		//! Does not own the buffer.
-		Image(std::uint32_t width, std::uint32_t height, std::uint32_t numComponents, unsigned char* buffer);
+		//! Copies the buffer.
+		Image(std::uint32_t width, std::uint32_t height, std::uint32_t numComponents, Origin origin, unsigned char* buffer);
 		
 		~Image()
 		{
@@ -49,15 +58,38 @@ namespace dagui
 		{
 			return _numComponents;
 		}
-		
+
+		void setOrigin(Origin origin)
+		{
+			_origin = origin;
+		}
+
+		Origin origin() const
+		{
+			return _origin;
+		}
+
 		void set(std::uint32_t row, std::uint32_t col, std::uint8_t red, std::uint8_t green, std::uint8_t blue)
 		{
 			if (row < _height && col < _width)
 			{
-				_buffer[row*_width*_numComponents+col*_numComponents+0] = red;
-				_buffer[row*_width*_numComponents+col*_numComponents+1] = green;
-				_buffer[row*_width*_numComponents+col*_numComponents+2] = blue;
-				_buffer[row*_width*_numComponents+col*_numComponents+3] = 255;
+				switch (_numComponents)
+				{
+				case 1:
+					_buffer[row*_width*_numComponents+col*_numComponents+0] = red;
+					break;
+				case 3:
+					_buffer[row*_width*_numComponents+col*_numComponents+0] = red;
+					_buffer[row*_width*_numComponents+col*_numComponents+1] = green;
+					_buffer[row*_width*_numComponents+col*_numComponents+2] = blue;
+					break;
+				case 4:
+					_buffer[row*_width*_numComponents+col*_numComponents+0] = red;
+					_buffer[row*_width*_numComponents+col*_numComponents+1] = green;
+					_buffer[row*_width*_numComponents+col*_numComponents+2] = blue;
+					_buffer[row*_width*_numComponents+col*_numComponents+3] = 255;
+					break;
+				}
 			}
 		}
 
@@ -95,6 +127,7 @@ namespace dagui
 		std::uint32_t _width{0};
 		std::uint32_t _height{0};
 		std::uint32_t _numComponents{0};
+		Origin _origin{ORIGIN_BOTTOM_LEFT};
 		std::uint8_t* _buffer{nullptr};
 		bool _own{true};
 	};

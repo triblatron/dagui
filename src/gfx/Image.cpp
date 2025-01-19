@@ -7,12 +7,12 @@
 
 namespace dagui
 {
-	Image::Image(std::uint32_t width, std::uint32_t height, std::uint32_t numComponents, unsigned char* buffer)
+	Image::Image(std::uint32_t width, std::uint32_t height, std::uint32_t numComponents, Origin origin, unsigned char* buffer)
 	:
 	_width(width),
 	_height(height),
 	_numComponents(numComponents),
-	_own(true)
+	_origin(origin)
 	{
 		_buffer = new unsigned char[_width * _height * _numComponents];
 		for (std::size_t i=0; i<_width*_height*_numComponents; i++)
@@ -77,8 +77,14 @@ namespace dagui
 						for (size_t col=0; col<source->width(); ++col)
 						{
 							std::uint8_t red{0},green{0},blue{0};
-							
-							source->get(row, col, &red, &green, &blue);
+							if (_origin==source->_origin)
+							{
+								source->get(row, col, &red, &green, &blue);
+							}
+							else
+							{
+								source->get(source->height()-1-row, col, &red, &green, &blue);
+							}
 							set(destRow, destCol, red, green, blue);
 							destCol ++;
 							if (destCol - destOriginCol == source->width())
