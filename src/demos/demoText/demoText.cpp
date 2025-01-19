@@ -26,9 +26,10 @@
 #include "core/LuaInterface.h"
 #include "core/ConfigurationElement.h"
 static dagui::Image* texImage = new dagui::Image(512,512,4);
-static GLuint texName;
-static FT_Library  library;
-static FT_Face     face;      /* handle to face object */
+static GLuint texName = 0;
+static FT_Library  library{nullptr};
+static dagui::FontImageSource* source{nullptr};
+static FT_Face     face{nullptr};      /* handle to face object */
 static dagui::TextureAtlas atlas;//(512, 512, 1);
 static dagui::OpenGLRenderer renderer;
 
@@ -92,18 +93,18 @@ void onDisplay()
     glBindTexture(GL_TEXTURE_2D, texName);
 
     glMatrixMode(GL_MODELVIEW);
-    //renderer.drawText(face, atlas, "A");
-    glBegin(GL_QUADS);
-    glColor3f(1.0f,1.0f,1.0f);
-    glTexCoord2d(0.0, 0.0);
-    glVertex2d(0.0, 0.0);
-    glTexCoord2d(1.0, 0.0);
-    glVertex2d(512.0,0.0);
-    glTexCoord2d(1.0,1.0);
-    glVertex2d(512.0,512.0);
-    glTexCoord2d(0.0,1.0);
-    glVertex2d(0.0,512.0);
-    glEnd();
+    renderer.drawText(face, atlas, "A");
+    // glBegin(GL_QUADS);
+    // glColor3f(1.0f,1.0f,1.0f);
+    // glTexCoord2d(0.0, 0.0);
+    // glVertex2d(0.0, 0.0);
+    // glTexCoord2d(1.0, 0.0);
+    // glVertex2d(512.0,0.0);
+    // glTexCoord2d(1.0,1.0);
+    // glVertex2d(512.0,512.0);
+    // glTexCoord2d(0.0,1.0);
+    // glVertex2d(0.0,512.0);
+    // glEnd();
     glutSwapBuffers();
     glDisable(GL_TEXTURE_2D);
 }
@@ -123,7 +124,7 @@ int main(int argc, char *argv[])
         return -1;
 
     }
-    auto* source = new dagui::FontImageSource(library);
+    source = new dagui::FontImageSource(library);
     dagbase::Lua lua;
     auto sourceConfig = dagbase::ConfigurationElement::fromFile(lua, argv[1]);
     if (!sourceConfig)
@@ -133,6 +134,7 @@ int main(int argc, char *argv[])
         return -1;
     }
     source->configure(*sourceConfig);
+    face = source->face();
     dagui::BinPackingStrategyFactory factory;
 
     auto binPacking = factory.createStrategy("MaxRects");

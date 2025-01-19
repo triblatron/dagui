@@ -20,14 +20,14 @@ namespace dagui
         glTexCoord2f(imageDef->p0.x, imageDef->p0.y);
         glVertex2f(x,y);
         glTexCoord2f(imageDef->p1.x, imageDef->p1.y);
-        glVertex2f(x+1.0f,y);
+        glVertex2f(x+imageDef->width,y);
         glTexCoord2f(imageDef->p2.x, imageDef->p2.y);
-        glVertex2f(x+1.0f,y+1.0f);
+        glVertex2f(x+imageDef->width,y+imageDef->height);
 
         glTexCoord2f(imageDef->p2.x, imageDef->p2.y);
-        glVertex2f(x+1.0f,y+1.0f);
+        glVertex2f(x+imageDef->width,y+imageDef->height);
         glTexCoord2f(imageDef->p3.x, imageDef->p3.y);
-        glVertex2f(x,y+1.0f);
+        glVertex2f(x,y+imageDef->height);
         glTexCoord2f(imageDef->p0.x, imageDef->p0.y);
         glVertex2f(x,y);
     }
