@@ -18,7 +18,7 @@ namespace dagui
     class DAGUI_API GlyphImageDef : public ImageDef
     {
     public:
-        GlyphImageDef(FT_Face face, FT_UInt glyphIndex, std::uint32_t width, std::uint32_t height);
+        GlyphImageDef(FT_Face face, FT_UInt glyphIndex, std::uint32_t width, std::uint32_t height, std::uint32_t advance);
 
         Image* createImage() const override;
 
@@ -26,8 +26,14 @@ namespace dagui
         {
             return _glyphIndex;
         }
+
+        std::uint32_t advance() const override
+        {
+            return _advance;
+        }
     private:
         FT_Face _face{nullptr};
         FT_UInt _glyphIndex{0};
+        std::uint32_t _advance{0};
     };
 }

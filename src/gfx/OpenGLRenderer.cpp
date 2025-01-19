@@ -44,7 +44,7 @@ namespace dagui
             ImageDef* imageDef = atlas.imageForGlyphIndex(glyphIndex);
             generateTextureCoordinates(*imageDef, *atlas.binImageDef());
             drawTexturedQuad(x, y, imageDef);
-            x+=imageDef->width;
+            x+=imageDef->advance();
         }
         // Get the texture coordinates for the glyph
         glEnd();

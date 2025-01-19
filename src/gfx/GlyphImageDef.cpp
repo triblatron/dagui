@@ -11,11 +11,12 @@
 
 namespace dagui
 {
-    GlyphImageDef::GlyphImageDef(FT_Face face, FT_UInt glyphIndex, std::uint32_t width, std::uint32_t height)
+    GlyphImageDef::GlyphImageDef(FT_Face face, FT_UInt glyphIndex, std::uint32_t width, std::uint32_t height, std::uint32_t advance)
         :
     ImageDef(width, height),
     _face(face),
-    _glyphIndex(glyphIndex)
+    _glyphIndex(glyphIndex),
+    _advance(advance)
     {
         // Do nothing
     }

@@ -112,7 +112,7 @@ namespace dagui
 		// 	}
 		// }
 
-		auto* image = new GlyphImageDef(_face, _face->glyph->glyph_index, _face->glyph->bitmap.width, _face->glyph->bitmap.rows);//, 1, _face->glyph->bitmap.buffer);
+fe		auto* image = new GlyphImageDef(_face, _face->glyph->glyph_index, _face->glyph->bitmap.width, _face->glyph->bitmap.rows, _face->glyph->advance.x>>6);//, 1, _face->glyph->bitmap.buffer);
 		return image;
 	}
 	

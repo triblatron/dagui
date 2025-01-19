@@ -29,6 +29,11 @@ namespace dagui
         {
             return 0;
         }
+
+        virtual std::uint32_t advance() const
+        {
+            return 0;
+        }
     public:
         std::uint32_t x{0};
         std::uint32_t y{0};
