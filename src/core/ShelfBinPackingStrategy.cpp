@@ -69,7 +69,7 @@ namespace dagui
 			// Update free space
 			inputImage->x = *nextX;
 			inputImage->y = *nextY;
-            atlas.allocateImage(_numAllocations, inputImage);
+            atlas.allocateImage(inputImage->index(), inputImage);
 			*nextX += inputImage->width;
 			if (*nextX == atlas.width())
 			{

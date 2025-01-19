@@ -24,6 +24,11 @@ namespace dagui
         virtual ~ImageDef() = default;
 
         virtual Image* createImage() const = 0;
+
+        virtual std::uint32_t index() const
+        {
+            return 0;
+        }
     public:
         std::uint32_t x{0};
         std::uint32_t y{0};

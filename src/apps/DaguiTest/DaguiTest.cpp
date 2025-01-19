@@ -930,7 +930,7 @@ INSTANTIATE_TEST_SUITE_P(Renderer, Renderer_testGenerateTextureCoordinates, ::te
 	std::make_tuple(256, 256, 0, 0, 256, 256, dagui::Vec2f(0.0f, 0.0f), dagui::Vec2f(1.0f, 0.0f), dagui::Vec2f(1.0f,1.0f), dagui::Vec2f(0.0f,1.0f))
 	));
 
-class TextureAtlas_testPack : public ::testing::TestWithParam<std::tuple<const char*, const char*>>
+class TextureAtlas_testPack : public ::testing::TestWithParam<std::tuple<const char*, const char*, std::uint32_t, bool>>
 {
 
 };
@@ -964,11 +964,15 @@ TEST_P(TextureAtlas_testPack, testPack)
 
 	EXPECT_TRUE(sut.binImage()->find(255,255,255));
 	EXPECT_GT(sut.binImage()->count(255,255,255),100);
+	auto glyphIndex = std::get<2>(GetParam());
+	auto notNull = std::get<3>(GetParam());
+	auto actualImage = sut.imageForGlyphIndex(glyphIndex);
+	EXPECT_EQ(notNull, actualImage!=nullptr);
 	FT_Done_FreeType(library);
 }
 
 INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testPack, ::testing::Values(
-	std::make_tuple("data/tests/TextureAtlas/testPack.lua", "MaxRects")
+	std::make_tuple("data/tests/TextureAtlas/testPack.lua", "MaxRects", 36, true)
 	));
 
 class FontImageSource_testEstimateCount : public ::testing::TestWithParam<std::tuple<const char*, std::size_t>>

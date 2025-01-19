@@ -21,6 +21,11 @@ namespace dagui
         GlyphImageDef(FT_Face face, FT_UInt glyphIndex, std::uint32_t width, std::uint32_t height);
 
         Image* createImage() const override;
+
+        std::uint32_t index() const override
+        {
+            return _glyphIndex;
+        }
     private:
         FT_Face _face{nullptr};
         FT_UInt _glyphIndex{0};

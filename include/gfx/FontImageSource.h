@@ -40,6 +40,10 @@ namespace dagui
 			return _errod == ERR_OK;
 		}
 
+		FT_Face face()
+		{
+			return _face;
+		}
         std::size_t estimateCount() const override;
 
 		bool hasMore() const override;

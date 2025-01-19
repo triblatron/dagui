@@ -41,7 +41,7 @@ namespace dagui
 	{
 		inputImage.x = freeNode.x();
 		inputImage.y = freeNode.y();
-        atlas.allocateImage(_numAllocations, &inputImage);
+        atlas.allocateImage(inputImage.index(), &inputImage);
 		++_numAllocations;
 	}
 }
