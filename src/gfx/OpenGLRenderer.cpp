@@ -11,7 +11,11 @@
 #include "gfx/ImageDef.h"
 #include "gfx/TextureAtlas.h"
 
+#if defined(__linux__) || defined(_WIN32)
+#include <GL/glut.h>
+#else
 #include <glut.h>
+#endif // __linux__ || _WIN32
 
 namespace dagui
 {
