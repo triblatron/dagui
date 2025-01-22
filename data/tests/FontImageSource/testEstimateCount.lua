@@ -4,12 +4,8 @@ root=
 	ranges=
 	{
 		{
-			first=32,
-			last=32
+			first=0x20,
+			last=0x7e
 		},
-		{
-			first=65,
-			last=65+25
-		}
 	}
 }
