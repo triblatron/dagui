@@ -39,7 +39,6 @@ namespace dagui
     void OpenGLRenderer::drawText(FT_FaceRec_* face, TextureAtlas& atlas, std::string_view text)
     {
         float x = 0, y = 0;
-        // TODO:Generate a list of triangles for the given ASCII string.
         glBegin(GL_TRIANGLES);
         // For each glyph in the string
         for (std::size_t i = 0; i < text.size(); i++)
