@@ -32,6 +32,7 @@ static dagui::FontImageSource* source{nullptr};
 static FT_Face     face{nullptr};      /* handle to face object */
 static dagui::TextureAtlas atlas;//(512, 512, 1);
 static dagui::OpenGLRenderer renderer;
+static std::string text;
 
 void copyGlyphToImage(FT_GlyphSlot glyph, dagui::Image* image)
 {
@@ -93,7 +94,7 @@ void onDisplay()
     glBindTexture(GL_TEXTURE_2D, texName);
 
     glMatrixMode(GL_MODELVIEW);
-    renderer.drawText(face, atlas, "HELLO WORLD");
+    renderer.drawText(face, atlas, text);
     // glBegin(GL_QUADS);
     // glColor3f(1.0f,1.0f,1.0f);
     // glTexCoord2d(0.0, 0.0);
@@ -111,12 +112,13 @@ void onDisplay()
 
 int main(int argc, char *argv[])
 {
-    if (argc != 2)
+    if (argc != 3)
     {
-        std::cerr << "Usage: " << argv[0] << " <fontFilename>\n";
+        std::cerr << "Usage: " << argv[0] << " <fontFilename> <text>\n";
 
         return -1;
     }
+    text = argv[2];
     int error = FT_Init_FreeType( &library );
     if ( error )
     {

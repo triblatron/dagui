@@ -46,9 +46,12 @@ namespace dagui
         {
             FT_UInt glyphIndex = FT_Get_Char_Index(face, text[i]);
             ImageDef* imageDef = atlas.imageForGlyphIndex(glyphIndex);
-            generateTextureCoordinates(*imageDef, *atlas.binImageDef());
-            drawTexturedQuad(x, y, imageDef);
-            x+=imageDef->advance();
+            if (imageDef)
+            {
+                generateTextureCoordinates(*imageDef, *atlas.binImageDef());
+                drawTexturedQuad(x, y, imageDef);
+                x+=imageDef->advance();
+            }
         }
         // Get the texture coordinates for the glyph
         glEnd();
