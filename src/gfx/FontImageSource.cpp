@@ -176,7 +176,7 @@ namespace dagui
 							 &_face );
 		if ( error == FT_Err_Unknown_File_Format )
 		{
-			std::cerr << "Unsupported font format, bailing\n";
+			std::cerr << "Unsupported font format for \"" << filename << "\", bailing\n";
 			_errod = ERR_UNSUPPORTED_FORMAT;
 
 			return;

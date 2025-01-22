@@ -9,6 +9,7 @@
 #include FT_FREETYPE_H
 
 #include <vector>
+#include <cstdint>
 
 namespace dagbase
 {
