@@ -31,6 +31,7 @@
 #include <cstring>
 
 #include "gfx/GlyphImageDef.h"
+#include "util/APIVersion.h"
 
 using testing::_;
 
@@ -684,3 +685,38 @@ TEST(VectorMap, testDuplicateKeysAreRejected)
     ASSERT_EQ(p.first, p2.first);
 }
 
+class APIVersion_compare : public ::testing::TestWithParam<std::tuple<int, int, int, int, int, int, int>>
+{
+
+};
+
+TEST_P(APIVersion_compare, testCompare)
+{
+	auto op1major = std::get<0>(GetParam());
+	auto op1minor = std::get<1>(GetParam());
+	auto op1patch = std::get<2>(GetParam());
+	auto op2major = std::get<3>(GetParam());
+	auto op2minor = std::get<4>(GetParam());
+	auto op2patch = std::get<5>(GetParam());
+	auto result = std::get<6>(GetParam());
+
+	dagui::APIVersion op1;
+	dagui::APIVersion op2;
+
+	op1.major = op1major;
+	op1.minor = op1minor;
+	op1.patch = op1patch;
+	op2.major = op2major;
+	op2.minor = op2minor;
+	op2.patch = op2patch;
+
+	auto actualResult = dagui::APIVersion::compare(op1,op2);
+	EXPECT_EQ(result, actualResult);
+}
+
+INSTANTIATE_TEST_SUITE_P(APIVersion, APIVersion_compare, ::testing::Values(
+	std::make_tuple(1, 1, 0, 1, 0, 0, 1),
+	std::make_tuple(1, 0, 0, 1, 1, 0, -1),
+	std::make_tuple(1, 1, 0, 1, 1, 0, 0),
+	std::make_tuple(1, 1, 1, 1, 1, 0, 1)
+	));

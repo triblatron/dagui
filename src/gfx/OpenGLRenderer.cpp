@@ -9,6 +9,7 @@
 #include "core/Vec2f.h"
 #include "gfx/BinImageDef.h"
 #include "gfx/ImageDef.h"
+#include "gfx/Mesh2D.h"
 #include "gfx/TextureAtlas.h"
 
 #if defined(__linux__) || defined(_WIN32)
@@ -36,6 +37,13 @@ namespace dagui
         glVertex2f(x,y);
     }
 
+    OpenGLRenderer::OpenGLRenderer()
+    {
+        _version.major = 1;
+        _version.minor = 1;
+        _version.patch = 0;
+    }
+
     void OpenGLRenderer::drawText(FT_FaceRec_* face, TextureAtlas& atlas, std::string_view text)
     {
         float x = 0, y = 0;
@@ -54,6 +62,23 @@ namespace dagui
         }
         // Get the texture coordinates for the glyph
         glEnd();
+    }
+
+    void OpenGLRenderer::drawMesh2D(const Mesh2D& mesh)
+    {
+        switch (mesh.primitiveType())
+        {
+        case Mesh2D::PRIMITIVE_TRIANGLE:
+            glBegin(GL_TRIANGLES);
+            for (auto i=0; i<mesh.numVertices(); i++)
+            {
+                glVertex2f(mesh.vertices()[i].x, mesh.vertices()[i].y);
+                glVertex2f(mesh.vertices()[i+1].x, mesh.vertices()[i+1].y);
+                glVertex2f(mesh.vertices()[i].x, mesh.vertices()[i].y);
+            }
+            glEnd();
+            break;
+        }
     }
 
     void OpenGLRenderer::generateTextureCoordinates(ImageDef& imageDef, BinImageDef& binImageDef)

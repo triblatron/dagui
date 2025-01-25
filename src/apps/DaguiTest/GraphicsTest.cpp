@@ -17,6 +17,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include "gfx/RendererFactory.h"
+
 class MockAtlas : public dagui::Atlas
 {
 public:
@@ -362,4 +364,31 @@ TEST_P(Image_testCopyFrom, testCopyFrom)
 INSTANTIATE_TEST_SUITE_P(Image, Image_testCopyFrom, ::testing::Values(
 	std::make_tuple(1, 2, 3, dagui::Image::ORIGIN_BOTTOM_LEFT, 0, 0, 0),
 	std::make_tuple(1, 2, 3, dagui::Image::ORIGIN_TOP_LEFT, 255, 255, 255)
+	));
+
+class RendererFactory_testCreateRenderer : public ::testing::TestWithParam<std::tuple<const char*, int, int, int>>
+{
+
+};
+
+TEST_P(RendererFactory_testCreateRenderer, testCreateRenderer)
+{
+	auto apiName = std::get<0>(GetParam());
+	auto majorVersion = std::get<1>(GetParam());
+	auto minorVersion = std::get<2>(GetParam());
+	auto patchVersion = std::get<3>(GetParam());
+	dagui::APIVersion version;
+	version.major = majorVersion;
+	version.minor = minorVersion;
+	version.patch = patchVersion;
+	dagui::RendererFactory sut;
+	auto actual = sut.createRenderer(apiName, version);
+	ASSERT_NE(nullptr, actual);
+	EXPECT_EQ(version.major, actual->apiVersion().major);
+	EXPECT_GE(actual->apiVersion().minor, version.minor);
+	EXPECT_GE(actual->apiVersion().patch, version.patch);
+}
+
+INSTANTIATE_TEST_SUITE_P(RendererFactory, RendererFactory_testCreateRenderer, ::testing::Values(
+	std::make_tuple("OpenGL", 1, 0, 0)
 	));

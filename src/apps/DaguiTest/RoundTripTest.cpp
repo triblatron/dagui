@@ -198,6 +198,7 @@ INSTANTIATE_TEST_SUITE_P(Mesh2D, Mesh2D_PrimitiveType_testRoundTrip, ::testing::
     std::make_tuple("PRIMITIVE_LINE_STRIP", dagui::Mesh2D::PRIMITIVE_LINE_STRIP),
     std::make_tuple("PRIMITIVE_LINE_LOOP", dagui::Mesh2D::PRIMITIVE_LINE_LOOP),
     std::make_tuple("PRIMITIVE_TRIANGLE", dagui::Mesh2D::PRIMITIVE_TRIANGLE),
+    std::make_tuple("PRIMITIVE_TRIANGLE_LIST", dagui::Mesh2D::PRIMITIVE_TRIANGLE_LIST),
     std::make_tuple("PRIMITIVE_TRIANGLE_STRIP", dagui::Mesh2D::PRIMITIVE_TRIANGLE_STRIP),
     std::make_tuple("PRIMITIVE_TRIANGLE_FAN", dagui::Mesh2D::PRIMITIVE_TRIANGLE_FAN)
     ));
