@@ -4,6 +4,7 @@
 #include "gfx/FontImageSource.h"
 #include "core/SpaceTree.h"
 #include "gfx/TextureAtlas.h"
+#include "gfx/Mesh2D.h"
 
 #include <gtest/gtest.h>
 
@@ -174,4 +175,29 @@ INSTANTIATE_TEST_SUITE_P(TextureAtlas, TextureAtlas_testRoundTrip, ::testing::Va
     std::make_tuple("ERR_NON_POWER_OF_TWO_DIMS", dagui::TextureAtlas::ERR_NON_POWER_OF_TWO_DIMS),
     std::make_tuple("ERR_FAILED_TO_ALLOCATE", dagui::TextureAtlas::ERR_FAILED_TO_ALLOCATE),
     std::make_tuple("ERR_UNKNOWN", dagui::TextureAtlas::ERR_UNKNOWN)
+    ));
+
+class Mesh2D_PrimitiveType_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Mesh2D::PrimitiveType>>
+{
+
+};
+
+TEST_P(Mesh2D_PrimitiveType_testRoundTrip, testRoundtrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::Mesh2D::primitiveTypeToString(value));
+    EXPECT_EQ(value, dagui::Mesh2D::parsePrimitiveType(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(Mesh2D, Mesh2D_PrimitiveType_testRoundTrip, ::testing::Values(
+    std::make_tuple("PRIMITIVE_UNKNOWN", dagui::Mesh2D::PRIMITIVE_UNKNOWN),
+    std::make_tuple("PRIMITIVE_POINT", dagui::Mesh2D::PRIMITIVE_POINT),
+    std::make_tuple("PRIMITIVE_LINE", dagui::Mesh2D::PRIMITIVE_LINE),
+    std::make_tuple("PRIMITIVE_LINE_STRIP", dagui::Mesh2D::PRIMITIVE_LINE_STRIP),
+    std::make_tuple("PRIMITIVE_LINE_LOOP", dagui::Mesh2D::PRIMITIVE_LINE_LOOP),
+    std::make_tuple("PRIMITIVE_TRIANGLE", dagui::Mesh2D::PRIMITIVE_TRIANGLE),
+    std::make_tuple("PRIMITIVE_TRIANGLE_STRIP", dagui::Mesh2D::PRIMITIVE_TRIANGLE_STRIP),
+    std::make_tuple("PRIMITIVE_TRIANGLE_FAN", dagui::Mesh2D::PRIMITIVE_TRIANGLE_FAN)
     ));

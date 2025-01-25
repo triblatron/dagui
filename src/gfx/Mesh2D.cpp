@@ -1,0 +1,42 @@
+//
+// Created by Tony Horrobin on 25/01/2025.
+//
+
+#include "config/config.h"
+
+#include "gfx/Mesh2D.h"
+#include "util/enums.h"
+
+namespace dagui
+{
+    const char* Mesh2D::primitiveTypeToString(PrimitiveType value)
+    {
+        switch (value)
+        {
+            ENUM_NAME(PRIMITIVE_UNKNOWN)
+            ENUM_NAME(PRIMITIVE_POINT)
+            ENUM_NAME(PRIMITIVE_LINE)
+            ENUM_NAME(PRIMITIVE_LINE_STRIP)
+            ENUM_NAME(PRIMITIVE_LINE_LOOP)
+            ENUM_NAME(PRIMITIVE_TRIANGLE)
+            ENUM_NAME(PRIMITIVE_TRIANGLE_STRIP)
+            ENUM_NAME(PRIMITIVE_TRIANGLE_FAN)
+        }
+
+        return "<error>";
+    }
+
+    Mesh2D::PrimitiveType Mesh2D::parsePrimitiveType(const char* str)
+    {
+        TEST_ENUM(PRIMITIVE_POINT, str);
+        TEST_ENUM(PRIMITIVE_LINE, str);
+        TEST_ENUM(PRIMITIVE_LINE_STRIP, str);
+        TEST_ENUM(PRIMITIVE_LINE_LOOP, str);
+        TEST_ENUM(PRIMITIVE_TRIANGLE, str);
+        TEST_ENUM(PRIMITIVE_TRIANGLE_STRIP, str);
+        TEST_ENUM(PRIMITIVE_TRIANGLE_FAN, str);
+
+        return PRIMITIVE_UNKNOWN;
+    }
+
+}
