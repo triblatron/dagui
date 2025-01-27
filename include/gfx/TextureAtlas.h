@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <vector>
 #include <cstdlib>
-#include "core/VectorMap.h"
+#include "util/VectorMap.h"
 
 namespace dagbase
 {
@@ -113,7 +113,7 @@ namespace dagui
 		using ImageBoundsMap = std::vector<std::pair<Image*, ImageBounds>>;
 		ImageBoundsMap _imageBounds;
 		std::size_t _numAllocations{0};
-        using ImageMap = VectorMap<unsigned long, ImageDef*>;
+        using ImageMap = dagbase::VectorMap<unsigned long, ImageDef*>;
         ImageMap _images;
 	};
 }

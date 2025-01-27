@@ -47,7 +47,6 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
 		include/core/BinPackingStrategyFactory.h
 		include/core/ShelfBinPackingStrategy.h
 		include/core/MaxRectsBinPackingStrategy.h
-		include/core/VectorMap.h
 		include/gfx/Renderer.h
 		include/gfx/OpenGLRenderer.h
 		include/core/Vec2f.h

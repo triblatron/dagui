@@ -20,7 +20,7 @@
 #include "core/BinPackingStrategyFactory.h"
 #include "core/BinPackingStrategy.h"
 #include "core/Atlas.h"
-#include "core/VectorMap.h"
+#include "util/VectorMap.h"
 #include "core/Vec2f.h"
 
 #include <ft2build.h>
@@ -634,7 +634,7 @@ class VectorMap_testInsert : public ::testing::TestWithParam<std::tuple<const ch
 
 };
 
-using IntVectorMap = dagui::VectorMap<std::int64_t, std::int64_t>;
+using IntVectorMap = dagbase::VectorMap<std::int64_t, std::int64_t>;
 
 TEST_P(VectorMap_testInsert, testInsert)
 {
@@ -684,6 +684,42 @@ TEST(VectorMap, testDuplicateKeysAreRejected)
     ASSERT_FALSE(p2.second);
     ASSERT_EQ(p.first, p2.first);
 }
+
+class VectorMap_testFind : public ::testing::TestWithParam<std::tuple<const char*, bool>>
+{
+
+};
+
+TEST_P(VectorMap_testFind, testFind)
+{
+	auto configStr = std::get<0>(GetParam());
+	dagbase::Lua lua;
+	auto config = dagbase::ConfigurationElement::fromString(lua, configStr);
+	ASSERT_NE(nullptr, config);
+	auto elementsConfig= config->findElement("elements");
+	ASSERT_NE(nullptr, elementsConfig);
+	IntVectorMap sut;
+	elementsConfig->eachChild([&sut](auto& child)
+	{
+		if (child.numChildren() == 2)
+			sut.insert(IntVectorMap::value_type(child.child(0)->asInteger(), child.child(1)->asInteger()));
+
+		return true;
+	});
+	auto searchConfig = config->findElement("search");
+	ASSERT_NE(nullptr, searchConfig);
+	auto key = searchConfig->asInteger();
+	auto result = std::get<1>(GetParam());
+	auto it = sut.find(key);
+	auto actualResult = it!=sut.end();
+	EXPECT_EQ(actualResult, result);
+}
+
+INSTANTIATE_TEST_SUITE_P(VectorMap, VectorMap_testFind, ::testing::Values(
+	std::make_tuple("root = { elements={ {1,1}, {2,2}, {3,3} }, search=1 }", true),
+	std::make_tuple("root = { elements={ {1,1}, {2,2}, {3,3} }, search=4 }", false),
+	std::make_tuple("root = { elements={ {1,1}, {3,3} }, search=2 }", false)
+	));
 
 class APIVersion_compare : public ::testing::TestWithParam<std::tuple<int, int, int, int, int, int, int>>
 {

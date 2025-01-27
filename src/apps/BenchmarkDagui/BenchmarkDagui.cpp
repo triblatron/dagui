@@ -5,7 +5,7 @@
 #include <benchmark/benchmark.h>
 #include "util/CompletionTrie.h"
 #include "util/CompletionSubstring.h"
-#include "core/VectorMap.h"
+#include "util/VectorMap.h"
 #include <map>
 #include <cstdint>
 
@@ -108,7 +108,7 @@ BENCHMARK(BM_Map);
 
 void BM_VectorMap(benchmark::State& state)
 {
-    using IntToIntMap = dagui::VectorMap<std::int64_t, std::int64_t>;
+    using IntToIntMap = dagbase::VectorMap<std::int64_t, std::int64_t>;
     for (auto _ : state)
     {
         IntToIntMap sut;
