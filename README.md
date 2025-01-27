@@ -166,6 +166,8 @@ DaguiTest
 * ~~Render some text using the font texture as a lookup~~
 
 ## Next up
+* Draw a mesh using a Renderer backend
+* Draw a window
 * Render effects such as underline using pango
   * image that can address individual pixels
   * address windows within the image to allow use of one image for multiple glyphs
@@ -180,7 +182,6 @@ DaguiTest
 * Repeat for Vulkan
 * ~~build on Raspberry Pi 5 64bit~~
 * build on Raspberry Pi 4 64bit
-* draw a window
 * design a renderer backend that can consume textured triangles and render to
   * a texture
   * the screen
