@@ -167,6 +167,8 @@ DaguiTest
 
 ## Next up
 * Draw a mesh using a Renderer backend
+  * Rectangle
+  * Sector of a circle 
 * Draw a window
 * Render effects such as underline using pango
   * image that can address individual pixels
