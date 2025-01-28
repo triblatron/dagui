@@ -6,9 +6,32 @@
 
 #include "gfx/Mesh2D.h"
 #include "util/enums.h"
+#include "core/ConfigurationElement.h"
 
 namespace dagui
 {
+    void Mesh2D::configure(dagbase::ConfigurationElement& config)
+    {
+        if (auto element = config.findElement("primitiveType"); element)
+        {
+            _primitiveType = parsePrimitiveType(element->asString().c_str());
+        }
+
+        if (auto element = config.findElement("vertices"); element)
+        {
+            _vertices.reserve(element->numChildren());
+            for (unsigned i = 0; i < element->numChildren(); i++)
+            {
+                Vec2f vertex;
+
+                vertex.x = static_cast<float>(element->child(i)->asDouble());
+                vertex.y = static_cast<float>(element->child(i)->asDouble());
+
+                _vertices.push_back(vertex);
+            }
+        }
+    }
+
     const char* Mesh2D::primitiveTypeToString(PrimitiveType value)
     {
         switch (value)

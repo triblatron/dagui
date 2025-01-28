@@ -17,6 +17,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include "gfx/OpenGL.h"
 #include "gfx/RendererFactory.h"
 
 class MockAtlas : public dagui::Atlas
@@ -391,4 +392,51 @@ TEST_P(RendererFactory_testCreateRenderer, testCreateRenderer)
 
 INSTANTIATE_TEST_SUITE_P(RendererFactory, RendererFactory_testCreateRenderer, ::testing::Values(
 	std::make_tuple("OpenGL", 1, 0, 0)
+	));
+
+class MockOpenGL : public dagui::gl::OpenGL
+{
+public:
+	MockOpenGL()
+	{
+		ON_CALL(*this, drawArray).WillByDefault([this](const dagui::gl::VertexBuffer& vertexBuffer)->void
+		{
+			EXPECT_EQ(_numVertices, vertexBuffer.numElements());
+		});
+	}
+
+	void setNumVertices(unsigned int numVertices)
+	{
+		_numVertices = numVertices;
+	}
+	MOCK_METHOD(void, drawArray, (const dagui::gl::VertexBuffer&), (override));
+	MOCK_METHOD(void, drawElements, (const dagui::gl::VertexBuffer&, const dagui::gl::IndexBuffer&), (override));
+private:
+	unsigned int _numVertices{0};
+};
+
+class OpenGL_testDrawElements : public ::testing::TestWithParam<std::tuple<const char*, unsigned int>>
+{
+
+};
+
+TEST_P(OpenGL_testDrawElements, testDrawElements)
+{
+	auto configStr = std::get<0>(GetParam());
+	auto numVertices = std::get<1>(GetParam());
+	dagbase::Lua lua;
+	auto config = dagbase::ConfigurationElement::fromString(lua, configStr);
+	ASSERT_NE(nullptr, config);
+	dagui::OpenGLRenderer renderer;
+	dagui::Mesh2D mesh;
+	mesh.configure(*config);
+	MockOpenGL sut;
+	sut.setNumVertices(numVertices);
+	renderer.setOpenGL(&sut);
+	EXPECT_CALL(sut, drawArray(::testing::_));
+	renderer.drawMesh2D(mesh);
+}
+
+INSTANTIATE_TEST_SUITE_P(OpenGL, OpenGL_testDrawElements, ::testing::Values(
+	std::make_tuple("root = { primitiveType=\"PRIMITIVE_TRIANGLE\", vertices={ { 0, 0 }, { 1, 0 }, { 1, 1 } } }", 3)
 	));

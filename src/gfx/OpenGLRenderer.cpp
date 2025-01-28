@@ -11,6 +11,7 @@
 #include "gfx/ImageDef.h"
 #include "gfx/Mesh2D.h"
 #include "gfx/TextureAtlas.h"
+#include "gfx/OpenGL.h"
 
 #if defined(__linux__) || defined(_WIN32)
 #include <GL/glut.h>
@@ -69,14 +70,25 @@ namespace dagui
         switch (mesh.primitiveType())
         {
         case Mesh2D::PRIMITIVE_TRIANGLE:
-            glBegin(GL_TRIANGLES);
-            for (auto i=0; i<mesh.numVertices(); i++)
+            if (_gl)
             {
-                glVertex2f(mesh.vertices()[i].x, mesh.vertices()[i].y);
-                glVertex2f(mesh.vertices()[i+1].x, mesh.vertices()[i+1].y);
-                glVertex2f(mesh.vertices()[i].x, mesh.vertices()[i].y);
+                gl::Layout vertexLayout;
+                vertexLayout.stride=1;
+                vertexLayout.dataType = GL_FLOAT;
+                vertexLayout.numComponentsPerAttr = 3;
+                gl::VertexBuffer vertices;
+                vertices.setLayout(vertexLayout);
+                vertices.setData(mesh.vertices(), mesh.numVertices());
+                _gl->drawArray(vertices);
             }
-            glEnd();
+            // glBegin(GL_TRIANGLES);
+            // for (auto i=0; i<mesh.numVertices(); i++)
+            // {
+            //     glVertex2f(mesh.vertices()[i].x, mesh.vertices()[i].y);
+            //     glVertex2f(mesh.vertices()[i+1].x, mesh.vertices()[i+1].y);
+            //     glVertex2f(mesh.vertices()[i].x, mesh.vertices()[i].y);
+            // }
+            // glEnd();
             break;
         }
     }

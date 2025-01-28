@@ -9,6 +9,11 @@
 
 namespace dagui
 {
+    namespace gl
+    {
+        class OpenGL;
+    }
+
     class DAGUI_API OpenGLRenderer : public Renderer
     {
     public:
@@ -19,11 +24,17 @@ namespace dagui
             return _version;
         }
 
+        void setOpenGL(gl::OpenGL* gl)
+        {
+            _gl = gl;
+        }
+
         void drawText(FT_Face face, TextureAtlas& atlas, std::string_view text) override;
         void drawMesh2D(const Mesh2D& mesh) override;
         void generateTextureCoordinates(ImageDef& imageDef, BinImageDef& binImageDef) override;
     private:
         APIVersion _version;
         void drawTexturedQuad(float x, float y, const ImageDef* imageDef);
+        gl::OpenGL* _gl{nullptr};
     };
 }

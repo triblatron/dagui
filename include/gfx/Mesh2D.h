@@ -4,10 +4,16 @@
 
 #pragma once
 
-#include <vector>
-
 #include "config/Export.h"
 #include "core/Vec2f.h"
+#include "util/Searchable.h"
+
+#include <vector>
+
+namespace dagbase
+{
+    class ConfigurationElement;
+}
 
 namespace dagui
 {
@@ -30,6 +36,8 @@ namespace dagui
         Mesh2D() = default;
 
         ~Mesh2D() = default;
+
+        void configure(dagbase::ConfigurationElement& config);
 
         void setPrimitiveType(PrimitiveType type)
         {
