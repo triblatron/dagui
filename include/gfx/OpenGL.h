@@ -9,7 +9,7 @@
 #include "config/Export.h"
 
 #if defined(_WIN32) || defined(__linux__)
-#include <GL/gl.h>
+#include <GL/glut.h>
 #elif defined(__APPLE__)
 #include <OpenGL/gl.h>
 #endif
@@ -21,9 +21,9 @@ namespace dagui
     {
         struct DAGUI_API Layout
         {
-            int numComponentsPerAttr{0};
-            int dataType{0};
-            int stride{0};
+            GLuint numComponentsPerAttr{0};
+            GLenum dataType{0};
+            GLuint stride{0};
         };
 
         class DAGUI_API Buffer

@@ -15,6 +15,17 @@ namespace dagui
 
         void VertexBuffer::unbind()
         {
+
+        }
+        void Buffer::allocate()
+        {
+            
+        }
+        void IndexBuffer::bind()
+        {
+        }
+        void IndexBuffer::unbind()
+        {
         }
     }
 }
