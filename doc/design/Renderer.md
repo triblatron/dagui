@@ -10,6 +10,7 @@ The scene graph contains:
 * Meshes
 * Textures
 * Materials
+
 Having shapes might be a mixture of abstraction levels.
 We could put Meshes inside Shapes to avoid another hierarchy.
 The scene graph is separate from the Widget tree and is used to implement it.
