@@ -165,10 +165,13 @@ DaguiTest
   * be careful not to stretch the texture when a reshape of the window occurs
 * ~~Render some text using the font texture as a lookup~~
 
-## Next up
+## Work8ng on
+* OpenGL backend classes
 * Draw a mesh using a Renderer backend
   * Rectangle
-  * Sector of a circle 
+  * Sector of a circle
+
+## Next up
 * Draw a window
 * Render effects such as underline using pango
   * image that can address individual pixels
