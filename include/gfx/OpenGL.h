@@ -29,8 +29,6 @@ namespace dagui
         class DAGUI_API Buffer
         {
         public:
-            virtual ~Buffer() = default;
-
             void setLayout(const Layout& layout)
             {
                 _layout = layout;
@@ -48,9 +46,6 @@ namespace dagui
             }
 
             void allocate();
-
-            virtual void bind() = 0;
-            virtual void unbind() = 0;
         private:
             Layout _layout;
             std::uint32_t _handle{0};
@@ -61,15 +56,15 @@ namespace dagui
         class DAGUI_API VertexBuffer : public Buffer
         {
         public:
-            void bind() override;
-            void unbind() override;
+            void bind();
+            void unbind();
         };
 
         class DAGUI_API IndexBuffer : public Buffer
         {
         public:
-            void bind() override;
-            void unbind() override;
+            void bind();
+            void unbind();
         };
 
         class DAGUI_API OpenGL

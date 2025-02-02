@@ -73,7 +73,7 @@ namespace dagui
             if (_gl)
             {
                 gl::Layout vertexLayout;
-                vertexLayout.stride=1;
+                vertexLayout.stride=0;
                 vertexLayout.dataType = GL_FLOAT;
                 vertexLayout.numComponentsPerAttr = 3;
                 gl::VertexBuffer vertices;
