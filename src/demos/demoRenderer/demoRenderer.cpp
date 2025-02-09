@@ -5,8 +5,11 @@
 
 #if defined(__APPLE__)
 #include <OpenGL/gl3.h>
-#endif // __APPLE__
 #include <glut.h>
+#elif defined(__linux__) || defined(_WIN32)
+#include <GL/gl3.h>
+#include <GL/glut.h>
+#endif // __APPLE__
 #include <iostream>
 #include <ostream>
 
@@ -15,6 +18,7 @@ void display()
     glClear(GL_COLOR_BUFFER_BIT);
     glutSwapBuffers();
 }
+
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
