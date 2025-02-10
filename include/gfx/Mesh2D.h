@@ -35,7 +35,7 @@ namespace dagui
     public:
         Mesh2D() = default;
 
-        ~Mesh2D() = default;
+        virtual ~Mesh2D() = default;
 
         void configure(dagbase::ConfigurationElement& config);
 
@@ -64,6 +64,13 @@ namespace dagui
             return _vertices.data();
         }
 
+        void addColour(float r, float g, float b, float a)
+        {
+            _colours.push_back(r);
+            _colours.push_back(g);
+            _colours.push_back(b);
+            _colours.push_back(a);
+        }
         std::size_t numIndices() const
         {
             return _indices.size();
@@ -74,18 +81,22 @@ namespace dagui
             _indices.push_back(index);
         }
 
-        const unsigned int* indices() const
+        const std::uint32_t* indices() const
         {
             return _indices.data();
         }
 
+        virtual void draw() = 0;
+
         static const char* primitiveTypeToString(PrimitiveType);
         static PrimitiveType parsePrimitiveType(const char *str);
-    private:
+    protected:
         PrimitiveType _primitiveType = PRIMITIVE_UNKNOWN;
         using VertexArray = std::vector<Vec2f>;
         VertexArray _vertices;
         using IndexArray = std::vector<std::uint32_t>;
         IndexArray _indices;
+        using ColourArray = std::vector<float>;
+        ColourArray _colours;
     };
 }

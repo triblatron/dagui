@@ -2,7 +2,7 @@
 // Created by Tony Horrobin on 25/01/2025.
 //
 
-#include "gfx/Mesh2D.h"
+#include "gfx/OpenGLMesh2D.h"
 #include "gfx/Image.h"
 #include "gfx/ImageDef.h"
 #include "gfx/OpenGLRenderer.h"
@@ -428,7 +428,7 @@ TEST_P(OpenGL_testDrawElements, testDrawElements)
 	auto config = dagbase::ConfigurationElement::fromString(lua, configStr);
 	ASSERT_NE(nullptr, config);
 	dagui::OpenGLRenderer renderer;
-	dagui::Mesh2D mesh;
+	dagui::gl::OpenGLMesh2D mesh;
 	mesh.configure(*config);
 	MockOpenGL sut;
 	sut.setNumVertices(numVertices);

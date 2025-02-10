@@ -46,9 +46,10 @@ namespace dagui
             }
 
             void allocate();
+        protected:
+            std::uint32_t _handle{0};
         private:
             Layout _layout;
-            std::uint32_t _handle{0};
             const void* _data{nullptr};
             unsigned int _size{0};
         };
