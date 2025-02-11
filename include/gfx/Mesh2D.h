@@ -56,10 +56,11 @@ namespace dagui
 
         void addVertex(const Vec2f& vertex)
         {
-            _vertices.push_back(vertex);
+            _vertices.push_back(vertex.x);
+            _vertices.push_back(vertex.y);
         }
 
-        const Vec2f* vertices() const
+        const float* vertices() const
         {
             return _vertices.data();
         }
@@ -92,7 +93,7 @@ namespace dagui
         static PrimitiveType parsePrimitiveType(const char *str);
     protected:
         PrimitiveType _primitiveType = PRIMITIVE_UNKNOWN;
-        using VertexArray = std::vector<Vec2f>;
+        using VertexArray = std::vector<float>;
         VertexArray _vertices;
         using IndexArray = std::vector<std::uint32_t>;
         IndexArray _indices;

@@ -33,7 +33,7 @@ namespace dagui::gl
     void OpenGLMesh2D::submit()
     {
         _vertexBuffer.bind();
-        glBufferData(GL_ARRAY_BUFFER, _vertices.size()*2*sizeof(float), _vertices.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, _vertices.size()*sizeof(float), _vertices.data(), GL_STATIC_DRAW);
         _colourBuffer.bind();
         glBufferData(GL_ARRAY_BUFFER, _colours.size()*sizeof(float), _colours.data(), GL_STATIC_DRAW);
         std::cout << glGetError() << std::endl;

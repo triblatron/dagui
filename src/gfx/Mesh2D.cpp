@@ -27,7 +27,7 @@ namespace dagui
                 vertex.x = static_cast<float>(element->child(i)->asDouble());
                 vertex.y = static_cast<float>(element->child(i)->asDouble());
 
-                _vertices.push_back(vertex);
+                addVertex(vertex);
             }
         }
     }
