@@ -12,6 +12,7 @@
 #include "gfx/Mesh2D.h"
 #include "gfx/TextureAtlas.h"
 #include "gfx/OpenGL.h"
+#include "gfx/DrawingCommand.h"
 
 #if defined(__linux__) || defined(_WIN32)
 #include <GL/glut.h>
@@ -43,6 +44,30 @@ namespace dagui
         _version.major = 1;
         _version.minor = 1;
         _version.patch = 0;
+    }
+
+    void OpenGLRenderer::configure(dagbase::ConfigurationElement& config)
+    {
+        if (auto element = config.findElement("commandClass"); element != nullptr)
+        {
+            auto commandClass = element->asString();
+            if (commandClass == "DrawArrays")
+            {
+                _command = new gl::DrawArrays();
+                _command->configure(*element);
+            }
+        }
+    }
+
+    dagbase::ConfigurationElement::ValueType OpenGLRenderer::find(std::string_view path) const
+    {
+        dagbase::ConfigurationElement::ValueType retval;
+
+        retval = dagbase::findEndpoint(path, "numCommands", _command!=nullptr?1:0);
+        if (retval.has_value())
+            return retval;
+
+        return {};
     }
 
     void OpenGLRenderer::drawText(FT_FaceRec_* face, TextureAtlas& atlas, std::string_view text)

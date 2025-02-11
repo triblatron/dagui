@@ -26,7 +26,7 @@ namespace dagui::gl
 
         void submit();
 
-        void draw() override;
+        void draw();
     private:
         gl::VertexBuffer _vertexBuffer;
         gl::VertexBuffer _colourBuffer;

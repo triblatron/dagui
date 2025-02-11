@@ -401,7 +401,7 @@ public:
 	{
 		ON_CALL(*this, drawArray).WillByDefault([this](const dagui::gl::VertexBuffer& vertexBuffer)->void
 		{
-			EXPECT_EQ(_numVertices, vertexBuffer.numElements());
+			EXPECT_EQ(_numVertices*_numComponentsPerVertex, vertexBuffer.numElements());
 		});
 	}
 
@@ -409,13 +409,19 @@ public:
 	{
 		_numVertices = numVertices;
 	}
+
+	void setNumComponentsPerVertex(unsigned int numComponentsPerVertex)
+	{
+		_numComponentsPerVertex = numComponentsPerVertex;
+	}
 	MOCK_METHOD(void, drawArray, (const dagui::gl::VertexBuffer&), (override));
 	MOCK_METHOD(void, drawElements, (const dagui::gl::VertexBuffer&, const dagui::gl::IndexBuffer&), (override));
 private:
 	unsigned int _numVertices{0};
+	unsigned int _numComponentsPerVertex{0};
 };
 
-class OpenGL_testDrawElements : public ::testing::TestWithParam<std::tuple<const char*, unsigned int>>
+class OpenGL_testDrawElements : public ::testing::TestWithParam<std::tuple<const char*, unsigned int, unsigned int>>
 {
 
 };
@@ -424,6 +430,7 @@ TEST_P(OpenGL_testDrawElements, testDrawElements)
 {
 	auto configStr = std::get<0>(GetParam());
 	auto numVertices = std::get<1>(GetParam());
+	auto numComponentsPerVertex = std::get<2>(GetParam());
 	dagbase::Lua lua;
 	auto config = dagbase::ConfigurationElement::fromString(lua, configStr);
 	ASSERT_NE(nullptr, config);
@@ -432,11 +439,76 @@ TEST_P(OpenGL_testDrawElements, testDrawElements)
 	mesh.configure(*config);
 	MockOpenGL sut;
 	sut.setNumVertices(numVertices);
+	sut.setNumComponentsPerVertex(numComponentsPerVertex);
 	renderer.setOpenGL(&sut);
 	EXPECT_CALL(sut, drawArray(::testing::_));
 	renderer.drawMesh2D(mesh);
 }
 
 INSTANTIATE_TEST_SUITE_P(OpenGL, OpenGL_testDrawElements, ::testing::Values(
-	std::make_tuple("root = { primitiveType=\"PRIMITIVE_TRIANGLE\", vertices={ { 0, 0 }, { 1, 0 }, { 1, 1 } } }", 3)
+	std::make_tuple("root = { primitiveType=\"PRIMITIVE_TRIANGLE\", vertices={ { 0, 0 }, { 1, 0 }, { 1, 1 } } }", 3, 2)
+	));
+
+class DrawingCommand_testMakeItSo : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*, dagbase::ConfigurationElement::ValueType, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+void assertComparison(dagbase::ConfigurationElement::ValueType expected, dagbase::ConfigurationElement::ValueType actual, double tolerance, dagbase::ConfigurationElement::RelOp op)
+{
+	switch (op)
+	{
+	case dagbase::ConfigurationElement::RELOP_EQ:
+		if (expected->index() == dagbase::ConfigurationElement::TYPE_DOUBLE && actual->index() == dagbase::ConfigurationElement::TYPE_DOUBLE)
+		{
+			EXPECT_NEAR(std::get<double>(actual.value()), std::get<double>(expected.value()), tolerance);
+		}
+		else if (expected.has_value() && actual.has_value())
+		{
+			EXPECT_EQ(expected.value(), actual.value());
+		}
+		break;
+	case dagbase::ConfigurationElement::RELOP_NE:
+		EXPECT_NE(expected.value(), actual.value());
+		break;
+	case dagbase::ConfigurationElement::RELOP_LT:
+		EXPECT_LT(actual.value(), expected.value());
+		break;
+	case dagbase::ConfigurationElement::RELOP_LE:
+		EXPECT_LE(actual.value(), expected.value());
+		break;
+	case dagbase::ConfigurationElement::RELOP_GT:
+		EXPECT_GT(actual.value(), expected.value());
+		break;
+	case dagbase::ConfigurationElement::RELOP_GE:
+		EXPECT_GE(actual.value(), expected.value());
+		break;
+	default:
+		assert(false);
+	}
+}
+TEST_P(DrawingCommand_testMakeItSo, testMakeItSo)
+{
+	auto meshConfigStr = std::get<0>(GetParam());
+	dagbase::Lua lua;
+	auto meshConfig = dagbase::ConfigurationElement::fromString(lua, meshConfigStr);
+	ASSERT_NE(nullptr, meshConfig);
+	dagui::Mesh2D mesh;
+	mesh.configure(*meshConfig);
+	auto rendererConfigStr = std::get<1>(GetParam());
+	auto rendererConfig = dagbase::ConfigurationElement::fromString(lua, rendererConfigStr);
+	ASSERT_NE(nullptr, rendererConfig);
+	dagui::OpenGLRenderer sut;
+	sut.configure(*rendererConfig);
+	auto path = std::get<2>(GetParam());
+	auto value = std::get<3>(GetParam());
+	auto tolerance = std::get<4>(GetParam());
+	auto op = std::get<5>(GetParam());
+	auto actualValue = sut.find(path);
+	ASSERT_TRUE(actualValue.has_value());
+	assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(DrawingCommand, DrawingCommand_testMakeItSo, ::testing::Values(
+	std::make_tuple("root = { primitiveType=\"PRIMITIVE_TRIANGLE\", vertices={ { 0, 0 }, { 1, 0 }, { 1, 1 } } }", "root = { commandClass=\"DrawArrays\" }", "numCommands", dagbase::ConfigurationElement::ValueType(std::int64_t(1)), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
 	));

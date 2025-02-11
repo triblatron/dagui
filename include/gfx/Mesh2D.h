@@ -65,6 +65,11 @@ namespace dagui
             return _vertices.data();
         }
 
+        std::size_t numColours() const
+        {
+            return _colours.size();
+        }
+
         void addColour(float r, float g, float b, float a)
         {
             _colours.push_back(r);
@@ -72,6 +77,12 @@ namespace dagui
             _colours.push_back(b);
             _colours.push_back(a);
         }
+
+        const float* colours() const
+        {
+            return _colours.data();
+        }
+
         std::size_t numIndices() const
         {
             return _indices.size();
@@ -86,8 +97,6 @@ namespace dagui
         {
             return _indices.data();
         }
-
-        virtual void draw() = 0;
 
         static const char* primitiveTypeToString(PrimitiveType);
         static PrimitiveType parsePrimitiveType(const char *str);

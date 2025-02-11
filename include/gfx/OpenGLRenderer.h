@@ -6,11 +6,13 @@
 
 #include "gfx/Renderer.h"
 #include "util/APIVersion.h"
+#include "core/ConfigurationElement.h"
 
 namespace dagui
 {
     namespace gl
     {
+        class DrawingCommand;
         class OpenGL;
     }
 
@@ -29,6 +31,8 @@ namespace dagui
             _gl = gl;
         }
 
+        void configure(dagbase::ConfigurationElement& config);
+        dagbase::ConfigurationElement::ValueType find(std::string_view path) const;
         void drawText(FT_Face face, TextureAtlas& atlas, std::string_view text) override;
         void drawMesh2D(const Mesh2D& mesh) override;
         void generateTextureCoordinates(ImageDef& imageDef, BinImageDef& binImageDef) override;
@@ -36,5 +40,6 @@ namespace dagui
         APIVersion _version;
         void drawTexturedQuad(float x, float y, const ImageDef* imageDef);
         gl::OpenGL* _gl{nullptr};
+        gl::DrawingCommand* _command{nullptr};
     };
 }
