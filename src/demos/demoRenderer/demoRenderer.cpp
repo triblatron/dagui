@@ -17,6 +17,12 @@
 
 dagui::gl::OpenGLMesh2D mesh;
 
+GLfloat vertices[] = {
+    -0.5f, -0.5f, 0.0f,  // Bottom-left
+     0.5f, -0.5f, 0.0f,  // Bottom-right
+     0.0f,  0.5f, 0.0f   // Top
+};
+
 void onReshape(int width, int height)
 {
     // glViewport(0,0,width,height);
@@ -32,11 +38,13 @@ void display()
     glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glBegin(GL_TRIANGLES);
-    //glColor3f(1.0f, 0.0f, 0.0f);
+    glColor3f(1.0f, 0.0f, 0.0f);
     glVertex2f(0.0f, 0.0f);
     glVertex2f(1.0f, 0.0f);
     glVertex2f(1.0f, 1.0f);
     glEnd();
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
 
     mesh.draw();
     std::cout << glGetError() << std::endl;
@@ -60,6 +68,7 @@ int main(int argc, char** argv)
     mesh.addColour(0.0f, 0.0f, 1.0f, 1.0f);
     mesh.allocate();
     mesh.submit();
+    std::cout << "sizeof(vertices): " << sizeof(vertices) << std::endl;
     std::cout << glGetError() << std::endl;
     glutReshapeFunc(onReshape);
     glutDisplayFunc(display);
