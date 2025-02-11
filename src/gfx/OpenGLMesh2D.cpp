@@ -14,6 +14,7 @@ namespace dagui::gl
     void OpenGLMesh2D::allocate()
     {
         _vertexBuffer.allocate();
+        _colourBuffer.allocate();
         _indexBuffer.allocate();
     }
 
@@ -31,18 +32,19 @@ namespace dagui::gl
 
     void OpenGLMesh2D::submit()
     {
-        bind();
+        _vertexBuffer.bind();
         glBufferData(GL_ARRAY_BUFFER, _vertices.size()*2*sizeof(float), _vertices.data(), GL_STATIC_DRAW);
-
+        _colourBuffer.bind();
+        glBufferData(GL_ARRAY_BUFFER, _colours.size()*sizeof(float), _colours.data(), GL_STATIC_DRAW);
         std::cout << glGetError() << std::endl;
     }
 
 
     void OpenGLMesh2D::draw()
     {
-        unbind();
-        glColorPointer(4, GL_FLOAT, 0, (void*)_colours.data());
-        bind();
+        _colourBuffer.bind();
+        glColorPointer(4, GL_FLOAT, 0, (void*)0);
+        _vertexBuffer.bind();
         glVertexPointer(2, GL_FLOAT, 0, (void*)0);
 
         glDrawArrays(GL_TRIANGLES, 0, _vertices.size());

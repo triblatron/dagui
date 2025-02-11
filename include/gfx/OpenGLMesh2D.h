@@ -29,6 +29,7 @@ namespace dagui::gl
         void draw() override;
     private:
         gl::VertexBuffer _vertexBuffer;
+        gl::VertexBuffer _colourBuffer;
         gl::IndexBuffer _indexBuffer;
     };
 }
