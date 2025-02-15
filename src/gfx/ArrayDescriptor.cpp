@@ -27,7 +27,7 @@ namespace dagui
             return true;
         }));
 
-        for (auto attr : attributes)
+        for (auto& attr : attributes)
         {
             attr.stride = offset;;
         }

@@ -586,3 +586,31 @@ INSTANTIATE_TEST_SUITE_P(GenericAttributeArray, GenericAttributeArray_testAddVer
 	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::b, 0.2f),
 	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::a, 1.0f)
 	));
+
+class AttributeLayout_testStride : public ::testing::TestWithParam<std::tuple<const char*, const char*, std::size_t, std::uint32_t>>
+{
+
+};
+
+TEST_P(AttributeLayout_testStride, testValue)
+{
+	auto configStr = std::get<0>(GetParam());
+	dagbase::Lua lua;
+	auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+	ASSERT_NE(nullptr, config);
+	auto layoutName = std::get<1>(GetParam());
+	auto attrIndex = std::get<2>(GetParam());
+	size_t stride = std::get<3>(GetParam());
+	dagui::ArrayDescriptor sut;
+	auto layoutConfig = config->findElement(layoutName);
+	ASSERT_NE(nullptr, layoutConfig);
+	sut.configure(*layoutConfig);
+	auto actualStride = sut.attributes[attrIndex].stride;
+	EXPECT_EQ(stride, actualStride);
+}
+
+INSTANTIATE_TEST_SUITE_P(AttributeLayout, AttributeLayout_testStride, ::testing::Values(
+	std::make_tuple("data/tests/AttributeLayout/testStride.lua", "packed", 0, 2*sizeof(float)),
+	std::make_tuple("data/tests/AttributeLayout/testStride.lua", "interleaved", 0, 6*sizeof(float)),
+	std::make_tuple("data/tests/AttributeLayout/testStride.lua", "interleaved", 1, 6*sizeof(float))
+	));
