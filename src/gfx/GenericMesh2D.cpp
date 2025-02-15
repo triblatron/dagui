@@ -8,8 +8,4 @@
 
 namespace dagui
 {
-    void GenericMesh2D::addArray(const ArrayDescriptor& descriptor)
-    {
-        _arrays.push_back(descriptor);
-    }
 }

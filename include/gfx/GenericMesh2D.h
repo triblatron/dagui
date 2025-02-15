@@ -6,9 +6,12 @@
 
 #include <vector>
 
+#include "GenericAttributeArray.h"
+
 namespace dagui
 {
     struct ArrayDescriptor;
+    class AttributeArray;
     struct AttributeLayout;
 }
 
@@ -25,7 +28,11 @@ namespace dagui
     public:
         GenericMesh2D() = default;
 
-        void addArray(const ArrayDescriptor& descriptor);
+        template<typename Vertex>
+        void addArray(const GenericAttributeArray<Vertex>* a)
+        {
+            _arrays.push_back(a);
+        }
 
         template<typename T>
         void addData(std::size_t arrayIndex, const T* data, Flags flags)
@@ -39,7 +46,7 @@ namespace dagui
         using ArrayDescriptorList = std::vector<ArrayDescriptor>;
         ArrayDescriptorList _arrays;
         //! We cannot delete these because we don't know the real type that was passed to addData().
-        using DataArray = std::vector<const void*>;
-        DataArray _data;
+        using AttributeArrays = std::vector<AttributeArray*>;
+        AttributeArrays _data;
     };
 }

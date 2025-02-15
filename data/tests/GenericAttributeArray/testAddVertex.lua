@@ -1,0 +1,32 @@
+root=
+{ 
+	vertex=
+	{
+		x=1.0, 
+		y=0.4, 
+		r=1.0, 
+		g=0.5, 
+		b=0.2,
+		a=1.0	
+	},
+	array=
+	{
+		{
+			attribute=
+			{
+				name="position",
+				dataType="TYPE_FLOAT",
+				numComponents=2
+			},
+			-- offset and stride are automatically computed
+		},
+		{
+			attribute=
+			{
+				name="colour",
+				dataType="TYPE_FLOAT",
+				numComponents=4
+			}
+		}
+	} 
+}

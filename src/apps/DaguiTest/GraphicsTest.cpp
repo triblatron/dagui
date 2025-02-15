@@ -17,6 +17,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include "gfx/GenericAttributeArray.h"
 #include "gfx/OpenGL.h"
 #include "gfx/RendererFactory.h"
 
@@ -511,4 +512,77 @@ TEST_P(DrawingCommand_testMakeItSo, testMakeItSo)
 
 INSTANTIATE_TEST_SUITE_P(DrawingCommand, DrawingCommand_testMakeItSo, ::testing::Values(
 	std::make_tuple("root = { primitiveType=\"PRIMITIVE_TRIANGLE\", vertices={ { 0, 0 }, { 1, 0 }, { 1, 1 } } }", "root = { commandClass=\"DrawArrays\" }", "numCommands", dagbase::ConfigurationElement::ValueType(std::int64_t(1)), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+	));
+
+struct TestVertex
+{
+	float x{0.0f};
+	float y{0.0f};
+	float r{0.0f};
+	float g{0.0f};
+	float b{0.0f};
+	float a{0.0f};
+
+	void configure(dagbase::ConfigurationElement& config)
+	{
+		if (auto element = config.findElement("x"); element)
+			x = static_cast<float>(element->asDouble());
+
+		if (auto element = config.findElement("y"); element)
+			y = static_cast<float>(element->asDouble());
+
+		if (auto element = config.findElement("r"); element)
+			r = static_cast<float>(element->asDouble());
+
+		if (auto element = config.findElement("g"); element)
+			g = static_cast<float>(element->asDouble());
+
+		if (auto element = config.findElement("b"); element)
+			b = static_cast<float>(element->asDouble());
+
+		if (auto element = config.findElement("a"); element)
+			a = static_cast<float>(element->asDouble());
+
+	}
+};
+
+typedef float TestVertex::*TestVertexField;
+
+class GenericAttributeArray_testAddVertex : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, TestVertexField, float>>
+{
+
+};
+
+TEST_P(GenericAttributeArray_testAddVertex, testDataIsPresentAfterAdd)
+{
+	auto configStr = std::get<0>(GetParam());
+	dagbase::Lua lua;
+	auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+	ASSERT_NE(nullptr, config);
+	auto index = std::get<1>(GetParam());
+	auto func = std::get<2>(GetParam());
+	auto value = std::get<3>(GetParam());
+	TestVertex v;
+	if (auto vertexConfig = config->findElement("vertex"); vertexConfig)
+		v.configure(*vertexConfig);
+
+	dagui::GenericAttributeArray<TestVertex> sut;
+	dagui::ArrayDescriptor arrayDescriptor;
+	if (auto arrayConfig = config->findElement("array"); arrayConfig)
+		arrayDescriptor.configure(*arrayConfig);
+
+	sut.setDescriptor(arrayDescriptor);
+	sut.addVertex(v);
+	v = sut.vertex(index);
+	float actualValue = v.*func;
+	EXPECT_EQ(value, actualValue);
+}
+
+INSTANTIATE_TEST_SUITE_P(GenericAttributeArray, GenericAttributeArray_testAddVertex, ::testing::Values(
+	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::x, 1.0f),
+	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::y, 0.4f),
+	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::r, 1.0f),
+	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::g, 0.5f),
+	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::b, 0.2f),
+	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::a, 1.0f)
 	));

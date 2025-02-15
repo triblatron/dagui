@@ -8,6 +8,8 @@
 
 #include <gtest/gtest.h>
 
+#include "gfx/AttributeDescriptor.h"
+
 class Window_testFeaturesRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Window::Features>>
 {
 
@@ -201,4 +203,27 @@ INSTANTIATE_TEST_SUITE_P(Mesh2D, Mesh2D_PrimitiveType_testRoundTrip, ::testing::
     std::make_tuple("PRIMITIVE_TRIANGLE_LIST", dagui::Mesh2D::PRIMITIVE_TRIANGLE_LIST),
     std::make_tuple("PRIMITIVE_TRIANGLE_STRIP", dagui::Mesh2D::PRIMITIVE_TRIANGLE_STRIP),
     std::make_tuple("PRIMITIVE_TRIANGLE_FAN", dagui::Mesh2D::PRIMITIVE_TRIANGLE_FAN)
+    ));
+
+class AttributeDataType_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::AttributeDescriptor::DataType>>
+{
+
+};
+
+TEST_P(AttributeDataType_testRoundTrip, testRoundtrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::AttributeDescriptor::dataTypeToString(value));
+    EXPECT_EQ(value, dagui::AttributeDescriptor::parseDataType(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(AttributeDataType, AttributeDataType_testRoundTrip, ::testing::Values(
+    std::make_tuple("TYPE_UNKNOWN", dagui::AttributeDescriptor::TYPE_UNKNOWN),
+    std::make_tuple("TYPE_BYTE", dagui::AttributeDescriptor::TYPE_BYTE),
+    std::make_tuple("TYPE_UINT32", dagui::AttributeDescriptor::TYPE_UINT32),
+    std::make_tuple("TYPE_INT32", dagui::AttributeDescriptor::TYPE_INT32),
+    std::make_tuple("TYPE_FLOAT", dagui::AttributeDescriptor::TYPE_FLOAT),
+    std::make_tuple("TYPE_DOUBLE", dagui::AttributeDescriptor::TYPE_DOUBLE)
     ));

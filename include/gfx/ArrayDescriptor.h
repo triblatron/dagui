@@ -15,7 +15,9 @@ namespace dagui
     //! Description of the attributes in a generic attribute array
     struct DAGUI_API ArrayDescriptor
     {
-        using AttributeLayoutArray = std::vector<std::vector<AttributeLayout>>;
+        using AttributeLayoutArray = std::vector<AttributeLayout>;
         AttributeLayoutArray attributes;
+
+        void configure(dagbase::ConfigurationElement& config);
     };
 }
