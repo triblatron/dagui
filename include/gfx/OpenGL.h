@@ -10,6 +10,11 @@
 
 #if defined(_WIN32) || defined(__linux__)
 #include <GL/glut.h>
+#define GL_GLEXT_PROTOTYPES 1
+#include <GL/glext.h>
+#if defined(_WIN32)
+#include <GL/wglext.h>
+#endif // _WIN32
 #elif defined(__APPLE__)
 #include <OpenGL/gl.h>
 #endif

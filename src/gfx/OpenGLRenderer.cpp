@@ -63,7 +63,7 @@ namespace dagui
     {
         dagbase::ConfigurationElement::ValueType retval;
 
-        retval = dagbase::findEndpoint(path, "numCommands", _command!=nullptr?1:0);
+        retval = dagbase::findEndpoint(path, "numCommands", _command!=nullptr?lua_Integer(1):lua_Integer(0));
         if (retval.has_value())
             return retval;
 

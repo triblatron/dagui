@@ -89,6 +89,8 @@ namespace dagui
             ENUM_NAME(USAGE_POSITION)
             ENUM_NAME(USAGE_COLOUR)
         }
+        
+        return "<error>";
     }
 
     AttributeDescriptor::Usage AttributeDescriptor::parseUsage(const char* str)
@@ -96,5 +98,7 @@ namespace dagui
         TEST_ENUM(USAGE_UNKNOWN, str);
         TEST_ENUM(USAGE_POSITION, str);
         TEST_ENUM(USAGE_COLOUR, str);
+
+        return USAGE_UNKNOWN;
     }
 }
