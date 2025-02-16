@@ -41,8 +41,8 @@ namespace dagui
             bind();
             if (_a)
             {
-                glVertexPointer(2, GL_FLOAT, _a->elementSize(), (void*)_a->desciptor().attributes[0].offset);
-                glColorPointer(3, GL_FLOAT, _a->elementSize(), (void*)_a->desciptor().attributes[1].offset);
+                glVertexPointer(2, dataTypeToGL(_a->desciptor().attributes[0].attr.dataType), _a->elementSize(), (void*)_a->desciptor().attributes[0].offset);
+                glColorPointer(3, dataTypeToGL(_a->desciptor().attributes[1].attr.dataType), _a->elementSize(), (void*)_a->desciptor().attributes[1].offset);
                 glDrawArrays(GL_TRIANGLES, 0, _a->size());
             }
             std::cout << glGetError() << std::endl;
@@ -51,6 +51,27 @@ namespace dagui
         void Buffer::allocate()
         {
             glGenBuffers(1, &_handle);
+        }
+
+        GLenum Buffer::dataTypeToGL(AttributeDescriptor::DataType dataType)
+        {
+            switch (dataType)
+            {
+            case dagui::AttributeDescriptor::TYPE_UNKNOWN:
+                return GL_NONE;
+            case dagui::AttributeDescriptor::TYPE_BYTE:
+                return GL_UNSIGNED_BYTE;
+            case dagui::AttributeDescriptor::TYPE_INT32:
+                return GL_INT;
+            case dagui::AttributeDescriptor::TYPE_UINT32:
+                return GL_UNSIGNED_INT;
+            case dagui::AttributeDescriptor::TYPE_FLOAT:
+                return GL_FLOAT;
+            case dagui::AttributeDescriptor::TYPE_DOUBLE:
+                return GL_DOUBLE;
+            }
+
+            return GL_NONE;
         }
 
         void IndexBuffer::bind()

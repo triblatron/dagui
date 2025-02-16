@@ -652,3 +652,24 @@ TEST_P(GenericMesh2D_testTakesOwnershipOfArrays, testDestructorCalledOnDelete)
 INSTANTIATE_TEST_SUITE_P(GenericMesh2D, GenericMesh2D_testTakesOwnershipOfArrays, ::testing::Values(
 	std::make_tuple("data/tests/GenericMesh2D/testTakesOwnershipOfArrays.lua")
 	));
+
+class OpenGLDataType_testFromAttribute : public ::testing::TestWithParam<std::tuple<dagui::AttributeDescriptor::DataType, GLenum>>
+{
+};
+
+TEST_P(OpenGLDataType_testFromAttribute, testValue)
+{
+	auto attrDataType = std::get<0>(GetParam());
+	auto glDataType = std::get<1>(GetParam());
+
+	EXPECT_EQ(glDataType, dagui::gl::Buffer::dataTypeToGL(attrDataType));
+}
+
+INSTANTIATE_TEST_SUITE_P(OpenGLDataType, OpenGLDataType_testFromAttribute, ::testing::Values(
+	std::make_tuple(dagui::AttributeDescriptor::TYPE_UNKNOWN, 0),
+	std::make_tuple(dagui::AttributeDescriptor::TYPE_BYTE, GL_UNSIGNED_BYTE),
+	std::make_tuple(dagui::AttributeDescriptor::TYPE_INT32, GL_INT),
+	std::make_tuple(dagui::AttributeDescriptor::TYPE_UINT32, GL_UNSIGNED_INT),
+	std::make_tuple(dagui::AttributeDescriptor::TYPE_FLOAT, GL_FLOAT),
+	std::make_tuple(dagui::AttributeDescriptor::TYPE_DOUBLE, GL_DOUBLE)
+	));

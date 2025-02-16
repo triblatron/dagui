@@ -15,6 +15,8 @@
 #endif
 #include <cstdint>
 
+#include "AttributeDescriptor.h"
+
 namespace dagui
 {
     class AttributeArray;
@@ -48,6 +50,8 @@ namespace dagui
             }
 
             void allocate();
+
+            static GLenum dataTypeToGL(AttributeDescriptor::DataType dataType);
         protected:
             std::uint32_t _handle{0};
         private:
