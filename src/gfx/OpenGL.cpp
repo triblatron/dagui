@@ -36,7 +36,7 @@ namespace dagui
                 glBufferData(GL_ARRAY_BUFFER, _a->elementSize()*_a->size(), _a->data(), GL_STATIC_DRAW);
         }
 
-        void VertexBuffer::draw()
+        void VertexBuffer::draw(GLenum mode, GLint first, GLsizei count)
         {
             bind();
             if (_a)
@@ -56,7 +56,7 @@ namespace dagui
                         break;
                     }
                 }
-                glDrawArrays(GL_TRIANGLES, 0, _a->size());
+                glDrawArrays(mode, first, count);
             }
             std::cout << glGetError() << std::endl;
         }

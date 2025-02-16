@@ -20,7 +20,17 @@
 
 dagui::GenericMesh2D mesh;
 dagui::gl::VertexBuffer vertexBuffer;
+struct Vertex
+{
+    float x{0.0f};
+    float y{0.0f};
+    float r{0.0f};
+    float g{0.0f};
+    float b{0.0f};
+    float a{0.0f};
+};
 
+dagui::GenericAttributeArray<Vertex>* a = new dagui::GenericAttributeArray<Vertex>();
 GLfloat vertices[] = {
     -0.5f, -0.5f, 0.0f,  // Bottom-left
      0.5f, -0.5f, 0.0f,  // Bottom-right
@@ -50,7 +60,7 @@ void display()
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
 
-    vertexBuffer.draw();
+    vertexBuffer.draw(GL_TRIANGLES, 0, a->size());
     std::cout << glGetError() << std::endl;
 //    mesh.unbind();
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -58,41 +68,21 @@ void display()
     glutSwapBuffers();
 }
 
-struct Vertex
-{
-    float x{0.0f};
-    float y{0.0f};
-    float r{0.0f};
-    float g{0.0f};
-    float b{0.0f};
-    float a{0.0f};
-};
-
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH/* | GLUT_3_2_CORE_PROFILE*/);
     glutCreateWindow("OpenGL Renderer");
     std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
-    dagui::GenericAttributeArray<Vertex>* a = new dagui::GenericAttributeArray<Vertex>();
+
     dagui::ArrayDescriptor descriptor;
     dagbase::Lua lua;
     auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Vertex.lua");
     descriptor.configure(*config);
     a->setDescriptor(descriptor);
-    Vertex v;
-    v.x = -1.0f;
-    v.y = -1.0f;
     a->addVertex({-1.0f, -1.0, 1.0f, 0.0f, 0.0f, 1.0f});
     a->addVertex({0.0f, -1.0, 0.0f, 1.0f, 0.0f, 1.0f});
     a->addVertex({0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f});
-    // mesh.addVertex({-1.0f, -1.0f});
-    // mesh.addVertex({0.0f, -1.0f});
-    // mesh.addVertex({0.0f, 0.0f});
-    // mesh.addColour(1.0f, 0.0f, 0.0f, 1.0f);
-    // mesh.addColour(0.0f, 1.0f, 0.0f, 1.0f);
-    // mesh.addColour(0.0f, 0.0f, 1.0f, 1.0f);
-    dagui::OpenGLRenderer renderer;
     vertexBuffer.setArray(a);
     vertexBuffer.allocate();
     vertexBuffer.submit();

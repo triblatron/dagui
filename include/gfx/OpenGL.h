@@ -72,7 +72,7 @@ namespace dagui
             void bind();
             void unbind();
             void submit();
-            void draw();
+            void draw(GLenum mode, GLint first, GLsizei count);
         private:
             const AttributeArray* _a{nullptr};
         };
