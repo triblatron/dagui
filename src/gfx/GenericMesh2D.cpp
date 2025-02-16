@@ -8,4 +8,11 @@
 
 namespace dagui
 {
+    GenericMesh2D::~GenericMesh2D()
+    {
+        for (auto a : _data)
+        {
+            delete a;
+        }
+    }
 }

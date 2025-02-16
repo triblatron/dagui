@@ -28,14 +28,9 @@ namespace dagui
     public:
         GenericMesh2D() = default;
 
-        template<typename Vertex>
-        void addArray(const GenericAttributeArray<Vertex>* a)
-        {
-            _arrays.push_back(a);
-        }
+        ~GenericMesh2D();
 
-        template<typename T>
-        void addData(std::size_t arrayIndex, const T* data, Flags flags)
+        void addData(std::size_t arrayIndex, AttributeArray* data)
         {
             if (arrayIndex >= _data.size())
                 _data.resize(arrayIndex + 1);
@@ -43,8 +38,6 @@ namespace dagui
             _data[arrayIndex] = data;
         }
     private:
-        using ArrayDescriptorList = std::vector<ArrayDescriptor>;
-        ArrayDescriptorList _arrays;
         //! We cannot delete these because we don't know the real type that was passed to addData().
         using AttributeArrays = std::vector<AttributeArray*>;
         AttributeArrays _data;

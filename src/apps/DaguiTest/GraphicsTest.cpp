@@ -18,6 +18,7 @@
 #include <gmock/gmock.h>
 
 #include "gfx/GenericAttributeArray.h"
+#include "gfx/GenericMesh2D.h"
 #include "gfx/OpenGL.h"
 #include "gfx/RendererFactory.h"
 
@@ -613,4 +614,38 @@ INSTANTIATE_TEST_SUITE_P(AttributeLayout, AttributeLayout_testStride, ::testing:
 	std::make_tuple("data/tests/AttributeLayout/testStride.lua", "packed", 0, 2*sizeof(float)),
 	std::make_tuple("data/tests/AttributeLayout/testStride.lua", "interleaved", 0, 6*sizeof(float)),
 	std::make_tuple("data/tests/AttributeLayout/testStride.lua", "interleaved", 1, 6*sizeof(float))
+	));
+
+class MockAttributeArray : public dagui::AttributeArray
+{
+public:
+	~MockAttributeArray()
+	{
+		destroy();
+	}
+	MOCK_METHOD(void, destroy, (), ());
+};
+
+class GenericMesh2D_testTakesOwnershipOfArrays : public ::testing::TestWithParam<std::tuple<const char*>>
+{
+
+};
+
+TEST_P(GenericMesh2D_testTakesOwnershipOfArrays, testDestructorCalledOnDelete)
+{
+	auto configStr = std::get<0>(GetParam());
+	dagbase::Lua lua;
+	auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+	ASSERT_NE(nullptr, config);
+	dagui::GenericMesh2D sut;
+	auto array = new MockAttributeArray();
+	dagui::ArrayDescriptor arrayConfig;
+	arrayConfig.configure(*config);
+	array->setDescriptor(arrayConfig);
+	sut.addData(0, array);
+	EXPECT_CALL(*array, destroy).Times(1);
+}
+
+INSTANTIATE_TEST_SUITE_P(GenericMesh2D, GenericMesh2D_testTakesOwnershipOfArrays, ::testing::Values(
+	std::make_tuple("data/tests/GenericMesh2D/testTakesOwnershipOfArrays.lua")
 	));
