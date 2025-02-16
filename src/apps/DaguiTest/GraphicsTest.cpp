@@ -673,3 +673,22 @@ INSTANTIATE_TEST_SUITE_P(OpenGLDataType, OpenGLDataType_testFromAttribute, ::tes
 	std::make_tuple(dagui::AttributeDescriptor::TYPE_FLOAT, GL_FLOAT),
 	std::make_tuple(dagui::AttributeDescriptor::TYPE_DOUBLE, GL_DOUBLE)
 	));
+
+class AttributeUsage_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::AttributeDescriptor::Usage>>
+{
+};
+
+TEST_P(AttributeUsage_testRoundTrip, testRoundTrip)
+{
+	auto str = std::get<0>(GetParam());
+	auto usage = std::get<1>(GetParam());
+
+	EXPECT_STREQ(str, dagui::AttributeDescriptor::usageToString(usage));
+	EXPECT_EQ(usage, dagui::AttributeDescriptor::parseUsage(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(AttributeDescriptor, AttributeUsage_testRoundTrip, ::testing::Values(
+	std::make_tuple("USAGE_UNKNOWN", dagui::AttributeDescriptor::USAGE_UNKNOWN),
+	std::make_tuple("USAGE_POSITION", dagui::AttributeDescriptor::USAGE_POSITION),
+	std::make_tuple("USAGE_COLOUR", dagui::AttributeDescriptor::USAGE_COLOUR)
+	));

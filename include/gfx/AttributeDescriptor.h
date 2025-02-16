@@ -35,6 +35,13 @@ namespace dagui
             //! IEEE double precision float
             TYPE_DOUBLE
         };
+        //! Fixed-pipeline usages
+        enum Usage
+        {
+            USAGE_UNKNOWN,
+            USAGE_POSITION,
+            USAGE_COLOUR
+        };
         //! The name of the attribute
         //! \note Not passed to the graphics library.
         std::string name;
@@ -44,6 +51,7 @@ namespace dagui
         //! \note The initial value will typically cause an error if used.
         //! \note Valid values are 1,2,3,4
         std::uint32_t numComponents{0};
+        Usage usage{USAGE_UNKNOWN};
 
         std::size_t size() const;
 
@@ -52,5 +60,9 @@ namespace dagui
         static const char* dataTypeToString(DataType type);
 
         static DataType parseDataType(const char* str);
+
+        static const char* usageToString(Usage usage);
+
+        static Usage parseUsage(const char* str);
     };
 }

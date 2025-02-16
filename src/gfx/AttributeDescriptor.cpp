@@ -49,6 +49,9 @@ namespace dagui
 
         if (auto element=config.findElement("numComponents"); element)
             numComponents = element->asInteger();
+
+        if (auto element=config.findElement("usage"); element)
+            usage = parseUsage(element->asString().c_str());
     }
 
     const char* AttributeDescriptor::dataTypeToString(DataType type)
@@ -76,5 +79,22 @@ namespace dagui
         TEST_ENUM(TYPE_DOUBLE, str);
 
         return TYPE_UNKNOWN;
+    }
+
+    const char* AttributeDescriptor::usageToString(Usage usage)
+    {
+        switch (usage)
+        {
+            ENUM_NAME(USAGE_UNKNOWN)
+            ENUM_NAME(USAGE_POSITION)
+            ENUM_NAME(USAGE_COLOUR)
+        }
+    }
+
+    AttributeDescriptor::Usage AttributeDescriptor::parseUsage(const char* str)
+    {
+        TEST_ENUM(USAGE_UNKNOWN, str);
+        TEST_ENUM(USAGE_POSITION, str);
+        TEST_ENUM(USAGE_COLOUR, str);
     }
 }

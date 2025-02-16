@@ -41,8 +41,21 @@ namespace dagui
             bind();
             if (_a)
             {
-                glVertexPointer(_a->desciptor().attributes[0].attr.numComponents, dataTypeToGL(_a->desciptor().attributes[0].attr.dataType), _a->elementSize(), (void*)_a->desciptor().attributes[0].offset);
-                glColorPointer(_a->desciptor().attributes[1].attr.numComponents, dataTypeToGL(_a->desciptor().attributes[1].attr.dataType), _a->elementSize(), (void*)_a->desciptor().attributes[1].offset);
+                std::size_t size = _a->size();
+                std::size_t elementSize = _a->elementSize();
+                for (auto i=0; i<_a->desciptor().attributes.size(); ++i)
+                {
+                    const AttributeLayout& layout = _a->desciptor().attributes[i];
+                    switch (layout.attr.usage)
+                    {
+                    case AttributeDescriptor::USAGE_POSITION:
+                        glVertexPointer(layout.attr.numComponents, dataTypeToGL(layout.attr.dataType), elementSize, (void*)layout.offset);
+                        break;
+                    case AttributeDescriptor::USAGE_COLOUR:
+                        glColorPointer(layout.attr.numComponents, dataTypeToGL(layout.attr.dataType), elementSize, (void*)layout.offset);
+                        break;
+                    }
+                }
                 glDrawArrays(GL_TRIANGLES, 0, _a->size());
             }
             std::cout << glGetError() << std::endl;

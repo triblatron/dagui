@@ -5,7 +5,8 @@ root=
 		{
 			name="position",
 			dataType="TYPE_FLOAT",
-			numComponents=2
+			numComponents=2,
+			usage="USAGE_POSITION",
 		},
 		-- offset and stride are automatically computed
 	},
@@ -14,7 +15,8 @@ root=
 		{
 			name="colour",
 			dataType="TYPE_FLOAT",
-			numComponents=4
+			numComponents=4,
+			usage="USAGE_COLOUR",
 		}
 	}
 }
