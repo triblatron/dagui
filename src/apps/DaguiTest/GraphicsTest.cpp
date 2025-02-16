@@ -624,6 +624,9 @@ public:
 		destroy();
 	}
 	MOCK_METHOD(void, destroy, (), ());
+	MOCK_METHOD(const void*, data, (), (const, override));
+	MOCK_METHOD(std::size_t, size, (), (const, override));
+	MOCK_METHOD(std::size_t, elementSize, (), (const, override));
 };
 
 class GenericMesh2D_testTakesOwnershipOfArrays : public ::testing::TestWithParam<std::tuple<const char*>>

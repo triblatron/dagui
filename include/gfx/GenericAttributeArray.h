@@ -44,6 +44,21 @@ namespace dagui
 
             return Vertex();
         }
+
+        std::size_t size() const override
+        {
+            return _data.size();
+        }
+
+        std::size_t elementSize() const override
+        {
+            return sizeof(Vertex);
+        }
+
+        const void* data() const override
+        {
+            return _data.data();
+        }
     private:
         using VertexArray = std::vector<Vertex>;
         VertexArray _data;

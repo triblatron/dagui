@@ -21,6 +21,17 @@ namespace dagui
         {
             _descriptor = descriptor;
         }
+
+        const ArrayDescriptor& desciptor() const
+        {
+            return _descriptor;
+        }
+
+        virtual std::size_t size() const = 0;
+
+        virtual std::size_t elementSize() const = 0;
+
+        virtual const void* data() const = 0;
     protected:
         ArrayDescriptor _descriptor;
     };

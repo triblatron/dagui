@@ -17,6 +17,8 @@
 
 namespace dagui
 {
+    class AttributeArray;
+
     namespace gl
     {
         struct DAGUI_API Layout
@@ -57,8 +59,18 @@ namespace dagui
         class DAGUI_API VertexBuffer : public Buffer
         {
         public:
+            VertexBuffer() = default;
+            explicit VertexBuffer(const AttributeArray* a);
+            void setArray(const AttributeArray* a)
+            {
+                _a = a;
+            }
             void bind();
             void unbind();
+            void submit();
+            void draw();
+        private:
+            const AttributeArray* _a{nullptr};
         };
 
         class DAGUI_API IndexBuffer : public Buffer
