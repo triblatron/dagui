@@ -9,11 +9,10 @@
 #include "config/Export.h"
 
 #if defined(_WIN32) || defined(__linux__)
-#include <GL/glut.h>
-#define GL_GLEXT_PROTOTYPES 1
-#include <GL/glext.h>
+#include <GL/glew.h>
 #if defined(_WIN32)
-#include <GL/wglext.h>
+#include <GL/glut.h>
+#include <GL/wglew.h>
 #endif // _WIN32
 #elif defined(__APPLE__)
 #include <OpenGL/gl.h>

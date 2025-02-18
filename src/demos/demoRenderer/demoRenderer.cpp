@@ -10,6 +10,7 @@
 #if defined(__linux__)
 #include <GL/gl3.h>
 #endif
+#include <GL/glew.h>
 #include <GL/glut.h>
 #endif // __APPLE__
 #include <iostream>
@@ -76,7 +77,14 @@ int main(int argc, char** argv)
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH/* | GLUT_3_2_CORE_PROFILE*/);
     glutCreateWindow("OpenGL Renderer");
     std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+    GLenum err = glewInit();
 
+    if (GLEW_OK != err)
+    {
+        std::cerr << "Failed to init GLEW with error: " << glewGetErrorString(err) << ", bailing\n";
+
+        return -1;
+    }
     dagui::ArrayDescriptor descriptor;
     dagbase::Lua lua;
     auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Vertex.lua");
