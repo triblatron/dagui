@@ -4,6 +4,7 @@
 #include "config/config.h"
 
 #if defined(__APPLE__)
+#include <GL/glew.h>
 #include <OpenGL/gl3.h>
 #include <glut.h>
 #elif defined(__linux__) || defined(_WIN32)
