@@ -87,6 +87,10 @@ namespace dagui
         {
             ENUM_NAME(USAGE_UNKNOWN)
             ENUM_NAME(USAGE_POSITION)
+            ENUM_NAME(USAGE_NORMAL)
+            ENUM_NAME(USAGE_TEXCOORD)
+            ENUM_NAME(USAGE_TANGENT)
+            ENUM_NAME(USAGE_BINORMAL)
             ENUM_NAME(USAGE_COLOUR)
         }
         
@@ -97,6 +101,10 @@ namespace dagui
     {
         TEST_ENUM(USAGE_UNKNOWN, str);
         TEST_ENUM(USAGE_POSITION, str);
+        TEST_ENUM(USAGE_NORMAL, str);
+        TEST_ENUM(USAGE_TEXCOORD, str);
+        TEST_ENUM(USAGE_TANGENT, str);
+        TEST_ENUM(USAGE_BINORMAL, str);
         TEST_ENUM(USAGE_COLOUR, str);
 
         return USAGE_UNKNOWN;

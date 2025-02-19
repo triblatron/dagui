@@ -227,3 +227,26 @@ INSTANTIATE_TEST_SUITE_P(AttributeDataType, AttributeDataType_testRoundTrip, ::t
     std::make_tuple("TYPE_FLOAT", dagui::AttributeDescriptor::TYPE_FLOAT),
     std::make_tuple("TYPE_DOUBLE", dagui::AttributeDescriptor::TYPE_DOUBLE)
     ));
+
+class AttributeUsage_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::AttributeDescriptor::Usage>>
+{
+};
+
+TEST_P(AttributeUsage_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto usage = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::AttributeDescriptor::usageToString(usage));
+    EXPECT_EQ(usage, dagui::AttributeDescriptor::parseUsage(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(AttributeDescriptor, AttributeUsage_testRoundTrip, ::testing::Values(
+    std::make_tuple("USAGE_UNKNOWN", dagui::AttributeDescriptor::USAGE_UNKNOWN),
+    std::make_tuple("USAGE_POSITION", dagui::AttributeDescriptor::USAGE_POSITION),
+    std::make_tuple("USAGE_NORMAL", dagui::AttributeDescriptor::USAGE_NORMAL),
+    std::make_tuple("USAGE_TEXCOORD", dagui::AttributeDescriptor::USAGE_TEXCOORD),
+    std::make_tuple("USAGE_TANGENT", dagui::AttributeDescriptor::USAGE_TANGENT),
+    std::make_tuple("USAGE_BINORMAL", dagui::AttributeDescriptor::USAGE_BINORMAL),
+    std::make_tuple("USAGE_COLOUR", dagui::AttributeDescriptor::USAGE_COLOUR)
+    ));

@@ -36,11 +36,16 @@ namespace dagui
             TYPE_DOUBLE
         };
         //! Fixed-pipeline usages
+        //! Use indices according to convention.
         enum Usage
         {
-            USAGE_UNKNOWN,
             USAGE_POSITION,
-            USAGE_COLOUR
+            USAGE_NORMAL,
+            USAGE_TEXCOORD,
+            USAGE_TANGENT,
+            USAGE_BINORMAL,
+            USAGE_COLOUR,
+            USAGE_UNKNOWN
         };
         //! The name of the attribute
         //! \note Not passed to the graphics library.
