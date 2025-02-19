@@ -580,12 +580,12 @@ TEST_P(GenericAttributeArray_testAddVertex, testDataIsPresentAfterAdd)
 }
 
 INSTANTIATE_TEST_SUITE_P(GenericAttributeArray, GenericAttributeArray_testAddVertex, ::testing::Values(
-	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::x, 1.0f),
-	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::y, 0.4f),
-	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::r, 1.0f),
-	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::g, 0.5f),
-	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::b, 0.2f),
-	std::make_tuple("data/tests/GenericAttributeArray/testAddAttribute.lua", 0, &TestVertex::a, 1.0f)
+	std::make_tuple("data/tests/GenericAttributeArray/testAddVertex.lua", 0, &TestVertex::x, 1.0f),
+	std::make_tuple("data/tests/GenericAttributeArray/testAddVertex.lua", 0, &TestVertex::y, 0.4f),
+	std::make_tuple("data/tests/GenericAttributeArray/testAddVertex.lua", 0, &TestVertex::r, 1.0f),
+	std::make_tuple("data/tests/GenericAttributeArray/testAddVertex.lua", 0, &TestVertex::g, 0.5f),
+	std::make_tuple("data/tests/GenericAttributeArray/testAddVertex.lua", 0, &TestVertex::b, 0.2f),
+	std::make_tuple("data/tests/GenericAttributeArray/testAddVertex.lua", 0, &TestVertex::a, 1.0f)
 	));
 
 class AttributeLayout_testStride : public ::testing::TestWithParam<std::tuple<const char*, const char*, std::size_t, std::uint32_t>>
