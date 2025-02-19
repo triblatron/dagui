@@ -8,9 +8,6 @@
 #include <OpenGL/gl3.h>
 #include <glut.h>
 #elif defined(__linux__) || defined(_WIN32)
-#if defined(__linux__)
-#include <GL/gl3.h>
-#endif
 #include <GL/glew.h>
 #include <GL/glut.h>
 #endif // __APPLE__

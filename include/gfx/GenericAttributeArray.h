@@ -8,6 +8,8 @@
 #include "config/Export.h"
 #include "gfx/AttributeArray.h"
 
+#include <cstring>
+
 namespace dagui
 {
     template<typename Vertex>
@@ -22,14 +24,14 @@ namespace dagui
             Vertex vertex;
             _data.push_back(vertex);
             //std::copy(attr, attr + size, static_cast<char*>(&_data.back()) + _descriptor.attributes[attrIndex].offset);;
-            memcpy((char*)&_data.back() + _descriptor.attributes[attrIndex].offset, (const char*)attr, size);
+            std::memcpy((char*)&_data.back() + _descriptor.attributes[attrIndex].offset, (const char*)attr, size);
         }
 
         template<typename ComponentType>
         void get(std::size_t attrIndex, std::size_t index, ComponentType* buf, std::size_t bufSize)
         {
             //std::copy(&_data[index] + _descriptor.attributes[attrIndex].offset, &_data[index] + _descriptor.attributes[attrIndex].offset + bufSize, buf);
-            memcpy((char*)buf, (const char*)&_data[index] + _descriptor.attributes[attrIndex].offset, bufSize);
+            std::memcpy((char*)buf, (const char*)&_data[index] + _descriptor.attributes[attrIndex].offset, bufSize);
         }
 
         void addVertex(const Vertex& vertex)

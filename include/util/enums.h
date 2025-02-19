@@ -6,6 +6,8 @@
 
 #include "config/Export.h"
 
+#include <cstring>
+
 #define BIT_NAME(mask, bit, str) \
     if (mask & bit) \
     {                            \
