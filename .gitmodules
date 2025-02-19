@@ -6,4 +6,4 @@
 	url = https://github.com/svgpp/svgpp
 [submodule "ThirdParty/dagbase"]
 	path = ThirdParty/dagbase
-	url = https://github.com/triblatron/dagbase
+	url = github:/triblatron/dagbase
