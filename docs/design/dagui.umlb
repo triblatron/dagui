@@ -1,52 +1,66 @@
+{"methodId":"2toOOrbroKWvyCUJ","name":"config","type":"s7zHz7OUxqZQjHyX","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"1F6xHl5WUmltxUfF"}
 {"_id":"1HYUiDl5RlsCOvcJ","name":"Mesh2D","kind":"StandardType","isMandatory":false}
+{"methodId":"WDnSMHsNkhD8V9f1","name":"op","type":"jIuXTDBRAsHRpEHn","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"1Ubtxvs2iZ5tPgEE"}
 {"_id":"2004BXruaD742EkR","name":"array of Vec2f","kind":"StandardType","isMandatory":false}
-{"_id":"3rEJx7dcBO17O07O","name":"addVertex","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","visibility":"public","isStatic":false,"classifierId":"eRpG0h7sI9RWPEKF","discriminator":"Method","kind":"Method","index":0}
-{"_id":"4y1JZk3w9QSMoGy4","name":"dataType","isAbstract":false,"type":"NGlp43iDoadAX7BT","isReadOnly":false,"visibility":"public","isStatic":false,"classifierId":"QudsmUUqJ4soFc1o","discriminator":"Property","kind":"Property","index":1}
+{"_id":"2toOOrbroKWvyCUJ","name":"configure","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"jIuXTDBRAsHRpEHn","discriminator":"Method","kind":"Method","index":1}
+{"_id":"3rEJx7dcBO17O07O","name":"addVertex","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"eRpG0h7sI9RWPEKF","discriminator":"Method","kind":"Method","index":0}
+{"_id":"3zEOwLSdmvqzTGgq","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"Layer","kind":"Class","position":{"x":1345.5,"y":1343},"discriminator":"Class","stereotypes":[]}
+{"_id":"4y1JZk3w9QSMoGy4","name":"dataType","isAbstract":false,"type":"NGlp43iDoadAX7BT","isReadOnly":false,"isStatic":false,"classifierId":"QudsmUUqJ4soFc1o","discriminator":"Property","kind":"Property","index":1}
 {"_id":"6DnqE3Z12Db5Oa53","name":"","diagramId":"iOPMJCqJeF2Ot5k3","kind":"Relationship","relationshipKind":"Implementation","anchorPoints":[],"source":{"id":"FbcRTyOtiEJWxKJH","isAutoDocking":true,"positionInPercent":0.5},"target":{"id":"luumYDxvcpXohEON","isAutoDocking":true,"positionInPercent":0.5}}
-{"_id":"88pejLFgkwZGOyBA","discriminator":"Note","position":{"x":1311,"y":732},"diagramId":"iOPMJCqJeF2Ot5k3","text":"The Widget tree specifies content and layout","kind":"Note","showNoteBackgroundTexture":true,"autosize":false,"supportMarkdown":true}
+{"_id":"88pejLFgkwZGOyBA","discriminator":"Note","position":{"x":1426,"y":806},"diagramId":"iOPMJCqJeF2Ot5k3","text":"The Widget tree specifies content and layout","kind":"Note","showNoteBackgroundTexture":true,"autosize":false,"supportMarkdown":true}
 {"_id":"8WtQl2C2ydtBGotC","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"ArrayDescriptor","kind":"Class","position":{"x":924.5,"y":984},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"]}
 {"_id":"9NOjqjvaaVKQPuc1","name":"","diagramId":"iOPMJCqJeF2Ot5k3","kind":"Relationship","relationshipKind":"Inheritance","source":{"id":"id6V7uxHnu1k9tYg","isAutoDocking":false,"dockingSide":"TOP","positionInPercent":0.5},"target":{"id":"brhRaccSFjSgYXFl","isAutoDocking":false,"dockingSide":"BOTTOM","positionInPercent":0.5,"isNavigable":false}}
 {"methodId":"FSzdot0xEzCgw5I6","name":"f","type":"uhFTAuELXia0i4yd","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"9dJoj5aIK116pL1m"}
-{"_id":"B1TdXbxjCDu6b8cU","name":"addChild","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","visibility":"public","isStatic":false,"classifierId":"QAN2FUv11ronAxN1","discriminator":"Method","kind":"Method","index":0}
+{"_id":"B1TdXbxjCDu6b8cU","name":"addChild","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"QAN2FUv11ronAxN1","discriminator":"Method","kind":"Method","index":0}
 {"_id":"CIsittURU8POf1tl","name":"uint32","kind":"StandardType","isMandatory":false}
 {"_id":"DFFGRBKFi9hCr91Z","name":"pointer to const ArrayDescriptor","kind":"StandardType","isMandatory":false}
 {"_id":"DMqX0bVkw0XXm0c6","name":"const pointer to T","kind":"StandardType","isMandatory":false}
-{"_id":"DnnqXFHwLgyNhqk6","name":"name","isAbstract":false,"type":"ikzHhHBuLGWEhG57","isReadOnly":false,"visibility":"public","isStatic":false,"classifierId":"QudsmUUqJ4soFc1o","discriminator":"Property","kind":"Property","index":0}
+{"_id":"DaCwQ1EmgSSLdoRz","name":"","diagramId":"iOPMJCqJeF2Ot5k3","kind":"Relationship","relationshipKind":"Inheritance","source":{"id":"yitYWd3RiQB5ALln","isAutoDocking":false,"dockingSide":"TOP","positionInPercent":0.5},"target":{"isAutoDocking":true,"dockingSide":"BOTTOM","id":"3zEOwLSdmvqzTGgq","positionInPercent":0.5,"isNavigable":false}}
+{"_id":"Dd8b0HEn2jDtLhwW","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"ShadowLayer","kind":"Class","position":{"x":1195.5,"y":1460},"discriminator":"Class","stereotypes":[]}
+{"_id":"DnnqXFHwLgyNhqk6","name":"name","isAbstract":false,"type":"ikzHhHBuLGWEhG57","isReadOnly":false,"isStatic":false,"classifierId":"QudsmUUqJ4soFc1o","discriminator":"Property","kind":"Property","index":0}
 {"_id":"EPmCI8yWIrg5jYbT","name":"ArrayDescriptor","kind":"StandardType","isMandatory":false}
 {"_id":"EZGE2U44AnZ5IH8N","name":"int","kind":"StandardType","isMandatory":false}
-{"_id":"EnCPvcORTpSMInNo","name":"data","isAbstract":false,"type":"VFsNu1c7RvmcfgCX","isReadOnly":false,"visibility":"public","isStatic":false,"classifierId":"id6V7uxHnu1k9tYg","discriminator":"Property","kind":"Property","index":0}
-{"_id":"FSzdot0xEzCgw5I6","name":"eachChild","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","visibility":"public","isStatic":false,"classifierId":"qqvgsxK7q4alPdrH","discriminator":"Method","kind":"Method","index":1}
+{"_id":"EnCPvcORTpSMInNo","name":"data","isAbstract":false,"type":"VFsNu1c7RvmcfgCX","isReadOnly":false,"isStatic":false,"classifierId":"id6V7uxHnu1k9tYg","discriminator":"Property","kind":"Property","index":0}
+{"_id":"FSzdot0xEzCgw5I6","name":"eachChild","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"qqvgsxK7q4alPdrH","discriminator":"Method","kind":"Method","index":1}
 {"_id":"FbcRTyOtiEJWxKJH","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"OpenGLRenderer","kind":"Class","position":{"x":73.59375,"y":528.921875},"discriminator":"Class","stereotypes":[],"customDimension":{"width":129.234375,"height":47.359375}}
-{"_id":"HYcQl6D6d6N7selH","name":"numComponents","isAbstract":false,"type":"CIsittURU8POf1tl","isReadOnly":false,"visibility":"public","isStatic":false,"classifierId":"QudsmUUqJ4soFc1o","discriminator":"Property","kind":"Property","index":2}
+{"_id":"HYcQl6D6d6N7selH","name":"numComponents","isAbstract":false,"type":"CIsittURU8POf1tl","isReadOnly":false,"isStatic":false,"classifierId":"QudsmUUqJ4soFc1o","discriminator":"Property","kind":"Property","index":2}
 {"_id":"Hfq0NR9rHpAsucSv","name":"void","kind":"StandardType","isMandatory":true,"defaultRole":"methodReturnType"}
 {"_id":"HsWMwtjjFkuYA6FK","name":"double","kind":"StandardType","isMandatory":false}
 {"methodId":"avXmKgyT7FxysB7G","name":"visitor","type":"XMSTSc8IWKrK0CGY","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"ILN79x14FdAUa8cs"}
 {"methodId":"JRMUkCPjUak3PoSs","name":"layout","type":"dPIEE88rArFcdyXc","kind":"Parameter","discriminator":"Parameter","index":2,"_id":"IYReNejb1UonY8cZ"}
-{"_id":"IbnHYlvq5f5BjWIE","name":"addAttribute","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","visibility":"public","isStatic":false,"classifierId":"S3DOGXYUzQLIPoPs","discriminator":"Method","kind":"Method","index":0}
-{"_id":"JRMUkCPjUak3PoSs","name":"addData","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","visibility":"public","isStatic":false,"classifierId":"S3DOGXYUzQLIPoPs","discriminator":"Method","kind":"Method","index":2}
+{"_id":"IbnHYlvq5f5BjWIE","name":"addAttribute","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"S3DOGXYUzQLIPoPs","discriminator":"Method","kind":"Method","index":0}
+{"_id":"JRMUkCPjUak3PoSs","name":"addData","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"S3DOGXYUzQLIPoPs","discriminator":"Method","kind":"Method","index":2}
 {"_id":"K1L3Evbe9WiswZ5l","name":"offset","isAbstract":false,"type":"CIsittURU8POf1tl","isReadOnly":false,"isStatic":false,"classifierId":"dPIEE88rArFcdyXc","discriminator":"Property","kind":"Property","index":1}
 {"_id":"LcQcAzEDOlNMBwer","name":"array of pair of AttributeLayout","kind":"StandardType","isMandatory":false}
 {"_id":"MjTZto41fCyy9c89","name":"date","kind":"StandardType","isMandatory":false}
 {"_id":"NGlp43iDoadAX7BT","name":"{FLOAT, DOUBLE, INT, UINT, BYTE, ...}","kind":"StandardType","isMandatory":false}
-{"_id":"OnagP9gkmVzkcMiO","name":"descriptor","isAbstract":false,"type":"DFFGRBKFi9hCr91Z","isReadOnly":false,"visibility":"public","isStatic":false,"classifierId":"brhRaccSFjSgYXFl","discriminator":"Property","kind":"Property","index":0}
-{"_id":"Otjr7FualsQvKjW0","name":"addArray","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","visibility":"public","isStatic":false,"classifierId":"S3DOGXYUzQLIPoPs","discriminator":"Method","kind":"Method","index":1}
-{"_id":"PxYis1P15KmBhJoS","name":"colours","isAbstract":false,"type":"uVaSrWNpIBgThUwq","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"eRpG0h7sI9RWPEKF","discriminator":"Property","kind":"Property","index":1}
-{"_id":"PzHqGo2ZbbgXPd4w","name":"normals","isAbstract":false,"type":"uVaSrWNpIBgThUwq","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"eRpG0h7sI9RWPEKF","discriminator":"Property","kind":"Property","index":2}
+{"_id":"OnagP9gkmVzkcMiO","name":"descriptor","isAbstract":false,"type":"DFFGRBKFi9hCr91Z","isReadOnly":false,"isStatic":false,"classifierId":"brhRaccSFjSgYXFl","discriminator":"Property","kind":"Property","index":0}
+{"_id":"Otjr7FualsQvKjW0","name":"addArray","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"S3DOGXYUzQLIPoPs","discriminator":"Method","kind":"Method","index":1}
+{"_id":"PxYis1P15KmBhJoS","name":"colours","isAbstract":false,"type":"uVaSrWNpIBgThUwq","isReadOnly":false,"isStatic":false,"classifierId":"eRpG0h7sI9RWPEKF","discriminator":"Property","kind":"Property","index":1}
+{"_id":"PzHqGo2ZbbgXPd4w","name":"normals","isAbstract":false,"type":"uVaSrWNpIBgThUwq","isReadOnly":false,"isStatic":false,"classifierId":"eRpG0h7sI9RWPEKF","discriminator":"Property","kind":"Property","index":2}
 {"methodId":"fj8rqcgZbaSOyqGH","name":"child","type":"qqvgsxK7q4alPdrH","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"Q2sNub6wU8gQhvze"}
 {"_id":"QAN2FUv11ronAxN1","isAbstract":true,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"SceneNode","kind":"Class","position":{"x":54,"y":211.265625},"discriminator":"Class","stereotypes":[]}
-{"_id":"QudsmUUqJ4soFc1o","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"AttributeDescriptor","kind":"Class","position":{"x":711.5,"y":611},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"]}
+{"_id":"QudsmUUqJ4soFc1o","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"AttributeDescriptor","kind":"Class","position":{"x":749.5,"y":602.3828125},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"]}
 {"_id":"RD9XrKpm48GbyXtv","name":"attr","isAbstract":false,"type":"dQx3Oq6jjmc21hrN","isReadOnly":false,"isStatic":false,"classifierId":"dPIEE88rArFcdyXc","discriminator":"Property","kind":"Property","index":0,"isDeleted":false}
 {"methodId":"Otjr7FualsQvKjW0","name":"descriptor","type":"EPmCI8yWIrg5jYbT","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"RRqAfS5g8FlCByN3"}
+{"_id":"RZfD3bZIbZCiUYQi","name":"depth","isAbstract":false,"type":"CIsittURU8POf1tl","isReadOnly":false,"isStatic":false,"classifierId":"jIuXTDBRAsHRpEHn","discriminator":"Property","kind":"Property","index":3,"visibility":"public"}
+{"_id":"ReyRXEPeTOVPnROZ","name":"shader","isAbstract":false,"type":"YmkjXqYzQWOZ9WgW","isReadOnly":false,"isStatic":false,"classifierId":"jIuXTDBRAsHRpEHn","discriminator":"Property","kind":"Property","index":1,"visibility":"public"}
 {"_id":"Rq2LdOsKvhorSXtd","name":"float","kind":"StandardType","isMandatory":false}
 {"_id":"S3DOGXYUzQLIPoPs","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"GenericMesh2D","kind":"Class","position":{"x":192.5,"y":816},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"],"customDimension":{"width":973.546875,"height":140.2578125}}
 {"_id":"TelyU4bvQyZrLLMt","name":"array of AttributeLayout","kind":"StandardType","isMandatory":false}
 {"_id":"U65DoyZHNuuzzYp4","name":"boolean","kind":"StandardType","isMandatory":false}
+{"_id":"UofIY6pQZ41chVR3","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"TextLayer","kind":"Class","position":{"x":1600.5,"y":1505},"discriminator":"Class","stereotypes":[]}
 {"_id":"VFsNu1c7RvmcfgCX","name":"vector of T","kind":"StandardType","isMandatory":false}
-{"_id":"VgKORmTecXw7HBhj","name":"mesh","isAbstract":false,"type":"1HYUiDl5RlsCOvcJ","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"QAN2FUv11ronAxN1","discriminator":"Property","kind":"Property","index":0}
+{"_id":"VQ7AmBPLtaWdiBoR","name":"attrs","isAbstract":false,"type":"jIuXTDBRAsHRpEHn","isReadOnly":false,"isStatic":false,"classifierId":"3zEOwLSdmvqzTGgq","discriminator":"Property","kind":"Property","index":0}
+{"_id":"VgKORmTecXw7HBhj","name":"mesh","isAbstract":false,"type":"1HYUiDl5RlsCOvcJ","isReadOnly":false,"isStatic":false,"classifierId":"QAN2FUv11ronAxN1","discriminator":"Property","kind":"Property","index":0}
+{"_id":"WDnSMHsNkhD8V9f1","name":"less","isAbstract":false,"type":"U65DoyZHNuuzzYp4","isStatic":false,"classifierId":"jIuXTDBRAsHRpEHn","discriminator":"Method","kind":"Method","index":0}
 {"_id":"XFPw7USDlxCgwDbm","name":"{FLOAT,DOUBLE,...}","kind":"StandardType","isMandatory":false}
+{"_id":"XFu10ZHOciBHGPYD","name":"","diagramId":"iOPMJCqJeF2Ot5k3","kind":"Relationship","relationshipKind":"Inheritance","source":{"id":"Dd8b0HEn2jDtLhwW","isAutoDocking":false,"dockingSide":"TOP","positionInPercent":0.5},"target":{"isAutoDocking":false,"id":"3zEOwLSdmvqzTGgq","positionInPercent":0.5,"isNavigable":false}}
 {"_id":"XMSTSc8IWKrK0CGY","name":"SceneNodeVisitor","kind":"StandardType","isMandatory":false}
+{"_id":"YmkjXqYzQWOZ9WgW","name":"ShaderHandle","kind":"StandardType","isMandatory":false}
 {"_id":"ZG6JTexxNVMAYa8X","name":"enum","kind":"StandardType","isMandatory":false}
 {"_id":"avXmKgyT7FxysB7G","name":"accept","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"QAN2FUv11ronAxN1","discriminator":"Method","kind":"Method","index":2}
+{"_id":"boG9MAT9Tx5GDTbP","name":"Shader","kind":"StandardType","isMandatory":false}
 {"_id":"brhRaccSFjSgYXFl","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"Array","kind":"Class","position":{"x":888.5,"y":1109},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"]}
 {"_id":"bv5UuGTpvld9t1xY","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"VertexBuffer","kind":"Class","position":{"x":316.9296875,"y":108},"discriminator":"Class","stereotypes":[],"customDimension":{"width":135.21875,"height":43.21875}}
 {"methodId":"B1TdXbxjCDu6b8cU","name":"child","type":"QAN2FUv11ronAxN1","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"cb5ONobgoNtb33Wy"}
@@ -54,35 +68,47 @@
 {"_id":"dQx3Oq6jjmc21hrN","name":"AttributeDescriptor","kind":"StandardType","isMandatory":false}
 {"_id":"dRVeNJw0giabUxwZ","name":"Vec2f","kind":"StandardType","isMandatory":false}
 {"_id":"eRpG0h7sI9RWPEKF","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"Mesh2D","kind":"Class","position":{"x":692.5,"y":312},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"]}
+{"_id":"fCGnky8QHKszmCsK","name":"","diagramId":"iOPMJCqJeF2Ot5k3","kind":"Relationship","relationshipKind":"Inheritance","source":{"id":"UofIY6pQZ41chVR3","isAutoDocking":false,"dockingSide":"TOP","positionInPercent":0.5},"target":{"isAutoDocking":false,"id":"3zEOwLSdmvqzTGgq","positionInPercent":0.5,"isNavigable":false}}
 {"methodId":"3rEJx7dcBO17O07O","name":"p","type":"dRVeNJw0giabUxwZ","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"fVnpCUNYMjYNVVwu"}
-{"_id":"fj8rqcgZbaSOyqGH","name":"addChild","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","visibility":"public","isStatic":false,"classifierId":"qqvgsxK7q4alPdrH","discriminator":"Method","kind":"Method","index":0}
+{"_id":"fhYI0caLK3uOgpho","name":"type","isAbstract":false,"type":"ivc2CSnOvIkjS5P4","isReadOnly":false,"isStatic":false,"classifierId":"jIuXTDBRAsHRpEHn","discriminator":"Property","kind":"Property","index":2,"visibility":"public"}
+{"_id":"fj8rqcgZbaSOyqGH","name":"addChild","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"qqvgsxK7q4alPdrH","discriminator":"Method","kind":"Method","index":0}
 {"methodId":"tUpnpfb2fObCR2YM","name":"mesh","type":"1HYUiDl5RlsCOvcJ","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"g4cDWtkZjhmJqcHr"}
 {"methodId":"IbnHYlvq5f5BjWIE","name":"descriptor","type":"dQx3Oq6jjmc21hrN","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"gB4swoFP2Yx9EUCb"}
-{"_id":"gDrEI9kqmh6kv676","name":"vertices","isAbstract":false,"type":"uVaSrWNpIBgThUwq","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"eRpG0h7sI9RWPEKF","discriminator":"Property","kind":"Property","index":0}
+{"_id":"gDrEI9kqmh6kv676","name":"vertices","isAbstract":false,"type":"uVaSrWNpIBgThUwq","isReadOnly":false,"isStatic":false,"classifierId":"eRpG0h7sI9RWPEKF","discriminator":"Property","kind":"Property","index":0}
 {"_id":"hmAyIZXPJRmpG1wh","name":"time","kind":"StandardType","isMandatory":false}
 {"methodId":"JRMUkCPjUak3PoSs","name":"data","type":"yyPGv6rrK6ySYL1m","kind":"Parameter","discriminator":"Parameter","index":2,"_id":"iKVurwdQ91uHSJ3u"}
-{"_id":"iOPMJCqJeF2Ot5k3","name":"dagui","kind":"ClassDiagram","titlePosition":{"x":550,"y":24},"version":"","dimension":{"width":4000,"height":4000}}
+{"_id":"iOPMJCqJeF2Ot5k3","name":"dagui","kind":"ClassDiagram","titlePosition":{"x":550,"y":24},"version":"1.13.0","dimension":{"width":4000,"height":4000}}
 {"_id":"ibuna34ZjhnfcL1o","name":"any","kind":"StandardType","isMandatory":true,"defaultRole":"parameterType"}
 {"_id":"id6V7uxHnu1k9tYg","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"GenericArray<T>","kind":"Class","position":{"x":1017.5,"y":1278},"discriminator":"Class","stereotypes":[]}
 {"_id":"ikzHhHBuLGWEhG57","name":"string","kind":"StandardType","isMandatory":true,"defaultRole":"propertyType"}
+{"_id":"ivc2CSnOvIkjS5P4","name":"{TEXT,BORDER,...}","kind":"StandardType","isMandatory":false}
+{"_id":"jIuXTDBRAsHRpEHn","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"LayerAttributes","kind":"Class","position":{"x":1534.5,"y":1039},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"]}
+{"_id":"jSbyaVuKhNkiYTdK","name":"LayerType","kind":"StandardType","isMandatory":false}
 {"_id":"ji2lTtIUZEYXpjDA","name":"pointer to float","kind":"StandardType","isMandatory":false}
 {"_id":"lNVSfA7rniy4fv94","name":"owns","diagramId":"iOPMJCqJeF2Ot5k3","kind":"Relationship","relationshipKind":"Composition","anchorPoints":[],"source":{"id":"QAN2FUv11ronAxN1","dockingSide":"RIGHT","isAutoDocking":false,"positionInPercent":0.5},"target":{"id":"eRpG0h7sI9RWPEKF","isAutoDocking":true,"positionInPercent":0.5}}
 {"_id":"luumYDxvcpXohEON","isAbstract":false,"isFinal":false,"isInterface":true,"diagramId":"iOPMJCqJeF2Ot5k3","name":"Renderer","kind":"Class","position":{"x":320.828125,"y":514.140625},"discriminator":"Class","stereotypes":[]}
+{"_id":"lwmEe9WMrFGb8DBR","name":"Texture","kind":"StandardType","isMandatory":false}
 {"methodId":"srWeNsPbT5ME502J","name":"mesh","type":"1HYUiDl5RlsCOvcJ","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"mdqGQRaYTx5YkR9T"}
 {"_id":"o2LC8dnoH5lu39fC","name":"pointer to void","kind":"StandardType","isMandatory":false}
+{"_id":"pozRZW2R1YGf43qQ","name":"texture","isAbstract":false,"type":"x8IzNSlBirj5QYUB","isReadOnly":false,"isStatic":false,"classifierId":"jIuXTDBRAsHRpEHn","discriminator":"Property","kind":"Property","index":0,"visibility":"public"}
 {"_id":"qQcM1wXMc581f8Y6","name":"char","kind":"StandardType","isMandatory":false}
 {"_id":"qqvgsxK7q4alPdrH","isAbstract":true,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"Widget","kind":"Class","position":{"x":228.7421875,"y":678.28125},"discriminator":"Class","stereotypes":[]}
-{"_id":"sblWXoHbh5E4nY5m","name":"vertexData","isAbstract":false,"type":"ji2lTtIUZEYXpjDA","visibility":"public","isStatic":false,"classifierId":"eRpG0h7sI9RWPEKF","discriminator":"Method","kind":"Method","index":1}
-{"_id":"srWeNsPbT5ME502J","name":"setMesh","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","visibility":"public","isStatic":false,"classifierId":"QAN2FUv11ronAxN1","discriminator":"Method","kind":"Method","index":1}
+{"_id":"rr1EpcAQVcJg4qFM","name":"{POSITION,NORMAL,TEXCOORD,TANGENT,BINORMAL,UNKNOWN}","kind":"StandardType","isMandatory":false}
+{"_id":"s7zHz7OUxqZQjHyX","name":"ConfigurationElement","kind":"StandardType","isMandatory":false}
+{"_id":"sblWXoHbh5E4nY5m","name":"vertexData","isAbstract":false,"type":"ji2lTtIUZEYXpjDA","isStatic":false,"classifierId":"eRpG0h7sI9RWPEKF","discriminator":"Method","kind":"Method","index":1}
+{"_id":"srWeNsPbT5ME502J","name":"setMesh","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"QAN2FUv11ronAxN1","discriminator":"Method","kind":"Method","index":1}
 {"_id":"sunFy8MQS7HyY4Wj","name":"array of T","kind":"StandardType","isMandatory":false}
-{"_id":"tUpnpfb2fObCR2YM","name":"drawMesh","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","visibility":"public","isStatic":false,"classifierId":"luumYDxvcpXohEON","discriminator":"Method","kind":"Method","index":0}
+{"_id":"tUpnpfb2fObCR2YM","name":"drawMesh","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"luumYDxvcpXohEON","discriminator":"Method","kind":"Method","index":0}
 {"_id":"u0qdZoEbt4vNtMtF","name":"array of string","kind":"StandardType","isMandatory":false}
 {"_id":"u1uRQNalYgjRbcY4","name":"stride","isAbstract":false,"type":"CIsittURU8POf1tl","isReadOnly":false,"isStatic":false,"classifierId":"dPIEE88rArFcdyXc","discriminator":"Property","kind":"Property","index":2,"isDeleted":false}
 {"_id":"uVaSrWNpIBgThUwq","name":"array of float","kind":"StandardType","isMandatory":false}
 {"_id":"uhFTAuELXia0i4yd","name":"function<bool(Widget)>","kind":"StandardType","isMandatory":false}
 {"_id":"uyWo0U1bGL1tjQCJ","name":"array of AttributeDescriptor","kind":"StandardType","isMandatory":false}
 {"_id":"vQLcUjHFbqJ6OoWu","discriminator":"Note","position":{"x":1097,"y":238},"diagramId":"iOPMJCqJeF2Ot5k3","text":"The scene graph implements the UI tree.","kind":"Note","showNoteBackgroundTexture":true,"autosize":false,"supportMarkdown":true}
+{"_id":"wbcp57Jdb4RmAzPi","name":"usage","isAbstract":false,"type":"rr1EpcAQVcJg4qFM","isReadOnly":false,"isStatic":false,"classifierId":"QudsmUUqJ4soFc1o","discriminator":"Property","kind":"Property","index":3}
+{"_id":"x8IzNSlBirj5QYUB","name":"TextureHandle","kind":"StandardType","isMandatory":false}
+{"_id":"yitYWd3RiQB5ALln","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"BorderLayer","kind":"Class","position":{"x":1403.5,"y":1516},"discriminator":"Class","stereotypes":[]}
 {"_id":"yyPGv6rrK6ySYL1m","name":"pointer to const T","kind":"StandardType","isMandatory":false}
-{"_id":"z3TEDxA0SCXbEffD","discriminator":"Note","position":{"x":1279,"y":532},"diagramId":"iOPMJCqJeF2Ot5k3","text":"The render tree implements the rendering algorithm.","kind":"Note","showNoteBackgroundTexture":true,"autosize":false,"supportMarkdown":true}
-{"_id":"zdBLCnQv1tO0Iz7b","name":"attributes","isAbstract":false,"type":"TelyU4bvQyZrLLMt","isReadOnly":false,"visibility":"public","isStatic":false,"classifierId":"8WtQl2C2ydtBGotC","discriminator":"Property","kind":"Property","index":0}
+{"_id":"z3TEDxA0SCXbEffD","discriminator":"Note","position":{"x":1404,"y":439},"diagramId":"iOPMJCqJeF2Ot5k3","text":"The render tree implements the rendering algorithm.","kind":"Note","showNoteBackgroundTexture":true,"autosize":false,"supportMarkdown":true}
+{"_id":"zdBLCnQv1tO0Iz7b","name":"attributes","isAbstract":false,"type":"TelyU4bvQyZrLLMt","isReadOnly":false,"isStatic":false,"classifierId":"8WtQl2C2ydtBGotC","discriminator":"Property","kind":"Property","index":0}
 {"_id":"znNHxYilLXz6z6na","name":"data structure","kind":"Stereotype","diagramId":"iOPMJCqJeF2Ot5k3"}

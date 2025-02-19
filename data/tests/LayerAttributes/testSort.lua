@@ -1,0 +1,20 @@
+root=
+{
+	texture=
+	{
+		op1=
+		{
+			texture=1,
+			shader=0,
+			type=1,
+			depth=0
+		},
+		op2=
+		{
+			texture=2,
+			shader=0,
+			type=1,
+			depth=0
+		}
+	}
+}

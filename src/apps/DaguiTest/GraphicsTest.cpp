@@ -19,6 +19,7 @@
 
 #include "gfx/GenericAttributeArray.h"
 #include "gfx/GenericMesh2D.h"
+#include "gfx/Layer.h"
 #include "gfx/OpenGL.h"
 #include "gfx/RendererFactory.h"
 
@@ -672,4 +673,32 @@ INSTANTIATE_TEST_SUITE_P(OpenGLDataType, OpenGLDataType_testFromAttribute, ::tes
 	std::make_tuple(dagui::AttributeDescriptor::TYPE_UINT32, GL_UNSIGNED_INT),
 	std::make_tuple(dagui::AttributeDescriptor::TYPE_FLOAT, GL_FLOAT),
 	std::make_tuple(dagui::AttributeDescriptor::TYPE_DOUBLE, GL_DOUBLE)
+	));
+
+class LayerAttributes_testSort : public ::testing::TestWithParam<std::tuple<const char*, const char*, bool>>
+{
+
+};
+
+TEST_P(LayerAttributes_testSort, testCorrectOrder)
+{
+	auto configStr = std::get<0>(GetParam());
+	dagbase::Lua lua;
+	auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+	ASSERT_NE(nullptr, config);
+	auto testConfigName = std::get<1>(GetParam());
+	dagbase::ConfigurationElement* testConfig = config->findElement(testConfigName);
+	ASSERT_NE(nullptr, testConfig);
+	dagui::LayerAttributes op1;
+	if (auto element = testConfig->findElement("op1"); element)
+		op1.configure(*element);
+	dagui::LayerAttributes op2;
+	if (auto element = testConfig->findElement("op2"); element)
+		op2.configure(*element);
+	auto order = std::get<2>(GetParam());
+	EXPECT_EQ(order, op1 < op2);
+}
+
+INSTANTIATE_TEST_SUITE_P(LayerAttributes, LayerAttributes_testSort, ::testing::Values(
+	std::make_tuple("data/tests/LayerAttributes/testSort.lua", "texture", true)
 	));
