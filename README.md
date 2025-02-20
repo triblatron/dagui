@@ -28,10 +28,10 @@ Pull requests will be allowed at some point. There will be a coding style and pr
 * glew for OpenGL support beyond version 1.1 on Windows
 * md4c for markdown parsing
 * svgpp for SVG parsing
-* [dagbase](gihub.com/triblatron/dagbase) for
+* [dagbase](https://gihub.com/triblatron/dagbase) for
   * A Lua interface
   * A ConfigurationElement
-* [dag](github.com/dag) for
+* [dag](https://github.com/dag) for
   * basic features such as streams.
   * the node graph support
     * node base class
