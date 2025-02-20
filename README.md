@@ -54,6 +54,7 @@ dnf install freetype-devel freeglut-devel lua-devel
 exit
 ```
 ## Build instructions 
+Note that dag, dagbase, md4c and svgpp are git submodules and will eventually all be built at the same time as dagui.
 
 ### Linux
 ```bash
