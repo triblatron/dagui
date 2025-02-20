@@ -25,6 +25,7 @@ Pull requests will be allowed at some point. There will be a coding style and pr
 * freetype for text rasterisation
 * pango for text layout including underlining
 * freeglut for OpenGL text demo
+* glew for OpenGL support beyond version 1.1 on Windows
 * md4c for markdown parsing
 * svgpp for SVG parsing
 * dagbase for
@@ -43,7 +44,7 @@ Pull requests will be allowed at some point. There will be a coding style and pr
   * required to create an Orthographic projection
 * Packages for Linux Debian based
 ```bash
-sudo apt-get install g++ cmake make freeglut3-dev libfreetype-dev libpango1.0-dev liblua5.4-dev git
+sudo apt-get install g++ cmake make freeglut3-dev libfreetype-dev libpango1.0-dev liblua5.4-dev git libglew-dev
 ```
 * Packages from Linux Red Hat based
 ```bash
