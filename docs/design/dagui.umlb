@@ -31,7 +31,10 @@
 {"_id":"IbnHYlvq5f5BjWIE","name":"addAttribute","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"S3DOGXYUzQLIPoPs","discriminator":"Method","kind":"Method","index":0}
 {"_id":"JRMUkCPjUak3PoSs","name":"addData","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"S3DOGXYUzQLIPoPs","discriminator":"Method","kind":"Method","index":2}
 {"_id":"K1L3Evbe9WiswZ5l","name":"offset","isAbstract":false,"type":"CIsittURU8POf1tl","isReadOnly":false,"isStatic":false,"classifierId":"dPIEE88rArFcdyXc","discriminator":"Property","kind":"Property","index":1}
+{"_id":"KyP896mQ1LpsQDLW","name":"Vertex","kind":"StandardType","isMandatory":false}
+{"_id":"L6Nl2mVdSbCVM5Pe","name":"addVertex","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","visibility":"public","isStatic":false,"classifierId":"QbeqLZ5W941jxMUk","discriminator":"Method","kind":"Method","index":1}
 {"_id":"LcQcAzEDOlNMBwer","name":"array of pair of AttributeLayout","kind":"StandardType","isMandatory":false}
+{"_id":"MByZnm1P5oMGzm1k","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"GPUDescriptor","kind":"Class","position":{"x":2016.5,"y":650},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"]}
 {"_id":"MjTZto41fCyy9c89","name":"date","kind":"StandardType","isMandatory":false}
 {"_id":"NGlp43iDoadAX7BT","name":"{FLOAT, DOUBLE, INT, UINT, BYTE, ...}","kind":"StandardType","isMandatory":false}
 {"_id":"OnagP9gkmVzkcMiO","name":"descriptor","isAbstract":false,"type":"DFFGRBKFi9hCr91Z","isReadOnly":false,"isStatic":false,"classifierId":"brhRaccSFjSgYXFl","discriminator":"Property","kind":"Property","index":0}
@@ -40,13 +43,16 @@
 {"_id":"PzHqGo2ZbbgXPd4w","name":"normals","isAbstract":false,"type":"uVaSrWNpIBgThUwq","isReadOnly":false,"isStatic":false,"classifierId":"eRpG0h7sI9RWPEKF","discriminator":"Property","kind":"Property","index":2}
 {"methodId":"fj8rqcgZbaSOyqGH","name":"child","type":"qqvgsxK7q4alPdrH","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"Q2sNub6wU8gQhvze"}
 {"_id":"QAN2FUv11ronAxN1","isAbstract":true,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"SceneNode","kind":"Class","position":{"x":54,"y":211.265625},"discriminator":"Class","stereotypes":[]}
+{"_id":"QbeqLZ5W941jxMUk","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"GenericMesh","kind":"Class","position":{"x":1733.5,"y":264},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na","ukVybo1YA7uQwwdA"]}
 {"_id":"QudsmUUqJ4soFc1o","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"AttributeDescriptor","kind":"Class","position":{"x":749.5,"y":602.3828125},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"]}
 {"_id":"RD9XrKpm48GbyXtv","name":"attr","isAbstract":false,"type":"dQx3Oq6jjmc21hrN","isReadOnly":false,"isStatic":false,"classifierId":"dPIEE88rArFcdyXc","discriminator":"Property","kind":"Property","index":0,"isDeleted":false}
 {"methodId":"Otjr7FualsQvKjW0","name":"descriptor","type":"EPmCI8yWIrg5jYbT","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"RRqAfS5g8FlCByN3"}
 {"_id":"RZfD3bZIbZCiUYQi","name":"depth","isAbstract":false,"type":"CIsittURU8POf1tl","isReadOnly":false,"isStatic":false,"classifierId":"jIuXTDBRAsHRpEHn","discriminator":"Property","kind":"Property","index":3,"visibility":"public"}
 {"_id":"ReyRXEPeTOVPnROZ","name":"shader","isAbstract":false,"type":"YmkjXqYzQWOZ9WgW","isReadOnly":false,"isStatic":false,"classifierId":"jIuXTDBRAsHRpEHn","discriminator":"Property","kind":"Property","index":1,"visibility":"public"}
+{"methodId":"tVBc8isfPiicSR0X","name":"descriptor","type":"dPIEE88rArFcdyXc","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"RknDvJnHx3EimEYU"}
 {"_id":"Rq2LdOsKvhorSXtd","name":"float","kind":"StandardType","isMandatory":false}
 {"_id":"S3DOGXYUzQLIPoPs","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"GenericMesh2D","kind":"Class","position":{"x":192.5,"y":816},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"],"customDimension":{"width":973.546875,"height":140.2578125}}
+{"_id":"SB2kxSO3379aXSV6","name":"attributeArrayPreference","isAbstract":false,"type":"yA4bUAOxX9WOeKQl","isReadOnly":false,"isStatic":false,"classifierId":"MByZnm1P5oMGzm1k","discriminator":"Property","kind":"Property","index":0}
 {"_id":"TelyU4bvQyZrLLMt","name":"array of AttributeLayout","kind":"StandardType","isMandatory":false}
 {"_id":"U65DoyZHNuuzzYp4","name":"boolean","kind":"StandardType","isMandatory":false}
 {"_id":"UofIY6pQZ41chVR3","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"TextLayer","kind":"Class","position":{"x":1600.5,"y":1505},"discriminator":"Class","stereotypes":[]}
@@ -64,6 +70,7 @@
 {"_id":"brhRaccSFjSgYXFl","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"Array","kind":"Class","position":{"x":888.5,"y":1109},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"]}
 {"_id":"bv5UuGTpvld9t1xY","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"VertexBuffer","kind":"Class","position":{"x":316.9296875,"y":108},"discriminator":"Class","stereotypes":[],"customDimension":{"width":135.21875,"height":43.21875}}
 {"methodId":"B1TdXbxjCDu6b8cU","name":"child","type":"QAN2FUv11ronAxN1","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"cb5ONobgoNtb33Wy"}
+{"_id":"d4ZLgvlWo47FVkzr","name":"array of A","kind":"StandardType","isMandatory":false}
 {"_id":"dPIEE88rArFcdyXc","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"AttributeLayout","kind":"Class","position":{"x":483.5,"y":971},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"],"customDimension":{"width":269.640625,"height":114.2421875},"isDeleted":false}
 {"_id":"dQx3Oq6jjmc21hrN","name":"AttributeDescriptor","kind":"StandardType","isMandatory":false}
 {"_id":"dRVeNJw0giabUxwZ","name":"Vec2f","kind":"StandardType","isMandatory":false}
@@ -85,13 +92,16 @@
 {"_id":"jIuXTDBRAsHRpEHn","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"LayerAttributes","kind":"Class","position":{"x":1534.5,"y":1039},"discriminator":"Class","stereotypes":["znNHxYilLXz6z6na"]}
 {"_id":"jSbyaVuKhNkiYTdK","name":"LayerType","kind":"StandardType","isMandatory":false}
 {"_id":"ji2lTtIUZEYXpjDA","name":"pointer to float","kind":"StandardType","isMandatory":false}
+{"_id":"kzyh8eAjVLFKMUi0","name":"attributes","isAbstract":false,"type":"TelyU4bvQyZrLLMt","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"QbeqLZ5W941jxMUk","discriminator":"Property","kind":"Property","index":0}
 {"_id":"lNVSfA7rniy4fv94","name":"owns","diagramId":"iOPMJCqJeF2Ot5k3","kind":"Relationship","relationshipKind":"Composition","anchorPoints":[],"source":{"id":"QAN2FUv11ronAxN1","dockingSide":"RIGHT","isAutoDocking":false,"positionInPercent":0.5},"target":{"id":"eRpG0h7sI9RWPEKF","isAutoDocking":true,"positionInPercent":0.5}}
 {"_id":"luumYDxvcpXohEON","isAbstract":false,"isFinal":false,"isInterface":true,"diagramId":"iOPMJCqJeF2Ot5k3","name":"Renderer","kind":"Class","position":{"x":320.828125,"y":514.140625},"discriminator":"Class","stereotypes":[]}
 {"_id":"lwmEe9WMrFGb8DBR","name":"Texture","kind":"StandardType","isMandatory":false}
 {"methodId":"srWeNsPbT5ME502J","name":"mesh","type":"1HYUiDl5RlsCOvcJ","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"mdqGQRaYTx5YkR9T"}
+{"methodId":"L6Nl2mVdSbCVM5Pe","name":"data","type":"KyP896mQ1LpsQDLW","kind":"Parameter","discriminator":"Parameter","index":1,"_id":"mtUzHCsNCjLRCmGF"}
 {"_id":"o2LC8dnoH5lu39fC","name":"pointer to void","kind":"StandardType","isMandatory":false}
 {"_id":"pozRZW2R1YGf43qQ","name":"texture","isAbstract":false,"type":"x8IzNSlBirj5QYUB","isReadOnly":false,"isStatic":false,"classifierId":"jIuXTDBRAsHRpEHn","discriminator":"Property","kind":"Property","index":0,"visibility":"public"}
 {"_id":"qQcM1wXMc581f8Y6","name":"char","kind":"StandardType","isMandatory":false}
+{"_id":"qZGVxAPnN5PJDYoR","discriminator":"Note","position":{"x":2582,"y":317},"diagramId":"iOPMJCqJeF2Ot5k3","text":"We add a Vertex at a time and the attribute descriptors determine whether the data ends up in interleaved or in separate arrays.","kind":"Note","showNoteBackgroundTexture":true,"autosize":false,"customDimension":{"width":250,"height":170},"supportMarkdown":true}
 {"_id":"qqvgsxK7q4alPdrH","isAbstract":true,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"Widget","kind":"Class","position":{"x":228.7421875,"y":678.28125},"discriminator":"Class","stereotypes":[]}
 {"_id":"rr1EpcAQVcJg4qFM","name":"{POSITION,NORMAL,TEXCOORD,TANGENT,BINORMAL,UNKNOWN}","kind":"StandardType","isMandatory":false}
 {"_id":"s7zHz7OUxqZQjHyX","name":"ConfigurationElement","kind":"StandardType","isMandatory":false}
@@ -99,14 +109,17 @@
 {"_id":"srWeNsPbT5ME502J","name":"setMesh","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"QAN2FUv11ronAxN1","discriminator":"Method","kind":"Method","index":1}
 {"_id":"sunFy8MQS7HyY4Wj","name":"array of T","kind":"StandardType","isMandatory":false}
 {"_id":"tUpnpfb2fObCR2YM","name":"drawMesh","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","isStatic":false,"classifierId":"luumYDxvcpXohEON","discriminator":"Method","kind":"Method","index":0}
+{"_id":"tVBc8isfPiicSR0X","name":"addAttribute","isAbstract":false,"type":"Hfq0NR9rHpAsucSv","visibility":"public","isStatic":false,"classifierId":"QbeqLZ5W941jxMUk","discriminator":"Method","kind":"Method","index":0}
 {"_id":"u0qdZoEbt4vNtMtF","name":"array of string","kind":"StandardType","isMandatory":false}
 {"_id":"u1uRQNalYgjRbcY4","name":"stride","isAbstract":false,"type":"CIsittURU8POf1tl","isReadOnly":false,"isStatic":false,"classifierId":"dPIEE88rArFcdyXc","discriminator":"Property","kind":"Property","index":2,"isDeleted":false}
 {"_id":"uVaSrWNpIBgThUwq","name":"array of float","kind":"StandardType","isMandatory":false}
 {"_id":"uhFTAuELXia0i4yd","name":"function<bool(Widget)>","kind":"StandardType","isMandatory":false}
+{"_id":"ukVybo1YA7uQwwdA","name":"template","kind":"Stereotype","diagramId":"iOPMJCqJeF2Ot5k3"}
 {"_id":"uyWo0U1bGL1tjQCJ","name":"array of AttributeDescriptor","kind":"StandardType","isMandatory":false}
 {"_id":"vQLcUjHFbqJ6OoWu","discriminator":"Note","position":{"x":1097,"y":238},"diagramId":"iOPMJCqJeF2Ot5k3","text":"The scene graph implements the UI tree.","kind":"Note","showNoteBackgroundTexture":true,"autosize":false,"supportMarkdown":true}
 {"_id":"wbcp57Jdb4RmAzPi","name":"usage","isAbstract":false,"type":"rr1EpcAQVcJg4qFM","isReadOnly":false,"isStatic":false,"classifierId":"QudsmUUqJ4soFc1o","discriminator":"Property","kind":"Property","index":3}
 {"_id":"x8IzNSlBirj5QYUB","name":"TextureHandle","kind":"StandardType","isMandatory":false}
+{"_id":"yA4bUAOxX9WOeKQl","name":"{UNKNOWN,SEPARATE,INTERLEAVED}","kind":"StandardType","isMandatory":false}
 {"_id":"yitYWd3RiQB5ALln","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"iOPMJCqJeF2Ot5k3","name":"BorderLayer","kind":"Class","position":{"x":1403.5,"y":1516},"discriminator":"Class","stereotypes":[]}
 {"_id":"yyPGv6rrK6ySYL1m","name":"pointer to const T","kind":"StandardType","isMandatory":false}
 {"_id":"z3TEDxA0SCXbEffD","discriminator":"Note","position":{"x":1404,"y":439},"diagramId":"iOPMJCqJeF2Ot5k3","text":"The render tree implements the rendering algorithm.","kind":"Note","showNoteBackgroundTexture":true,"autosize":false,"supportMarkdown":true}

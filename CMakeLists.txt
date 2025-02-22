@@ -43,7 +43,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
 		include/gfx/AttributeDescriptor.h
 		include/gfx/AttributeLayout.h
 		include/gfx/ArrayDescriptor.h
-		include/gfx/GenericMesh2D.h
+		include/gfx/GenericMesh.h
 		include/gfx/AttributeArray.h
 		include/gfx/GenericAttributeArray.h
 		include/gfx/Layer.h
@@ -71,7 +71,7 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
 		src/gfx/OpenGL.cpp
 		src/gfx/OpenGLMesh2D.cpp
 		src/gfx/DrawingCommand.cpp
-		src/gfx/GenericMesh2D.cpp
+		src/gfx/GenericMesh.cpp
 		src/gfx/AttributeDescriptor.cpp
 		src/gfx/AttributeLayout.cpp
 		src/gfx/ArrayDescriptor.cpp

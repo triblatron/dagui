@@ -12,12 +12,19 @@
 
 namespace dagui
 {
+    //! A template for an array of arbitrary attributes
+    //! It can handle one attribute or multiple interleaved attributes
+    //! as along as the descriptor corresponds to the type Vertex
+    //! \note Vertex must be a POD type with no virtual functions
     template<typename Vertex>
     class GenericAttributeArray : public AttributeArray
     {
     public:
         GenericAttributeArray() = default;
 
+        //! Add an attribute with components of type ComponentType
+        //! This will be the C++ type for one of the types in AttributeDescriptor
+        //! e.g. float, unsigned int, ...
         template<typename ComponentType>
         void addAttribute(std::size_t attrIndex, const ComponentType* attr, std::size_t size)
         {

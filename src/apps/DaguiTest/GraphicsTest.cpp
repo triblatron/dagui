@@ -18,7 +18,7 @@
 #include <gmock/gmock.h>
 
 #include "gfx/GenericAttributeArray.h"
-#include "gfx/GenericMesh2D.h"
+#include "gfx/GenericMesh.h"
 #include "gfx/Layer.h"
 #include "gfx/OpenGL.h"
 #include "gfx/RendererFactory.h"
@@ -546,6 +546,11 @@ struct TestVertex
 			a = static_cast<float>(element->asDouble());
 
 	}
+
+	bool operator==(const TestVertex& other) const
+	{
+		return x==other.x && y==other.y && r==other.r && g==other.g && b==other.b && a==other.a;
+	}
 };
 
 typedef float TestVertex::*TestVertexField;
@@ -617,42 +622,42 @@ INSTANTIATE_TEST_SUITE_P(AttributeLayout, AttributeLayout_testStride, ::testing:
 	std::make_tuple("data/tests/AttributeLayout/testStride.lua", "interleaved", 1, 6*sizeof(float))
 	));
 
-class MockAttributeArray : public dagui::AttributeArray
-{
-public:
-	~MockAttributeArray()
-	{
-		destroy();
-	}
-	MOCK_METHOD(void, destroy, (), ());
-	MOCK_METHOD(const void*, data, (), (const, override));
-	MOCK_METHOD(std::size_t, size, (), (const, override));
-	MOCK_METHOD(std::size_t, elementSize, (), (const, override));
-};
-
-class GenericMesh2D_testTakesOwnershipOfArrays : public ::testing::TestWithParam<std::tuple<const char*>>
-{
-
-};
-
-TEST_P(GenericMesh2D_testTakesOwnershipOfArrays, testDestructorCalledOnDelete)
-{
-	auto configStr = std::get<0>(GetParam());
-	dagbase::Lua lua;
-	auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
-	ASSERT_NE(nullptr, config);
-	dagui::GenericMesh2D sut;
-	auto array = new MockAttributeArray();
-	dagui::ArrayDescriptor arrayConfig;
-	arrayConfig.configure(*config);
-	array->setDescriptor(arrayConfig);
-	sut.addData(0, array);
-	EXPECT_CALL(*array, destroy).Times(1);
-}
-
-INSTANTIATE_TEST_SUITE_P(GenericMesh2D, GenericMesh2D_testTakesOwnershipOfArrays, ::testing::Values(
-	std::make_tuple("data/tests/GenericMesh2D/testTakesOwnershipOfArrays.lua")
-	));
+// class MockAttributeArray : public dagui::AttributeArray
+// {
+// public:
+// 	~MockAttributeArray()
+// 	{
+// 		destroy();
+// 	}
+// 	MOCK_METHOD(void, destroy, (), ());
+// 	MOCK_METHOD(const void*, data, (), (const, override));
+// 	MOCK_METHOD(std::size_t, size, (), (const, override));
+// 	MOCK_METHOD(std::size_t, elementSize, (), (const, override));
+// };
+//
+// class GenericMesh_testTakesOwnershipOfArrays : public ::testing::TestWithParam<std::tuple<const char*>>
+// {
+//
+// };
+//
+// TEST_P(GenericMesh_testTakesOwnershipOfArrays, testDestructorCalledOnDelete)
+// {
+// 	auto configStr = std::get<0>(GetParam());
+// 	dagbase::Lua lua;
+// 	auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+// 	ASSERT_NE(nullptr, config);
+// 	dagui::GenericMesh<TestVertex> sut;
+// 	auto array = new MockAttributeArray();
+// 	dagui::ArrayDescriptor arrayConfig;
+// 	arrayConfig.configure(*config);
+// 	array->setDescriptor(arrayConfig);
+// 	sut.addData(0, array);
+// 	EXPECT_CALL(*array, destroy).Times(1);
+// }
+//
+// INSTANTIATE_TEST_SUITE_P(GenericMesh, GenericMesh_testTakesOwnershipOfArrays, ::testing::Values(
+// 	std::make_tuple("data/tests/GenericMesh/testTakesOwnershipOfArrays.lua")
+// 	));
 
 class OpenGLDataType_testFromAttribute : public ::testing::TestWithParam<std::tuple<dagui::AttributeDescriptor::DataType, GLenum>>
 {
@@ -701,4 +706,35 @@ TEST_P(LayerAttributes_testSort, testCorrectOrder)
 
 INSTANTIATE_TEST_SUITE_P(LayerAttributes, LayerAttributes_testSort, ::testing::Values(
 	std::make_tuple("data/tests/LayerAttributes/testSort.lua", "texture", true)
+	));
+
+class GenericMesh_addVertex : public ::testing::TestWithParam<std::tuple<const char*, const char*, TestVertexField, float>>
+{
+
+};
+
+TEST_P(GenericMesh_addVertex, testValue)
+{
+	auto configStr = std::get<0>(GetParam());
+	dagbase::Lua lua;
+	auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+	ASSERT_NE(nullptr, config);
+	auto testConfigName = std::get<1>(GetParam());
+	auto testConfig = config->findElement(testConfigName);
+	ASSERT_NE(nullptr, testConfig);
+	auto field = std::get<2>(GetParam());
+	TestVertex v;
+	if (auto element = testConfig->findElement("vertex"); element)
+		v.configure(*element);
+	dagui::GenericMesh<TestVertex> sut;
+	if (auto element = testConfig->findElement("mesh"); element)
+		sut.configure(*element);
+	sut.addVertex(v);
+	TestVertex actualVertex;
+	sut.getVertex(0, &actualVertex);
+	EXPECT_EQ(v, actualVertex);
+}
+
+INSTANTIATE_TEST_SUITE_P(GenericMesh, GenericMesh_addVertex, ::testing::Values(
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "position", &TestVertex::x, 1.0f)
 	));

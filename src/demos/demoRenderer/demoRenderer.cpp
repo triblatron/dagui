@@ -15,11 +15,10 @@
 #include <ostream>
 
 #include "core/LuaInterface.h"
-#include "gfx/GenericMesh2D.h"
+#include "gfx/GenericMesh.h"
 #include "gfx/OpenGLMesh2D.h"
 #include "gfx/OpenGLRenderer.h"
 
-dagui::GenericMesh2D mesh;
 dagui::gl::VertexBuffer vertexBuffer;
 struct Vertex
 {
@@ -30,6 +29,7 @@ struct Vertex
     float b{0.0f};
     float a{0.0f};
 };
+dagui::GenericMesh<Vertex> mesh;
 
 dagui::GenericAttributeArray<Vertex>* a = new dagui::GenericAttributeArray<Vertex>();
 GLfloat vertices[] = {
