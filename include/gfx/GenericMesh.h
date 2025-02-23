@@ -55,7 +55,6 @@ namespace dagui
 
         void getVertex(std::size_t i, Vertex* v)
         {
-            // TOOD:Copy from all arrays into v
             if (v)
             {
                 for (auto a : _data)
