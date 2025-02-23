@@ -14,7 +14,8 @@ namespace dagui
     void AttributeLayout::configure(dagbase::ConfigurationElement& config)
     {
         if (auto element=config.findElement("attribute"); element)
+        {
             attr.configure(*element);
-
+        }
     }
 }

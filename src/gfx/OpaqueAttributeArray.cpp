@@ -12,13 +12,13 @@ namespace dagui
     {
         if (bufferSize >= elementSize())
             for (auto a : _descriptor.attributes)
-                std::copy_n(static_cast<const char*>(buffer)+a.offset, elementSize(), std::back_inserter(_data));
+                std::copy_n(static_cast<const char*>(buffer)+a.offset, a.attr.size(), std::back_inserter(_data));
     }
 
     void OpaqueAttributeArray::getVertex(std::size_t index, void* buffer, std::size_t bufferSize)
     {
         if (bufferSize>=elementSize())
             for (auto a : _descriptor.attributes)
-                std::copy_n(static_cast<const char*>(data())+elementSize()*index, elementSize(), static_cast<char*>(buffer)+a.offset);
+                std::copy_n(static_cast<const char*>(data())+elementSize()*index+a.elementOffset, a.attr.size(), static_cast<char*>(buffer)+a.offset);
     }
 }

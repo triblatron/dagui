@@ -13,15 +13,16 @@ namespace dagui
     void ArrayDescriptor::configure(dagbase::ConfigurationElement& config)
     {
         std::uint32_t offset{offsetSoFar};
-
-        config.eachChild(([this, &offset](dagbase::ConfigurationElement& child)
+        std::uint32_t elementOffset{0};
+        config.eachChild(([this, &offset, &elementOffset](dagbase::ConfigurationElement& child)
         {
             AttributeLayout layout;
 
             layout.configure(child);
+            layout.elementOffset = elementOffset;
             layout.offset = offset;
             offset += layout.attr.size();
-
+            elementOffset = offset;
             attributes.push_back(layout);
 
             return true;
@@ -39,7 +40,7 @@ namespace dagui
 
         for (auto& attr : attributes)
         {
-            total += attr.stride;
+            total += attr.attr.size();
         }
 
         return total;

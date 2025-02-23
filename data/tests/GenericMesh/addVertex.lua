@@ -40,5 +40,44 @@ root=
 				}
 			}
 		}
+	},
+	interleaved=
+	{
+		vertex=
+		{
+			x=1.0,
+			y=2.0,
+			r=1.0,
+			g=0.5,
+			b=0.2,
+			a=0.8,
+		},
+		mesh=
+		{
+			arrays=
+			{
+				{
+					{
+						attribute=
+						{
+							name="position",
+							dataType="TYPE_FLOAT",
+							numComponents=2,
+							usage="USAGE_POSITION",
+						},
+						-- offset and stride are automatically computed
+					},
+					{
+						attribute=
+						{
+							name="colour",
+							dataType="TYPE_FLOAT",
+							numComponents=4,
+							usage="USAGE_COLOUR",
+						},
+					},
+				},
+			}
+		}
 	}
 }
