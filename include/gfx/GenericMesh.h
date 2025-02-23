@@ -39,18 +39,18 @@ namespace dagui
                 delete a;
         }
 
-        void addAttribute(const AttributeLayout& layout)
-        {
-            _attrs.push_back(layout);
-        }
-
         void addVertex(const Vertex& v)
         {
-            // TODO:Copy data into attribute arrays
+            bool vertexAdded = false;
+
             for (auto a : _data)
             {
                 a->addVertex(&v, sizeof(Vertex));
+                vertexAdded = true;
             }
+
+            if (vertexAdded)
+                ++_numVertices;
         }
 
         void getVertex(std::size_t i, Vertex* v)
@@ -63,6 +63,11 @@ namespace dagui
                     a->getVertex(i, v, sizeof(Vertex));
                 }
             }
+        }
+
+        std::size_t size() const
+        {
+            return _numVertices;
         }
 
         void configure(dagbase::ConfigurationElement& config)
@@ -81,24 +86,11 @@ namespace dagui
                     _data.push_back(array);
                     return true;
                 });
-
-
             }
-            // for each array do
-            //   create a VertexArray
         }
-        // void addData(std::size_t arrayIndex, AttributeArray* data)
-        // {
-        //     if (arrayIndex >= _data.size())
-        //         _data.resize(arrayIndex + 1);
-        //
-        //     _data[arrayIndex] = data;
-        // }
     private:
-        using AttributeLayoutArray = std::vector<dagui::AttributeLayout>;
-        AttributeLayoutArray _attrs;
-        //! We cannot delete these because we don't know the real type that was passed to addData().
         using AttributeArrays = std::vector<AttributeArray*>;
         AttributeArrays _data;
+        std::size_t _numVertices{ 0 };
     };
 }

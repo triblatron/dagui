@@ -19,7 +19,7 @@ namespace dagui
 
         std::size_t size() const override
         {
-            return _data.size();
+            return _numVertices;
         }
 
         std::size_t elementSize() const override
@@ -38,5 +38,6 @@ namespace dagui
     private:
         using VertexArray = std::vector<char>;
         VertexArray _data;
+        std::size_t _numVertices{0};
     };
 }
