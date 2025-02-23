@@ -1,8 +1,7 @@
 root=
 {
-	separate=
+	vertices=
 	{
-		vertex=
 		{
 			x=1.0,
 			y=2.0,
@@ -11,6 +10,25 @@ root=
 			b=0.2,
 			a=0.8,
 		},
+		{
+			x=2.0,
+			y=2.0,
+			r=0.0,
+			g=1.0,
+			b=0.0,
+			a=1.0,
+		},
+		{
+			x=2.0,
+			y=3.0,
+			r=1.0,
+			g=0.0,
+			b=1.0,
+			a=1.0
+		}
+	},
+	separate=
+	{
 		mesh=
 		{
 			arrays=
@@ -43,15 +61,6 @@ root=
 	},
 	interleaved=
 	{
-		vertex=
-		{
-			x=1.0,
-			y=2.0,
-			r=1.0,
-			g=0.5,
-			b=0.2,
-			a=0.8,
-		},
 		mesh=
 		{
 			arrays=

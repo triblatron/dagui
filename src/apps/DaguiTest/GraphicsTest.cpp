@@ -708,7 +708,7 @@ INSTANTIATE_TEST_SUITE_P(LayerAttributes, LayerAttributes_testSort, ::testing::V
 	std::make_tuple("data/tests/LayerAttributes/testSort.lua", "texture", true)
 	));
 
-class GenericMesh_addVertex : public ::testing::TestWithParam<std::tuple<const char*, const char*, TestVertexField, float>>
+class GenericMesh_addVertex : public ::testing::TestWithParam<std::tuple<const char*, const char*, TestVertexField, std::size_t, float>>
 {
 
 };
@@ -723,29 +723,51 @@ TEST_P(GenericMesh_addVertex, testValue)
 	auto testConfig = config->findElement(testConfigName);
 	ASSERT_NE(nullptr, testConfig);
 	auto field = std::get<2>(GetParam());
-	TestVertex v;
-	if (auto element = testConfig->findElement("vertex"); element)
-		v.configure(*element);
 	dagui::GenericMesh<TestVertex> sut;
 	if (auto element = testConfig->findElement("mesh"); element)
 		sut.configure(*element);
-	sut.addVertex(v);
+	if (auto element = config->findElement("vertices"); element)
+	{
+		element->eachChild([&sut](dagbase::ConfigurationElement& child)
+		{
+			TestVertex v;
+
+			v.configure(child);
+			sut.addVertex(v);
+
+			return true;
+		});
+	}
 	TestVertex actualVertex;
-	sut.getVertex(0, &actualVertex);
-	EXPECT_EQ(v.*field, actualVertex.*field);
+	auto index = std::get<3>(GetParam());
+	auto value = std::get<4>(GetParam());
+	sut.getVertex(index, &actualVertex);
+	EXPECT_EQ(value, actualVertex.*field);
 }
 
 INSTANTIATE_TEST_SUITE_P(GenericMesh, GenericMesh_addVertex, ::testing::Values(
-std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::x, 1.0f),
-std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::y, 2.0f),
-std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::r, 1.0f),
-std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::g, 0.5f),
-std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::b, 0.2f),
-std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::a, 0.8f),
-std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::x, 1.0f),
-std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::y, 2.0f),
-std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::r, 1.0f),
-std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::g, 0.5f),
-std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::b, 0.2f),
-std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::a, 0.8f)
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::x, 0, 1.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::y, 0, 2.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::r, 0, 1.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::g, 0, 0.5f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::b, 0, 0.2f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::a, 0, 0.8f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::x, 2, 2.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::y, 2, 3.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::r, 2, 1.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::g, 2, 0.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::b, 2, 1.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::a, 2, 1.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::x, 0, 1.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::y, 0, 2.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::r, 0, 1.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::g, 0, 0.5f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::b, 0, 0.2f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::a, 0, 0.8f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::x, 2, 2.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::y, 2, 3.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::r, 2, 1.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::g, 2, 0.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::b, 2, 1.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::a, 2, 1.0f)
 ));
