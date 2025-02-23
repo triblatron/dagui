@@ -32,4 +32,16 @@ namespace dagui
             attr.stride = offset;;
         }
     }
+
+    std::size_t ArrayDescriptor::size() const
+    {
+        std::size_t total{0};
+
+        for (auto& attr : attributes)
+        {
+            total += attr.stride;
+        }
+
+        return total;
+    }
 }

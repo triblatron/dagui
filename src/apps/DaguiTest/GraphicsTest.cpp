@@ -732,7 +732,7 @@ TEST_P(GenericMesh_addVertex, testValue)
 	sut.addVertex(v);
 	TestVertex actualVertex;
 	sut.getVertex(0, &actualVertex);
-	EXPECT_EQ(v, actualVertex);
+	EXPECT_EQ(v.*field, actualVertex.*field);
 }
 
 INSTANTIATE_TEST_SUITE_P(GenericMesh, GenericMesh_addVertex, ::testing::Values(

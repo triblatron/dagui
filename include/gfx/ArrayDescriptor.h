@@ -19,5 +19,7 @@ namespace dagui
         AttributeLayoutArray attributes;
 
         void configure(dagbase::ConfigurationElement& config);
+
+        std::size_t size() const;
     };
 }

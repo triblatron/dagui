@@ -31,6 +31,10 @@ namespace dagui
 
         virtual std::size_t elementSize() const = 0;
 
+        virtual void addVertex(const void* buffer, std::size_t bufferSize) = 0;
+
+        virtual void getVertex(std::size_t index, void* buffer, std::size_t bufferSize) = 0;
+
         virtual const void* data() const = 0;
     protected:
         ArrayDescriptor _descriptor;

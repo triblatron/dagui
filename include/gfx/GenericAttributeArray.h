@@ -41,6 +41,20 @@ namespace dagui
             std::memcpy((char*)buf, (const char*)&_data[index] + _descriptor.attributes[attrIndex].offset, bufSize);
         }
 
+        void addVertex(const void* buffer, std::size_t bufferSize) override
+        {
+            if (bufferSize>=sizeof(Vertex))
+                addVertex(*((const Vertex*)buffer));
+        }
+
+        void getVertex(std::size_t index, void* buffer, std::size_t bufferSize) override
+        {
+            if (bufferSize>=sizeof(Vertex))
+            {
+                std::memcpy(buffer, &_data[index], bufferSize);
+            }
+        }
+
         void addVertex(const Vertex& vertex)
         {
             _data.push_back(vertex);

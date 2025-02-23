@@ -7,6 +7,8 @@
 #include <vector>
 
 #include "GenericAttributeArray.h"
+#include "OpaqueAttributeArray.h"
+#include "core/ConfigurationElement.h"
 
 namespace dagbase
 {
@@ -44,17 +46,43 @@ namespace dagui
 
         void addVertex(const Vertex& v)
         {
-
+            // TODO:Copy data into attribute arrays
+            for (auto a : _data)
+            {
+                a->addVertex(&v, sizeof(Vertex));
+            }
         }
 
         void getVertex(std::size_t i, Vertex* v)
         {
-
+            // TOOD:Copy from all arrays into v
+            if (v)
+            {
+                for (auto a : _data)
+                {
+                    a->getVertex(i, v, sizeof(Vertex));
+                }
+            }
         }
 
         void configure(dagbase::ConfigurationElement& config)
         {
+            if (auto element = config.findElement("arrays"); element)
+            {
+                element->eachChild([this](dagbase::ConfigurationElement& child)
+                {
+                    ArrayDescriptor descriptor;
+                    descriptor.configure(child);
+                    auto array = new OpaqueAttributeArray();
+                    array->setDescriptor(descriptor);
+                    _data.push_back(array);
+                    return true;
+                });
 
+
+            }
+            // for each array do
+            //   create a VertexArray
         }
         // void addData(std::size_t arrayIndex, AttributeArray* data)
         // {
