@@ -1,6 +1,6 @@
 root=
 {
-	position=
+	separate=
 	{
 		vertex=
 		{
@@ -25,6 +25,17 @@ root=
 							usage="USAGE_POSITION",
 						},
 						-- offset and stride are automatically computed
+					},
+				},
+				{
+					{
+						attribute=
+						{
+							name="colour",
+							dataType="TYPE_FLOAT",
+							numComponents=4,
+							usage="USAGE_COLOUR",
+						},
 					},
 				}
 			}

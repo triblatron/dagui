@@ -12,7 +12,7 @@ namespace dagui
 {
     void ArrayDescriptor::configure(dagbase::ConfigurationElement& config)
     {
-        std::uint32_t offset{0};
+        std::uint32_t offset{offsetSoFar};
 
         config.eachChild(([this, &offset](dagbase::ConfigurationElement& child)
         {

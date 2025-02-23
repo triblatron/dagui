@@ -736,5 +736,10 @@ TEST_P(GenericMesh_addVertex, testValue)
 }
 
 INSTANTIATE_TEST_SUITE_P(GenericMesh, GenericMesh_addVertex, ::testing::Values(
-	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "position", &TestVertex::x, 1.0f)
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::x, 1.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::y, 2.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::r, 1.0f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::g, 0.5f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::b, 0.2f),
+	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "separate", &TestVertex::a, 0.8f)
 	));

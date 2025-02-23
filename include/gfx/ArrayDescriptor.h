@@ -15,6 +15,7 @@ namespace dagui
     //! Description of the attributes in a generic attribute array
     struct DAGUI_API ArrayDescriptor
     {
+        std::uint32_t offsetSoFar{0};
         using AttributeLayoutArray = std::vector<AttributeLayout>;
         AttributeLayoutArray attributes;
 

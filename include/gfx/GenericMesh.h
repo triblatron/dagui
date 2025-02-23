@@ -69,10 +69,13 @@ namespace dagui
         {
             if (auto element = config.findElement("arrays"); element)
             {
-                element->eachChild([this](dagbase::ConfigurationElement& child)
+                std::size_t offsetSoFar = 0;
+                element->eachChild([this,&offsetSoFar](dagbase::ConfigurationElement& child)
                 {
                     ArrayDescriptor descriptor;
+                    descriptor.offsetSoFar = offsetSoFar;
                     descriptor.configure(child);
+                    offsetSoFar += descriptor.size();
                     auto array = new OpaqueAttributeArray();
                     array->setDescriptor(descriptor);
                     _data.push_back(array);

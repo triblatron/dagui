@@ -11,12 +11,14 @@ namespace dagui
     void OpaqueAttributeArray::addVertex(const void* buffer, std::size_t bufferSize)
     {
         if (bufferSize >= elementSize())
-            std::copy_n(static_cast<const char*>(buffer), elementSize(), std::back_inserter(_data));
+            for (auto a : _descriptor.attributes)
+                std::copy_n(static_cast<const char*>(buffer)+a.offset, elementSize(), std::back_inserter(_data));
     }
 
     void OpaqueAttributeArray::getVertex(std::size_t index, void* buffer, std::size_t bufferSize)
     {
         if (bufferSize>=elementSize())
-            std::copy_n(static_cast<const char*>(data())+elementSize()*index, elementSize(), static_cast<char*>(buffer));
+            for (auto a : _descriptor.attributes)
+                std::copy_n(static_cast<const char*>(data())+elementSize()*index, elementSize(), static_cast<char*>(buffer)+a.offset);
     }
 }
