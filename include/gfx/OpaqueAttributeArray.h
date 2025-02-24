@@ -10,7 +10,7 @@
 
 namespace dagui
 {
-    class OpaqueAttributeArray : public dagui::AttributeArray
+    class DAGUI_API OpaqueAttributeArray : public dagui::AttributeArray
     {
     public:
         OpaqueAttributeArray() = default;
