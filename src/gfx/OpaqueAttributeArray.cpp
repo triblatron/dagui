@@ -6,6 +6,9 @@
 
 #include "gfx/OpaqueAttributeArray.h"
 
+#include <algorithm>
+#include <iterator>
+
 namespace dagui
 {
     void OpaqueAttributeArray::addVertex(const void* buffer, std::size_t bufferSize)
