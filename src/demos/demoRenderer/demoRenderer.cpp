@@ -40,12 +40,11 @@ GLfloat vertices[] = {
 
 void onReshape(int width, int height)
 {
-    // glViewport(0,0,width,height);
-    // glMatrixMode(GL_PROJECTION);
-    // glLoadIdentity();
-    // gluOrtho2D(0.0, width, 0.0, height);
-    // glMatrixMode(GL_MODELVIEW);
-    // glLoadIdentity();
+    glViewport(0,0,width,height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 void display()
