@@ -16,7 +16,6 @@
 #include <iostream>
 #include <cstdint>
 
-#include "../../../ThirdParty/dagbase/include/core/ConfigurationElement.h"
 #include "core/BinPackingStrategy.h"
 #include "core/BinPackingStrategyFactory.h"
 #include "gfx/Image.h"
