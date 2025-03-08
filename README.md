@@ -84,6 +84,7 @@ DaguiTest
 * Note that \path\to\dependencies-x64-windows-vc17 is the path to the dependencies on your system
 * Note that you may have to add a -G <generator> where <generator> is something like "Visual Studio 15 2017"
 * Note that the -A x64 is mandatory because we don't support 32bit platforms.
+* Note that as of 20250308, the dagbase submodule of dagui has been moved to ThirdParty/dag/thirdparty/dagbase, and may be necessary to configure and generate or reopen the solution in Visual Studio to get a correct build
 ### macOS Common Dependencies
 ```bash
 brew install googletest
@@ -141,12 +142,15 @@ DaguiTest
 
 ~~Build on Ubuntu 20.04~~
 
+~~Build on Windows 10~~
+
 ~~Build on Windows 11~~
 
 ~~Build on Raspian 12~~
 
-* ~~Build on macOS 10.15 Catalina~~
+* ~~Build on macOS 10.15 Catalina Intel~~
   * ~~HEAD that requires GLUT and FreeType et al~~
+* ~~Build on macOS 15.3 Sequoia Apple Silicon~~
 * ~~Render a full screen quad in a GLUT window~~
 * ~~Create a texture of a solid colour~~
 * ~~Render a glyph to a texture~~
@@ -167,12 +171,12 @@ DaguiTest
   * be careful not to stretch the texture when a reshape of the window occurs
 * ~~Render some text using the font texture as a lookup~~
 
-## Work8ng on
+## Working on
 * OpenGL backend classes
 * Draw a mesh using a Renderer backend
   * Rectangle
   * Sector of a circle
-
+* 
 ## Next up
 * Draw a window
 * Render effects such as underline using pango
