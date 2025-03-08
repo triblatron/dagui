@@ -143,6 +143,7 @@ DaguiTest
 ~~Build on Ubuntu 20.04~~
 
 ~~Build on Windows 10~~
+* Visual Studio 17.7.3
 
 ~~Build on Windows 11~~
 
