@@ -6,6 +6,7 @@ FIND_PACKAGE(OpenGL COMPONENTS OpenGL REQUIRED)
 FIND_PACKAGE(Freetype REQUIRED)
 FIND_PACKAGE(GLEW REQUIRED)
 FIND_PACKAGE(Lua 5.4 REQUIRED)
+FIND_PACKAGE(glm REQUIRED)
 SET(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -48,6 +49,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
 		include/gfx/GenericAttributeArray.h
 		include/gfx/Layer.h
 		include/gfx/OpaqueAttributeArray.h
+		include/util/glmOutput.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -78,6 +80,7 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
 		src/gfx/ArrayDescriptor.cpp
 		src/gfx/Layer.cpp
 		src/gfx/OpaqueAttributeArray.cpp
+		src/util/glmOutput.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")

@@ -18,6 +18,10 @@
 #include "gfx/GenericMesh.h"
 #include "gfx/OpenGLMesh2D.h"
 #include "gfx/OpenGLRenderer.h"
+#include "util/glmOutput.h"
+
+#include <glm/glm.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
 
 dagui::gl::VertexBuffer vertexBuffer;
 struct Vertex
@@ -95,6 +99,8 @@ int main(int argc, char** argv)
     vertexBuffer.submit();
     std::cout << "sizeof(vertices): " << sizeof(vertices) << std::endl;
     std::cout << glGetError() << std::endl;
+    glm::mat4 model = glm::perspective(45*glm::radians(45.0),16.0/9.0, 0.1, 1000.0);
+    std::cout << "model: " << model << std::endl;
     glutReshapeFunc(onReshape);
     glutDisplayFunc(display);
     glutMainLoop();
