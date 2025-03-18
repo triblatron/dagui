@@ -36,7 +36,7 @@ namespace dagui::gl
         glBufferData(GL_ARRAY_BUFFER, _vertices.size()*sizeof(float), _vertices.data(), GL_STATIC_DRAW);
         _colourBuffer.bind();
         glBufferData(GL_ARRAY_BUFFER, _colours.size()*sizeof(float), _colours.data(), GL_STATIC_DRAW);
-        std::cout << glGetError() << std::endl;
+        //std::cout << glGetError() << std::endl;
     }
 
 
@@ -48,6 +48,6 @@ namespace dagui::gl
         glVertexPointer(2, GL_FLOAT, 0, (void*)0);
 
         glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
-        std::cout << glGetError() << std::endl;
+        //std::cout << glGetError() << std::endl;
     }
 }

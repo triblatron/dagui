@@ -58,7 +58,7 @@ namespace dagui
                 }
                 glDrawArrays(mode, first, count);
             }
-            std::cout << glGetError() << std::endl;
+            //std::cout << glGetError() << std::endl;
         }
 
         void Buffer::allocate()
