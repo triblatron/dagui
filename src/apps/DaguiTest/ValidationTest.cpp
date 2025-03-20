@@ -5,8 +5,11 @@
 #include "core/ValidatorNumber.h"
 
 #include <gtest/gtest.h>
+#include <regex>
 
-    class ValidatorNumber_testFilter : public ::testing::TestWithParam<std::tuple<const char*, const char*, bool, double>>
+#include "core/ValidatorRegex.h"
+
+class ValidatorNumber_testFilter : public ::testing::TestWithParam<std::tuple<const char*, const char*, bool, double>>
 {
 
 };
@@ -75,4 +78,39 @@ INSTANTIATE_TEST_SUITE_P(ValidatorNumber, ValidatorNumber_testFilter, ::testing:
     std::make_tuple("-+1", "-1", true, -1),
     std::make_tuple("-+1..45", "-1.45", true, -1.45),
     std::make_tuple("-+1..45ee1", "-1.45e1", true, -1.45e1)
+    ));
+
+class ValidatorRegex_testFilter : public ::testing::TestWithParam<std::tuple<std::regex, const char*, const char*, bool, const char*>>
+{
+
+};
+
+TEST_P(ValidatorRegex_testFilter, testExpectedOutput)
+{
+    auto regex = std::get<0>(GetParam());
+    std::string input = std::get<1>(GetParam());
+    auto output = std::get<2>(GetParam());
+    auto valid = std::get<3>(GetParam());
+    auto value = std::get<4>(GetParam());
+
+    dagui::ValidatorRegex sut;
+    sut.setRegex(regex);
+    for (auto nextChar : input)
+    {
+        sut.filter(nextChar);
+    }
+    EXPECT_EQ(output, sut.output());
+    sut.submit();
+    EXPECT_EQ(valid, sut.isValid());
+    EXPECT_EQ(value, sut.stringValue());
+}
+
+INSTANTIATE_TEST_SUITE_P(ValidatorRegex, ValidatorRegex_testFilter, ::testing::Values(
+    std::make_tuple("[0-9]+", "1", "1", true, "1"),
+    std::make_tuple("[0-9]+", "", "", false, ""),
+    std::make_tuple("[0-9]+", "10", "10", true, "10"),
+    std::make_tuple("\\w+", "wibble", "wibble", true, "wibble"),
+    std::make_tuple("\\w+@\\w+", "wibble@wobble", "wibble@wobble", true, "wibble@wobble"),
+    std::make_tuple("\\w+@\\w+(\\.\\w+)*", "triblatron@github.com", "triblatron@github.com", true, "triblatron@github.com"),
+    std::make_tuple("[0-9]*", "1", "1", true, "1")
     ));
