@@ -37,6 +37,8 @@ namespace dagui
         {
             return _state == STATE_FINISH;
         }
+
+        double asDouble() const;
     private:
         State _state{STATE_INITIAL};
         std::string _output;

@@ -122,4 +122,15 @@ namespace dagui
             }
         }
     }
+
+    double ValidatorNumber::asDouble() const
+    {
+        char* endPtr = nullptr;
+        double value = std::strtod(_output.c_str(), &endPtr);
+        if (endPtr == _output.c_str())
+        {
+            return std::numeric_limits<double>::quiet_NaN();
+        }
+        return value;
+    }
 }
