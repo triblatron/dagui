@@ -31,11 +31,6 @@ namespace dagui
         void submit();
 
         bool isValid() const;
-
-        std::string stringValue() const
-        {
-            return _output;
-        }
     private:
         std::regex _regex;
         std::string _output;
