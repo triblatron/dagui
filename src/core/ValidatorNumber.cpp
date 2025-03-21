@@ -31,6 +31,10 @@ namespace dagui
                 _output += nextChar;
                 _state = STATE_INTEGER;
             }
+            else if (nextChar == '+' || nextChar == '-')
+            {
+                _status = STATUS_ERR_SIGN;
+            }
             break;
         case STATE_INTEGER:
             if (nextChar == '.')
@@ -58,6 +62,10 @@ namespace dagui
             {
                 _output += nextChar;
                 _state = STATE_EXPONENT_SIGN;
+            }
+            else if (nextChar == '.')
+            {
+                _status = STATUS_ERR_POINT;
             }
             break;
         case STATE_FRACTION:
@@ -88,6 +96,10 @@ namespace dagui
             {
                 _output += nextChar;
             }
+            else if (nextChar == '+' || nextChar == '-')
+            {
+                _status = STATUS_ERR_EXPONENT_SIGN;
+            }
             break;
         default:
             break;
@@ -115,6 +127,10 @@ namespace dagui
                 if (std::isdigit(_output.back()))
                 {
                     _state = STATE_FINISH;
+                }
+                else if (_output.back() == '+' || _output.back() == '-')
+                {
+                    _status = STATUS_ERR_EXPONENT;
                 }
                 break;
             default:

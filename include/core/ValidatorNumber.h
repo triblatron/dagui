@@ -24,6 +24,17 @@ namespace dagui
             STATE_EXPONENT,
             STATE_FINISH
         };
+
+        enum Status : std::uint32_t
+        {
+            STATUS_OK,
+            STATUS_ERR_SIGN,
+            STATUS_ERR_INTEGER,
+            STATUS_ERR_POINT,
+            STATUS_ERR_EXPONENT_SIGN,
+            STATUS_ERR_EXPONENT,
+            STATUS_UNKNOWN
+        };
     public:
         ValidatorNumber() = default;
 
@@ -38,9 +49,15 @@ namespace dagui
             return _state == STATE_FINISH;
         }
 
+        Status status() const
+        {
+            return _status;
+        }
+
         double asDouble() const;
     private:
-        State _state{STATE_INITIAL};
         std::string _output;
+        State _state{STATE_INITIAL};
+        Status _status{STATUS_OK};
     };
 }
