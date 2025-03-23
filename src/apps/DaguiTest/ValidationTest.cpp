@@ -80,7 +80,8 @@ INSTANTIATE_TEST_SUITE_P(ValidatorNumber, ValidatorNumber_testFilter, ::testing:
     std::make_tuple("-+1.0eE--2", "-1.0e-2", true, -1e-2, dagui::ValidatorNumber::STATUS_ERR_EXPONENT_SIGN),
     std::make_tuple("-+1", "-1", true, -1, dagui::ValidatorNumber::STATUS_ERR_SIGN),
     std::make_tuple("-+1..45", "-1.45", true, -1.45, dagui::ValidatorNumber::STATUS_ERR_POINT),
-    std::make_tuple("-+1..45ee1", "-1.45e1", true, -1.45e1, dagui::ValidatorNumber::STATUS_ERR_EXPONENT_SIGN)
+    std::make_tuple("-+1..45ee1", "-1.45e1", true, -1.45e1, dagui::ValidatorNumber::STATUS_ERR_EXPONENT_SIGN),
+    std::make_tuple("-+1..", "-1.", true, -1, dagui::ValidatorNumber::STATUS_ERR_POINT)
     ));
 
 class ValidatorRegex_testFilter : public ::testing::TestWithParam<std::tuple<std::regex, const char*, const char*, bool>>
