@@ -28,6 +28,7 @@ namespace dagui
         enum Status : std::uint32_t
         {
             STATUS_OK,
+            STATUS_ERR_EMPTY,
             STATUS_ERR_SIGN,
             STATUS_ERR_INTEGER,
             STATUS_ERR_POINT,

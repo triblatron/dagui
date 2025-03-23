@@ -43,6 +43,7 @@ TEST_P(ValidatorNumber_testFilter, testExpectedOutput)
 }
 
 INSTANTIATE_TEST_SUITE_P(ValidatorNumber, ValidatorNumber_testFilter, ::testing::Values(
+    std::make_tuple("", "", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_EMPTY),
     std::make_tuple("+1", "+1", true, 1, dagui::ValidatorNumber::STATUS_OK),
     std::make_tuple("-1", "-1", true, -1, dagui::ValidatorNumber::STATUS_OK),
     std::make_tuple("1", "1", true, 1, dagui::ValidatorNumber::STATUS_OK),

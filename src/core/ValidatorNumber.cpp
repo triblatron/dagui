@@ -141,6 +141,10 @@ namespace dagui
                 break;
             }
         }
+        else
+        {
+            _status = STATUS_ERR_EMPTY;
+        }
     }
 
     double ValidatorNumber::asDouble() const
