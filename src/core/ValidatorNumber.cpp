@@ -90,6 +90,10 @@ namespace dagui
                 _output += nextChar;
                 _state = STATE_EXPONENT;
             }
+            else if (nextChar == 'e' || nextChar == 'E')
+            {
+                _status = STATUS_ERR_EXPONENT_SIGN;
+            }
             break;
         case STATE_EXPONENT:
             if (std::isdigit(nextChar))
