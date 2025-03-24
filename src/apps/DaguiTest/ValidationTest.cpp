@@ -71,18 +71,18 @@ INSTANTIATE_TEST_SUITE_P(ValidatorNumber, ValidatorNumber_testFilter, ::testing:
     std::make_tuple("1.54e10", "1.54e10", true, 1.54e10, dagui::ValidatorNumber::STATUS_OK),
     std::make_tuple("-1.54e10", "-1.54e10", true, -1.54e10, dagui::ValidatorNumber::STATUS_OK),
     std::make_tuple("-1.54e-5", "-1.54e-5", true, -1.54e-5, dagui::ValidatorNumber::STATUS_OK),
-    std::make_tuple("++", "+", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_SIGN),
-    std::make_tuple("--", "-", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_SIGN),
-    std::make_tuple("+-", "+", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_SIGN),
-    std::make_tuple("-+", "-", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_SIGN),
-    std::make_tuple("-+1e", "-1e", false, -1, dagui::ValidatorNumber::STATUS_ERR_SIGN),
-    std::make_tuple("-+1e+", "-1e+", false, -1, dagui::ValidatorNumber::STATUS_ERR_EXPONENT),
-    std::make_tuple("-+1e-", "-1e-", false, -1, dagui::ValidatorNumber::STATUS_ERR_EXPONENT ),
-    std::make_tuple("-+1.0eE--2", "-1.0e-2", true, -1e-2, dagui::ValidatorNumber::STATUS_ERR_EXPONENT_SIGN),
-    std::make_tuple("-+1", "-1", true, -1, dagui::ValidatorNumber::STATUS_ERR_SIGN),
-    std::make_tuple("-+1..45", "-1.45", true, -1.45, dagui::ValidatorNumber::STATUS_ERR_POINT),
-    std::make_tuple("-+1..45ee1", "-1.45e1", true, -1.45e1, dagui::ValidatorNumber::STATUS_ERR_EXPONENT_SIGN),
-    std::make_tuple("-+1..", "-1.", true, -1, dagui::ValidatorNumber::STATUS_ERR_POINT)
+    std::make_tuple("++", "++", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_SIGN),
+    std::make_tuple("--", "--", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_SIGN),
+    std::make_tuple("+-", "+-", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_SIGN),
+    std::make_tuple("-+", "-+", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_SIGN),
+    std::make_tuple("-+1e", "-+1e", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_SIGN),
+    std::make_tuple("-+1e+", "-+1e+", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_EXPONENT),
+    std::make_tuple("-+1e-", "-+1e-", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_EXPONENT ),
+    std::make_tuple("-+1.0eE--2", "-+1.0eE--2", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_EXPONENT_SIGN),
+    std::make_tuple("-+1", "-+1", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_SIGN),
+    std::make_tuple("-+1..45", "-+1..45", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_POINT),
+    std::make_tuple("-+1..45ee1", "-+1..45ee1", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_EXPONENT_SIGN),
+    std::make_tuple("-+1..", "-+1..", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_POINT)
     ));
 
 class ValidatorRegex_testFilter : public ::testing::TestWithParam<std::tuple<std::regex, const char*, const char*, bool>>

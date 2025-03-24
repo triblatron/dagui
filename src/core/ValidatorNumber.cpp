@@ -11,24 +11,22 @@ namespace dagui
 {
     void ValidatorNumber::filter(char nextChar)
     {
+        _output += nextChar;
         switch (_state)
         {
         case STATE_INITIAL:
             if (std::isdigit(nextChar))
             {
-                _output += nextChar;
                 _state = STATE_INTEGER;
             }
             else if (nextChar == '+' || nextChar == '-')
             {
-                _output += nextChar;
                 _state = STATE_SIGN;
             }
             break;
         case STATE_SIGN:
             if (std::isdigit(nextChar))
             {
-                _output += nextChar;
                 _state = STATE_INTEGER;
             }
             else if (nextChar == '+' || nextChar == '-')
@@ -39,28 +37,23 @@ namespace dagui
         case STATE_INTEGER:
             if (nextChar == '.')
             {
-                _output += nextChar;
                 _state = STATE_POINT;
             }
             else if (std::isdigit(nextChar))
             {
-                _output += nextChar;
             }
             else if (nextChar == 'e' || nextChar == 'E')
             {
-                _output += nextChar;
                 _state = STATE_EXPONENT_SIGN;
             }
             break;
         case STATE_POINT:
             if (std::isdigit(nextChar))
             {
-                _output += nextChar;
                 _state = STATE_FRACTION;
             }
             else if (nextChar == 'e' || nextChar == 'E')
             {
-                _output += nextChar;
                 _state = STATE_EXPONENT_SIGN;
             }
             else if (nextChar == '.')
@@ -71,23 +64,19 @@ namespace dagui
         case STATE_FRACTION:
             if (std::isdigit(nextChar))
             {
-                _output += nextChar;
             }
             else if (nextChar == 'e' || nextChar == 'E')
             {
-                _output += nextChar;
                 _state = STATE_EXPONENT_SIGN;
             }
             break;
         case STATE_EXPONENT_SIGN:
             if (nextChar == '+' || nextChar == '-')
             {
-                _output += nextChar;
                 _state = STATE_EXPONENT;
             }
             else if (std::isdigit(nextChar))
             {
-                _output += nextChar;
                 _state = STATE_EXPONENT;
             }
             else if (nextChar == 'e' || nextChar == 'E')
@@ -98,7 +87,6 @@ namespace dagui
         case STATE_EXPONENT:
             if (std::isdigit(nextChar))
             {
-                _output += nextChar;
             }
             else if (nextChar == '+' || nextChar == '-')
             {
@@ -125,10 +113,11 @@ namespace dagui
             case STATE_INTEGER:
             case STATE_POINT:
             case STATE_FRACTION:
-                _state = STATE_FINISH;
+                if (_status == STATUS_OK)
+                    _state = STATE_FINISH;
                 break;
             case STATE_EXPONENT:
-                if (std::isdigit(_output.back()))
+                if (std::isdigit(_output.back()) && _status == STATUS_OK)
                 {
                     _state = STATE_FINISH;
                 }
