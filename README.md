@@ -1,6 +1,6 @@
 # Dagui
 
-A library for eff8ciently rendering GUIs for node graphs with OpenGL and Vulkan backends in C++.
+A library for efficiently rendering GUIs for node graphs with OpenGL and Vulkan backends in C++.
 
 ## License 
 
