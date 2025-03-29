@@ -6,11 +6,13 @@
 
 #include "config/Export.h"
 
+#include "core/Validator.h"
+
 #include <string>
 
 namespace dagui
 {
-    class DAGUI_API ValidatorNumber
+    class DAGUI_API ValidatorNumber : public dagui::Validator
     {
     public:
         enum State : std::uint32_t
@@ -25,19 +27,19 @@ namespace dagui
             STATE_FINISH
         };
 
-        enum Status : std::uint32_t
-        {
-            STATUS_OK,
-            STATUS_ERR_EMPTY,
-            STATUS_ERR_SIGN,
-            STATUS_ERR_INTEGER,
-            STATUS_ERR_POINT,
-            STATUS_ERR_EXPONENT_SIGN,
-            STATUS_ERR_EXPONENT,
-            STATUS_UNKNOWN
-        };
+
     public:
         ValidatorNumber() = default;
+
+        void setMinValue(double minValue)
+        {
+            _minValue = minValue;
+        }
+
+        void setMaxValue(double maxValue)
+        {
+            _maxValue = maxValue;
+        }
 
         void filter(char nextChar);
 
@@ -58,6 +60,8 @@ namespace dagui
         double asDouble() const;
     private:
         std::string _output;
+        double _minValue{std::numeric_limits<double>::lowest()};
+        double _maxValue{std::numeric_limits<double>::max()};
         State _state{STATE_INITIAL};
         Status _status{STATUS_OK};
     };

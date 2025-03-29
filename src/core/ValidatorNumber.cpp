@@ -125,6 +125,20 @@ namespace dagui
         {
             _status = STATUS_ERR_EMPTY;
         }
+
+        if (_state == STATE_FINISH)
+        {
+            double value = asDouble();
+
+            if (value < _minValue)
+            {
+                _status = STATUS_ERR_TOO_LOW;
+            }
+            else if (value > _maxValue)
+            {
+                _status = STATUS_ERR_TOO_HIGH;
+            }
+        }
     }
 
     double ValidatorNumber::asDouble() const

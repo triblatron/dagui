@@ -85,6 +85,37 @@ INSTANTIATE_TEST_SUITE_P(ValidatorNumber, ValidatorNumber_testFilter, ::testing:
     std::make_tuple("-+1..", "-+1..", false, std::numeric_limits<double>::quiet_NaN(), dagui::ValidatorNumber::STATUS_ERR_POINT)
     ));
 
+class ValidatorNumber_testRange : public ::testing::TestWithParam<std::tuple<const char*, double, double, dagui::Validator::Status>>
+{
+
+};
+
+TEST_P(ValidatorNumber_testRange, testExpectedStatus)
+{
+    std::string_view input = std::get<0>(GetParam());
+    auto minValue = std::get<1>(GetParam());
+    auto maxValue = std::get<2>(GetParam());
+    auto status = std::get<3>(GetParam());
+
+    dagui::ValidatorNumber sut;
+    sut.setMinValue(minValue);
+    sut.setMaxValue(maxValue);
+    for (auto nextChar : input)
+    {
+        sut.filter(nextChar);
+    }
+    sut.submit();
+    EXPECT_EQ(status, sut.status());
+}
+
+INSTANTIATE_TEST_SUITE_P(ValidatorNumber, ValidatorNumber_testRange, ::testing::Values(
+    std::make_tuple("1", 1, 10, dagui::Validator::STATUS_OK),
+    std::make_tuple("2", 1, 10, dagui::Validator::STATUS_OK),
+    std::make_tuple("10", 1, 10, dagui::Validator::STATUS_OK),
+    std::make_tuple("0", 1, 10, dagui::Validator::STATUS_ERR_TOO_LOW),
+    std::make_tuple("11", 1, 10, dagui::Validator::STATUS_ERR_TOO_HIGH)
+    ));
+
 class ValidatorRegex_testFilter : public ::testing::TestWithParam<std::tuple<std::regex, const char*, const char*, bool>>
 {
 
