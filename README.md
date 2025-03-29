@@ -1,4 +1,6 @@
-# A User Interface for dag
+# Dagui
+
+A library for eff8ciently rendering GUIs for node graphs with OpenGL and Vulkan backends in C++.
 
 ## License 
 
