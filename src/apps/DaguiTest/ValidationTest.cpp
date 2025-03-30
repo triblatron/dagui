@@ -3,11 +3,12 @@
 //
 
 #include "core/ValidatorNumber.h"
+#include "core/ValidatorInteger.h"
+#include "core/ValidatorRegex.h"
 
 #include <gtest/gtest.h>
 #include <regex>
 
-#include "core/ValidatorRegex.h"
 
 class ValidatorNumber_testFilter : public ::testing::TestWithParam<std::tuple<const char*, const char*, bool, double, dagui::ValidatorNumber::Status>>
 {
@@ -114,6 +115,49 @@ INSTANTIATE_TEST_SUITE_P(ValidatorNumber, ValidatorNumber_testRange, ::testing::
     std::make_tuple("10", 1, 10, dagui::Validator::STATUS_OK),
     std::make_tuple("0", 1, 10, dagui::Validator::STATUS_ERR_TOO_LOW),
     std::make_tuple("11", 1, 10, dagui::Validator::STATUS_ERR_TOO_HIGH)
+    ));
+
+class ValidatorInteger_testFilter : public ::testing::TestWithParam<std::tuple<const char*, std::int64_t, std::int64_t, bool, std::int64_t, dagui::Validator::Status>>
+{
+
+};
+
+TEST_P(ValidatorInteger_testFilter, testExpectedStatus)
+{
+    std::string_view input = std::get<0>(GetParam());
+    int minValue = std::get<1>(GetParam());
+    int maxValue = std::get<2>(GetParam());
+    auto valid = std::get<3>(GetParam());
+    auto value = std::get<4>(GetParam());
+    auto status = std::get<5>(GetParam());
+
+    dagui::ValidatorInteger sut;
+    sut.setMinValue(minValue);
+    sut.setMaxValue(maxValue);
+    for (auto nextChar : input)
+    {
+        sut.filter(nextChar);
+    }
+    sut.submit();
+    EXPECT_EQ(valid, sut.valid());
+    EXPECT_EQ(status, sut.status());
+    EXPECT_EQ(value, sut.asInteger());
+}
+
+INSTANTIATE_TEST_SUITE_P(ValidatorInteger, ValidatorInteger_testFilter, ::testing::Values(
+    std::make_tuple("", 0, 10, false, std::int64_t{0}, dagui::Validator::STATUS_ERR_EMPTY),
+    std::make_tuple("0", 0, 10, true, std::int64_t{0}, dagui::Validator::STATUS_OK),
+    std::make_tuple("2", 0, 10, true, std::int64_t{2}, dagui::Validator::STATUS_OK),
+    std::make_tuple("5", 0, 10, true, std::int64_t{5}, dagui::Validator::STATUS_OK),
+    std::make_tuple("9", 0, 10, true, 9, dagui::Validator::STATUS_OK),
+    std::make_tuple("10", 0, 10, true, 10, dagui::Validator::STATUS_OK),
+    std::make_tuple("-1", 0, 10, false, -1, dagui::Validator::STATUS_ERR_TOO_LOW),
+    std::make_tuple("11", 0, 10, false, 11, dagui::Validator::STATUS_ERR_TOO_HIGH),
+    std::make_tuple("-", 0, 10, false,  std::numeric_limits<std::int64_t>::quiet_NaN(), dagui::Validator::STATUS_ERR_SIGN),
+    std::make_tuple("+", 0, 10, false, std::numeric_limits<std::int64_t>::quiet_NaN(), dagui::Validator::STATUS_ERR_SIGN),
+    std::make_tuple("+1", 0, 10, true, 1, dagui::Validator::STATUS_OK),
+    std::make_tuple("-1", -10, 10, true, -1, dagui::Validator::STATUS_OK),
+    std::make_tuple("-1.", -10, 10, false, -1, dagui::Validator::STATUS_ERR_POINT)
     ));
 
 class ValidatorRegex_testFilter : public ::testing::TestWithParam<std::tuple<std::regex, const char*, const char*, bool>>
