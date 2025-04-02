@@ -28,16 +28,15 @@ TEST_P(ValidatorNumber_testFilter, testExpectedOutput)
     {
         sut.filter(nextChar);
     }
-    EXPECT_EQ(expected, sut.output());
-    sut.submit();
+    sut.submit(input);
     EXPECT_EQ(valid, sut.isValid());
     if (!std::isnan(value))
     {
-        EXPECT_EQ(value, sut.asDouble());
+        EXPECT_EQ(value, sut.asDouble(input));
     }
     else
     {
-        EXPECT_TRUE(std::isnan(sut.asDouble()));
+        EXPECT_TRUE(std::isnan(sut.asDouble(input)));
     }
 
     EXPECT_EQ(status, sut.status());
@@ -139,7 +138,7 @@ TEST_P(ValidatorInteger_testFilter, testExpectedStatus)
         sut.filter(nextChar);
     }
     sut.submit();
-    EXPECT_EQ(valid, sut.valid());
+    EXPECT_EQ(valid, sut.isValid());
     EXPECT_EQ(status, sut.status());
     EXPECT_EQ(value, sut.asInteger());
 }

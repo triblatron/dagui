@@ -19,8 +19,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/core/CompositeShape.h
         include/core/Window.h
         include/util/enums.h
-        include/core/ValidatorInt.h
-        include/gfx/Image.h
+		include/gfx/Image.h
         include/gfx/ImageSource.h
         include/gfx/FontImageSource.h
         include/gfx/TextureAtlas.h
@@ -55,6 +54,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
 		include/core/ValidatorRegex.h
 		include/core/Validator.h
 		include/core/ValidatorInteger.h
+		include/core/ValidatorRange.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
