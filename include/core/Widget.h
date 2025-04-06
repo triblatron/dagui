@@ -6,7 +6,10 @@
 
 #include "config/Export.h"
 
+#include "core/ConfigurationElement.h"
+
 #include <string>
+#include <string_view>
 
 namespace dagui
 {
@@ -43,6 +46,8 @@ namespace dagui
         {
             return _shape;
         }
+
+        virtual dagbase::ConfigurationElement::ValueType find(std::string_view path);
     private:
         std::string _id;
         Widget* _parent{nullptr};

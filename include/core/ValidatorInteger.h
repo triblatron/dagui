@@ -31,7 +31,7 @@ namespace dagui
 
         void filter(char nextChar) override;
 
-        void submit(const std::stringG input) override;
+        void submit(const std::string& input) override;
 
         bool isValid() const override
         {

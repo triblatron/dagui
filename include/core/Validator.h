@@ -38,7 +38,10 @@ namespace dagui
 
         virtual ~Validator() = default;
 
-        virtual void configure(dagbase::ConfigurationElement& config) = 0;
+        virtual void configure(dagbase::ConfigurationElement& config)
+        {
+
+        }
 
         virtual void filter(char nextChar) = 0;
 

@@ -14,4 +14,9 @@ namespace dagui
     {
         // Do nothing.
     }
+
+    dagbase::ConfigurationElement::ValueType Widget::find(std::string_view path)
+    {
+        return {};
+    }
 }
