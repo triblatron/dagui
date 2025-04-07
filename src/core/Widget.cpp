@@ -23,6 +23,26 @@ namespace dagui
         {
             _id = element->asString();
         }
+
+        if (auto element=config.findElement("children"); element)
+        {
+            element->eachChild([this, &factory](dagbase::ConfigurationElement& child)
+            {
+                Widget* childWidget = factory.create(child);
+
+                if (childWidget)
+                {
+                    addChild(childWidget);
+                }
+                return true;
+            });
+        }
+    }
+
+    void Widget::addChild(Widget* child)
+    {
+        if (child)
+            _children.push_back(child);
     }
 
     dagbase::ConfigurationElement::ValueType Widget::find(std::string_view path)
@@ -30,6 +50,10 @@ namespace dagui
         dagbase::ConfigurationElement::ValueType retval;
 
         retval = dagbase::findEndpoint(path, "id", _id);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "numChildren", std::uint32_t(_children.size()));
         if (retval.has_value())
             return retval;
 
