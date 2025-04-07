@@ -6,12 +6,30 @@
 
 #include "core/WidgetFactory.h"
 #include "core/ConfigurationElement.h"
-#include "core/Widget.h"
+#include "core/Window.h"
 
 namespace dagui
 {
     Widget* WidgetFactory::create(dagbase::ConfigurationElement& config)
     {
-        return new Widget();
+        std::string className;
+
+        if (auto element = config.findElement("class"); element)
+        {
+            className = element->asString();
+        }
+
+        Widget* widget = nullptr;
+        if (className == "Window")
+        {
+            widget = new Window(nullptr);
+        }
+
+        if (widget)
+        {
+            widget->configure(config, *this);
+        }
+
+        return widget;
     }
 }

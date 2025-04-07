@@ -19,6 +19,10 @@ void assertComparison(dagbase::ConfigurationElement::ValueType expected, dagbase
         {
             EXPECT_EQ(expected.value(), actual.value());
         }
+        else if ((!expected.has_value() && actual.has_value()) || (expected.has_value() && !actual.has_value()))
+        {
+            FAIL();
+        }
         break;
     case dagbase::ConfigurationElement::RELOP_NE:
         EXPECT_NE(expected.value(), actual.value());

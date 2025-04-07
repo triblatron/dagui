@@ -13,6 +13,11 @@
 
 namespace dagui
 {
+    class WidgetFactory;
+}
+
+namespace dagui
+{
     class Shape;
 
     class DAGUI_API Widget
@@ -46,6 +51,8 @@ namespace dagui
         {
             return _shape;
         }
+
+        virtual void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory);
 
         virtual dagbase::ConfigurationElement::ValueType find(std::string_view path);
     private:
