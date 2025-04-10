@@ -6,7 +6,15 @@
 
 #include "config/Export.h"
 
+#include "core/ConfigurationElement.h"
+
 #include <string>
+#include <string_view>
+
+namespace dagui
+{
+    class WidgetFactory;
+}
 
 namespace dagui
 {
@@ -43,9 +51,17 @@ namespace dagui
         {
             return _shape;
         }
+
+        virtual void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory);
+
+        void addChild(Widget* child);
+
+        virtual dagbase::ConfigurationElement::ValueType find(std::string_view path);
     private:
         std::string _id;
         Widget* _parent{nullptr};
         Shape* _shape{nullptr};
+        using ChildArray = std::vector<Widget*>;
+        ChildArray _children;
     };
 }

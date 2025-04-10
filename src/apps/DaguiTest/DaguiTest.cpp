@@ -15,7 +15,6 @@
 #include "core/CompositeShape.h"
 #include "core/ShapeVisitor.h"
 #include "core/Window.h"
-#include "core/ValidatorInt.h"
 #include "core/SpaceTree.h"
 #include "core/BinPackingStrategyFactory.h"
 #include "core/BinPackingStrategy.h"
@@ -309,35 +308,6 @@ TEST(Window, testAfterConstructionThenAllFeaturesAreAvailable)
 
     EXPECT_TRUE(sut->areFeaturesAvailable(dagui::Window::DEFAULT_FEATURES));
 }
-
-
-class ValidatorInt_testRange : public ::testing::TestWithParam<std::tuple<std::int64_t, std::int64_t, const char*, dagui::ValidatorInt<std::int64_t>::Error>>
-{
-};
-
-TEST_P(ValidatorInt_testRange, testRange)
-{
-
-    auto minValue = std::get<0>(GetParam());
-    auto maxValue = std::get<1>(GetParam());
-    auto str = std::get<2>(GetParam());
-    auto error = std::get<3>(GetParam());
-
-    auto sut = std::make_unique<dagui::ValidatorInt<std::int64_t>>(minValue, maxValue);
-
-    dagui::ValidatorInt<std::int64_t>::Error actual =  sut->validate(str);
-
-    EXPECT_EQ(error, actual);
-}
-
-INSTANTIATE_TEST_SUITE_P(ValidatorInt, ValidatorInt_testRange, ::testing::Values(
-        std::make_tuple(0, 5, "0", dagui::ValidatorInt<std::int64_t>::ERR_OK),
-        std::make_tuple(0, 5, "5", dagui::ValidatorInt<std::int64_t>::ERR_OK),
-        std::make_tuple(0, 5, "2", dagui::ValidatorInt<std::int64_t>::ERR_OK),
-        std::make_tuple(0, 5, "10", dagui::ValidatorInt<std::int64_t>::ERR_TOO_HIGH),
-        std::make_tuple(0, 5, "-1", dagui::ValidatorInt<std::int64_t>::ERR_TOO_LOW)
-        ));
-
 
 class SpaceTree_testFromConfig : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, const char*, dagbase::ConfigurationElement::ValueType>>
 {

@@ -8,6 +8,7 @@
 
 #include <gtest/gtest.h>
 
+#include "core/ValidatorNumber.h"
 #include "gfx/AttributeDescriptor.h"
 
 class Window_testFeaturesRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Window::Features>>
@@ -249,4 +250,32 @@ INSTANTIATE_TEST_SUITE_P(AttributeDescriptor, AttributeUsage_testRoundTrip, ::te
     std::make_tuple("USAGE_TANGENT", dagui::AttributeDescriptor::USAGE_TANGENT),
     std::make_tuple("USAGE_BINORMAL", dagui::AttributeDescriptor::USAGE_BINORMAL),
     std::make_tuple("USAGE_COLOUR", dagui::AttributeDescriptor::USAGE_COLOUR)
+    ));
+
+class ValidatorNumberStatus_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::ValidatorNumber::Status>>
+{
+
+};
+
+TEST_P(ValidatorNumberStatus_testRoundTrip, testRoundtrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto status = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::ValidatorNumber::statusString(status));
+    EXPECT_EQ(status, dagui::ValidatorNumber::parseStatus(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(ValidatorNumberStatus, ValidatorNumberStatus_testRoundTrip, ::testing::Values(
+    std::make_tuple("STATUS_OK", dagui::Validator::STATUS_OK),
+    std::make_tuple("STATUS_ERR_EMPTY", dagui::Validator::STATUS_ERR_EMPTY),
+    std::make_tuple("STATUS_ERR_SIGN", dagui::Validator::STATUS_ERR_SIGN),
+    std::make_tuple("STATUS_ERR_INTEGER", dagui::Validator::STATUS_ERR_INTEGER),
+    std::make_tuple("STATUS_ERR_POINT", dagui::Validator::STATUS_ERR_POINT),
+    std::make_tuple("STATUS_ERR_EXPONENT_SIGN", dagui::Validator::STATUS_ERR_EXPONENT_SIGN),
+    std::make_tuple("STATUS_ERR_EXPONENT", dagui::Validator::STATUS_ERR_EXPONENT),
+    std::make_tuple("STATUS_ERR_TOO_LOW", dagui::Validator::STATUS_ERR_TOO_LOW),
+    std::make_tuple("STATUS_ERR_TOO_HIGH", dagui::Validator::STATUS_ERR_TOO_HIGH),
+    std::make_tuple("STATUS_ERR_MINMAX", dagui::Validator::STATUS_ERR_MINMAX),
+    std::make_tuple("STATUS_UNKNOWN", dagui::Validator::STATUS_UNKNOWN)
     ));

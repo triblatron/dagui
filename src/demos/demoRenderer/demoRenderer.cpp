@@ -5,8 +5,7 @@
 
 #if defined(__APPLE__)
 #include <GL/glew.h>
-#include <OpenGL/gl3.h>
-#include <glut.h>
+#include <GLFW/glfw3.h>
 #elif defined(__linux__) || defined(_WIN32)
 #include <GL/glew.h>
 #include <GL/glut.h>
@@ -23,6 +22,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 
+GLFWwindow* window = nullptr;
 dagui::gl::VertexBuffer vertexBuffer;
 struct Vertex
 {
@@ -65,18 +65,43 @@ void display()
     glEnableClientState(GL_COLOR_ARRAY);
 
     vertexBuffer.draw(GL_TRIANGLES, 0, a->size());
-    std::cout << glGetError() << std::endl;
+    //std::cout << glGetError() << std::endl;
 //    mesh.unbind();
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
-    glutSwapBuffers();
+    glfwSwapBuffers(window);
+}
+
+static void error_callback(int error, const char* description)
+{
+    fprintf(stderr, "Error: %s\n", description);
 }
 
 int main(int argc, char** argv)
 {
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH/* | GLUT_3_2_CORE_PROFILE*/);
-    glutCreateWindow("OpenGL Renderer");
+    glfwSetErrorCallback(error_callback);
+    if (!glfwInit())
+    {
+        std::cerr << "Failed to initialize GLFW" << '\n';
+
+        return -1;
+    }
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
+    glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
+    // glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH/* | GLUT_3_2_CORE_PROFILE*/);
+    window = glfwCreateWindow(640, 480, "My Title", NULL, NULL);
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+    if (!window)
+    {
+        // Window or OpenGL context creation failed
+        std::cerr << "Failed to open GLFW window." << '\n';
+
+        glfwTerminate();
+        return -1;
+    }
     std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
     GLenum err = glewInit();
 
@@ -98,11 +123,21 @@ int main(int argc, char** argv)
     vertexBuffer.allocate();
     vertexBuffer.submit();
     std::cout << "sizeof(vertices): " << sizeof(vertices) << std::endl;
-    std::cout << glGetError() << std::endl;
+    //std::cout << glGetError() << std::endl;
     glm::mat4 model = glm::perspective(glm::radians(45.0),16.0/9.0, 0.1, 1000.0);
     std::cout << "model: " << model << std::endl;
-    glutReshapeFunc(onReshape);
-    glutDisplayFunc(display);
-    glutMainLoop();
+    while (!glfwWindowShouldClose(window))
+    {
+        int width, height;
+        glfwGetFramebufferSize(window, &width, &height);
+        const float ratio = width / (float) height;
+
+        glViewport(0, 0, width, height);
+
+        display();
+        glfwPollEvents();
+    }
+    glfwDestroyWindow(window);
+    glfwTerminate();
     return 0;
 }

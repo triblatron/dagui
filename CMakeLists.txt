@@ -2,6 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 PROJECT( Dagui )
 
 FIND_PACKAGE(GLUT REQUIRED)
+FIND_PACKAGE(glfw3 REQUIRED)
 FIND_PACKAGE(OpenGL COMPONENTS OpenGL REQUIRED)
 FIND_PACKAGE(Freetype REQUIRED)
 FIND_PACKAGE(GLEW REQUIRED)
@@ -18,8 +19,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/core/CompositeShape.h
         include/core/Window.h
         include/util/enums.h
-        include/core/ValidatorInt.h
-        include/gfx/Image.h
+		include/gfx/Image.h
         include/gfx/ImageSource.h
         include/gfx/FontImageSource.h
         include/gfx/TextureAtlas.h
@@ -50,6 +50,12 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
 		include/gfx/Layer.h
 		include/gfx/OpaqueAttributeArray.h
 		include/util/glmOutput.h
+		include/core/ValidatorNumber.h
+		include/core/ValidatorRegex.h
+		include/core/Validator.h
+		include/core/ValidatorInteger.h
+		include/core/ValidatorRange.h
+		include/core/WidgetFactory.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -81,6 +87,12 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
 		src/gfx/Layer.cpp
 		src/gfx/OpaqueAttributeArray.cpp
 		src/util/glmOutput.cpp
+		src/core/ValidatorNumber.cpp
+		src/core/ValidatorRegex.cpp
+		src/core/Validator.cpp
+		src/core/ValidatorInteger.cpp
+		src/core/WidgetFactory.cpp
+		include/core/RootWidget.h
 )
 
 SET(HEADERS_GROUP "Header Files")
