@@ -10,6 +10,10 @@
 #include <unordered_map>
 #include <memory>
 
+#include "gfx/ArrayDescriptor.h"
+#include "gfx/ArrayDescriptor.h"
+#include "util/SearchableMap.h"
+
 namespace dagui
 {
     class DAGUI_API RootWidget : public dagui::Widget
@@ -17,8 +21,20 @@ namespace dagui
     public:
         RootWidget() = default;
 
-    private:
-        using WidgetLookup = std::unordered_map<std::string, std::shared_ptr<Widget>>;
+        void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory) override;
 
+        RootWidget* root() override
+        {
+            return this;
+        }
+
+        void addIdentified(Widget* widget) override;
+
+        Widget* lookupWidget(std::string name) override;
+
+        dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
+    private:
+        using WidgetLookup = dagbase::SearchableMap<std::unordered_map<std::string, Widget*>>;
+        WidgetLookup _widgetLookup;
     };
 }

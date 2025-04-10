@@ -25,16 +25,20 @@ namespace dagui
         if (className == "RootWidget")
         {
             widget = new RootWidget();
+            _root = widget;
         }
         else if (className == "Window")
         {
-            widget = new Window(nullptr);
+            widget = new Window(!_parentStack.empty()?_parentStack.top():nullptr);
         }
+        _parentStack.push(widget);
 
         if (widget)
         {
             widget->configure(config, *this);
         }
+
+        _parentStack.pop();
 
         return widget;
     }

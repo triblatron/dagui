@@ -6,6 +6,8 @@
 
 #include "config/Export.h"
 
+#include <stack>
+
 namespace dagbase
 {
     class ConfigurationElement;
@@ -19,5 +21,10 @@ namespace dagui
     {
     public:
         Widget* create(dagbase::ConfigurationElement& config);
+
+    private:
+        Widget* _root{nullptr};
+        using ParentStack = std::stack<Widget*>;
+        ParentStack _parentStack;
     };
 }

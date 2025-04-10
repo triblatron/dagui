@@ -6,6 +6,7 @@
 
 #include "core/Window.h"
 #include "util/enums.h"
+#include "util/Searchable.h"
 
 namespace dagui
 {
@@ -14,6 +15,29 @@ namespace dagui
     Widget(parent)
     {
         // Do nothing
+    }
+
+    void Window::configure(dagbase::ConfigurationElement& config, WidgetFactory& factory)
+    {
+        Widget::configure(config, factory);
+
+        if (auto element=config.findElement("title"); element)
+        {
+            _title = element->asString();
+        }
+    }
+
+    dagbase::ConfigurationElement::ValueType Window::find(std::string_view path) const
+    {
+        dagbase::ConfigurationElement::ValueType retval = Widget::find(path);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "title", _title);
+        if (retval.has_value())
+            return retval;
+
+        return {};
     }
 
     std::string Window::featuresName(Window::Features feature)

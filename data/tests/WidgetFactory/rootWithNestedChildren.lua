@@ -6,6 +6,7 @@ root=
 		{
 			class="Window",
 			id="test",
+			title="Hello, Dagui!",
 			children=
 			{
 				{

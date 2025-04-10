@@ -54,9 +54,18 @@ namespace dagui
 
         virtual void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory);
 
+        virtual Widget* root();
+
         void addChild(Widget* child);
 
-        virtual dagbase::ConfigurationElement::ValueType find(std::string_view path);
+        virtual void addIdentified(Widget* widget)
+        {
+            // Do nothing.
+        }
+
+        virtual Widget* lookupWidget(std::string name);
+
+        virtual dagbase::ConfigurationElement::ValueType find(std::string_view path) const;
     private:
         std::string _id;
         Widget* _parent{nullptr};
