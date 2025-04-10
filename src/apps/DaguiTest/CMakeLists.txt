@@ -2,8 +2,8 @@ SET( DaguiTest_SRC DaguiTest.cpp RoundTripTest.cpp
         GraphicsTest.cpp
         ValidationTest.cpp
         WidgetTest.cpp
-        TestUtils.h
-        TestUtils.cpp)
+        ../../../ThirdParty/dag/thirdparty/dagbase/include/test/TestUtils.h
+        ../../../ThirdParty/dag/thirdparty/dagbase/src/test/TestUtils.cpp)
 ADD_EXECUTABLE( DaguiTest ${DaguiTest_SRC} )
 IF (UNIX)
 LIST(APPEND LUA_LIBRARIES dl)

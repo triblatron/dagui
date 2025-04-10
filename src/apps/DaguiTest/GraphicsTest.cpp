@@ -18,7 +18,7 @@
 #include "gfx/Layer.h"
 #include "gfx/OpenGL.h"
 #include "gfx/RendererFactory.h"
-#include "TestUtils.h"
+#include "test/TestUtils.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>

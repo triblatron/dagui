@@ -7,6 +7,7 @@
 #include "core/WidgetFactory.h"
 #include "core/ConfigurationElement.h"
 #include "core/Window.h"
+#include "core/RootWidget.h"
 
 namespace dagui
 {
@@ -20,7 +21,12 @@ namespace dagui
         }
 
         Widget* widget = nullptr;
-        if (className == "Window")
+
+        if (className == "RootWidget")
+        {
+            widget = new RootWidget();
+        }
+        else if (className == "Window")
         {
             widget = new Window(nullptr);
         }

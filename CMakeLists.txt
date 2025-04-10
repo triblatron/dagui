@@ -92,6 +92,7 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
 		src/core/Validator.cpp
 		src/core/ValidatorInteger.cpp
 		src/core/WidgetFactory.cpp
+		include/core/RootWidget.h
 )
 
 SET(HEADERS_GROUP "Header Files")
