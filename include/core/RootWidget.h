@@ -8,6 +8,7 @@
 #include "config/Export.h"
 #include "util/Searchable.h"
 #include <unordered_map>
+#include <memory>
 
 namespace dagui
 {

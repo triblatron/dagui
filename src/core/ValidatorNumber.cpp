@@ -6,6 +6,7 @@
 
 #include "core/ValidatorNumber.h"
 #include <cctype>
+#include <limits>
 
 namespace dagui
 {

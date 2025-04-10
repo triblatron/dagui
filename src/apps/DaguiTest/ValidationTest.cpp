@@ -8,7 +8,7 @@
 
 #include <gtest/gtest.h>
 #include <regex>
-
+#include <cmath>
 
 class ValidatorNumber_testFilter : public ::testing::TestWithParam<std::tuple<const char*, const char*, bool, double, dagui::ValidatorNumber::Status>>
 {

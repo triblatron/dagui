@@ -8,7 +8,7 @@
 #include <GLFW/glfw3.h>
 #elif defined(__linux__) || defined(_WIN32)
 #include <GL/glew.h>
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
 #endif // __APPLE__
 #include <iostream>
 #include <ostream>
