@@ -10,6 +10,8 @@
 
 #include <cstdint>
 
+#include "WidgetFactory.h"
+
 namespace dagui
 {
     class DAGUI_API Window : public Widget
@@ -52,10 +54,24 @@ namespace dagui
         //! \param parent : Widget The parent of this Window, can be nullptr if this is the root window.
         explicit Window(Widget* parent);
 
+        void setTitle(std::string_view title)
+        {
+            _title = title;
+        }
+
+        const std::string& title() const
+        {
+            return _title;
+        }
+
         bool areFeaturesAvailable(Features features) const
         {
             return (_features & features) == features;
         }
+
+        void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory) override;
+
+        dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
 
         static std::string featuresName(Features feature);
 
@@ -67,5 +83,6 @@ namespace dagui
     private:
         Features _features{ DEFAULT_FEATURES };
         Status _status{ 0x0 };
+        std::string _title;
     };
 }

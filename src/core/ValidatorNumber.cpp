@@ -6,12 +6,16 @@
 
 #include "core/ValidatorNumber.h"
 #include <cctype>
+#include <limits>
 
 namespace dagui
 {
+    void ValidatorNumber::configure(dagbase::ConfigurationElement& config)
+    {
+    }
+
     void ValidatorNumber::filter(char nextChar)
     {
-        _output += nextChar;
         switch (_state)
         {
         case STATE_INITIAL:
@@ -90,14 +94,9 @@ namespace dagui
 
     }
 
-    std::string ValidatorNumber::output() const
+    void ValidatorNumber::submit(const std::string& input)
     {
-        return _output;
-    }
-
-    void ValidatorNumber::submit()
-    {
-        if (!_output.empty())
+        if (!input.empty())
         {
             switch (_state)
             {
@@ -108,11 +107,11 @@ namespace dagui
                     _state = STATE_FINISH;
                 break;
             case STATE_EXPONENT:
-                if (std::isdigit(_output.back()) && _status == STATUS_OK)
+                if (std::isdigit(input.back()) && _status == STATUS_OK)
                 {
                     _state = STATE_FINISH;
                 }
-                else if (_output.back() == '+' || _output.back() == '-')
+                else if (input.back() == '+' || input.back() == '-')
                 {
                     _status = STATUS_ERR_EXPONENT;
                 }
@@ -125,27 +124,13 @@ namespace dagui
         {
             _status = STATUS_ERR_EMPTY;
         }
-
-        if (_state == STATE_FINISH)
-        {
-            double value = asDouble();
-
-            if (value < _minValue)
-            {
-                _status = STATUS_ERR_TOO_LOW;
-            }
-            else if (value > _maxValue)
-            {
-                _status = STATUS_ERR_TOO_HIGH;
-            }
-        }
     }
 
-    double ValidatorNumber::asDouble() const
+    double ValidatorNumber::asDouble(const std::string& input) const
     {
         char* endPtr = nullptr;
-        double value = std::strtod(_output.c_str(), &endPtr);
-        if (endPtr == _output.c_str())
+        double value = std::strtod(input.c_str(), &endPtr);
+        if (endPtr == input.c_str())
         {
             return std::numeric_limits<double>::quiet_NaN();
         }

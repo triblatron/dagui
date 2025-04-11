@@ -31,23 +31,13 @@ namespace dagui
     public:
         ValidatorNumber() = default;
 
-        void setMinValue(double minValue)
-        {
-            _minValue = minValue;
-        }
+        void configure(dagbase::ConfigurationElement& config) override;
 
-        void setMaxValue(double maxValue)
-        {
-            _maxValue = maxValue;
-        }
+        void filter(char nextChar) override;
 
-        void filter(char nextChar);
+        void submit(const std::string& input) override;
 
-        std::string output() const;
-
-        void submit();
-
-        bool isValid() const
+        bool isValid() const override
         {
             return _state == STATE_FINISH;
         }
@@ -57,11 +47,8 @@ namespace dagui
             return _status;
         }
 
-        double asDouble() const;
+        double asDouble(const std::string& input) const;
     private:
-        std::string _output;
-        double _minValue{std::numeric_limits<double>::lowest()};
-        double _maxValue{std::numeric_limits<double>::max()};
         State _state{STATE_INITIAL};
         Status _status{STATUS_OK};
     };

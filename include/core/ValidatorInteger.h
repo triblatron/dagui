@@ -29,21 +29,11 @@ namespace dagui
     public:
         ValidatorInteger() = default;
 
-        void setMinValue(std::int64_t minValue)
-        {
-            _minValue = minValue;
-        }
+        void filter(char nextChar) override;
 
-        void setMaxValue(std::int64_t maxValue)
-        {
-            _maxValue = maxValue;
-        }
+        void submit(const std::string& input) override;
 
-        void filter(char nextChar);
-
-        void submit();
-
-        bool valid() const
+        bool isValid() const override
         {
             return _status == STATUS_OK;
         }
@@ -53,12 +43,9 @@ namespace dagui
             return _status;
         }
 
-        std::int64_t asInteger() const;
+        std::int64_t asInteger(const std::string& input) const;
     private:
-        std::int64_t _minValue = std::numeric_limits<std::int64_t>::min();
-        std::int64_t _maxValue = std::numeric_limits<std::int64_t>::max();
         State _state{STATE_INITIAL};
-        std::string _output;
         Status _status{STATUS_UNKNOWN};
     };
 }

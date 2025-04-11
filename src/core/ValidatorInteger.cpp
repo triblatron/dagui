@@ -47,12 +47,11 @@ namespace dagui
         default:
             break;
         }
-        _output += nextChar;
     }
 
-    void ValidatorInteger::submit()
+    void ValidatorInteger::submit(const std::string& input)
     {
-        if (!_output.empty())
+        if (!input.empty())
         {
             switch (_state)
             {
@@ -60,7 +59,7 @@ namespace dagui
                 _status = STATUS_ERR_SIGN;
                 break;
             case STATE_INTEGER:
-                if (std::isdigit(_output.back()))
+                if (std::isdigit(input.back()))
                 {
                     _status = STATUS_OK;
                 }
@@ -73,23 +72,11 @@ namespace dagui
         {
             _status = STATUS_ERR_EMPTY;
         }
-        if (_status == STATUS_OK)
-        {
-            std::int64_t result = asInteger();
-            if (result<_minValue)
-            {
-                _status = STATUS_ERR_TOO_LOW;
-            }
-            else if (result>_maxValue)
-            {
-                _status = STATUS_ERR_TOO_HIGH;
-            }
-        }
     }
 
-    std::int64_t ValidatorInteger::asInteger() const
+    std::int64_t ValidatorInteger::asInteger(const std::string& input) const
     {
-        std::int64_t result = strtoll(_output.c_str(), NULL, 10);
+        std::int64_t result = strtoll(input.c_str(), NULL, 10);
         return result;
     }
 }

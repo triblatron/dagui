@@ -276,5 +276,6 @@ INSTANTIATE_TEST_SUITE_P(ValidatorNumberStatus, ValidatorNumberStatus_testRoundT
     std::make_tuple("STATUS_ERR_EXPONENT", dagui::Validator::STATUS_ERR_EXPONENT),
     std::make_tuple("STATUS_ERR_TOO_LOW", dagui::Validator::STATUS_ERR_TOO_LOW),
     std::make_tuple("STATUS_ERR_TOO_HIGH", dagui::Validator::STATUS_ERR_TOO_HIGH),
+    std::make_tuple("STATUS_ERR_MINMAX", dagui::Validator::STATUS_ERR_MINMAX),
     std::make_tuple("STATUS_UNKNOWN", dagui::Validator::STATUS_UNKNOWN)
     ));

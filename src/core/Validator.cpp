@@ -22,6 +22,7 @@ namespace dagui
             ENUM_NAME(STATUS_ERR_EXPONENT)
             ENUM_NAME(STATUS_ERR_TOO_LOW)
             ENUM_NAME(STATUS_ERR_TOO_HIGH)
+            ENUM_NAME(STATUS_ERR_MINMAX)
             ENUM_NAME(STATUS_UNKNOWN)
         }
         return "<error>";
@@ -38,6 +39,7 @@ namespace dagui
         TEST_ENUM(STATUS_ERR_EXPONENT, str);
         TEST_ENUM(STATUS_ERR_TOO_LOW, str);
         TEST_ENUM(STATUS_ERR_TOO_HIGH, str);
+        TEST_ENUM(STATUS_ERR_MINMAX, str);
 
         return STATUS_UNKNOWN;
     }
