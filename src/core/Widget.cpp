@@ -86,7 +86,7 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
-        retval = dagbase::findEndpoint(path, "numChildren", std::uint32_t(_children.size()));
+        retval = dagbase::findEndpoint(path, "numChildren", std::int64_t(_children.size()));
         if (retval.has_value())
             return retval;
 
