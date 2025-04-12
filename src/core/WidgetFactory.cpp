@@ -5,6 +5,8 @@
 #include "config/config.h"
 
 #include "core/WidgetFactory.h"
+
+#include "core/Button.h"
 #include "core/ConfigurationElement.h"
 #include "core/Window.h"
 #include "core/RootWidget.h"
@@ -31,6 +33,11 @@ namespace dagui
         {
             widget = new Window(!_parentStack.empty()?_parentStack.top():nullptr);
         }
+        else if (className == "Button")
+        {
+            widget = new Button(!_parentStack.empty()?_parentStack.top():nullptr);
+        }
+
         _parentStack.push(widget);
 
         if (widget)
