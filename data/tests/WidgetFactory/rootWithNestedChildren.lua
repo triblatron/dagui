@@ -1,6 +1,7 @@
 root=
 {
 	class="RootWidget",
+	id="root",
 	children=
 	{
 		{
