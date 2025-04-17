@@ -10,6 +10,8 @@
 #include "core/ConfigurationElement.h"
 #include "core/Window.h"
 #include "core/RootWidget.h"
+#include "core/Vertical.h"
+#include "core/Label.h"
 
 namespace dagui
 {
@@ -36,6 +38,14 @@ namespace dagui
         else if (className == "Button")
         {
             widget = new Button(!_parentStack.empty()?_parentStack.top():nullptr);
+        }
+        else if (className == "Vertical")
+        {
+            widget = new Vertical(!_parentStack.empty()?_parentStack.top():nullptr);
+        }
+        else if (className == "Label")
+        {
+            widget = new Label(!_parentStack.empty()?_parentStack.top():nullptr);
         }
 
         _parentStack.push(widget);
