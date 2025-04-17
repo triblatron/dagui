@@ -647,7 +647,7 @@ class MockVisualElementVisitor : public dagui::VisualElementVisitor
 public:
 	MockVisualElementVisitor()
 	{
-		registerHandler("Border", [this](dagui::VisualElement* visualElement)
+		registerHandler(dagbase::Atom::intern("Border"), [this](dagui::VisualElement* visualElement)
 		{
 			++_numCalls;
 			return true;
@@ -655,7 +655,7 @@ public:
 
 		ON_CALL(*this, visit).WillByDefault([this](dagui::VisualElement* element)
 		{
-			auto handler = findHandler(element->className());
+			auto handler = findHandler(dagbase::Atom::intern(element->className()));
 
 			if (handler)
 			{

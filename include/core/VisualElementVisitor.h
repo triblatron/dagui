@@ -7,6 +7,7 @@
 #include "config/Export.h"
 #include "util/VectorMap.h"
 #include "VisualElement.h"
+#include "core/Atom.h"
 
 #include <functional>
 #include <string>
@@ -20,21 +21,21 @@ namespace dagui
     public:
         virtual ~VisualElementVisitor() = default;
 
-        void registerHandler(std::string name, Handler handler);
+        void registerHandler(dagbase::Atom name, Handler handler);
 
-        Handler findHandler(std::string name);
+        Handler findHandler(dagbase::Atom name);
 
         virtual void visit(VisualElement* visualElement) = 0;
     private:
-        dagbase::VectorMap<std::string, Handler> _handlers;
+        dagbase::VectorMap<dagbase::Atom, Handler> _handlers;
     };
 
-    inline void VisualElementVisitor::registerHandler(std::string name, Handler handler)
+    inline void VisualElementVisitor::registerHandler(dagbase::Atom name, Handler handler)
     {
         _handlers.insert(std::make_pair(name, handler));
     }
 
-    inline VisualElementVisitor::Handler VisualElementVisitor::findHandler(std::string name)
+    inline VisualElementVisitor::Handler VisualElementVisitor::findHandler(dagbase::Atom name)
     {
         if (auto it=_handlers.find(name); it!=_handlers.end())
             return it->second;
