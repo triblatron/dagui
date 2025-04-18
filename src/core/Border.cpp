@@ -17,6 +17,6 @@ namespace dagui
 
     void Border::accept(VisualElementVisitor& visitor)
     {
-        visitor.visit(this);
+        visitor.visit(*this);
     }
 }

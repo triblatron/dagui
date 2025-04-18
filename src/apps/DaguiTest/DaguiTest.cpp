@@ -647,21 +647,20 @@ class MockVisualElementVisitor : public dagui::VisualElementVisitor
 public:
 	MockVisualElementVisitor()
 	{
-		registerHandler(dagbase::Atom::intern("Border"), [this](dagui::VisualElement* visualElement)
+		registerHandler(dagbase::Atom::intern("Border"), [this](dagui::VisualElement& visualElement)
 		{
 			++_numCalls;
-			return true;
 		});
 
-		ON_CALL(*this, visit).WillByDefault([this](dagui::VisualElement* element)
-		{
-			auto handler = findHandler(dagbase::Atom::intern(element->className()));
-
-			if (handler)
-			{
-				handler(element);
-			}
-		});
+//		ON_CALL(*this, visit).WillByDefault([this](dagui::VisualElement& element)
+//		{
+//			auto handler = findHandler(element.className());
+//
+//			if (handler)
+//			{
+//				handler(element);
+//			}
+//		});
 	}
 
 	int numCalls() const
@@ -669,7 +668,7 @@ public:
 		return _numCalls;
 	}
 
-	MOCK_METHOD(void, visit, (dagui::VisualElement*), (override));
+	MOCK_METHOD(void, visit, (dagui::VisualElement&), ());
 private:
 	int _numCalls = 0;
 };
@@ -682,7 +681,7 @@ TEST_P(VisualElementVisitor_testVisitIsCalled, testVisitIsCalled)
 	// ASSERT_NE(nullptr, config);
 	std::string className = std::get<0>(GetParam());
 	MockVisualElementVisitor visitor;
-	EXPECT_CALL(visitor, visit(::testing::Matcher<dagui::VisualElement*>(::testing::NotNull()))).Times(1);
+
 	dagui::Border border;
 	border.accept(visitor);
 

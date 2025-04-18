@@ -5,32 +5,39 @@
 #pragma once
 
 #include "config/Export.h"
+#include "core/VisualElementVisitor.h"
+#include "core/Atom.h"
 
 #include <string>
 
 namespace dagui
 {
-    class VisualElementVisitor;
-
     class DAGUI_API VisualElement
     {
     public:
         VisualElement(std::string className);
 
-        std::string className() const
+        dagbase::Atom className() const
         {
             return _className;
         }
 
         virtual ~VisualElement() = default;
 
+        dagbase::Atom typeName() const
+        {
+            return _className;
+        }
+
         virtual void accept(VisualElementVisitor& visitor) = 0;
+    protected:
+
     private:
-        std::string _className;
+        dagbase::Atom _className;
     };
 
     inline VisualElement::VisualElement(std::string className)
-        : _className(className)
+        : _className(dagbase::Atom::intern(className))
     {
         // Do nothing.
     }
