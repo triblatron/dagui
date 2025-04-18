@@ -15,7 +15,7 @@ namespace dagui
     class DAGUI_API Button : public Widget
     {
     public:
-        Button(Widget* parent);
+        explicit Button(Widget* parent);
 
         void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory) override;
 

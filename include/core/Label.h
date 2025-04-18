@@ -12,7 +12,7 @@ namespace dagui
     class DAGUI_API Label : public Widget
     {
     public:
-        explicit Label(Widget* parent);
+        explicit Label(Widget *parent);
 
         ~Label() override = default;
 

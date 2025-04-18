@@ -12,7 +12,7 @@ namespace dagui
 
     Label::Label(Widget *parent)
     :
-    Widget(parent)
+    Widget(dagbase::Atom::intern("Label"), parent)
     {
         // Do nothing.
     }

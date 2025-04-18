@@ -1,0 +1,17 @@
+root=
+{
+	{
+		cmd="beginElement",
+		class="Group",
+	},
+	{
+		cmd="beginElement",
+		class="Label"
+	},
+	{
+		cmd="endElement",
+	},
+	{
+		cmd="endElement",
+	}
+}

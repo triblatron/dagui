@@ -115,7 +115,7 @@ INSTANTIATE_TEST_SUITE_P(Circle, Circle_testIsInside, ::testing::Values(
 TEST(Container, testEachChild)
 {
     auto* parent = new dagui::Container();
-    auto* child = new dagui::Widget();
+    auto* child = new dagui::Widget(dagbase::Atom::intern("Widget"));
     parent->addChild(child);
     std::size_t numChildren {0};
     parent->eachChild([&numChildren](dagui::Widget* child) {

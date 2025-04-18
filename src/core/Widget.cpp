@@ -5,17 +5,18 @@
 #include "config/config.h"
 #include "core/Widget.h"
 
-#include <utility>
 #include "core/ConfigurationElement.h"
 #include "core/WidgetFactory.h"
 #include "gfx/ArrayDescriptor.h"
-#include "gfx/ArrayDescriptor.h"
 #include "util/Searchable.h"
+
+#include <utility>
 
 namespace dagui
 {
-    Widget::Widget(Widget *parent)
+    Widget::Widget(dagbase::Atom typeName, Widget *parent)
     :
+    _typeName(typeName),
     _parent(parent)
     {
         // Do nothing.
@@ -91,5 +92,10 @@ namespace dagui
             return retval;
 
         return {};
+    }
+
+    void Widget::accept(WidgetVisitor &visitor)
+    {
+        visitor.visit(*this);
     }
 }

@@ -9,7 +9,7 @@
 namespace dagui
 {
 
-    Container::Container(Widget *parent) : Widget(parent)
+    Container::Container(Widget *parent) : Widget(dagbase::Atom::intern("Container"), parent)
     {
         // Do nothing.
     }

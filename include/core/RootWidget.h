@@ -19,7 +19,7 @@ namespace dagui
     class DAGUI_API RootWidget : public dagui::Widget
     {
     public:
-        RootWidget() = default;
+        RootWidget();
 
         void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory) override;
 

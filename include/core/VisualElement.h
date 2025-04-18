@@ -7,6 +7,7 @@
 #include "config/Export.h"
 #include "core/VisualElementVisitor.h"
 #include "core/Atom.h"
+#include "core/ConfigurationElement.h"
 
 #include <string>
 
@@ -17,11 +18,6 @@ namespace dagui
     public:
         VisualElement(std::string className);
 
-        dagbase::Atom className() const
-        {
-            return _className;
-        }
-
         virtual ~VisualElement() = default;
 
         dagbase::Atom typeName() const
@@ -29,16 +25,12 @@ namespace dagui
             return _className;
         }
 
+        virtual dagbase::ConfigurationElement::ValueType find(std::string_view path) const;
+
         virtual void accept(VisualElementVisitor& visitor) = 0;
     protected:
 
     private:
         dagbase::Atom _className;
     };
-
-    inline VisualElement::VisualElement(std::string className)
-        : _className(dagbase::Atom::intern(className))
-    {
-        // Do nothing.
-    }
 }

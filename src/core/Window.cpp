@@ -12,7 +12,7 @@ namespace dagui
 {
     Window::Window(Widget *parent)
     :
-    Widget(parent)
+    Widget(dagbase::Atom::intern("Window"),parent)
     {
         // Do nothing
     }

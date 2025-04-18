@@ -12,7 +12,7 @@ namespace dagui
 {
     Button::Button(Widget* parent)
         :
-    Widget(parent)
+    Widget(dagbase::Atom::intern("Button"), parent)
     {
         // Do nothing.
     }

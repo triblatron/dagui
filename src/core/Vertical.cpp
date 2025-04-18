@@ -18,8 +18,8 @@ namespace dagui
         return Widget::find(path);
     }
 
-    Vertical::Vertical(Widget *parent) : Widget(parent)
+    Vertical::Vertical(Widget *parent) : Widget(dagbase::Atom::intern("Vertical"), parent)
     {
-
+        // Do nothing.
     }
 }

@@ -1,0 +1,10 @@
+root=
+{
+	{
+		cmd="beginElement",
+		class="Group",
+	},
+	{
+		cmd="endElement",
+	}
+}

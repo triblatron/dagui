@@ -7,6 +7,7 @@
 #include "config/Export.h"
 
 #include "core/ConfigurationElement.h"
+#include "core/DynamicVisitor.h"
 
 #include <string>
 #include <string_view>
@@ -19,11 +20,13 @@ namespace dagui
 namespace dagui
 {
     class Shape;
+    class Widget;
+    using WidgetVisitor = dagbase::DynamicVisitor<Widget>;
 
     class DAGUI_API Widget
     {
     public:
-        explicit Widget(Widget* parent= nullptr);
+        explicit Widget(dagbase::Atom typeName, Widget* parent= nullptr);
 
         virtual ~Widget() = default;
 
@@ -66,7 +69,15 @@ namespace dagui
         virtual Widget* lookupWidget(std::string name);
 
         virtual dagbase::ConfigurationElement::ValueType find(std::string_view path) const;
+
+        virtual void accept(WidgetVisitor& visitor);
+
+        dagbase::Atom typeName()
+        {
+            return _typeName;
+        }
     private:
+        dagbase::Atom _typeName;
         std::string _id;
         Widget* _parent{nullptr};
         Shape* _shape{nullptr};

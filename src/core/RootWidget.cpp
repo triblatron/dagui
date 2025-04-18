@@ -44,4 +44,11 @@ namespace dagui
 
         return {};
     }
+
+    RootWidget::RootWidget()
+    :
+    Widget(dagbase::Atom::intern("RootWidget"))
+    {
+        // Do nothing.
+    }
 }
