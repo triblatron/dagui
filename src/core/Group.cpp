@@ -21,7 +21,7 @@ namespace dagui
     {
         dagbase::ConfigurationElement::ValueType retval;
 
-        retval = dagbase::findEndpoint(path, "numChildren", std::uint32_t(_children.a.size()));
+        retval = dagbase::findEndpoint(path, "numChildren", std::int64_t(_children.a.size()));
         if (retval.has_value())
             return retval;
 
