@@ -76,6 +76,8 @@ namespace dagui
         {
             return _typeName;
         }
+
+        void eachChild(std::function<bool(Widget&)>);
     private:
         dagbase::Atom _typeName;
         std::string _id;

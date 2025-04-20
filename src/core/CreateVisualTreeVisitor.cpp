@@ -10,21 +10,51 @@
 #include "core/Label.h"
 #include "core/Border.h"
 #include "core/Group.h"
+#include "core/RootWidget.h"
 
 namespace dagui
 {
     CreateVisualTreeVisitor::CreateVisualTreeVisitor()
     {
+        _builder.setFactory(&_factory);
         registerHandler(dagbase::Atom::intern("RootWidget"), [this](Widget& widget) {
-           Group* parent = new Group();
+            _builder.beginElement(dagbase::Atom::intern("Group"));
+            RootWidget& root = static_cast<RootWidget&>(widget);
 
-           _tree = parent;
+            root.eachChild([this](Widget& child) {
+                child.accept(*this);
+
+                return true;
+            });
+
+            _builder.endElement();
+
+            _tree = _builder.build();
         });
-        registerHandler(dagbase::Atom::intern("Label"), [this](Widget& widget) {
+        auto fparent = [this](Widget& widget) {
+            _builder.beginElement(dagbase::Atom::intern("Group"));
+
+            widget.eachChild([this](Widget& child) {
+                child.accept(*this);
+
+                return true;
+            });
+            _builder.endElement();
+        };
+
+        registerHandler(dagbase::Atom::intern("Window"), fparent);
+        registerHandler(dagbase::Atom::intern("Vertical"), fparent);
+
+        auto fchild = [this](Widget& widget) {
             Label& label = static_cast<Label&>(widget);
-            Group* parent = new Group();
 
-            _tree = parent;
-        });
+            _builder.beginElement(dagbase::Atom::intern("Group"));
+            _builder.beginElement(dagbase::Atom::intern("Border"));
+            _builder.endElement();
+            _builder.endElement();
+        };
+
+        registerHandler(dagbase::Atom::intern("Label"), fchild);
+        registerHandler(dagbase::Atom::intern("Button"), fchild);
     }
 }

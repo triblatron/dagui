@@ -6,6 +6,8 @@
 
 #include "core/DynamicVisitor.h"
 #include "core/Widget.h"
+#include "core/VisualElementTreeBuilder.h"
+#include "core/VisualElementFactory.h"
 
 namespace dagui
 {
@@ -22,5 +24,7 @@ namespace dagui
         }
     private:
         VisualElement* _tree{nullptr};
+        VisualElementFactory _factory;
+        VisualElementTreeBuilder _builder;
     };
 }

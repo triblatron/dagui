@@ -9,6 +9,8 @@
 #include "core/ConfigurationElement.h"
 #include "core/Widget.h"
 #include "test/TestUtils.h"
+#include "core/CreateVisualTreeVisitor.h"
+#include "core/VisualElement.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
@@ -52,3 +54,34 @@ INSTANTIATE_TEST_SUITE_P(WidgetFactory, WidgetFactory_testCreate, ::testing::Val
     std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.vertical.numChildren", std::int64_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.label.text", std::string("A label"), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
     ));
+
+class CreateVisualTreeVisitor_testVisit : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::ConfigurationElement::ValueType, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+TEST_P(CreateVisualTreeVisitor_testVisit, testExpectedTree)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+    auto tolerance = std::get<3>(GetParam());
+    auto op = std::get<4>(GetParam());
+    dagui::CreateVisualTreeVisitor visitor;
+    dagui::WidgetFactory factory;
+    auto widgetTree = factory.create(*config);
+    ASSERT_NE(nullptr, widgetTree);
+    widgetTree->accept(visitor);
+    auto visualTree = visitor.tree();
+    ASSERT_NE(nullptr, visualTree);
+    auto actualValue = visualTree->find(path);
+    assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(CreateVisualTreeVisitor, CreateVisualTreeVisitor_testVisit, ::testing::Values(
+        std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", "numChildren", std::int64_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", "children[0].children[0].numChildren", std::int64_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));

@@ -98,4 +98,15 @@ namespace dagui
     {
         visitor.visit(*this);
     }
+
+    void Widget::eachChild(std::function<bool(Widget &)> f)
+    {
+        for (auto child : _children)
+        {
+            if (!f(*child))
+            {
+                break;
+            }
+        }
+    }
 }
