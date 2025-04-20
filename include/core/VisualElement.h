@@ -13,10 +13,12 @@
 
 namespace dagui
 {
+    class Widget;
+
     class DAGUI_API VisualElement
     {
     public:
-        VisualElement(dagbase::Atom className);
+        VisualElement(dagbase::Atom className, Widget* widget);
 
         virtual ~VisualElement() = default;
 
@@ -31,6 +33,7 @@ namespace dagui
     protected:
 
     private:
+        Widget* _widget{nullptr};
         dagbase::Atom _className;
     };
 }

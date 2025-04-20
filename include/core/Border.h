@@ -13,7 +13,7 @@ namespace dagui
     class DAGUI_API Border : public VisualElement
     {
     public:
-        Border();
+        Border(Widget* widget);
 
         void accept(VisualElementVisitor& visitor) override;
     };

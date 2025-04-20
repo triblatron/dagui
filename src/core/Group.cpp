@@ -10,16 +10,19 @@
 namespace dagui
 {
 
-    Group::Group()
+    Group::Group(Widget* widget)
     :
-    VisualElement(dagbase::Atom::intern("Group"))
+    VisualElement(dagbase::Atom::intern("Group"), widget)
     {
         // Do nothing.
     }
 
     dagbase::ConfigurationElement::ValueType Group::find(std::string_view path) const
     {
-        dagbase::ConfigurationElement::ValueType retval;
+        dagbase::ConfigurationElement::ValueType retval = VisualElement::find(path);
+
+        if (retval.has_value())
+            return retval;
 
         retval = dagbase::findEndpoint(path, "numChildren", std::int64_t(_children.a.size()));
         if (retval.has_value())

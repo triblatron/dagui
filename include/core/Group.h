@@ -17,7 +17,7 @@ namespace dagui
     class DAGUI_API Group : public VisualElement
     {
     public:
-        Group();
+        Group(Widget* widget);
 
         void accept(VisualElementVisitor& visitor) override
         {

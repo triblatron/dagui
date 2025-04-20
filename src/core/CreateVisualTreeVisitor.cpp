@@ -18,7 +18,7 @@ namespace dagui
     {
         _builder.setFactory(&_factory);
         registerHandler(dagbase::Atom::intern("RootWidget"), [this](Widget& widget) {
-            _builder.beginElement(dagbase::Atom::intern("Group"));
+            _builder.beginElement(dagbase::Atom::intern("Group"), &widget);
             RootWidget& root = static_cast<RootWidget&>(widget);
 
             root.eachChild([this](Widget& child) {
@@ -32,7 +32,7 @@ namespace dagui
             _tree = _builder.build();
         });
         auto fparent = [this](Widget& widget) {
-            _builder.beginElement(dagbase::Atom::intern("Group"));
+            _builder.beginElement(dagbase::Atom::intern("Group"), &widget);
 
             widget.eachChild([this](Widget& child) {
                 child.accept(*this);
@@ -48,8 +48,8 @@ namespace dagui
         auto fchild = [this](Widget& widget) {
             Label& label = static_cast<Label&>(widget);
 
-            _builder.beginElement(dagbase::Atom::intern("Group"));
-            _builder.beginElement(dagbase::Atom::intern("Border"));
+            _builder.beginElement(dagbase::Atom::intern("Group"), &widget);
+            _builder.beginElement(dagbase::Atom::intern("Border"), &widget);
             _builder.endElement();
             _builder.endElement();
         };

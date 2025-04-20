@@ -83,5 +83,6 @@ TEST_P(CreateVisualTreeVisitor_testVisit, testExpectedTree)
 
 INSTANTIATE_TEST_SUITE_P(CreateVisualTreeVisitor, CreateVisualTreeVisitor_testVisit, ::testing::Values(
         std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", "numChildren", std::int64_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", "children[0].children[0].numChildren", std::int64_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", "children[0].children[0].numChildren", std::int64_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", "children[0].widget", true, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

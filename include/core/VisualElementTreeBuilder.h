@@ -18,6 +18,7 @@ namespace dagui
     class Group;
     class VisualElement;
     class VisualElementFactory;
+    class Widget;
 
     class DAGUI_API VisualElementTreeBuilder
     {
@@ -29,7 +30,7 @@ namespace dagui
             _factory = factory;
         }
 
-        void beginElement(dagbase::Atom className);
+        void beginElement(dagbase::Atom className, Widget *widget);
 
         void endElement();
 
@@ -42,6 +43,6 @@ namespace dagui
         using ParentStack = std::stack<VisualElement*>;
         ParentStack _parentStack;
         VisualElement* _currentElement{nullptr};
-        VisualElement* createElement(dagbase::Atom className);
+        VisualElement* createElement(dagbase::Atom className, Widget* widget);
     };
 }

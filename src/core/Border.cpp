@@ -9,9 +9,9 @@
 
 namespace dagui
 {
-    Border::Border()
+    Border::Border(Widget* widget)
         :
-    VisualElement(dagbase::Atom::intern("Border"))
+    VisualElement(dagbase::Atom::intern("Border"), widget)
     {
     }
 

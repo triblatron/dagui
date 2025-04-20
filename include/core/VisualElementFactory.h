@@ -5,6 +5,7 @@
 #include "config/Export.h"
 
 #include "core/Atom.h"
+#include "Widget.h"
 
 namespace dagui
 {
@@ -13,6 +14,6 @@ namespace dagui
     class DAGUI_API VisualElementFactory
     {
     public:
-        VisualElement* createElement(dagbase::Atom className);
+        VisualElement *createElement(dagbase::Atom className, dagui::Widget *widget);
     };
 }

@@ -21,7 +21,7 @@ TEST_P(VisualElementFactory_testCreate, testExpectedReturn)
 {
     auto className = dagbase::Atom::intern(std::get<0>(GetParam()));
     dagui::VisualElementFactory sut;
-    auto actual = sut.createElement(className);
+    auto actual = sut.createElement(className, nullptr);
     auto notNull = std::get<1>(GetParam());
     EXPECT_EQ(notNull, actual!=nullptr);
 }
@@ -64,7 +64,7 @@ public:
                             className = classElement->asString();
                         }
 
-                        _sut->beginElement(dagbase::Atom::intern(className));
+                        _sut->beginElement(dagbase::Atom::intern(className), nullptr);
                     }
                     else if (cmd == "endElement")
                     {

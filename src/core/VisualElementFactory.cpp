@@ -11,15 +11,15 @@
 namespace dagui
 {
 
-    VisualElement *VisualElementFactory::createElement(dagbase::Atom className)
+    VisualElement *VisualElementFactory::createElement(dagbase::Atom className, Widget *widget)
     {
         if (className == "Group")
         {
-            return new Group();
+            return new Group(widget);
         }
         else if (className == "Border")
         {
-            return new Border();
+            return new Border(widget);
         }
         return nullptr;
     }

@@ -682,7 +682,7 @@ TEST_P(VisualElementVisitor_testVisitIsCalled, testVisitIsCalled)
 	std::string className = std::get<0>(GetParam());
 	MockVisualElementVisitor visitor;
 
-	dagui::Border border;
+	dagui::Border border(nullptr);
 	border.accept(visitor);
 
 	EXPECT_EQ(1, visitor.numCalls());
