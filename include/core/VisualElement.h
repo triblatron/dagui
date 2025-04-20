@@ -16,7 +16,7 @@ namespace dagui
     class DAGUI_API VisualElement
     {
     public:
-        VisualElement(std::string className);
+        VisualElement(dagbase::Atom className);
 
         virtual ~VisualElement() = default;
 

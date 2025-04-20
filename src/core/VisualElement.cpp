@@ -8,9 +8,9 @@
 
 namespace dagui
 {
-    VisualElement::VisualElement(std::string className)
+    VisualElement::VisualElement(dagbase::Atom className)
     :
-    _className(dagbase::Atom::intern(className))
+    _className(className)
     {
         // Do nothing.
     }

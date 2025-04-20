@@ -11,7 +11,7 @@ namespace dagui
 {
     Border::Border()
         :
-    VisualElement("Border")
+    VisualElement(dagbase::Atom::intern("Border"))
     {
     }
 

@@ -12,7 +12,7 @@ namespace dagui
 
     Group::Group()
     :
-    VisualElement("Group")
+    VisualElement(dagbase::Atom::intern("Group"))
     {
         // Do nothing.
     }
