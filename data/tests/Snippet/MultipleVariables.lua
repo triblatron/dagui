@@ -1,0 +1,9 @@
+root=
+{
+	input="foo={{foo}}\nbar={{bar}}\n",
+	variables=
+	{
+		{"foo","true"},
+		{"bar","1.5"}
+	}
+}

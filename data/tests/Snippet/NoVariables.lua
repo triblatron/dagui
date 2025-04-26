@@ -1,0 +1,4 @@
+root=
+{
+	input="foo=true"
+}
