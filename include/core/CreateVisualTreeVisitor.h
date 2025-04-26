@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "config/Export.h"
+
 #include "core/DynamicVisitor.h"
 #include "core/Widget.h"
 #include "core/VisualElementTreeBuilder.h"
@@ -13,7 +15,7 @@ namespace dagui
 {
     class VisualElement;
 
-    class CreateVisualTreeVisitor : public dagbase::DynamicVisitor<Widget>
+    class DAGUI_API CreateVisualTreeVisitor : public dagbase::DynamicVisitor<Widget>
     {
     public:
         CreateVisualTreeVisitor();
