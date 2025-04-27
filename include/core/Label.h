@@ -16,6 +16,16 @@ namespace dagui
 
         ~Label() override = default;
 
+        void setText(const std::string& text)
+        {
+            _text = text;
+        }
+
+        const std::string& text() const
+        {
+            return _text;
+        }
+
         void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory) override;
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;

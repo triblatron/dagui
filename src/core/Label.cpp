@@ -35,7 +35,7 @@ namespace dagui
             return retval;
         }
 
-        retval = dagbase::findEndpoint(path, "text", _text);
+        retval = dagbase::findEndpoint(path, "text", text());
         if (retval.has_value())
             return retval;
 
