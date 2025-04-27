@@ -18,8 +18,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/util/CompletionSubstring.h
         include/core/CompositeShape.h
         include/core/Window.h
-        include/util/enums.h
-		include/gfx/Image.h
+ 		include/gfx/Image.h
         include/gfx/ImageSource.h
         include/gfx/FontImageSource.h
         include/gfx/TextureAtlas.h
@@ -66,6 +65,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/core/Group.h
         include/core/VisualElementTreeBuilder.h
         include/core/VisualElementFactory.h
+        include/core/SceneNode.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
