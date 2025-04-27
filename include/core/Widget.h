@@ -8,6 +8,7 @@
 
 #include "core/ConfigurationElement.h"
 #include "core/DynamicVisitor.h"
+#include "util/SearchableMap.h"
 
 #include <string>
 #include <string_view>
@@ -19,6 +20,7 @@ namespace dagui
 
 namespace dagui
 {
+    class SceneNode;
     class Shape;
     class Widget;
     using WidgetVisitor = dagbase::DynamicVisitor<Widget>;
@@ -79,11 +81,14 @@ namespace dagui
 
         void eachChild(std::function<bool(Widget&)>);
     private:
-        dagbase::Atom _typeName;
+        using Properties=dagbase::SearchableMap<std::unordered_map<dagbase::Atom, dagbase::ConfigurationElement::ValueType>>;
+        Properties _props;
         std::string _id;
-        Widget* _parent{nullptr};
-        Shape* _shape{nullptr};
         using ChildArray = std::vector<Widget*>;
         ChildArray _children;
+        dagbase::Atom _typeName;
+        Widget* _parent{nullptr};
+        SceneNode* _sceneNode{nullptr};
+        Shape* _shape{nullptr};
     };
 }
