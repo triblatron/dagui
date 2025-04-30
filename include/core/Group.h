@@ -6,20 +6,22 @@
 
 #include "config/Export.h"
 
-#include "core/VisualElement.h"
-#include "core/VisualElementVisitor.h"
+#include "core/SceneNode.h"
+
 #include "util/SearchableArray.h"
 
 #include <vector>
 
 namespace dagui
 {
-    class DAGUI_API Group : public VisualElement
+    class DAGUI_API Group : public SceneNode
     {
     public:
         Group(Widget* widget);
 
-        void accept(VisualElementVisitor& visitor) override
+        void eachChild(std::function<bool(SceneNode*)> f) override;
+
+        void accept(SceneNodeVisitor& visitor) override
         {
             visitor.visit(*this);
             for (auto child : _children.a)
@@ -28,7 +30,7 @@ namespace dagui
             }
         }
 
-        void addChild(VisualElement* child)
+        void addChild(SceneNode* child)
         {
             if (child)
             {
@@ -36,9 +38,9 @@ namespace dagui
             }
         }
 
-        dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
+        dagbase::Variant find(std::string_view path) const override;
     private:
-        using ChildArray = dagbase::SearchableArray<std::vector<VisualElement*>>;
+        using ChildArray = dagbase::SearchableArray<std::vector<SceneNode*>>;
         ChildArray _children;
     };
 }

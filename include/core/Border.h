@@ -6,16 +6,25 @@
 
 #include "config/Export.h"
 
-#include "core/VisualElement.h"
+#include "core/SceneNode.h"
 
 namespace dagui
 {
-    class DAGUI_API Border : public VisualElement
+    class Widget;
+
+    class DAGUI_API Border : public SceneNode
     {
     public:
         Border(Widget* widget);
 
-        void accept(VisualElementVisitor& visitor) override;
+        void accept(SceneNodeVisitor & visitor) override;
+
+        void eachChild(std::function<bool(SceneNode*)> f) override
+        {
+            // Do nothing.
+        }
+
+        dagbase::Variant find(std::string_view path) const override;
     };
 
 }

@@ -4,14 +4,14 @@
 
 #include "config/config.h"
 
-#include "core/VisualElementFactory.h"
+#include "core/SceneNodeFactory.h"
 #include "core/Group.h"
 #include "core/Border.h"
 
 namespace dagui
 {
 
-    VisualElement *VisualElementFactory::createElement(dagbase::Atom className, Widget *widget)
+    SceneNode *SceneNodeFactory::createNode(dagbase::Atom className, Widget *widget)
     {
         if (className == "Group")
         {

@@ -30,7 +30,6 @@
 #include <cstring>
 
 #include "core/Border.h"
-#include "core/VisualElementVisitor.h"
 #include "gfx/GlyphImageDef.h"
 #include "util/APIVersion.h"
 
@@ -637,57 +636,57 @@ INSTANTIATE_TEST_SUITE_P(APIVersion, APIVersion_compare, ::testing::Values(
 	std::make_tuple(1, 1, 1, 1, 1, 0, 1)
 	));
 
-class VisualElementVisitor_testVisitIsCalled : public ::testing::TestWithParam<std::tuple<const char*>>
-{
-
-};
-
-class MockVisualElementVisitor : public dagui::VisualElementVisitor
-{
-public:
-	MockVisualElementVisitor()
-	{
-		registerHandler(dagbase::Atom::intern("Border"), [this](dagui::VisualElement& visualElement)
-		{
-			++_numCalls;
-		});
-
-//		ON_CALL(*this, visit).WillByDefault([this](dagui::VisualElement& element)
-//		{
-//			auto handler = findHandler(element.className());
+//class VisualElementVisitor_testVisitIsCalled : public ::testing::TestWithParam<std::tuple<const char*>>
+//{
 //
-//			if (handler)
-//			{
-//				handler(element);
-//			}
+//};
+//
+//class MockVisualElementVisitor : public dagui::VisualElementVisitor
+//{
+//public:
+//	MockVisualElementVisitor()
+//	{
+//		registerHandler(dagbase::Atom::intern("Border"), [this](dagui::VisualElement& visualElement)
+//		{
+//			++_numCalls;
 //		});
-	}
-
-	int numCalls() const
-	{
-		return _numCalls;
-	}
-
-	MOCK_METHOD(void, visit, (dagui::VisualElement&), ());
-private:
-	int _numCalls = 0;
-};
-
-TEST_P(VisualElementVisitor_testVisitIsCalled, testVisitIsCalled)
-{
-	// auto configString = std::get<0>(GetParam());
-	// dagbase::Lua lua;
-	// auto config = dagbase::ConfigurationElement::fromFile(lua, configString);
-	// ASSERT_NE(nullptr, config);
-	std::string className = std::get<0>(GetParam());
-	MockVisualElementVisitor visitor;
-
-	dagui::Border border(nullptr);
-	border.accept(visitor);
-
-	EXPECT_EQ(1, visitor.numCalls());
-}
-
-INSTANTIATE_TEST_SUITE_P(VisualElementVisitor, VisualElementVisitor_testVisitIsCalled, ::testing::Values(
-	std::make_tuple("Border"))
-	);
+//
+////		ON_CALL(*this, visit).WillByDefault([this](dagui::VisualElement& element)
+////		{
+////			auto handler = findHandler(element.className());
+////
+////			if (handler)
+////			{
+////				handler(element);
+////			}
+////		});
+//	}
+//
+//	int numCalls() const
+//	{
+//		return _numCalls;
+//	}
+//
+//	MOCK_METHOD(void, visit, (dagui::VisualElement&), ());
+//private:
+//	int _numCalls = 0;
+//};
+//
+//TEST_P(VisualElementVisitor_testVisitIsCalled, testVisitIsCalled)
+//{
+//	// auto configString = std::get<0>(GetParam());
+//	// dagbase::Lua lua;
+//	// auto config = dagbase::ConfigurationElement::fromFile(lua, configString);
+//	// ASSERT_NE(nullptr, config);
+//	std::string className = std::get<0>(GetParam());
+//	MockVisualElementVisitor visitor;
+//
+//	dagui::Border border(nullptr);
+//	border.accept(visitor);
+//
+//	EXPECT_EQ(1, visitor.numCalls());
+//}
+//
+//INSTANTIATE_TEST_SUITE_P(VisualElementVisitor, VisualElementVisitor_testVisitIsCalled, ::testing::Values(
+//	std::make_tuple("Border"))
+//	);

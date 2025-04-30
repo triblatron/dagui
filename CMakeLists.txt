@@ -56,16 +56,14 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
 		include/core/ValidatorRange.h
 		include/core/WidgetFactory.h
 		include/core/Button.h
-		include/core/VisualElement.h
-		include/core/VisualElementVisitor.h
-		include/core/Border.h
+        include/core/Border.h
 		include/core/Vertical.h
         include/core/Label.h
-        include/core/CreateVisualTreeVisitor.h
         include/core/Group.h
-        include/core/VisualElementTreeBuilder.h
-        include/core/VisualElementFactory.h
+        include/core/SceneNodeFactory.h
         include/core/SceneNode.h
+        include/core/WidgetPattern.h
+        include/core/SceneTemplate.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -108,11 +106,11 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
 		src/core/Border.cpp
         src/core/Vertical.cpp
         src/core/Label.cpp
-        src/core/CreateVisualTreeVisitor.cpp
         src/core/Group.cpp
-        src/core/VisualElement.cpp
-        src/core/VisualElementTreeBuilder.cpp
-        src/core/VisualElementFactory.cpp
+        src/core/SceneNodeFactory.cpp
+        src/core/WidgetPattern.cpp
+        src/core/SceneTemplate.cpp
+        src/core/SceneNode.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")

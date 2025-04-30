@@ -4,7 +4,7 @@ SET( DaguiTest_SRC DaguiTest.cpp RoundTripTest.cpp
         WidgetTest.cpp
         ../../../ThirdParty/dag/thirdparty/dagbase/include/test/TestUtils.h
         ../../../ThirdParty/dag/thirdparty/dagbase/src/test/TestUtils.cpp
-        VisualElementTest.cpp)
+        PatternMatchingTest.cpp)
 ADD_EXECUTABLE( DaguiTest ${DaguiTest_SRC} )
 IF (UNIX)
 LIST(APPEND LUA_LIBRARIES dl)

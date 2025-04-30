@@ -9,11 +9,11 @@
 
 namespace dagui
 {
-    class VisualElement;
+    class SceneNode;
 
-    class DAGUI_API VisualElementFactory
+    class DAGUI_API SceneNodeFactory
     {
     public:
-        VisualElement *createElement(dagbase::Atom className, dagui::Widget *widget);
+        SceneNode* createNode(dagbase::Atom className, Widget* widget);
     };
 }

@@ -12,14 +12,14 @@ namespace dagui
 
     Group::Group(Widget* widget)
     :
-    VisualElement(dagbase::Atom::intern("Group"), widget)
+    SceneNode(dagbase::Atom::intern("Group"), widget)
     {
         // Do nothing.
     }
 
-    dagbase::ConfigurationElement::ValueType Group::find(std::string_view path) const
+    dagbase::Variant Group::find(std::string_view path) const
     {
-        dagbase::ConfigurationElement::ValueType retval = VisualElement::find(path);
+        dagbase::Variant retval = SceneNode::find(path);
 
         if (retval.has_value())
             return retval;
@@ -33,5 +33,17 @@ namespace dagui
             return retval;
 
         return {};
+    }
+
+    void Group::eachChild(std::function<bool(SceneNode *)> f)
+    {
+        if (f)
+        {
+            for (auto child : _children.a)
+            {
+                if (!f(child))
+                    break;
+            }
+        }
     }
 }
