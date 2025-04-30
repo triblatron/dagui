@@ -21,6 +21,7 @@
 #include "core/Atlas.h"
 #include "util/VectorMap.h"
 #include "core/Vec2f.h"
+#include "core/SceneNodeFactory.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -690,3 +691,26 @@ INSTANTIATE_TEST_SUITE_P(APIVersion, APIVersion_compare, ::testing::Values(
 //INSTANTIATE_TEST_SUITE_P(VisualElementVisitor, VisualElementVisitor_testVisitIsCalled, ::testing::Values(
 //	std::make_tuple("Border"))
 //	);
+
+class SceneNodeFactory_testCreateNode : public ::testing::TestWithParam<std::tuple<const char*, bool>>
+{
+
+};
+
+TEST_P(SceneNodeFactory_testCreateNode, testExpectedNotNull)
+{
+    auto className = dagbase::Atom::intern(std::get<0>(GetParam()));
+    auto notNull = std::get<1>(GetParam());
+
+    dagui::SceneNodeFactory factory;
+    dagui::Widget* widget = nullptr;
+    auto node = factory.createNode(className, widget);
+    EXPECT_EQ(notNull, node!=nullptr);
+}
+
+INSTANTIATE_TEST_SUITE_P(SceneNodeFactory, SceneNodeFactory_testCreateNode, ::testing::Values(
+        std::make_tuple("Group", true),
+        std::make_tuple("Border", true),
+        std::make_tuple("Text", true),
+        std::make_tuple("Spoo", false)
+        ));

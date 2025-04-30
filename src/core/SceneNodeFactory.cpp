@@ -7,6 +7,7 @@
 #include "core/SceneNodeFactory.h"
 #include "core/Group.h"
 #include "core/Border.h"
+#include "core/Text.h"
 
 namespace dagui
 {
@@ -21,6 +22,11 @@ namespace dagui
         {
             return new Border(widget);
         }
+        else if (className == "Text")
+        {
+            return new Text(widget);
+        }
+
         return nullptr;
     }
 }

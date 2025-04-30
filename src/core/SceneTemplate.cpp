@@ -7,6 +7,7 @@
 #include "core/SceneTemplate.h"
 #include "core/ConfigurationElement.h"
 #include "core/Group.h"
+#include "core/Text.h"
 
 namespace dagui
 {
@@ -39,7 +40,20 @@ namespace dagui
     {
         if (_sceneClass=="Group")
         {
-            return new Group(&widget);
+            Group* parent = new Group(&widget);
+
+            for (auto childTemplate : _children.a)
+            {
+                auto child = childTemplate->instantiate(widget);
+                if (child)
+                    parent->addChild(child);
+            }
+
+            return parent;
+        }
+        else if (_sceneClass=="Text")
+        {
+            return new Text(&widget);
         }
 
         return nullptr;
