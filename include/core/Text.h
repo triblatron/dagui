@@ -26,5 +26,7 @@ namespace dagui
         }
 
         dagbase::Variant find(std::string_view path) const override;
+    private:
+        std::string _text;
     };
 }

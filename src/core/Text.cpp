@@ -5,6 +5,7 @@
 #include "config/config.h"
 
 #include "core/Text.h"
+#include "util/Searchable.h"
 
 namespace dagui
 {
@@ -18,6 +19,15 @@ namespace dagui
 
     dagbase::Variant Text::find(std::string_view path) const
     {
-        return SceneNode::find(path);
+        auto retval = SceneNode::find(path);
+
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "text", _text);
+        if (retval.has_value())
+            return retval;
+
+        return {};
     }
 }
