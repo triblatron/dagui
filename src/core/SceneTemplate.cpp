@@ -22,7 +22,12 @@ namespace dagui
             auto prop = child.name();
             auto value = child.value();
             if (value.has_value())
-                _props.m.insert(PropertyMap::value_type (prop,value));
+            {
+                auto snippet = new WidgetSnippet();
+                snippet->setInput(value.toString().c_str());
+                _snippets.m.insert(SnippetMap::value_type (prop, snippet));
+                _props.m.insert(PropertyMap::value_type(prop, value));
+            }
             return true;
         });
         if (auto element = config.findElement("children"); element)
@@ -53,7 +58,14 @@ namespace dagui
         }
         else if (_sceneClass=="Text")
         {
-            return new Text(&widget);
+            auto text =  new Text(&widget);
+            if (auto it = _snippets.m.find("text"); it!=_snippets.m.end())
+            {
+                auto textSnippet = it->second;
+                textSnippet->setWidget(&widget);
+                text->setText(textSnippet->interpolate());
+            }
+            return text;
         }
 
         return nullptr;

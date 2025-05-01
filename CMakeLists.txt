@@ -65,6 +65,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/core/WidgetPattern.h
         include/core/SceneTemplate.h
         include/core/Text.h
+        include/core/WidgetSnippet.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -113,6 +114,7 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         src/core/SceneTemplate.cpp
         src/core/SceneNode.cpp
         src/core/Text.cpp
+        src/core/WidgetSnippet.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")

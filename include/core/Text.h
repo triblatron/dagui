@@ -25,6 +25,11 @@ namespace dagui
             // Do nothing.
         }
 
+        void setText(const std::string& text)
+        {
+            _text = text;
+        }
+
         dagbase::Variant find(std::string_view path) const override;
     private:
         std::string _text;
