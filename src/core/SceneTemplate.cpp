@@ -8,6 +8,8 @@
 #include "core/ConfigurationElement.h"
 #include "core/Group.h"
 #include "core/Text.h"
+#include "core/ClipGroup.h"
+#include "core/Widget.h"
 
 namespace dagui
 {
@@ -23,8 +25,10 @@ namespace dagui
             auto value = child.value();
             if (value.has_value())
             {
-                auto snippet = new WidgetSnippet();
+                auto snippet = new WidgetPropertyBinding();
                 snippet->setInput(value.toString().c_str());
+                snippet->setOpen(dagbase::Atom::intern("{{"));
+                snippet->setClose(dagbase::Atom::intern("}}"));
                 _snippets.m.insert(SnippetMap::value_type (prop, snippet));
                 _props.m.insert(PropertyMap::value_type(prop, value));
             }
@@ -56,6 +60,27 @@ namespace dagui
 
             return parent;
         }
+        else if (_sceneClass=="ClipGroup")
+        {
+            ClipGroup* parent = new ClipGroup(&widget);
+
+            if (auto it=_snippets.m.find("bounds"); it!=_snippets.m.end())
+            {
+                auto snippet = it->second;
+                snippet->setWidget(&widget);
+                parent->setBounds(snippet->interpolate([&widget](std::string name) {
+                    return widget.find(name);
+                }).asVec2());
+            }
+            for (auto childTemplate : _children.a)
+            {
+                auto child = childTemplate->instantiate(widget);
+                if (child)
+                    parent->addChild(child);
+            }
+
+            return parent;
+        }
         else if (_sceneClass=="Text")
         {
             auto text =  new Text(&widget);
@@ -63,7 +88,9 @@ namespace dagui
             {
                 auto textSnippet = it->second;
                 textSnippet->setWidget(&widget);
-                text->setText(textSnippet->interpolate());
+                text->setText(textSnippet->interpolate([&widget](std::string name) {
+                    return widget.find(name);
+                }).asString());
             }
             return text;
         }

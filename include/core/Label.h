@@ -31,5 +31,6 @@ namespace dagui
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
     private:
         std::string _text;
+        dagbase::Vec2 _bounds;
     };
 }

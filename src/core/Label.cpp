@@ -25,6 +25,11 @@ namespace dagui
         {
             _text = element->asString();
         }
+
+        if (auto element=config.findElement("bounds"); element)
+        {
+            _bounds = element->value().asVec2();
+        }
     }
 
     dagbase::ConfigurationElement::ValueType Label::find(std::string_view path) const
@@ -36,6 +41,10 @@ namespace dagui
         }
 
         retval = dagbase::findEndpoint(path, "text", text());
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "bounds", dagbase::Variant(_bounds));
         if (retval.has_value())
             return retval;
 

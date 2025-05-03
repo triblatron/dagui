@@ -8,6 +8,7 @@
 #include "core/Group.h"
 #include "core/Border.h"
 #include "core/Text.h"
+#include "core/ClipGroup.h"
 
 namespace dagui
 {
@@ -25,6 +26,10 @@ namespace dagui
         else if (className == "Text")
         {
             return new Text(widget);
+        }
+        else if (className == "ClipGroup")
+        {
+            return new ClipGroup(widget);
         }
 
         return nullptr;

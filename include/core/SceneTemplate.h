@@ -8,7 +8,7 @@
 #include "util/SearchableMap.h"
 #include "util/VectorMap.h"
 #include "core/Variant.h"
-#include "core/WidgetSnippet.h"
+#include "core/WidgetPropertyBinding.h"
 
 #include <string>
 #include <vector>
@@ -43,7 +43,7 @@ namespace dagui
         PropertyMap _props;
         using ChildArray = dagbase::SearchableArray<std::vector<SceneTemplate*>>;
         ChildArray _children;
-        using SnippetMap = dagbase::SearchableMap<dagbase::VectorMap<std::string, WidgetSnippet*>>;
+        using SnippetMap = dagbase::SearchableMap<dagbase::VectorMap<std::string, WidgetPropertyBinding*>>;
         SnippetMap _snippets;
     };
 }

@@ -3,17 +3,14 @@ root=
 	matchClass="Label",
 	sceneTemplate=
 	{
-		class="Group",
+		class="ClipGroup",
+		bounds="{{bounds}}",
 		children=
 		{
-			--~ {
-				--~ class="Rectangle",
-				--~ bounds="{{bounds}}",
-			--~ },
 			{
 				class="Text",
 				text="{{text}}",
-			}
+			},
 		}
 	}
 }
