@@ -25,10 +25,8 @@ namespace dagui
             auto value = child.value();
             if (value.has_value())
             {
-                auto snippet = new WidgetPropertyBinding();
+                auto snippet = new dagbase::PropertyBinding();
                 snippet->setInput(value.toString().c_str());
-                snippet->setOpen(dagbase::Atom::intern("{{"));
-                snippet->setClose(dagbase::Atom::intern("}}"));
                 _snippets.m.insert(SnippetMap::value_type (prop, snippet));
                 _props.m.insert(PropertyMap::value_type(prop, value));
             }
@@ -67,8 +65,7 @@ namespace dagui
             if (auto it=_snippets.m.find("bounds"); it!=_snippets.m.end())
             {
                 auto snippet = it->second;
-                snippet->setWidget(&widget);
-                parent->setBounds(snippet->interpolate([&widget](std::string name) {
+                parent->setBounds(snippet->interpolate(dagbase::Atom::intern("{{"), dagbase::Atom::intern("}}"), [&widget](std::string name) {
                     return widget.find(name);
                 }).asVec2());
             }
@@ -87,8 +84,7 @@ namespace dagui
             if (auto it = _snippets.m.find("text"); it!=_snippets.m.end())
             {
                 auto textSnippet = it->second;
-                textSnippet->setWidget(&widget);
-                text->setText(textSnippet->interpolate([&widget](std::string name) {
+                text->setText(textSnippet->interpolate(dagbase::Atom::intern("{{"), dagbase::Atom::intern("}}"), [&widget](std::string name) {
                     return widget.find(name);
                 }).asString());
             }
