@@ -9,9 +9,10 @@
 
 namespace dagui
 {
-    SceneNode::SceneNode(const dagbase::Atom& className, Widget* widget)
+    SceneNode::SceneNode(const dagbase::Atom& className, dagbase::IdentifierGenerator::Identifier id, Widget* widget)
             :
             _className(className),
+            _id(id),
             _widget(widget)
     {
         // Do nothing.

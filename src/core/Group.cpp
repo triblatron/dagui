@@ -10,9 +10,9 @@
 namespace dagui
 {
 
-    Group::Group(Widget* widget)
+    Group::Group(dagbase::IdentifierGenerator::Identifier id, Widget* widget)
     :
-    SceneNode(dagbase::Atom::intern("Group"), widget)
+    SceneNode(dagbase::Atom::intern("Group"), id, widget)
     {
         // Do nothing.
     }

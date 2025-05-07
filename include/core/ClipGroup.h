@@ -16,7 +16,7 @@ namespace dagui
     class DAGUI_API ClipGroup : public Group
     {
     public:
-        explicit ClipGroup(Widget* widget);
+        explicit ClipGroup(dagbase::IdentifierGenerator::Identifier id, Widget* widget);
 
         void setBounds(const dagbase::Vec2& bounds)
         {

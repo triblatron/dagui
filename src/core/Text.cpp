@@ -10,9 +10,9 @@
 namespace dagui
 {
 
-    Text::Text(Widget *widget)
+    Text::Text(dagbase::IdentifierGenerator::Identifier id, Widget *widget)
     :
-            SceneNode(dagbase::Atom::intern("Text"), widget)
+    SceneNode(dagbase::Atom::intern("Text"), id, widget)
     {
         // Do nothing.
     }

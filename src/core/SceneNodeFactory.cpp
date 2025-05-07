@@ -10,28 +10,51 @@
 #include "core/Text.h"
 #include "core/ClipGroup.h"
 
+#include <algorithm>
+
 namespace dagui
 {
 
     SceneNode *SceneNodeFactory::createNode(dagbase::Atom className, Widget *widget)
     {
+        dagbase::IdentifierGenerator::Identifier id = _idGen.generate();
+        SceneNode* node = nullptr;
         if (className == "Group")
         {
-            return new Group(widget);
+            node = new Group(id, widget);
         }
         else if (className == "Border")
         {
-            return new Border(widget);
+            node = new Border(id, widget);
         }
         else if (className == "Text")
         {
-            return new Text(widget);
+            node = new Text(id, widget);
         }
         else if (className == "ClipGroup")
         {
-            return new ClipGroup(widget);
+            node = new ClipGroup(id, widget);
         }
 
-        return nullptr;
+        if (node)
+        {
+            _nodes.resize(std::max(std::size_t(id+1),_nodes.size()),nullptr);
+            if (id<_nodes.size())
+            {
+                _nodes[id] = node;
+            }
+        }
+
+        return node;
+    }
+
+    void SceneNodeFactory::deleteNode(dagbase::IdentifierGenerator::Identifier id)
+    {
+        if (id<_nodes.size())
+        {
+            delete _nodes[id];
+            _idGen.release(id);
+            _nodes[id] = nullptr;
+        }
     }
 }

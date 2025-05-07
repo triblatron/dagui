@@ -10,11 +10,11 @@
 namespace dagui
 {
 
-    SceneNode *WidgetPattern::match(Widget& widget)
+    SceneNode *WidgetPattern::match(SceneNodeFactory& factory, Widget& widget)
     {
         if (widget.typeName() == dagbase::Atom::intern(_matchClass))
         {
-            return _sceneTemplate.instantiate(widget);
+            return _sceneTemplate.instantiate(factory,widget);
         }
 
         return nullptr;

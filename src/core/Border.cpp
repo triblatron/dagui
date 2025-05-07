@@ -8,9 +8,9 @@
 
 namespace dagui
 {
-    Border::Border(Widget* widget)
+    Border::Border(dagbase::IdentifierGenerator::Identifier id, Widget* widget)
         :
-    SceneNode(dagbase::Atom::intern("Border"), widget)
+    SceneNode(dagbase::Atom::intern("Border"), id, widget)
     {
         // Do nothing.
     }

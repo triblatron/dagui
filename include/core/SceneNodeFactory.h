@@ -6,6 +6,7 @@
 
 #include "core/Atom.h"
 #include "Widget.h"
+#include "core/IdentifierGenerator.h"
 
 namespace dagui
 {
@@ -15,5 +16,19 @@ namespace dagui
     {
     public:
         SceneNode* createNode(dagbase::Atom className, Widget* widget);
+
+        SceneNode* nodeByID(dagbase::IdentifierGenerator::Identifier id)
+        {
+            if (id<_nodes.size())
+                return _nodes[id];
+
+            return nullptr;
+        }
+
+        void deleteNode(dagbase::IdentifierGenerator::Identifier id);
+    private:
+        dagbase::IdentifierGenerator _idGen;
+        using NodeArray = std::vector<SceneNode*>;
+        NodeArray _nodes;
     };
 }

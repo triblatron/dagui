@@ -13,7 +13,7 @@ namespace dagui
     class DAGUI_API Text : public SceneNode
     {
     public:
-        explicit Text(Widget* widget);
+        explicit Text(dagbase::IdentifierGenerator::Identifier id, Widget* widget);
 
         void accept(SceneNodeVisitor& visitor) override
         {

@@ -8,8 +8,7 @@
 
 #include "core/DynamicVisitor.h"
 #include "core/Variant.h"
-
-#include <string_view>
+#include "core/IdentifierGenerator.h"
 
 namespace dagui
 {
@@ -20,13 +19,18 @@ namespace dagui
     class DAGUI_API SceneNode
     {
     public:
-        SceneNode(const dagbase::Atom &className, Widget* widget);
+        SceneNode(const dagbase::Atom &className, dagbase::IdentifierGenerator::Identifier id, Widget* widget);
 
         virtual ~SceneNode() = default;
 
         dagbase::Atom typeName() const
         {
             return _className;
+        }
+
+        dagbase::IdentifierGenerator::Identifier id() const
+        {
+            return _id;
         }
 
         virtual void eachChild(std::function<bool(SceneNode*)> f) = 0;
@@ -36,6 +40,7 @@ namespace dagui
         virtual dagbase::Variant find(std::string_view path) const;
     private:
         dagbase::Atom _className;
+        dagbase::IdentifierGenerator::Identifier _id{0};
         Widget* _widget{nullptr};
     };
 }

@@ -8,9 +8,9 @@
 
 namespace dagui
 {
-    ClipGroup::ClipGroup(Widget *widget)
+    ClipGroup::ClipGroup(dagbase::IdentifierGenerator::Identifier id, Widget *widget)
     :
-    Group(widget)
+    Group(id, widget)
     {
         // Do nothing.
     }

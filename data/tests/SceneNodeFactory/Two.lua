@@ -1,0 +1,13 @@
+root=
+{
+	{
+		cmd="create",
+		class="Group",
+		expectedId=0,
+	},
+	{
+		cmd="create",
+		class="Text",
+		expectedId=1,
+	}
+}

@@ -17,7 +17,7 @@ namespace dagui
     class DAGUI_API Group : public SceneNode
     {
     public:
-        Group(Widget* widget);
+        Group(dagbase::IdentifierGenerator::Identifier id, Widget* widget);
 
         void eachChild(std::function<bool(SceneNode*)> f) override;
 

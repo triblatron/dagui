@@ -25,7 +25,7 @@ namespace dagui
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const;
 
-        SceneNode* match(Widget& widget);
+        SceneNode* match(SceneNodeFactory& factory, Widget& widget);
     private:
         std::string _matchClass;
         SceneTemplate _sceneTemplate;

@@ -15,7 +15,7 @@ namespace dagui
     class DAGUI_API Border : public SceneNode
     {
     public:
-        Border(Widget* widget);
+        Border(dagbase::IdentifierGenerator::Identifier id, Widget* widget);
 
         void accept(SceneNodeVisitor & visitor) override;
 

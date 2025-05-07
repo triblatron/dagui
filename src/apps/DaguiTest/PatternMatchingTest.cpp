@@ -11,6 +11,7 @@
 #include "test/TestUtils.h"
 #include "core/WidgetPattern.h"
 #include "core/SceneNode.h"
+#include "core/SceneNodeFactory.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
@@ -34,7 +35,8 @@ TEST_P(WidgetPattern_testMatch, testExpectedResult)
     ASSERT_NE(nullptr, widgetTree);
     dagui::WidgetPattern sut;
     sut.configure(*patternConfig);
-    auto scene = sut.match(*widgetTree);
+    dagui::SceneNodeFactory sceneNodeFactory;
+    auto scene = sut.match(sceneNodeFactory, *widgetTree);
     ASSERT_NE(nullptr, scene);
     auto path = std::get<2>(GetParam());
     auto value = std::get<3>(GetParam());

@@ -21,6 +21,7 @@ namespace dagbase
 namespace dagui
 {
     class SceneNode;
+    class SceneNodeFactory;
     class Widget;
 
     class DAGUI_API SceneTemplate
@@ -36,7 +37,7 @@ namespace dagui
                 _children.a.push_back(child);
         }
 
-        SceneNode* instantiate(Widget& widget);
+        SceneNode* instantiate(SceneNodeFactory& factory, Widget& widget);
     private:
         std::string _sceneClass;
         using PropertyMap = dagbase::SearchableMap<dagbase::VectorMap<std::string, dagbase::Variant>>;
