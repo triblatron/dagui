@@ -81,7 +81,7 @@ namespace dagui
 
         void eachChild(std::function<bool(Widget&)>);
     private:
-        using Properties=dagbase::SearchableMap<std::unordered_map<dagbase::Atom, dagbase::ConfigurationElement::ValueType>>;
+        using Properties=dagbase::SearchableMap<std::unordered_map<dagbase::Atom, dagbase::Variant>>;
         Properties _props;
         std::string _id;
         using ChildArray = std::vector<Widget*>;
