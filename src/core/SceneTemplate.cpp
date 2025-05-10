@@ -46,62 +46,40 @@ namespace dagui
 
     SceneNode *SceneTemplate::instantiate(SceneNodeFactory& factory, Widget &widget)
     {
-//        auto node = factory.createNode()
-        if (_sceneClass=="Group")
+        auto node = factory.createNode(dagbase::Atom::intern(_sceneClass), &widget);
+
+        if (auto parent = dynamic_cast<Group *>(node); parent)
         {
-            Group* parent = dynamic_cast<Group*>(factory.createNode(dagbase::Atom::intern("Group"), &widget));
-
-            if (parent)
+            for (auto childTemplate: _children.a)
             {
-                for (auto childTemplate : _children.a)
-                {
-                    auto child = childTemplate->instantiate(factory, widget);
-                    if (child)
-                        parent->addChild(child);
-                }
+                auto child = childTemplate->instantiate(factory, widget);
+                if (child)
+                    parent->addChild(child);
             }
-
-            return parent;
-        }
-        else if (_sceneClass=="ClipGroup")
-        {
-            ClipGroup* parent = dynamic_cast<ClipGroup*>(factory.createNode(dagbase::Atom::intern("ClipGroup"), &widget));
-
-            if (parent)
-            {
-                if (auto it=_snippets.m.find("bounds"); it!=_snippets.m.end())
-                {
-                    auto snippet = it->second;
-                    parent->setBounds(snippet->interpolate(dagbase::Atom::intern("{{"), dagbase::Atom::intern("}}"), [&widget](std::string name) {
-                        return widget.find(name);
-                    }).asVec2());
-                }
-                for (auto childTemplate : _children.a)
-                {
-                    auto child = childTemplate->instantiate(factory, widget);
-                    if (child)
-                        parent->addChild(child);
-                }
-            }
-
-            return parent;
-        }
-        else if (_sceneClass=="Text")
-        {
-            auto text =  dynamic_cast<Text*>(factory.createNode(dagbase::Atom::intern("Text"), &widget));
-            if (text)
-            {
-                if (auto it = _snippets.m.find("text"); it!=_snippets.m.end())
-                {
-                    auto textSnippet = it->second;
-                    text->setText(textSnippet->interpolate(dagbase::Atom::intern("{{"), dagbase::Atom::intern("}}"), [&widget](std::string name) {
-                        return widget.find(name);
-                    }).asString());
-                }
-            }
-            return text;
         }
 
-        return nullptr;
+        if (auto clipGroup=dynamic_cast<ClipGroup*>(node); clipGroup)
+        {
+            if (auto it=_snippets.m.find("bounds"); it!=_snippets.m.end())
+            {
+                auto snippet = it->second;
+                clipGroup->setBounds(snippet->interpolate(dagbase::Atom::intern("{{"), dagbase::Atom::intern("}}"), [&widget](std::string name) {
+                    return widget.find(name);
+                }).asVec2());
+            }
+        }
+
+        if (auto text = dynamic_cast<Text*>(node); text)
+        {
+            if (auto it = _snippets.m.find("text"); it!=_snippets.m.end())
+            {
+                auto textSnippet = it->second;
+                text->setText(textSnippet->interpolate(dagbase::Atom::intern("{{"), dagbase::Atom::intern("}}"), [&widget](std::string name) {
+                    return widget.find(name);
+                }).asString());
+            }
+        }
+
+        return node;
     }
 }
