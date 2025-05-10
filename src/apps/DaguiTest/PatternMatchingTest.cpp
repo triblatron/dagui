@@ -51,5 +51,9 @@ INSTANTIATE_TEST_SUITE_P(WidgetPattern, WidgetPattern_testMatch, ::testing::Valu
         std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "children[0].text", std::string("Hello, world!"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "bounds", dagbase::Vec2{20,20}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithLabel.lua", "children[0].parent", true, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithLabel.lua", "children[0].children[0].text", std::string("test"), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithLabel.lua", "children[0].children[0].text", std::string("test"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithNestedChildren.lua", "children[0].class", std::string("Group"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithNestedChildren.lua", "children[0].children[0].children[0].class", std::string("Text"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithNestedChildren.lua", "children[0].children[0].children[0].text", std::string("test"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithNestedChildren.lua", "children[0].children[1].children[0].text", std::string("Click me"), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

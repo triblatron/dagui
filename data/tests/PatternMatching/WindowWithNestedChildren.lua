@@ -1,0 +1,21 @@
+root=
+{
+	class="Window",
+	children=
+	{
+		{
+			class="Vertical",
+			children=
+			{
+				{
+					class="Label",
+					text="test",
+				},
+				{
+					class="Button",
+					text="Click me",	
+				}
+			}
+		},
+	}
+}

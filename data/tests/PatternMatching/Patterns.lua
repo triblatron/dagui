@@ -21,5 +21,27 @@ root=
 		{
 			class="Group",
 		}
+	},
+	{
+		matchClass="Vertical",
+		sceneTemplate=
+		{
+			class="Group",
+		}
+	},
+	{
+		matchClass="Button",
+		sceneTemplate=
+		{
+			class="ClipGroup",
+			bounds="{{bounds}}",
+			children=
+			{
+				{
+					class="Text",
+					text="{{text}}",
+				},
+			}
+		}
 	}
 }
