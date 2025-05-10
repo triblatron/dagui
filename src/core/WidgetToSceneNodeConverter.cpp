@@ -16,7 +16,7 @@ namespace dagui
     void WidgetToSceneNodeConverter::configure(dagbase::ConfigurationElement &config)
     {
         config.eachChild([this](dagbase::ConfigurationElement& child) {
-            WidgetPattern* pattern = new WidgetPattern();
+            auto pattern = new WidgetPattern();
             pattern->configure(child);
             _widgetPatterns.insert(NameToWidgetPatternMap::value_type(dagbase::Atom::intern(pattern->matchClass()), pattern));
             return true;

@@ -2,20 +2,15 @@
 // Created by Tony Horrobin on 29/04/2025.
 //
 
-#include "config/config.h"
-
 #include "core/ConfigurationElement.h"
 #include "core/LuaInterface.h"
 #include "core/WidgetFactory.h"
-#include "core/Widget.h"
 #include "test/TestUtils.h"
-#include "core/WidgetPattern.h"
 #include "core/SceneNode.h"
 #include "core/SceneNodeFactory.h"
 #include "core/WidgetToSceneNodeConverter.h"
 
 #include <gtest/gtest.h>
-#include <gmock/gmock.h>
 
 class WidgetPattern_testMatch : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
 {
