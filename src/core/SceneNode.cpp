@@ -9,11 +9,12 @@
 
 namespace dagui
 {
-    SceneNode::SceneNode(const dagbase::Atom& className, dagbase::IdentifierGenerator::Identifier id, Widget* widget)
+    SceneNode::SceneNode(const dagbase::Atom& className, dagbase::IdentifierGenerator::Identifier id, Widget* widget, SceneNode* parent)
             :
             _className(className),
             _id(id),
-            _widget(widget)
+            _widget(widget),
+            _parent(parent)
     {
         // Do nothing.
     }
@@ -23,6 +24,10 @@ namespace dagui
         dagbase::Variant retval;
 
         retval = dagbase::findEndpoint(path, "class", std::string(_className.value()));
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "parent", dagbase::Variant(_parent!=nullptr));
         if (retval.has_value())
             return retval;
 

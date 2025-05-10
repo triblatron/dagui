@@ -21,6 +21,11 @@ namespace dagui
     public:
         WidgetPattern() = default;
 
+        const std::string& matchClass() const
+        {
+            return _matchClass;
+        }
+
         void configure(dagbase::ConfigurationElement& config);
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const;

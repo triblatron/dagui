@@ -46,4 +46,13 @@ namespace dagui
             }
         }
     }
+
+    void Group::addChild(SceneNode *child)
+    {
+        if (child)
+        {
+            child->setParent(this);
+            _children.a.push_back(child);
+        }
+    }
 }

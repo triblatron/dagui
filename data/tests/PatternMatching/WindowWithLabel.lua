@@ -1,0 +1,11 @@
+root=
+{
+	class="Window",
+	children=
+	{
+		{
+			class="Label",
+			text="test",
+		}
+	}
+}

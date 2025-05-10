@@ -30,13 +30,7 @@ namespace dagui
             }
         }
 
-        void addChild(SceneNode* child)
-        {
-            if (child)
-            {
-                _children.a.push_back(child);
-            }
-        }
+        void addChild(SceneNode* child);
 
         dagbase::Variant find(std::string_view path) const override;
     private:

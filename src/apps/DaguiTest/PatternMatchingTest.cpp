@@ -12,6 +12,7 @@
 #include "core/WidgetPattern.h"
 #include "core/SceneNode.h"
 #include "core/SceneNodeFactory.h"
+#include "core/WidgetToSceneNodeConverter.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
@@ -33,10 +34,10 @@ TEST_P(WidgetPattern_testMatch, testExpectedResult)
     dagui::WidgetFactory factory;
     auto widgetTree = factory.create(*widgetConfig);
     ASSERT_NE(nullptr, widgetTree);
-    dagui::WidgetPattern sut;
+    dagui::WidgetToSceneNodeConverter sut;
     sut.configure(*patternConfig);
     dagui::SceneNodeFactory sceneNodeFactory;
-    auto scene = sut.match(sceneNodeFactory, *widgetTree);
+    auto scene = sut.convert(sceneNodeFactory, *widgetTree);
     ASSERT_NE(nullptr, scene);
     auto path = std::get<2>(GetParam());
     auto value = std::get<3>(GetParam());
@@ -53,5 +54,7 @@ INSTANTIATE_TEST_SUITE_P(WidgetPattern, WidgetPattern_testMatch, ::testing::Valu
         std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "class", std::string("Group"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "children[0].class", std::string("Text"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "children[0].text", std::string("Hello, world!"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "bounds", dagbase::Vec2{20,20}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "bounds", dagbase::Vec2{20,20}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithLabel.lua", "children[0].parent", true, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithLabel.lua", "children[0].children[0].text", std::string("test"), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

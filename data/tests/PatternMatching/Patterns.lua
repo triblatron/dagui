@@ -1,16 +1,25 @@
 root=
 {
-	matchClass="Label",
-	sceneTemplate=
 	{
-		class="ClipGroup",
-		bounds="{{bounds}}",
-		children=
+		matchClass="Label",
+		sceneTemplate=
 		{
+			class="ClipGroup",
+			bounds="{{bounds}}",
+			children=
 			{
-				class="Text",
-				text="{{text}}",
-			},
+				{
+					class="Text",
+					text="{{text}}",
+				},
+			}
+		}
+	},
+	{
+		matchClass="Window",
+		sceneTemplate=
+		{
+			class="Group",
 		}
 	}
 }
