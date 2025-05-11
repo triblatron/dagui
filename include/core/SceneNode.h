@@ -33,6 +33,11 @@ namespace dagui
             return _id;
         }
 
+        void setParent(SceneNode* parent)
+        {
+            _parent = parent;
+        }
+
         SceneNode* parent()
         {
             return _parent;
@@ -43,14 +48,9 @@ namespace dagui
         virtual void accept(SceneNodeVisitor& visitor) = 0;
 
         virtual dagbase::Variant find(std::string_view path) const;
-
-        void setParent(SceneNode* parent)
-        {
-            _parent = parent;
-        }
     private:
         dagbase::Atom _className;
-        dagbase::IdentifierGenerator::Identifier _id{0};
+        dagbase::IdentifierGenerator::Identifier _id{dagbase::IdentifierGenerator::INVALID_ID};
         Widget* _widget{nullptr};
         SceneNode* _parent{nullptr};
     };

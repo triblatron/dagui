@@ -1,6 +1,9 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 PROJECT( Dagui )
 
+SET(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 FIND_PACKAGE(GLUT REQUIRED)
 FIND_PACKAGE(glfw3 REQUIRED)
 FIND_PACKAGE(OpenGL COMPONENTS OpenGL REQUIRED)
@@ -8,8 +11,6 @@ FIND_PACKAGE(Freetype REQUIRED)
 FIND_PACKAGE(GLEW REQUIRED)
 FIND_PACKAGE(Lua 5.4 REQUIRED)
 FIND_PACKAGE(glm REQUIRED)
-SET(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
 SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/core/Rectangle.h include/core/Shape.h include/core/Widget.h
         include/util/Completion.h
@@ -142,7 +143,7 @@ TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_B
 
 set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
 LINK_DIRECTORIES( ${DEP_ROOT}/lib )
-TARGET_LINK_LIBRARIES( dagui PRIVATE dagbase ${LUA_LIBRARY} GLEW::glew GLUT::GLUT OpenGL::GL OpenGL::GLU Freetype::Freetype )
+TARGET_LINK_LIBRARIES( dagui PRIVATE dagbase ${LUA_LIBRARY} GLEW::glew GLUT::GLUT OpenGL::GL OpenGL::GLU Freetype::Freetype glm::glm )
 #~ add_subdirectory(ThirdParty/dagbase)
 add_subdirectory(ThirdParty/dag)
 add_subdirectory(src/apps/DaguiTest)
@@ -198,6 +199,8 @@ ELSEIF ( WIN32 )
     INSTALL( FILES ${PROJECT_BINARY_DIR}/etc/setup.bat DESTINATION . )
 ENDIF( UNIX )
 
+MESSAGE("glm found:" ${glm_FOUND})
+MESSAGE("glm includes:" ${glm_INCLUDE_DIR})
 INSTALL( TARGETS dagui
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
