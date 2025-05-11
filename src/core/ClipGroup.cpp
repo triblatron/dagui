@@ -10,7 +10,7 @@ namespace dagui
 {
     ClipGroup::ClipGroup(dagbase::IdentifierGenerator::Identifier id, Widget *widget)
     :
-    Group(id, widget)
+    Group(dagbase::Atom::intern("ClipGroup"), id, widget)
     {
         // Do nothing.
     }

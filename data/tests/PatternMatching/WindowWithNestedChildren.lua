@@ -13,7 +13,7 @@ root=
 				},
 				{
 					class="Button",
-					text="Click me",	
+					text="Click me",
 				}
 			}
 		},

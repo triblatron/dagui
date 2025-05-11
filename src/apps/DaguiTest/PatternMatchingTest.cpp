@@ -46,7 +46,8 @@ TEST_P(WidgetPattern_testMatch, testExpectedResult)
 }
 
 INSTANTIATE_TEST_SUITE_P(WidgetPattern, WidgetPattern_testMatch, ::testing::Values(
-        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "class", std::string("Group"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "class", std::string("ClipGroup"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "bounds", dagbase::Vec2{20.0,20.0}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "children[0].class", std::string("Text"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "children[0].text", std::string("Hello, world!"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/Label.lua", "bounds", dagbase::Vec2{20,20}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
@@ -55,5 +56,6 @@ INSTANTIATE_TEST_SUITE_P(WidgetPattern, WidgetPattern_testMatch, ::testing::Valu
         std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithNestedChildren.lua", "children[0].class", std::string("Group"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithNestedChildren.lua", "children[0].children[0].children[0].class", std::string("Text"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithNestedChildren.lua", "children[0].children[0].children[0].text", std::string("test"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithNestedChildren.lua", "children[0].children[1].children[0].text", std::string("Click me"), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithNestedChildren.lua", "children[0].children[1].children[0].text", std::string("Click me"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/PatternMatching/Patterns.lua", "data/tests/PatternMatching/WindowWithNestedChildren.lua", "children[0].children[1].class", std::string("ClipGroup"), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

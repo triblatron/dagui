@@ -19,6 +19,8 @@ namespace dagui
     public:
         Group(dagbase::IdentifierGenerator::Identifier id, Widget* widget);
 
+        Group(const dagbase::Atom &className, dagbase::IdentifierGenerator::Identifier id, Widget* widget);
+
         void eachChild(std::function<bool(SceneNode*)> f) override;
 
         void accept(SceneNodeVisitor& visitor) override
