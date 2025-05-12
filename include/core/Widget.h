@@ -34,10 +34,10 @@ namespace dagui
 
         void setId(const std::string& id)
         {
-            _id = id;
+            _id = dagbase::Atom::intern(id);
         }
 
-        const std::string& id() const
+        const dagbase::Atom& id() const
         {
             return _id;
         }
@@ -68,7 +68,7 @@ namespace dagui
             // Do nothing.
         }
 
-        virtual Widget* lookupWidget(std::string name);
+        virtual Widget* lookupWidget(dagbase::Atom name);
 
         virtual dagbase::ConfigurationElement::ValueType find(std::string_view path) const;
 
@@ -83,7 +83,7 @@ namespace dagui
     private:
         using Properties=dagbase::SearchableMap<std::unordered_map<dagbase::Atom, dagbase::Variant>>;
         Properties _props;
-        std::string _id;
+        dagbase::Atom _id;
         using ChildArray = std::vector<Widget*>;
         ChildArray _children;
         dagbase::Atom _typeName;

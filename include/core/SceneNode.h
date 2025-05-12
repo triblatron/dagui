@@ -10,6 +10,8 @@
 #include "core/Variant.h"
 #include "core/IdentifierGenerator.h"
 
+#include <glm/glm.hpp>
+
 namespace dagui
 {
     class SceneNode;
@@ -53,5 +55,6 @@ namespace dagui
         dagbase::IdentifierGenerator::Identifier _id{dagbase::IdentifierGenerator::INVALID_ID};
         Widget* _widget{nullptr};
         SceneNode* _parent{nullptr};
+        glm::ivec2  _pos;
     };
 }

@@ -26,7 +26,7 @@ namespace dagui
     {
         if (auto element=config.findElement("id"); element)
         {
-            _id = element->asString();
+            _id = dagbase::Atom::intern(element->asString());
             if (!_id.empty())
                 root()->addIdentified(this);
         }
@@ -64,7 +64,7 @@ namespace dagui
             _children.push_back(child);
     }
 
-    Widget* Widget::lookupWidget(std::string name)
+    Widget* Widget::lookupWidget(dagbase::Atom name)
     {
         Widget* root=this;
         while (root && root->_parent)
@@ -83,9 +83,12 @@ namespace dagui
     {
         dagbase::ConfigurationElement::ValueType retval;
 
-        retval = dagbase::findEndpoint(path, "id", _id);
-        if (retval.has_value())
-            return retval;
+        if (!_id.empty())
+        {
+            retval = dagbase::findEndpoint(path, "id", std::string(_id.value()));
+            if (retval.has_value())
+                return retval;
+        }
 
         retval = dagbase::findEndpoint(path, "numChildren", std::int64_t(_children.size()));
         if (retval.has_value())

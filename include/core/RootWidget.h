@@ -13,6 +13,7 @@
 #include "gfx/ArrayDescriptor.h"
 #include "gfx/ArrayDescriptor.h"
 #include "util/SearchableMap.h"
+#include "core/Atom.h"
 
 namespace dagui
 {
@@ -30,11 +31,11 @@ namespace dagui
 
         void addIdentified(Widget* widget) override;
 
-        Widget* lookupWidget(std::string name) override;
+        Widget* lookupWidget(dagbase::Atom name) override;
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
     private:
-        using WidgetLookup = dagbase::SearchableMap<std::unordered_map<std::string, Widget*>>;
+        using WidgetLookup = dagbase::SearchableMapFromAtom<std::unordered_map<dagbase::Atom, Widget*>>;
         WidgetLookup _widgetLookup;
     };
 }

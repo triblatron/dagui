@@ -21,7 +21,7 @@ namespace dagui
         }
     }
 
-    Widget* RootWidget::lookupWidget(std::string name)
+    Widget* RootWidget::lookupWidget(dagbase::Atom name)
     {
         if (auto it=_widgetLookup.m.find(name); it!=_widgetLookup.m.end())
         {
