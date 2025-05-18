@@ -11,6 +11,8 @@
 #include "util/SearchableMap.h"
 #include "core/Constraint.h"
 #include "util/SearchableArray.h"
+#include "core/Reference.h"
+#include "core/Atom.h"
 
 #include <glm/vec2.hpp>
 
@@ -19,14 +21,11 @@
 
 namespace dagui
 {
-    class WidgetFactory;
-}
-
-namespace dagui
-{
     class SceneNode;
     class Shape;
     class Widget;
+    class WidgetFactory;
+
     using WidgetVisitor = dagbase::DynamicVisitor<Widget>;
 
     class DAGUI_API Widget
@@ -72,7 +71,7 @@ namespace dagui
             // Do nothing.
         }
 
-        virtual Widget* lookupWidget(dagbase::Atom name);
+        virtual Widget* lookup(dagbase::Atom name);
 
         virtual dagbase::Variant find(std::string_view path) const;
 

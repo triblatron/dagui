@@ -78,3 +78,31 @@ TEST_P(Widget_testProperties, testExpectedValue)
 INSTANTIATE_TEST_SUITE_P(Widget, Widget_testProperties, ::testing::Values(
         std::make_tuple("data/tests/Widget/Label.lua", "text", "test", 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
+
+class WidgetRef_testResolve : public ::testing::TestWithParam<std::tuple<const char*, const char*, bool>>
+{
+
+};
+
+TEST_P(WidgetRef_testResolve, testExpectedNotNull)
+{
+    auto configStr = std::get<0>(GetParam());
+    auto id = std::get<1>(GetParam());
+    auto notNull = std::get<2>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::WidgetFactory factory;
+    auto widget = factory.create(*config);
+    ASSERT_NE(nullptr, widget);
+    dagui::WidgetRef sut;
+    sut.setId(dagbase::Atom::intern(id));
+    sut.resolve(widget);
+    auto actual = sut.ref();
+    EXPECT_EQ(notNull, actual!=nullptr);
+}
+
+INSTANTIATE_TEST_SUITE_P(WidgetRef, WidgetRef_testResolve, ::testing::Values(
+        std::make_tuple("data/tests/WidgetRef/Lookup.lua", "spoo", false),
+        std::make_tuple("data/tests/WidgetRef/Lookup.lua", "label1", true)
+        ));

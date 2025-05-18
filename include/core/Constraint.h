@@ -8,6 +8,7 @@
 
 #include "core/Atom.h"
 #include "core/Variant.h"
+#include "core/WidgetRef.h"
 
 #include <string_view>
 
@@ -18,8 +19,6 @@ namespace dagbase
 
 namespace dagui
 {
-    class Widget;
-
     class DAGUI_API Constraint
     {
     public:
@@ -70,7 +69,7 @@ namespace dagui
 
         static Strength parseStrength(const char* str);
     private:
-        dagbase::Atom _firstItem{};
+        WidgetRef _firstItem{};
         Attribute _firstAttr{Attribute::LEFT};
         Relation _relation{Relation::EQ};
         dagbase::Atom _secondItem{};

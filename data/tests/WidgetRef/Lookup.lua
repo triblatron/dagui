@@ -1,0 +1,13 @@
+root=
+{
+	class="RootWidget",
+	id="root",
+	children=
+	{
+		{
+			id="label1",
+			class="Label",
+			text="Hello",
+		}
+	}
+}

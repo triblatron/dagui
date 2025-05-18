@@ -74,7 +74,7 @@ namespace dagui
             _children.push_back(child);
     }
 
-    Widget* Widget::lookupWidget(dagbase::Atom name)
+    Widget* Widget::lookup(dagbase::Atom name)
     {
         Widget* root=this;
         while (root && root->_parent)
@@ -83,7 +83,7 @@ namespace dagui
         }
         if (root && !root->_parent)
         {
-            return root->lookupWidget(std::move(name));
+            return root->lookup(std::move(name));
         }
 
         return nullptr;

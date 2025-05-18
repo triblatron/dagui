@@ -42,7 +42,7 @@ namespace dagui
     {
         Constraint constraint;
 
-        constraint._firstItem = child;
+        constraint._firstItem.setId(child);
         constraint._firstAttr = attr;
         constraint._relation = Relation::EQ;
         constraint._secondItem = parent;
@@ -56,7 +56,7 @@ namespace dagui
     {
         dagbase::Variant retval;
 
-        retval = dagbase::findEndpoint(path, "firstItem", std::string(_firstItem.value()));
+        retval = dagbase::findEndpoint(path, "firstItem", std::string(_firstItem.toString()));
         if (retval.has_value())
             return retval;
 

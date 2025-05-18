@@ -31,7 +31,7 @@ namespace dagui
 
         void addIdentified(Widget* widget) override;
 
-        Widget* lookupWidget(dagbase::Atom name) override;
+        Widget* lookup(dagbase::Atom name) override;
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
     private:
