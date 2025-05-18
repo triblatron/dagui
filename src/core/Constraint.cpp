@@ -15,7 +15,11 @@ namespace dagui
 
     Constraint Constraint::create(dagbase::ConfigurationElement &config)
     {
-        if (config.name() == "growth")
+        std::string type;
+
+        dagbase::ConfigurationElement::readConfig(config, "type", &type);
+
+        if (type == "growth")
         {
             float ratio{0.0f};
             dagbase::ConfigurationElement::readConfig(config, "ratio", &ratio);

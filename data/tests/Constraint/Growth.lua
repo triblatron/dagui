@@ -15,8 +15,8 @@ root=
 					id="label1",
 					constraints=
 					{
-						growth=
 						{
+							type="growth",
 							parent="window1",
 							attribute="Attribute::WIDTH",
 							relation="Relation::EQ",
