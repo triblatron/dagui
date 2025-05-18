@@ -10,7 +10,7 @@
 
 namespace dagui
 {
-    class ResolveWidgetRefsVisitor : public dagbase::DynamicVisitor<Widget>
+    class DAGUI_API ResolveWidgetRefsVisitor : public dagbase::DynamicVisitor<Widget>
     {
     public:
         ResolveWidgetRefsVisitor();

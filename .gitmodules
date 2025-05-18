@@ -6,4 +6,4 @@
 	url = https://github.com/svgpp/svgpp
 [submodule "ThirdParty/dag"]
 	path = ThirdParty/dag
-	url = github:/triblatron/dag
+	url = github_home:/triblatron/dag
