@@ -9,6 +9,7 @@
 
 #include "util/Searchable.h"
 #include "util/enums.h"
+#include "core/Widget.h"
 
 namespace dagui
 {
@@ -45,7 +46,7 @@ namespace dagui
         constraint._firstItem.setId(child);
         constraint._firstAttr = attr;
         constraint._relation = Relation::EQ;
-        constraint._secondItem = parent;
+        constraint._secondItem.setId(parent);
         constraint._secondAttr = attr;
         constraint._constant = ratio;
 
@@ -56,9 +57,12 @@ namespace dagui
     {
         dagbase::Variant retval;
 
-        retval = dagbase::findEndpoint(path, "firstItem", std::string(_firstItem.toString()));
-        if (retval.has_value())
-            return retval;
+        if (_firstItem.ref())
+        {
+            retval = dagbase::findInternal(path, "firstItem", *_firstItem.ref());
+            if (retval.has_value())
+                return retval;
+        }
 
         retval = dagbase::findEndpoint(path, "firstAttribute", attributeToString(_firstAttr));
         if (retval.has_value())
@@ -68,9 +72,12 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
-        retval = dagbase::findEndpoint(path, "secondItem", std::string(_secondItem.value()));
-        if (retval.has_value())
-            return retval;
+        if (_secondItem.ref())
+        {
+            retval = dagbase::findInternal(path, "secondItem", *_secondItem.ref());
+            if (retval.has_value())
+                return retval;
+        }
 
         retval = dagbase::findEndpoint(path, "secondAttribute", attributeToString(_secondAttr));
         if (retval.has_value())
@@ -166,5 +173,11 @@ namespace dagui
         TEST_ENUM(Strength::WEAK, str)
 
         return Constraint::Strength::REQUIRED;
+    }
+
+    void Constraint::resolveRefs(Widget &widget)
+    {
+        _firstItem.resolve(&widget);
+        _secondItem.resolve(&widget);
     }
 }

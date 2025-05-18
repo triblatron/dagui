@@ -8,6 +8,7 @@
 #include "core/LuaInterface.h"
 #include "core/ConfigurationElement.h"
 #include "core/Widget.h"
+#include "core/ResolveWidgetRefsVisitor.h"
 #include "test/TestUtils.h"
 
 #include <gtest/gtest.h>
@@ -105,4 +106,33 @@ TEST_P(WidgetRef_testResolve, testExpectedNotNull)
 INSTANTIATE_TEST_SUITE_P(WidgetRef, WidgetRef_testResolve, ::testing::Values(
         std::make_tuple("data/tests/WidgetRef/Lookup.lua", "spoo", false),
         std::make_tuple("data/tests/WidgetRef/Lookup.lua", "label1", true)
+        ));
+
+class ResolveWidgetRefsVisitor_testVisit : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+TEST_P(ResolveWidgetRefsVisitor_testVisit, testExpectedValue)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::ResolveWidgetRefsVisitor sut;
+    dagui::WidgetFactory factory;
+    auto widget = factory.create(*config);
+    ASSERT_NE(nullptr, widget);
+    widget->accept(sut);
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+    auto tolerance = std::get<3>(GetParam());
+    auto op = std::get<4>(GetParam());
+    auto actualValue = widget->find(path);
+    assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(ResolveWidgetRefsVisitor, ResolveWidgetRefsVisitor_testVisit, ::testing::Values(
+        std::make_tuple("data/tests/WidgetRef/WithConstraints.lua", "lookup.label1.constraints[0].firstItem.id", std::string("label1"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/WidgetRef/WithConstraints.lua", "lookup.label1.constraints[0].secondItem.id", std::string("window1"), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

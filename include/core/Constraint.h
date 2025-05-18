@@ -53,6 +53,8 @@ namespace dagui
     public:
         dagbase::Variant find(std::string_view path) const;
 
+        void resolveRefs(Widget& widget);
+
         static Constraint create(dagbase::ConfigurationElement& config);
         static Constraint width();
         static Constraint proportional(const dagbase::Atom& child, Attribute attr, const dagbase::Atom& parent, float ratio);
@@ -72,7 +74,7 @@ namespace dagui
         WidgetRef _firstItem{};
         Attribute _firstAttr{Attribute::LEFT};
         Relation _relation{Relation::EQ};
-        dagbase::Atom _secondItem{};
+        WidgetRef _secondItem{};
         Attribute _secondAttr{Attribute::LEFT};
         Strength _strength{Strength::REQUIRED};
         float _multiplier{1.0f};

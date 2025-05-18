@@ -118,12 +118,23 @@ namespace dagui
 
     void Widget::eachChild(std::function<bool(Widget &)> f)
     {
-        for (auto child : _children)
-        {
-            if (!f(*child))
+        if (f)
+            for (auto child : _children)
             {
-                break;
+                if (!f(*child))
+                {
+                    break;
+                }
             }
-        }
+    }
+
+    void Widget::eachConstraint(std::function<bool(Constraint &)> f)
+    {
+        if (f)
+            for (auto& constraint : _constraints.a)
+            {
+                if (!f(constraint))
+                    break;
+            }
     }
 }

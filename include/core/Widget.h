@@ -82,7 +82,9 @@ namespace dagui
             return _typeName;
         }
 
-        void eachChild(std::function<bool(Widget&)>);
+        void eachChild(std::function<bool(Widget&)> f);
+
+        void eachConstraint(std::function<bool(Constraint&)> f);
     private:
         glm::ivec2 _pos;
         using Properties=dagbase::SearchableMap<std::unordered_map<dagbase::Atom, dagbase::Variant>>;
