@@ -60,9 +60,13 @@ namespace dagui
         if (_firstItem.ref())
         {
             retval = dagbase::findInternal(path, "firstItem", *_firstItem.ref());
-            if (retval.has_value())
-                return retval;
         }
+        else
+        {
+            retval = dagbase::findEndpoint(path, "firstItem", _firstItem.toString());
+        }
+        if (retval.has_value())
+            return retval;
 
         retval = dagbase::findEndpoint(path, "firstAttribute", attributeToString(_firstAttr));
         if (retval.has_value())
@@ -75,9 +79,13 @@ namespace dagui
         if (_secondItem.ref())
         {
             retval = dagbase::findInternal(path, "secondItem", *_secondItem.ref());
-            if (retval.has_value())
-                return retval;
         }
+        else
+        {
+            retval = dagbase::findEndpoint(path, "secondItem", _secondItem.toString());
+        }
+        if (retval.has_value())
+            return retval;
 
         retval = dagbase::findEndpoint(path, "secondAttribute", attributeToString(_secondAttr));
         if (retval.has_value())
