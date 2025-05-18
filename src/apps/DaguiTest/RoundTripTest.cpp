@@ -279,3 +279,78 @@ INSTANTIATE_TEST_SUITE_P(ValidatorNumberStatus, ValidatorNumberStatus_testRoundT
     std::make_tuple("STATUS_ERR_MINMAX", dagui::Validator::STATUS_ERR_MINMAX),
     std::make_tuple("STATUS_UNKNOWN", dagui::Validator::STATUS_UNKNOWN)
     ));
+
+class ConstraintAttribute_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Constraint::Attribute>>
+{
+
+};
+
+TEST_P(ConstraintAttribute_testRoundTrip, testExpectedValue)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+    EXPECT_STREQ(str, dagui::Constraint::attributeToString(value));
+    EXPECT_EQ(value, dagui::Constraint::parseAttribute(str));
+}
+//"            RIGHT,\n"
+//"            TOP,\n"
+//"            BOTTOM,\n"
+//"            WIDTH,\n"
+//"            HEIGHT,\n"
+//"            CENTRE_X,\n"
+//"            CENTRE_Y,\n"
+//"            BASELINE")
+
+INSTANTIATE_TEST_SUITE_P(ConstraintAttribute, ConstraintAttribute_testRoundTrip, ::testing::Values(
+        std::make_tuple("Attribute::ATTR_UNKNOWN", dagui::Constraint::Attribute::ATTR_UNKNOWN),
+        std::make_tuple("Attribute::LEFT", dagui::Constraint::Attribute::LEFT),
+        std::make_tuple("Attribute::RIGHT", dagui::Constraint::Attribute::RIGHT),
+        std::make_tuple("Attribute::TOP", dagui::Constraint::Attribute::TOP),
+        std::make_tuple("Attribute::BOTTOM", dagui::Constraint::Attribute::BOTTOM),
+        std::make_tuple("Attribute::WIDTH", dagui::Constraint::Attribute::WIDTH),
+        std::make_tuple("Attribute::HEIGHT", dagui::Constraint::Attribute::HEIGHT),
+        std::make_tuple("Attribute::CENTRE_X", dagui::Constraint::Attribute::CENTRE_X),
+        std::make_tuple("Attribute::CENTRE_Y", dagui::Constraint::Attribute::CENTRE_Y),
+        std::make_tuple("Attribute::BASELINE", dagui::Constraint::Attribute::BASELINE)
+        ));
+
+class ConstraintRelation_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Constraint::Relation>>
+{
+
+};
+
+TEST_P(ConstraintRelation_testRoundTrip, testExpectedValue)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::Constraint::relationToString(value));
+    EXPECT_EQ(value, dagui::Constraint::parseRelation(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(Constraint, ConstraintRelation_testRoundTrip, ::testing::Values(
+        std::make_tuple("Relation::EQ", dagui::Constraint::Relation::EQ),
+        std::make_tuple("Relation::LE", dagui::Constraint::Relation::LE),
+        std::make_tuple("Relation::GE", dagui::Constraint::Relation::GE)
+        ));
+
+class ConstraintStrength_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Constraint::Strength>>
+{
+
+};
+
+TEST_P(ConstraintStrength_testRoundTrip, testExpectedValue)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::Constraint::strengthToString(value));
+    EXPECT_EQ(value, dagui::Constraint::parseStrength(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(Constraint, ConstraintStrength_testRoundTrip, ::testing::Values(
+        std::make_tuple("Strength::REQUIRED", dagui::Constraint::Strength::REQUIRED),
+        std::make_tuple("Strength::STRONG", dagui::Constraint::Strength::STRONG),
+        std::make_tuple("Strength::MEDIUM", dagui::Constraint::Strength::MEDIUM),
+        std::make_tuple("Strength::WEAK", dagui::Constraint::Strength::WEAK)
+        ));

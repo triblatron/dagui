@@ -39,5 +39,6 @@ INSTANTIATE_TEST_SUITE_P(Constraint, Constraint_testConfigure, ::testing::Values
         std::make_tuple("data/tests/Constraint/Growth.lua", "lookup.label1.constraints[0].firstItem", std::string("label1"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Constraint/Growth.lua", "lookup.label1.constraints[0].firstAttribute", std::string("Attribute::WIDTH"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Constraint/Growth.lua", "lookup.label1.constraints[0].relation", std::string("Relation::EQ"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/Constraint/Growth.lua", "lookup.label1.constraints[0].constant", 1.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/Constraint/Growth.lua", "lookup.label1.constraints[0].constant", 1.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Constraint/Growth.lua", "lookup.label1.constraints[0].strength", std::string("Strength::REQUIRED"), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
