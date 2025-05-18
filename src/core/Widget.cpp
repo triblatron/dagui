@@ -114,6 +114,10 @@ namespace dagui
     void Widget::accept(WidgetVisitor &visitor)
     {
         visitor.visit(*this);
+        eachChild([this, &visitor](Widget& child) {
+            child.accept(visitor);
+            return true;
+        });
     }
 
     void Widget::eachChild(std::function<bool(Widget &)> f)
