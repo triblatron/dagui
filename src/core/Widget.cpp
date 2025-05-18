@@ -44,6 +44,16 @@ namespace dagui
                 return true;
             });
         }
+
+        if (auto element = config.findElement("constraints"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                auto constraint = Constraint::create(child);
+
+                _constraints.a.emplace_back(constraint);
+                return true;
+            });
+        }
     }
 
     Widget* Widget::root()
@@ -91,6 +101,10 @@ namespace dagui
         }
 
         retval = dagbase::findEndpoint(path, "numChildren", std::int64_t(_children.size()));
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findInternal(path, "constraints", _constraints);
         if (retval.has_value())
             return retval;
 

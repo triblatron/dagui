@@ -8,6 +8,7 @@
 #include "config/Export.h"
 
 #include "core/Widget.h"
+#include "core/LayoutProperties.h"
 
 namespace dagui
 {
@@ -20,8 +21,16 @@ public:
 
     void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory) override;
 
-    dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
+    dagbase::Variant find(std::string_view path) const override;
 private:
+    LayoutProperties _props;
+    struct ChildProperties
+    {
+        Widget* widget{nullptr};
+        float growthFactor{0.0f};
+    };
+    using GrowthFactorArray = std::vector<ChildProperties>;
+    ChildProperties _childProps;
 };
 
 }

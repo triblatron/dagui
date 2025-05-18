@@ -9,6 +9,10 @@
 #include "core/ConfigurationElement.h"
 #include "core/DynamicVisitor.h"
 #include "util/SearchableMap.h"
+#include "core/Constraint.h"
+#include "util/SearchableArray.h"
+
+#include <glm/vec2.hpp>
 
 #include <string>
 #include <string_view>
@@ -70,7 +74,7 @@ namespace dagui
 
         virtual Widget* lookupWidget(dagbase::Atom name);
 
-        virtual dagbase::ConfigurationElement::ValueType find(std::string_view path) const;
+        virtual dagbase::Variant find(std::string_view path) const;
 
         virtual void accept(WidgetVisitor& visitor);
 
@@ -81,6 +85,7 @@ namespace dagui
 
         void eachChild(std::function<bool(Widget&)>);
     private:
+        glm::ivec2 _pos;
         using Properties=dagbase::SearchableMap<std::unordered_map<dagbase::Atom, dagbase::Variant>>;
         Properties _props;
         dagbase::Atom _id;
@@ -90,5 +95,7 @@ namespace dagui
         Widget* _parent{nullptr};
         SceneNode* _sceneNode{nullptr};
         Shape* _shape{nullptr};
+        using ConstraintArray = dagbase::SearchableArray<std::vector<Constraint>>;
+        ConstraintArray _constraints;
     };
 }

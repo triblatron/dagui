@@ -1,0 +1,31 @@
+root=
+{
+	class="RootWidget",
+	id="root",
+	children=
+	{
+		{
+			class="Window",
+			id="window1",
+			children=
+			{
+				{
+					class="Label",
+					test="Hello",
+					id="label1",
+					constraints=
+					{
+						growth=
+						{
+							parent="window1",
+							attribute="Attribute::WIDTH",
+							relation="Relation::EQ",
+							ratio=1.0,
+							child="label1",
+						}
+					}
+				}
+			}
+		}
+	}
+}
