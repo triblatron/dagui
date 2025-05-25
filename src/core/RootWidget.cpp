@@ -11,6 +11,11 @@ namespace dagui
     void RootWidget::configure(dagbase::ConfigurationElement& config, WidgetFactory& factory)
     {
         Widget::configure(config, factory);
+        if (auto element = config.findElement("size"); element)
+        {
+            dagbase::ConfigurationElement::readConfig(*element, "width", &_size.x);
+            dagbase::ConfigurationElement::readConfig(*element, "height", &_size.y);
+        }
     }
 
     void RootWidget::addIdentified(Widget* widget)
@@ -38,7 +43,15 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
-        retval = findInternal(path, "lookup", _widgetLookup);
+        retval = dagbase::findEndpoint(path, "width", std::int64_t(_size.x));
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "height", std::int64_t(_size.y));
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findInternal(path, "lookup", _widgetLookup);
         if (retval.has_value())
             return retval;
 
