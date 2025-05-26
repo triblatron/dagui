@@ -176,10 +176,13 @@ It is necesary to build benchmark from source to make a successful build on VS20
 * SWIG xml mode works only if we %define DAGUI_API %enddef, otherwise it just generaates code tags instead of the parse tree.
 * If a library contains a main, it seems that the target_include_directories() for the intended target that has that same main source will be ignored.
   * This leads to includes not being found by the compiler, because they are not passed to the compile line by cmake.
-* If you encounter a "not our ref" error mentioning "dag" from git and you have commit permission to the repo, try:
+* If you encounter a "not our ref" error mentioning "dag" from git, try:
 ```bash
+git pull
 git add ThirdParty/dag
 git commit
 git pull --recurse-submodules
 ```
-
+from the dagui checkout directory.
+Something similar might work for dagbase, but has not been tested.
+* Note that this is a local commit, not a push.
