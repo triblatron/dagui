@@ -37,5 +37,6 @@ namespace dagui
     private:
         using WidgetLookup = dagbase::SearchableMapFromAtom<std::unordered_map<dagbase::Atom, Widget*>>;
         WidgetLookup _widgetLookup;
+        glm::ivec2 _size{};
     };
 }
