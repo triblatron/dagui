@@ -11,12 +11,14 @@ namespace dagui
 
     ResolveWidgetRefsVisitor::ResolveWidgetRefsVisitor()
     {
-        registerHandler(dagbase::Atom::intern("Label"),[this](Widget& widget) {
-            widget.eachConstraint([this, &widget](Constraint& constraint) {
-               constraint.resolveRefs(widget);
-               return true;
+        auto h = [this](Widget &widget) {
+            widget.eachConstraint([this, &widget](Constraint &constraint) {
+                constraint.resolveRefs(widget);
+                return true;
             });
-        });
+        };
+        registerHandler(dagbase::Atom::intern("Label"), h);
+        registerHandler(dagbase::Atom::intern("Window"), h);
     }
 
     void ResolveWidgetRefsVisitor::visitChildren(Widget &widget)

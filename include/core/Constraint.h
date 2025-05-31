@@ -33,7 +33,9 @@ namespace dagui
             HEIGHT,
             CENTRE_X,
             CENTRE_Y,
-            BASELINE
+            BASELINE,
+            X,
+            Y
         };
 
         enum class Relation
@@ -50,14 +52,35 @@ namespace dagui
             MEDIUM=500,
             WEAK=250
         };
+
+        enum class AnchorType
+        {
+            FIXED,
+            RELATIVE,
+            PARENT_RELATIVE,
+            SIBLING_RELATIVE
+        };
+
+        struct Position
+        {
+            AnchorType anchor{AnchorType::FIXED};
+            float value{0.0f};
+            WidgetRef ref{};
+        };
     public:
         dagbase::Variant find(std::string_view path) const;
 
         void resolveRefs(Widget& widget);
 
+        void makeItSo();
+
         static Constraint create(dagbase::ConfigurationElement& config);
+
         static Constraint width();
+
         static Constraint proportional(const dagbase::Atom& child, Attribute attr, const dagbase::Atom& parent, float ratio);
+
+        static Constraint position(WidgetRef ref, AnchorType anchorType, Attribute, float value);
 
         static const char* attributeToString(Attribute value);
 
@@ -70,6 +93,10 @@ namespace dagui
         static const char* strengthToString(Strength value);
 
         static Strength parseStrength(const char* str);
+
+        static const char* anchorTypeToString(AnchorType value);
+
+        static AnchorType parseAnchorType(const char* str);
     private:
         WidgetRef _firstItem{};
         Attribute _firstAttr{Attribute::LEFT};

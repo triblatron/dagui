@@ -60,6 +60,16 @@ namespace dagui
             return _shape;
         }
 
+        void setX(int x)
+        {
+            _pos[0] = x;
+        }
+
+        void setY(int y)
+        {
+            _pos[1] = y;
+        }
+
         virtual void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory);
 
         virtual Widget* root();

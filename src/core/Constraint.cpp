@@ -5,6 +5,8 @@
 #include "config/config.h"
 
 #include "core/Constraint.h"
+
+#include <utility>
 #include "core/ConfigurationElement.h"
 
 #include "util/Searchable.h"
@@ -34,6 +36,23 @@ namespace dagui
             std::string child;
             dagbase::ConfigurationElement::readConfig(config, "child", &child);
             return proportional(dagbase::Atom::intern(child), attr, dagbase::Atom::intern(parent), ratio);
+        }
+        else if (type == "position")
+        {
+            AnchorType anchor{AnchorType::FIXED};
+            dagbase::ConfigurationElement::readConfig<AnchorType>(config, "anchor", [](const char* str) {
+                return Constraint::parseAnchorType(str);
+            }, &anchor);
+            float constant = 0.0f;
+            dagbase::ConfigurationElement::readConfig(config, "constant", &constant);
+            std::string ref;
+            dagbase::ConfigurationElement::readConfig(config, "widget", &ref);
+            Attribute attr{Attribute::ATTR_UNKNOWN};
+            if (auto element=config.findElement("attribute"); element)
+            {
+                attr = parseAttribute(element->asString().c_str());
+            }
+            return position(WidgetRef(dagbase::Atom::intern(ref)), anchor, attr, constant);
         }
         return {};
     }
@@ -120,6 +139,8 @@ namespace dagui
             ENUM_NAME(Attribute::CENTRE_X)
             ENUM_NAME(Attribute::CENTRE_Y)
             ENUM_NAME(Attribute::BASELINE)
+            ENUM_NAME(Attribute::X)
+            ENUM_NAME(Attribute::Y)
         }
 
         return "<error>";
@@ -136,6 +157,8 @@ namespace dagui
         TEST_ENUM(Attribute::CENTRE_X, str)
         TEST_ENUM(Attribute::CENTRE_Y, str)
         TEST_ENUM(Attribute::BASELINE, str)
+        TEST_ENUM(Attribute::X, str)
+        TEST_ENUM(Attribute::Y, str)
 
         return Attribute::ATTR_UNKNOWN;
     }
@@ -188,4 +211,56 @@ namespace dagui
         _firstItem.resolve(&widget);
         _secondItem.resolve(&widget);
     }
+
+    Constraint Constraint::width()
+    {
+        return Constraint();
+    }
+
+    const char *Constraint::anchorTypeToString(Constraint::AnchorType value)
+    {
+        switch (value)
+        {
+            ENUM_NAME(AnchorType::FIXED)
+            ENUM_NAME(AnchorType::RELATIVE)
+            ENUM_NAME(AnchorType::PARENT_RELATIVE)
+            ENUM_NAME(AnchorType::SIBLING_RELATIVE)
+        }
+        return "<error>";
+    }
+
+    Constraint::AnchorType Constraint::parseAnchorType(const char *str)
+    {
+        TEST_ENUM(AnchorType::FIXED, str);
+        TEST_ENUM(AnchorType::RELATIVE, str);
+        TEST_ENUM(AnchorType::PARENT_RELATIVE, str);
+        TEST_ENUM(AnchorType::SIBLING_RELATIVE, str);
+
+        return Constraint::AnchorType::FIXED;
+    }
+
+    Constraint Constraint::position(WidgetRef ref, Constraint::AnchorType anchorType, Attribute attr, float value)
+    {
+        Constraint constraint;
+
+        constraint._firstAttr = attr;
+        constraint._constant = value;
+        constraint._firstItem = std::move(ref);
+        constraint._relation = Relation::EQ;
+
+        return constraint;
+    }
+
+    void Constraint::makeItSo()
+    {
+        if (_firstAttr == Constraint::Attribute::X)
+        {
+            _firstItem.ref()->setX(int(_constant));
+        }
+        else if (_firstAttr == Constraint::Attribute::Y)
+        {
+            _firstItem.ref()->setY(int(_constant));
+        }
+    }
+
 }

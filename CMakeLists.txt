@@ -73,6 +73,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/core/Constraint.h
         include/core/WidgetRef.h
         include/core/ResolveWidgetRefsVisitor.h
+        include/core/ConstraintSolverVisitor.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -127,6 +128,7 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         src/core/LayoutProperties.cpp
         src/core/Constraint.cpp
         src/core/ResolveWidgetRefsVisitor.cpp
+        src/ConstraintSolverVisitor.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")

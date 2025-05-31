@@ -311,7 +311,9 @@ INSTANTIATE_TEST_SUITE_P(ConstraintAttribute, ConstraintAttribute_testRoundTrip,
         std::make_tuple("Attribute::HEIGHT", dagui::Constraint::Attribute::HEIGHT),
         std::make_tuple("Attribute::CENTRE_X", dagui::Constraint::Attribute::CENTRE_X),
         std::make_tuple("Attribute::CENTRE_Y", dagui::Constraint::Attribute::CENTRE_Y),
-        std::make_tuple("Attribute::BASELINE", dagui::Constraint::Attribute::BASELINE)
+        std::make_tuple("Attribute::BASELINE", dagui::Constraint::Attribute::BASELINE),
+        std::make_tuple("Attribute::X", dagui::Constraint::Attribute::X),
+        std::make_tuple("Attribute::Y", dagui::Constraint::Attribute::Y)
         ));
 
 class ConstraintRelation_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Constraint::Relation>>
@@ -353,4 +355,25 @@ INSTANTIATE_TEST_SUITE_P(Constraint, ConstraintStrength_testRoundTrip, ::testing
         std::make_tuple("Strength::STRONG", dagui::Constraint::Strength::STRONG),
         std::make_tuple("Strength::MEDIUM", dagui::Constraint::Strength::MEDIUM),
         std::make_tuple("Strength::WEAK", dagui::Constraint::Strength::WEAK)
+        ));
+
+class ConstraintAnchorType_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Constraint::AnchorType>>
+{
+
+};
+
+TEST_P(ConstraintAnchorType_testRoundTrip, testExpectedValue)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::Constraint::anchorTypeToString(value));
+    EXPECT_EQ(value, dagui::Constraint::parseAnchorType(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(ConstraintAnchorType, ConstraintAnchorType_testRoundTrip, ::testing::Values(
+        std::make_tuple("AnchorType::FIXED", dagui::Constraint::AnchorType::FIXED),
+        std::make_tuple("AnchorType::RELATIVE", dagui::Constraint::AnchorType::RELATIVE),
+        std::make_tuple("AnchorType::PARENT_RELATIVE", dagui::Constraint::AnchorType::PARENT_RELATIVE),
+        std::make_tuple("AnchorType::SIBLING_RELATIVE", dagui::Constraint::AnchorType::SIBLING_RELATIVE)
         ));

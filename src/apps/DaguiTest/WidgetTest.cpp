@@ -9,6 +9,7 @@
 #include "core/ConfigurationElement.h"
 #include "core/Widget.h"
 #include "core/ResolveWidgetRefsVisitor.h"
+#include "core/ConstraintSolverVisitor.h"
 #include "test/TestUtils.h"
 
 #include <gtest/gtest.h>
@@ -137,4 +138,39 @@ TEST_P(ResolveWidgetRefsVisitor_testVisit, testExpectedValue)
 INSTANTIATE_TEST_SUITE_P(ResolveWidgetRefsVisitor, ResolveWidgetRefsVisitor_testVisit, ::testing::Values(
         std::make_tuple("data/tests/WidgetRef/WithConstraints.lua", "lookup.label1.constraints[0].firstItem.id", std::string("label1"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/WidgetRef/WithConstraints.lua", "lookup.label1.constraints[0].secondItem.id", std::string("window1"), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));
+
+class ConstraintSolverVisitor_testVisit : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+TEST_P(ConstraintSolverVisitor_testVisit, testExpectedValue)
+{
+    auto configStr = std::get<0>(GetParam());
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+    auto tolerance = std::get<3>(GetParam());
+    auto op = std::get<4>(GetParam());
+
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::WidgetFactory factory;
+    dagui::Widget* widgetTree = factory.create(*config);
+    ASSERT_NE(nullptr, widgetTree);
+    dagui::ResolveWidgetRefsVisitor resolver;
+    widgetTree->accept(resolver);
+    dagui::ConstraintSolverVisitor sut;
+
+    widgetTree->accept(sut);
+    auto actualValue = widgetTree->find(path);
+    assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(ConstraintSolverVisitor, ConstraintSolverVisitor_testVisit, ::testing::Values(
+        std::make_tuple("data/tests/ConstraintSolverVisitor/NoConstraints.lua", "x", std::int64_t{0}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/ConstraintSolverVisitor/NoConstraints.lua", "y", std::int64_t{0}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/ConstraintSolverVisitor/Position.lua", "lookup.test.x", std::int64_t{100}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/ConstraintSolverVisitor/Position.lua", "lookup.test.y", std::int64_t{200}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
