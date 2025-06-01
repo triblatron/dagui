@@ -10,6 +10,8 @@
 #include "core/Widget.h"
 #include "core/ResolveWidgetRefsVisitor.h"
 #include "core/ConstraintSolverVisitor.h"
+#include "core/LayoutConstraintsCollectionVisitor.h"
+
 #include "test/TestUtils.h"
 
 #include <gtest/gtest.h>
@@ -173,4 +175,33 @@ INSTANTIATE_TEST_SUITE_P(ConstraintSolverVisitor, ConstraintSolverVisitor_testVi
         std::make_tuple("data/tests/ConstraintSolverVisitor/NoConstraints.lua", "y", std::int64_t{0}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/ConstraintSolverVisitor/Position.lua", "lookup.test.x", std::int64_t{100}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/ConstraintSolverVisitor/Position.lua", "lookup.test.y", std::int64_t{200}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));
+
+class LayoutConstraintsCollectionVisitor_testVisit : public ::testing::TestWithParam<std::tuple<const char*, const char *, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+TEST_P(LayoutConstraintsCollectionVisitor_testVisit, testExpectedCount)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::LayoutConstraintsCollectionVisitor sut;
+    dagui::WidgetFactory factory;
+    auto widgetTree = factory.create(*config);
+    ASSERT_NE(nullptr, widgetTree);
+    widgetTree->accept(sut);
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+    auto tolerance = std::get<3>(GetParam());
+    auto op = std::get<4>(GetParam());
+    auto actualValue = sut.find(path);
+    assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(LayoutConstraintsCollectionVisitor, LayoutConstraintsCollectionVisitor_testVisit, ::testing::Values(
+        std::make_tuple("data/tests/LayoutConstraintsCollectionVisitor/NoConstraints.lua", "numConstraints", std::int64_t{0}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/LayoutConstraintsCollectionVisitor/OneConstraint.lua", "numConstraints", std::int64_t{1}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

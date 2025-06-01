@@ -1,0 +1,27 @@
+root=
+{
+	class="RootWidget",
+	children=
+	{
+		{
+			class="Window",
+			constraints=
+			{
+				{
+					type="position",
+					widget="test",
+					attribute="Attribute::X",
+					relation="Relation::EQ",
+					anchorType="AnchorType::FIXED",
+					constant=100.0,
+				},
+			},
+			children=
+			{
+				{
+					class="Label",
+				}
+			}
+		}
+	}
+}

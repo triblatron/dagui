@@ -1,0 +1,16 @@
+root=
+{
+	class="RootWidget",
+	children=
+	{
+		{
+			class="Window",
+			children=
+			{
+				{
+					class="Label",
+				}
+			}
+		}
+	}
+}
