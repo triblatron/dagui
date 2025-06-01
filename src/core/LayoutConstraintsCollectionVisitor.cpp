@@ -18,12 +18,16 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
+        retval = dagbase::findInternal(path, "constraints", _constraints);
+        if (retval.has_value())
+            return retval;
+        
         return {};
     }
 
     LayoutConstraintsCollectionVisitor::LayoutConstraintsCollectionVisitor()
     {
-        registerHandler(dagbase::Atom::intern("Window"), [this](Widget& widget) {
+        registerHandler(dagbase::Atom::intern("*"), [this](Widget& widget) {
             widget.eachConstraint([this](Constraint& constraint) {
                 _constraints.a.push_back(constraint);
                 return true;

@@ -203,5 +203,6 @@ TEST_P(LayoutConstraintsCollectionVisitor_testVisit, testExpectedCount)
 
 INSTANTIATE_TEST_SUITE_P(LayoutConstraintsCollectionVisitor, LayoutConstraintsCollectionVisitor_testVisit, ::testing::Values(
         std::make_tuple("data/tests/LayoutConstraintsCollectionVisitor/NoConstraints.lua", "numConstraints", std::int64_t{0}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/LayoutConstraintsCollectionVisitor/OneConstraint.lua", "numConstraints", std::int64_t{1}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/LayoutConstraintsCollectionVisitor/OneConstraint.lua", "numConstraints", std::int64_t{1}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/LayoutConstraintsCollectionVisitor/OneConstraint.lua", "constraints[0].constant", double{100}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
