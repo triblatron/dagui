@@ -7,9 +7,17 @@
 
 #include "config/Export.h"
 
+#include "core/Variant.h"
+
 #include <cstdint>
 #include <optional>
 #include <vector>
+#include <string_view>
+
+namespace dagbase
+{
+    class ConfigurationElement;
+}
 
 namespace dagui
 {
@@ -17,18 +25,20 @@ namespace dagui
     {
         enum HorizontalAlignment : std::uint32_t
         {
-            ALIGN_LEFT,
-            ALIGN_CENTRE,
-            ALIGN_RIGHT
+            HORIZ_ALIGN_UNKNOWN,
+            HORIZ_ALIGN_LEFT,
+            HORIZ_ALIGN_CENTRE,
+            HORIZ_ALIGN_RIGHT
         };
 
         float spacing{0.0f};
         float padding[4]{};
 
-        HorizontalAlignment horizontalAlignment{ALIGN_LEFT};
+        HorizontalAlignment horizontalAlignment{HORIZ_ALIGN_LEFT};
 
         enum VerticalAlignment : std::uint32_t
         {
+            VERTICAL_ALIGN_UNKNOWN,
             VERTICAL_ALIGN_TOP,
             VERTICAL_ALIGN_CENTRE,
             VERTICAL_ALIGN_BOTTOM
@@ -58,6 +68,12 @@ namespace dagui
         };
         int growthWidth{0};
         int growthHeight{0};
+
+        void configure(dagbase::ConfigurationElement& config);
+
+        dagbase::Variant find(std::string_view path) const;
+
+        static HorizontalAlignment parseHorizontalAlignment(const char* str);
     };
 }
 

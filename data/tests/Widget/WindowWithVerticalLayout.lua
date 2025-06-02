@@ -1,0 +1,22 @@
+root=
+{
+	class="RootWidget",
+	children=
+	{
+		{
+			class="Vertical",
+			id="test",
+			layoutProperties=
+			{
+				horizAlign="HORIZ_ALIGN_CENTRE",
+			},
+			children=
+			{
+				{
+					class="Label",
+					text="Hello, world!",
+				}
+			}
+		}
+	}
+}
