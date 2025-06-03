@@ -85,7 +85,9 @@ TEST_P(Widget_testProperties, testExpectedValue)
 INSTANTIATE_TEST_SUITE_P(Widget, Widget_testProperties, ::testing::Values(
         std::make_tuple("data/tests/Widget/Label.lua", "text", "test", 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.test.layoutProperties.horizAlign", std::int64_t(dagui::LayoutProperties::HORIZ_ALIGN_CENTRE), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.test.layoutProperties.verticalAlign", std::int64_t(dagui::LayoutProperties::VERTICAL_ALIGN_CENTRE), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.test.layoutProperties.verticalAlign", std::int64_t(dagui::LayoutProperties::VERTICAL_ALIGN_CENTRE), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.test.layoutProperties.spacing", 5.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.test.layoutProperties.padding[0].padding", 1.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
 
 class WidgetRef_testResolve : public ::testing::TestWithParam<std::tuple<const char*, const char*, bool>>

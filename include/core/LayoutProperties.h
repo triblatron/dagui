@@ -8,11 +8,13 @@
 #include "config/Export.h"
 
 #include "core/Variant.h"
+#include "util/SearchableArray.h"
 
 #include <cstdint>
 #include <optional>
 #include <vector>
 #include <string_view>
+#include <array>
 
 namespace dagbase
 {
@@ -21,6 +23,13 @@ namespace dagbase
 
 namespace dagui
 {
+    struct DAGUI_API Padding
+    {
+        float padding;
+
+        dagbase::Variant find(std::string_view path) const;
+    };
+
     struct DAGUI_API LayoutProperties
     {
         enum HorizontalAlignment : std::uint32_t
@@ -32,7 +41,7 @@ namespace dagui
         };
 
         float spacing{0.0f};
-        float padding[4]{};
+        dagbase::SearchableArray<std::array<Padding,4>> padding;
 
         HorizontalAlignment horizontalAlignment{HORIZ_ALIGN_LEFT};
 
@@ -74,6 +83,8 @@ namespace dagui
         dagbase::Variant find(std::string_view path) const;
 
         static HorizontalAlignment parseHorizontalAlignment(const char* str);
+
+        static VerticalAlignment parseVerticalAlignment(const char* str);
     };
 }
 
