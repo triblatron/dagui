@@ -25,10 +25,10 @@ namespace dagui
         {
             if (element->numChildren()==4)
             {
-                padding.a[0].padding = float(element->child(0)->asDouble());
-                padding.a[1].padding = float(element->child(1)->asDouble());
-                padding.a[2].padding = float(element->child(2)->asDouble());
-                padding.a[3].padding = float(element->child(3)->asDouble());
+                padding.a[0] = float(element->child(0)->asDouble());
+                padding.a[1] = float(element->child(1)->asDouble());
+                padding.a[2] = float(element->child(2)->asDouble());
+                padding.a[3] = float(element->child(3)->asDouble());
             }
         }
     }

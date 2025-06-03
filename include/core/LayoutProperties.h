@@ -23,13 +23,6 @@ namespace dagbase
 
 namespace dagui
 {
-    struct DAGUI_API Padding
-    {
-        float padding;
-
-        dagbase::Variant find(std::string_view path) const;
-    };
-
     struct DAGUI_API LayoutProperties
     {
         enum HorizontalAlignment : std::uint32_t
@@ -41,7 +34,7 @@ namespace dagui
         };
 
         float spacing{0.0f};
-        dagbase::SearchableArray<std::array<Padding,4>> padding;
+        dagbase::SearchablePrimitiveArray<std::array<float,4>> padding;
 
         HorizontalAlignment horizontalAlignment{HORIZ_ALIGN_LEFT};
 
