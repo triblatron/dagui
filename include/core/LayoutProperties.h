@@ -2,8 +2,7 @@
 // Created by Tony Horrobin on 12/05/2025.
 //
 
-#ifndef DAGUI_LAYOUTPROPERTIES_H
-#define DAGUI_LAYOUTPROPERTIES_H
+#pragma once
 
 #include "config/Export.h"
 
@@ -80,5 +79,3 @@ namespace dagui
         static VerticalAlignment parseVerticalAlignment(const char* str);
     };
 }
-
-#endif //DAGUI_LAYOUTPROPERTIES_H

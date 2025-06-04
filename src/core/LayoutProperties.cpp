@@ -73,15 +73,4 @@ namespace dagui
 
         return LayoutProperties::VERTICAL_ALIGN_UNKNOWN;
     }
-
-    dagbase::Variant Padding::find(std::string_view path) const
-    {
-        dagbase::Variant retval;
-
-        retval = dagbase::findEndpoint(path, "padding", padding);
-        if (retval.has_value())
-            return retval;
-
-        return {};
-    }
 }
