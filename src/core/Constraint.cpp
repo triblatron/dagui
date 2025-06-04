@@ -212,9 +212,16 @@ namespace dagui
         _secondItem.resolve(&widget);
     }
 
-    Constraint Constraint::width()
+    Constraint Constraint::width(dagbase::Atom ref, Relation relation, float value)
     {
-        return Constraint();
+        Constraint constraint;
+
+        constraint._firstItem.setId(ref);
+        constraint._firstAttr = Attribute::WIDTH;
+        constraint._relation = relation;
+        constraint._constant = value;
+
+        return constraint;
     }
 
     const char *Constraint::anchorTypeToString(Constraint::AnchorType value)

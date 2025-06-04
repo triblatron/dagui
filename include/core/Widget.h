@@ -94,6 +94,11 @@ namespace dagui
 
         void eachChild(std::function<bool(Widget&)> f);
 
+        void addConstraint(const Constraint& constraint)
+        {
+            _constraints.a.emplace_back(constraint);
+        }
+
         void eachConstraint(std::function<bool(Constraint&)> f);
     private:
         glm::ivec2 _pos;

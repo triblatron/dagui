@@ -76,7 +76,7 @@ namespace dagui
 
         static Constraint create(dagbase::ConfigurationElement& config);
 
-        static Constraint width();
+        static Constraint width(dagbase::Atom ref, Relation relation, float value);
 
         static Constraint proportional(const dagbase::Atom& child, Attribute attr, const dagbase::Atom& parent, float ratio);
 

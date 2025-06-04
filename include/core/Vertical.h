@@ -28,6 +28,8 @@ namespace dagui
             return _props;
         }
 
+        void computeConstraints();
+
         void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory) override;
 
         dagbase::Variant find(std::string_view path) const override;
@@ -40,5 +42,6 @@ namespace dagui
         };
         using GrowthFactorArray = std::vector<ChildProperties>;
         ChildProperties _childProps;
+        float _minWidth{0.0};
     };
 }

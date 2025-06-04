@@ -16,6 +16,8 @@ namespace dagui
         {
             _props.configure(*element);
         }
+        dagbase::ConfigurationElement::readConfig(config, "minWidth", &_minWidth);
+        computeConstraints();
     }
 
     dagbase::ConfigurationElement::ValueType Vertical::find(std::string_view path) const
@@ -35,5 +37,10 @@ namespace dagui
     Vertical::Vertical(Widget *parent) : Widget(dagbase::Atom::intern("Vertical"), parent)
     {
         // Do nothing.
+    }
+
+    void Vertical::computeConstraints()
+    {
+        addConstraint(Constraint::width(id(), Constraint::Relation::GE, _minWidth));
     }
 }
