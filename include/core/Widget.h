@@ -118,6 +118,7 @@ namespace dagui
         using ConstraintArray = dagbase::SearchableArray<std::vector<Constraint>>;
         ConstraintArray _constraints;
         dagbase::Atom _typeName;
+        dagbase::Atom _styleClass;
         StyleRef _style;
         Widget* _parent{nullptr};
         Shape* _shape{nullptr};

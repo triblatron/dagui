@@ -31,28 +31,6 @@ namespace dagui
         float _border{0.0f};
     };
 
-    class StyleLookup
-    {
-    public:
-        Style* lookup(dagbase::Atom name)
-        {
-            if (auto it=_lookup.m.find(name); it!=_lookup.m.end())
-                return it->second;
-
-            return nullptr;
-        }
-
-        void addStyle(dagbase::Atom name, Style* style)
-        {
-            if (!name.empty() && style)
-                _lookup.m.emplace(name,style);
-        }
-
-        dagbase::Variant find(std::string_view path) const;
-    private:
-        using Lookup = dagbase::SearchableMapFromAtom<std::unordered_map<dagbase::Atom, Style*>>;
-        Lookup _lookup;
-    };
-
+    using StyleLookup = dagbase::SearchableMapFromAtom<std::unordered_map<dagbase::Atom, Style*>>;
     using StyleRef = dagbase::Reference<dagbase::Atom, Style, StyleLookup>;
 }

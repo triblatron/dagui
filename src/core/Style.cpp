@@ -27,9 +27,4 @@ namespace dagui
 
         return {};
     }
-
-    dagbase::Variant StyleLookup::find(std::string_view path) const
-    {
-        return dagbase::findMapFromAtom(path, _lookup.m);
-    }
 }

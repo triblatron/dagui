@@ -36,7 +36,7 @@ namespace dagui
 
         void addStyle(dagbase::Atom name, Style* style)
         {
-            _styles.addStyle(name, style);
+            _styles.m.emplace(name, style);
         }
 
         Widget* lookup(dagbase::Atom name) override;
