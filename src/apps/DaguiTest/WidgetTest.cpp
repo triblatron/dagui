@@ -90,7 +90,7 @@ INSTANTIATE_TEST_SUITE_P(Widget, Widget_testProperties, ::testing::Values(
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.test.layoutProperties.padding[0]", 1.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.styleClass", std::string("label"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.shape.class", std::string("Rectangle"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        //std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.border", std::int64_t{4}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "styles.label.border", 4.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.shape.cornerRadius", 16.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
 

@@ -5,6 +5,7 @@
 #include "config/config.h"
 
 #include "core/RootWidget.h"
+#include "core/Style.h"
 
 namespace dagui
 {
@@ -15,6 +16,18 @@ namespace dagui
         {
             dagbase::ConfigurationElement::readConfig(*element, "width", &_size.x);
             dagbase::ConfigurationElement::readConfig(*element, "height", &_size.y);
+        }
+
+        if (auto element = config.findElement("styles"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                auto style = new Style();
+                std::string name;
+                dagbase::ConfigurationElement::readConfig(child, "name", &name);
+                style->configure(child);
+                addStyle(dagbase::Atom::intern(name), style);
+                return true;
+            });
         }
     }
 
@@ -52,6 +65,10 @@ namespace dagui
             return retval;
 
         retval = dagbase::findInternal(path, "lookup", _widgetLookup);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findInternal(path, "styles", _styles);
         if (retval.has_value())
             return retval;
 

@@ -17,6 +17,8 @@
 
 namespace dagui
 {
+    class Style;
+
     class DAGUI_API RootWidget : public dagui::Widget
     {
     public:
@@ -31,12 +33,19 @@ namespace dagui
 
         void addIdentified(Widget* widget) override;
 
+        void addStyle(dagbase::Atom name, Style* style)
+        {
+            if (style)
+                _styles.m.emplace(name, style);
+        }
         Widget* lookup(dagbase::Atom name) override;
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
     private:
         using WidgetLookup = dagbase::SearchableMapFromAtom<std::unordered_map<dagbase::Atom, Widget*>>;
         WidgetLookup _widgetLookup;
+        using StyleLookup = dagbase::SearchableMapFromAtom<std::unordered_map<dagbase::Atom, Style*>>;
+        StyleLookup _styles;
         glm::ivec2 _size{};
     };
 }
