@@ -54,6 +54,8 @@ namespace dagui
                 return true;
             });
         }
+
+        dagbase::ConfigurationElement::readConfig(config, "styleClass", &_styleClass);
     }
 
     Widget* Widget::root()
@@ -116,6 +118,12 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
+        if (!_styleClass.empty())
+        {
+            retval = dagbase::findEndpoint(path, "styleClass", std::string(_styleClass.value()));
+            if (retval.has_value())
+                return retval;
+        }
         return {};
     }
 

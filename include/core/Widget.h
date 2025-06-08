@@ -107,11 +107,11 @@ namespace dagui
         dagbase::Atom _id;
         using ChildArray = std::vector<Widget*>;
         ChildArray _children;
-        dagbase::Atom _typeName;
-        Widget* _parent{nullptr};
-        SceneNode* _sceneNode{nullptr};
-        Shape* _shape{nullptr};
         using ConstraintArray = dagbase::SearchableArray<std::vector<Constraint>>;
         ConstraintArray _constraints;
+        dagbase::Atom _typeName;
+        dagbase::Atom _styleClass;
+        Widget* _parent{nullptr};
+        Shape* _shape{nullptr};
     };
 }
