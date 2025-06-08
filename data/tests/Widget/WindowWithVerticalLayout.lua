@@ -5,8 +5,7 @@ root=
 	{
 		{
 			name="label",
-			border=4,
-			cornerRadius=16,
+			border=4.0,
 		}
 	},
 	children=

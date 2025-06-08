@@ -56,7 +56,10 @@ namespace dagui
             });
         }
 
-        dagbase::ConfigurationElement::readConfig(config, "styleClass", &_styleClass);
+        std::string styleClass;
+        dagbase::ConfigurationElement::readConfig(config, "styleClass", &styleClass);
+
+        _style.setId(dagbase::Atom::intern(styleClass));
 
         if (auto element = config.findElement("shape"); element)
         {
@@ -124,9 +127,13 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
-        if (!_styleClass.empty())
+        retval = dagbase::findEndpoint(path, "styleClass", std::string(_style.toString()));
+        if (retval.has_value())
+            return retval;
+
+        if (_style.ref())
         {
-            retval = dagbase::findEndpoint(path, "styleClass", std::string(_styleClass.value()));
+            retval = dagbase::findInternal(path, "style", *_style.ref());
             if (retval.has_value())
                 return retval;
         }
@@ -170,5 +177,10 @@ namespace dagui
                 if (!f(constraint))
                     break;
             }
+    }
+
+    void Widget::resolveRefs()
+    {
+        _style.resolve(root()->styleLookup());
     }
 }

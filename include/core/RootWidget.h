@@ -14,6 +14,7 @@
 #include "gfx/ArrayDescriptor.h"
 #include "util/SearchableMap.h"
 #include "core/Atom.h"
+#include "core/Style.h"
 
 namespace dagui
 {
@@ -35,16 +36,21 @@ namespace dagui
 
         void addStyle(dagbase::Atom name, Style* style)
         {
-            if (style)
-                _styles.m.emplace(name, style);
+            _styles.addStyle(name, style);
         }
+
         Widget* lookup(dagbase::Atom name) override;
+
+        StyleLookup* styleLookup() override
+        {
+            return &_styles;
+        }
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
     private:
         using WidgetLookup = dagbase::SearchableMapFromAtom<std::unordered_map<dagbase::Atom, Widget*>>;
         WidgetLookup _widgetLookup;
-        using StyleLookup = dagbase::SearchableMapFromAtom<std::unordered_map<dagbase::Atom, Style*>>;
+
         StyleLookup _styles;
         glm::ivec2 _size{};
     };

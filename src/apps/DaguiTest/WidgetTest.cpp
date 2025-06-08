@@ -78,6 +78,8 @@ TEST_P(Widget_testProperties, testExpectedValue)
     auto value = std::get<2>(GetParam());
     auto tolerance = std::get<3>(GetParam());
     auto op = std::get<4>(GetParam());
+    dagui::ResolveWidgetRefsVisitor resolver;
+    sut->accept(resolver);
     auto actualValue = sut->find(path);
     assertComparison(value, actualValue, tolerance, op);
 }
@@ -91,7 +93,8 @@ INSTANTIATE_TEST_SUITE_P(Widget, Widget_testProperties, ::testing::Values(
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.styleClass", std::string("label"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.shape.class", std::string("Rectangle"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "styles.label.border", 4.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.shape.cornerRadius", 16.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.shape.cornerRadius", 16.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.style.border", 4.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
 
 class WidgetRef_testResolve : public ::testing::TestWithParam<std::tuple<const char*, const char*, bool>>

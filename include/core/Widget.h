@@ -13,6 +13,7 @@
 #include "util/SearchableArray.h"
 #include "core/Reference.h"
 #include "core/Atom.h"
+#include "core/Style.h"
 
 #include <glm/vec2.hpp>
 
@@ -100,6 +101,13 @@ namespace dagui
         }
 
         void eachConstraint(std::function<bool(Constraint&)> f);
+
+        void resolveRefs();
+
+        virtual StyleLookup* styleLookup()
+        {
+            return nullptr;
+        }
     private:
         glm::ivec2 _pos;
         using Properties=dagbase::SearchableMap<std::unordered_map<dagbase::Atom, dagbase::Variant>>;
@@ -110,7 +118,7 @@ namespace dagui
         using ConstraintArray = dagbase::SearchableArray<std::vector<Constraint>>;
         ConstraintArray _constraints;
         dagbase::Atom _typeName;
-        dagbase::Atom _styleClass;
+        StyleRef _style;
         Widget* _parent{nullptr};
         Shape* _shape{nullptr};
     };

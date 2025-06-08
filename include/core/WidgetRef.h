@@ -10,5 +10,5 @@
 namespace dagui
 {
     class Widget;
-    using WidgetRef = typename dagbase::Reference<dagbase::Atom, Widget>;
+    using WidgetRef = typename dagbase::Reference<dagbase::Atom, Widget, Widget>;
 }

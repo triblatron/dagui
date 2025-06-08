@@ -12,6 +12,7 @@ namespace dagui
     ResolveWidgetRefsVisitor::ResolveWidgetRefsVisitor()
     {
         auto h = [this](Widget &widget) {
+            widget.resolveRefs();
             widget.eachConstraint([this, &widget](Constraint &constraint) {
                 constraint.resolveRefs(widget);
                 return true;
