@@ -6,15 +6,19 @@
 
 #include "core/Rectangle.h"
 #include "core/ShapeVisitor.h"
+#include "core/ConfigurationElement.h"
+#include "util/Searchable.h"
 
 namespace dagui
 {
     Rectangle::Rectangle()
+    :
+    Shape(dagbase::Atom::intern("Rectangle"))
     {
-
+        // Do notbing.
     }
 
-    bool Rectangle::isInside(double x, double y)
+    bool Rectangle::isInside(float x, float y)
     {
         if (_cornerRadius==0.0)
         {
@@ -64,11 +68,11 @@ namespace dagui
         visitor.visitRectangle(*this);
     }
 
-    bool Rectangle::isInCorner(double x, double y, double cornerX, double cornerY)
+    bool Rectangle::isInCorner(float x, float y, float d, float d1)
     {
-        double deltaX = x - cornerX;
+        double deltaX = x - d;
         deltaX *= deltaX;
-        double deltaY = y - cornerY;
+        double deltaY = y - d1;
         deltaY *= deltaY;
         double dist = deltaX + deltaY;
         if (dist < _cornerRadius * _cornerRadius)
@@ -77,5 +81,23 @@ namespace dagui
         }
 
         return false;
+    }
+
+    void Rectangle::configure(dagbase::ConfigurationElement &config, WidgetFactory &factory)
+    {
+        dagbase::ConfigurationElement::readConfig(config, "cornerRadius", &_cornerRadius);
+    }
+
+    dagbase::Variant Rectangle::find(std::string_view path) const
+    {
+        dagbase::Variant retval = Shape::find(path);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "cornerRadius", _cornerRadius);
+        if (retval.has_value())
+            return retval;
+
+        return {};
     }
 }

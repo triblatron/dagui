@@ -1,6 +1,14 @@
 root=
 {
 	class="RootWidget",
+	styles=
+	{
+		{
+			name="label",
+			border=4,
+			cornerRadius=16,
+		}
+	},
 	children=
 	{
 		{
@@ -19,7 +27,14 @@ root=
 			{
 				{
 					class="Label",
+					id="label1",
 					text="Hello, world!",
+					styleClass="label",
+					shape=
+					{
+						class="Rectangle",
+						cornerRadius=16.0,
+					}
 				}
 			}
 		}

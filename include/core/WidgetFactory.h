@@ -15,6 +15,7 @@ namespace dagbase
 
 namespace dagui
 {
+    class Shape;
     class Widget;
 
     class DAGUI_API WidgetFactory
@@ -22,6 +23,7 @@ namespace dagui
     public:
         Widget* create(dagbase::ConfigurationElement& config);
 
+        Shape* createShape(dagbase::ConfigurationElement& config);
     private:
         Widget* _root{nullptr};
         using ParentStack = std::stack<Widget*>;

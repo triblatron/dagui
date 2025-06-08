@@ -277,10 +277,17 @@ INSTANTIATE_TEST_SUITE_P(CompositeShape, CompositeShape_testIsInside, ::testing:
 class MockShape : public dagui::Shape
 {
 public:
-    MockShape() = default;
+    MockShape()
+    :
+    dagui::Shape(dagbase::Atom::intern("MockShape"))
+    {
+        // Do nothing.
+    }
 
     MOCK_METHOD(void, accept, (dagui::ShapeVisitor&), (override));
-    MOCK_METHOD(bool, isInside, (double,double), (override));
+    MOCK_METHOD(bool, isInside, (float,float), (override));
+    MOCK_METHOD(void, configure, (dagbase::ConfigurationElement&, dagui::WidgetFactory&), (override));
+    MOCK_METHOD(dagbase::Variant, find, (std::string_view), (const,override));
 };
 
 class TestShapeVisitor : public dagui::ShapeVisitor

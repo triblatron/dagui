@@ -12,6 +12,7 @@
 #include "core/RootWidget.h"
 #include "core/Vertical.h"
 #include "core/Label.h"
+#include "core/Rectangle.h"
 
 namespace dagui
 {
@@ -58,5 +59,26 @@ namespace dagui
         _parentStack.pop();
 
         return widget;
+    }
+
+    Shape *WidgetFactory::createShape(dagbase::ConfigurationElement &config)
+    {
+        std::string className;
+
+        dagbase::ConfigurationElement::readConfig(config, "class", &className);
+
+        Shape* shape = nullptr;
+
+        if (className == "Rectangle")
+        {
+            shape = new Rectangle();
+        }
+
+        if (shape)
+        {
+            shape->configure(config, *this);
+        }
+
+        return shape;
     }
 }

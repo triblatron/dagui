@@ -5,6 +5,9 @@
 #include "config/config.h"
 
 #include "core/CompositeShape.h"
+#include "core/ConfigurationElement.h"
+#include "util/Searchable.h"
+#include "core/WidgetFactory.h"
 
 namespace dagui
 {
@@ -17,7 +20,7 @@ namespace dagui
         }
     }
 
-    bool CompositeShape::isInside(double x, double y)
+    bool CompositeShape::isInside(float x, float y)
     {
         for (auto shape : _shapes)
         {
@@ -35,5 +38,29 @@ namespace dagui
         {
             _shapes.push_back(shape);
         }
+    }
+
+    void CompositeShape::configure(dagbase::ConfigurationElement &config, WidgetFactory &factory)
+    {
+        if (auto element = config.findElement("children"); element)
+        {
+            element->eachChild([this, &factory](dagbase::ConfigurationElement& child) {
+                auto childShape = factory.createShape(child);
+                addShape(childShape);
+                return true;
+            });
+        }
+    }
+
+    dagbase::Variant CompositeShape::find(std::string_view path) const
+    {
+        return Shape::find(path);
+    }
+
+    CompositeShape::CompositeShape()
+    :
+    Shape(dagbase::Atom::intern("CompositeShape"))
+    {
+        // Do nothing.
     }
 }

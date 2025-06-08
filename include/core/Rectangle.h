@@ -5,6 +5,7 @@
 #include "config/Export.h"
 
 #include "core/Shape.h"
+#include "WidgetFactory.h"
 
 namespace dagui
 {
@@ -42,14 +43,18 @@ namespace dagui
         
         void accept(ShapeVisitor& visitor) override;
 
-        bool isInside(double x, double y) override;
-    private:
-        double _x{0.0};
-        double _y{0.0};
-        double _width{0.0};
-        double _height{0.0};
-        double _cornerRadius{0.0};
+        bool isInside(float x, float y) override;
 
-        bool isInCorner(double x, double y, double d, double d1);
+        void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory) override;
+
+        dagbase::Variant find(std::string_view path) const override;
+    private:
+        float _x{0.0f};
+        float _y{0.0f};
+        float _width{0.0f};
+        float _height{0.0f};
+        float _cornerRadius{0.0f};
+
+        bool isInCorner(float x, float y, float d, float d1);
     };
 }

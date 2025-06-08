@@ -9,6 +9,7 @@
 #include "core/WidgetFactory.h"
 #include "gfx/ArrayDescriptor.h"
 #include "util/Searchable.h"
+#include "core/Shape.h"
 
 #include <utility>
 
@@ -56,6 +57,11 @@ namespace dagui
         }
 
         dagbase::ConfigurationElement::readConfig(config, "styleClass", &_styleClass);
+
+        if (auto element = config.findElement("shape"); element)
+        {
+            _shape = factory.createShape(*element);
+        }
     }
 
     Widget* Widget::root()
@@ -124,6 +130,14 @@ namespace dagui
             if (retval.has_value())
                 return retval;
         }
+
+        if (_shape)
+        {
+            retval = dagbase::findInternal(path, "shape", *_shape);
+            if (retval.has_value())
+                return retval;
+        }
+
         return {};
     }
 
