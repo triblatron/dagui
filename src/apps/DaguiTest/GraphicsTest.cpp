@@ -18,6 +18,9 @@
 #include "gfx/Layer.h"
 #include "gfx/OpenGL.h"
 #include "gfx/RendererFactory.h"
+#include "core/WidgetFactory.h"
+#include "core/Shape.h"
+#include "core/DrawCommandBuffer.h"
 #include "test/TestUtils.h"
 
 #include <gtest/gtest.h>
@@ -741,3 +744,52 @@ INSTANTIATE_TEST_SUITE_P(GenericMesh, GenericMesh_addVertex, ::testing::Values(
 	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::b, 2, 1.0f),
 	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::a, 2, 1.0f)
 ));
+
+class DrawCommandBuffer_testShapeGeneratesGeometry : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+/*
+class MockDrawCommandBuffer : public dagui::DrawCommandBuffer
+{
+public:
+    MockDrawCommandBuffer()
+    {
+        ON_CALL(*this, find).WillByDefault([](std::string_view path) {
+            dagbase::Variant retval;
+
+            retval = dagbase::findEndpoint(path, "numPoints", _points.size());
+            return dagbase::Variant();
+        });
+    }
+public:
+    MOCK_METHOD(void, drawRect, (const dagui::Rectangle&), (override));
+    MOCK_METHOD(dagbase::Variant, find, (std::string_view), (const,override));
+private:
+};
+*/
+
+TEST_P(DrawCommandBuffer_testShapeGeneratesGeometry, testExpectedValue)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::WidgetFactory factory;
+    auto shape = factory.createShape(*config);
+    ASSERT_NE(nullptr, shape);
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+    auto tolerance = std::get<3>(GetParam());
+    auto op = std::get<4>(GetParam());
+    auto sut = new dagui::DrawCommandBuffer();
+    shape->render(*sut);
+    auto actualValue = sut->find(path);
+
+    assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(DrawCommandBuffer, DrawCommandBuffer_testShapeGeneratesGeometry, ::testing::Values(
+        std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "numCommands", std::int64_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "commands[0].op", std::string("OP_RECTANGLE"), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));

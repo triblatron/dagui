@@ -8,6 +8,7 @@
 #include "core/ShapeVisitor.h"
 #include "core/ConfigurationElement.h"
 #include "util/Searchable.h"
+#include "core/DrawCommandBuffer.h"
 
 namespace dagui
 {
@@ -85,6 +86,10 @@ namespace dagui
 
     void Rectangle::configure(dagbase::ConfigurationElement &config, WidgetFactory &factory)
     {
+        dagbase::ConfigurationElement::readConfig( config, "x", &_x);
+        dagbase::ConfigurationElement::readConfig( config, "y", &_y);
+        dagbase::ConfigurationElement::readConfig( config, "width", &_width);
+        dagbase::ConfigurationElement::readConfig( config, "height", &_height);
         dagbase::ConfigurationElement::readConfig(config, "cornerRadius", &_cornerRadius);
     }
 
@@ -99,5 +104,10 @@ namespace dagui
             return retval;
 
         return {};
+    }
+
+    void Rectangle::render(DrawCommandBuffer &buffer)
+    {
+        buffer.drawRect(*this);
     }
 }

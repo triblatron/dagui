@@ -48,6 +48,8 @@ namespace dagui
         void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory) override;
 
         dagbase::Variant find(std::string_view path) const override;
+
+        void render(DrawCommandBuffer& buffer) override;
     private:
         float _x{0.0f};
         float _y{0.0f};
