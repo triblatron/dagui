@@ -791,5 +791,9 @@ TEST_P(DrawCommandBuffer_testShapeGeneratesGeometry, testExpectedValue)
 
 INSTANTIATE_TEST_SUITE_P(DrawCommandBuffer, DrawCommandBuffer_testShapeGeneratesGeometry, ::testing::Values(
         std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "numCommands", std::int64_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "commands[0].op", std::string("OP_RECTANGLE"), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "commands[0].op", std::string("OP_RECTANGLE"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "commands[0].rect.x", 0.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "commands[0].rect.y", 0.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "commands[0].rect.width", 200.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "commands[0].rect.height", 100.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

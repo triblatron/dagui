@@ -68,11 +68,25 @@ namespace dagui
             // Do nothing.
         }
 
-
+        virtual dagbase::Variant find(std::string_view path) const;
     private:
         Rectangle _rect;
 
     };
+
+    dagbase::Variant DrawRectangle::find(std::string_view path) const
+    {
+        dagbase::Variant retval =  DrawCommand::find(path);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findInternal(path, "rect", _rect);
+        if (retval.has_value())
+            return retval;
+
+        return {};
+    }
+
     void DrawCommandBuffer::drawRect(const Rectangle &rect)
     {
         addCommand(new DrawRectangle(rect));

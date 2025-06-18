@@ -12,6 +12,8 @@
 
 #include <glm/glm.hpp>
 
+#include <cstdint>
+
 namespace dagui
 {
     class SceneNode;
@@ -55,6 +57,6 @@ namespace dagui
         dagbase::IdentifierGenerator::Identifier _id{dagbase::IdentifierGenerator::INVALID_ID};
         Widget* _widget{nullptr};
         SceneNode* _parent{nullptr};
-        glm::ivec2  _pos;
+        std::int32_t _zOrder{0};
     };
 }

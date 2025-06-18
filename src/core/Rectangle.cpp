@@ -103,6 +103,22 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
+        retval = dagbase::findEndpoint(path, "x", _x);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "y", _y);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "width", _width);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "height", _height);
+        if (retval.has_value())
+            return retval;
+
         return {};
     }
 
