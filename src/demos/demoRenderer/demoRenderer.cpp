@@ -18,6 +18,7 @@
 #include "gfx/OpenGLMesh2D.h"
 #include "gfx/OpenGLRenderer.h"
 #include "util/glmOutput.h"
+#include "core/Rectangle.h"
 
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
@@ -51,10 +52,15 @@ void onReshape(int width, int height)
     glLoadIdentity();
 }
 
-void display()
+void display(dagui::Renderer& renderer)
 {
     glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+    glColor3f(1.0f, 1.0f, 0.0f);
+    dagui::Rectangle rect;
+    rect.setSize(1.0f,0.5f);
+    renderer.drawRect(rect);
     glBegin(GL_TRIANGLES);
     glColor3f(1.0f, 0.0f, 0.0f);
     glVertex2f(0.0f, 0.0f);
@@ -126,6 +132,7 @@ int main(int argc, char** argv)
     //std::cout << glGetError() << std::endl;
     glm::mat4 model = glm::perspective(glm::radians(45.0),16.0/9.0, 0.1, 1000.0);
     std::cout << "model: " << model << std::endl;
+    dagui::OpenGLRenderer renderer;
     while (!glfwWindowShouldClose(window))
     {
         int width, height;
@@ -134,7 +141,7 @@ int main(int argc, char** argv)
 
         glViewport(0, 0, width, height);
 
-        display();
+        display(renderer);
         glfwPollEvents();
     }
     glfwDestroyWindow(window);

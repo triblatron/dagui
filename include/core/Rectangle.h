@@ -14,13 +14,23 @@ namespace dagui
     public:
         Rectangle();
 
-        void setPos(double x, double y)
+        void setPos(float x, float y)
         {
             _x = x;
             _y = y;
         }
 
-        void setSize(double width, double height)
+        float x() const
+        {
+            return _x;
+        }
+
+        float y() const
+        {
+            return _y;
+        }
+
+        void setSize(float width, float height)
         {
             _width = width;
             _height = height;

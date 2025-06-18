@@ -13,6 +13,9 @@
 #include "gfx/TextureAtlas.h"
 #include "gfx/OpenGL.h"
 #include "gfx/DrawingCommand.h"
+#include "core/DrawCommandBuffer.h"
+#include "core/DrawCommand.h"
+#include "core/Rectangle.h"
 
 #if defined(__linux__) || defined(_WIN32)
 #include <GL/glut.h>
@@ -128,5 +131,22 @@ namespace dagui
         imageDef.p2.y = float(imageDef.y+imageDef.height)/float(binImageDef.height);
         imageDef.p3.x = float(imageDef.x)/float(binImageDef.width);
         imageDef.p3.y = float(imageDef.y+imageDef.height)/float(binImageDef.height);
+    }
+
+    void OpenGLRenderer::makeItSo(DrawCommandBuffer &buffer)
+    {
+        buffer.eachCommand([this](DrawCommand* cmd) {
+            cmd->makeItSo(*this);
+        });
+    }
+
+    void OpenGLRenderer::drawRect(const Rectangle &rect)
+    {
+        glBegin(GL_QUADS);
+        glVertex2f(rect.x(), rect.y());
+        glVertex2f( rect.x() + rect.width(), rect.y());
+        glVertex2f(rect.x() + rect.width(), rect.y() + rect.height());
+        glVertex2f(rect.x(), rect.y() + rect.height());
+        glEnd();
     }
 }

@@ -6,36 +6,13 @@
 
 #include "core/DrawCommandBuffer.h"
 #include "core/Rectangle.h"
+#include "core/DrawCommand.h"
 #include "util/Searchable.h"
 #include "util/enums.h"
+#include "gfx/Renderer.h"
 
 namespace dagui
 {
-    class DrawCommand
-    {
-    public:
-        enum OpCode : std::uint32_t
-        {
-            OP_UNKNOWN,
-            OP_RECTANGLE,
-        };
-    public:
-        DrawCommand(OpCode op)
-        :
-        _op(op)
-        {
-            // Do nothing.
-        }
-
-        virtual ~DrawCommand() = default;
-
-        virtual dagbase::Variant find(std::string_view path) const;
-
-        static const char* opCodeToString(OpCode op);
-    private:
-        OpCode _op{OP_UNKNOWN};
-    };
-
     dagbase::Variant DrawCommand::find(std::string_view path) const
     {
         dagbase::Variant retval;
@@ -69,6 +46,8 @@ namespace dagui
         }
 
         virtual dagbase::Variant find(std::string_view path) const;
+
+        virtual void makeItSo(Renderer& renderer) override;
     private:
         Rectangle _rect;
 
@@ -85,6 +64,11 @@ namespace dagui
             return retval;
 
         return {};
+    }
+
+    void DrawRectangle::makeItSo(Renderer &renderer)
+    {
+        renderer.drawRect(_rect);
     }
 
     void DrawCommandBuffer::drawRect(const Rectangle &rect)
@@ -105,5 +89,13 @@ namespace dagui
             return retval;
 
         return {};
+    }
+
+    void DrawCommandBuffer::eachCommand(std::function<void(DrawCommand *)> f)
+    {
+        if (f)
+        {
+            std::for_each(_cmds.a.begin(), _cmds.a.end(), f);
+        }
     }
 }

@@ -14,10 +14,12 @@
 namespace dagui
 {
     struct APIVersion;
+    class DrawCommandBuffer;
     class Mesh2D;
     class TextureAtlas;
     class BinImageDef;
     class ImageDef;
+    class Rectangle;
 
     class DAGUI_API Renderer
     {
@@ -25,6 +27,8 @@ namespace dagui
         virtual ~Renderer() = default;
 
         virtual const APIVersion& apiVersion() const = 0;
+        virtual void makeItSo(DrawCommandBuffer& buffer) = 0;
+        virtual void drawRect(const Rectangle& rect) = 0;
         virtual void drawText(FT_Face face, TextureAtlas& atlas, std::string_view text) = 0;
         virtual void drawMesh2D(const Mesh2D& mesh) = 0;
         virtual void generateTextureCoordinates(ImageDef& imageDef, BinImageDef& binImageDef) = 0;

@@ -11,6 +11,7 @@
 
 #include <string_view>
 #include <vector>
+#include <functional>
 
 namespace dagui
 {
@@ -21,6 +22,8 @@ namespace dagui
     {
     public:
         void drawRect(const Rectangle& rect);
+
+        void eachCommand(std::function<void(DrawCommand*)> f);
 
         dagbase::Variant find(std::string_view path) const;
     private:

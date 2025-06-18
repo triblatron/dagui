@@ -33,6 +33,8 @@ namespace dagui
 
         void configure(dagbase::ConfigurationElement& config);
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const;
+        void makeItSo(DrawCommandBuffer& buffer);
+        void drawRect(const Rectangle& rect) override;
         void drawText(FT_Face face, TextureAtlas& atlas, std::string_view text) override;
         void drawMesh2D(const Mesh2D& mesh) override;
         void generateTextureCoordinates(ImageDef& imageDef, BinImageDef& binImageDef) override;
