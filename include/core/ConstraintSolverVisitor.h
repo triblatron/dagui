@@ -12,7 +12,7 @@ namespace dagui
 {
     class Widget;
 
-    class ConstraintSolverVisitor : public dagbase::DynamicVisitor<Widget>
+    class DAGUI_API ConstraintSolverVisitor : public dagbase::DynamicVisitor<Widget>
     {
     public:
         ConstraintSolverVisitor();
