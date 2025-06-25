@@ -21,6 +21,8 @@
 #include "core/WidgetFactory.h"
 #include "core/Shape.h"
 #include "core/DrawCommandBuffer.h"
+#include "core/Batcher.h"
+#include "core/RenderBin.h"
 #include "test/TestUtils.h"
 
 #include <gtest/gtest.h>
@@ -796,4 +798,30 @@ INSTANTIATE_TEST_SUITE_P(DrawCommandBuffer, DrawCommandBuffer_testShapeGenerates
         std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "commands[0].rect.y", 0.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "commands[0].rect.width", 200.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "commands[0].rect.height", 100.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));
+
+class Batcher_testSort : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::size_t>>
+{
+
+};
+
+TEST_P(Batcher_testSort, testExpectedOrder)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::Batcher sut;
+    sut.configure(*config);
+    auto firstIndex = std::get<1>(GetParam());
+    auto secondIndex = std::get<2>(GetParam());
+    auto firstElement = sut[firstIndex];
+    ASSERT_NE(nullptr, firstElement);
+    auto secondElement = sut[secondIndex];
+    ASSERT_NE(nullptr, secondElement);
+    EXPECT_LT(*firstElement, *secondElement);
+}
+
+INSTANTIATE_TEST_SUITE_P(Batcher, Batcher_testSort, ::testing::Values(
+        std::make_tuple("data/tests/Batcher/TwoBins.lua", 0, 1)
         ));

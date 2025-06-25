@@ -1,0 +1,14 @@
+root=
+{
+	bins=
+	{
+		{
+			material=1,
+			layer=0
+		},
+		{
+			material=2,
+			layer=0
+		}
+	}
+}

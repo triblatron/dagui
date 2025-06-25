@@ -78,6 +78,8 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/core/Style.h
         include/core/DrawCommandBuffer.h
         include/core/DrawCommand.h
+        include/core/Batcher.h
+        include/core/RenderBin.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -136,6 +138,8 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         src/core/LayoutConstraintsCollectionVisitor.cpp
         src/core/Style.cpp
         src/core/DrawCommandBuffer.cpp
+        src/core/Batcher.cpp
+        src/core/RenderBin.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")
