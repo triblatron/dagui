@@ -109,7 +109,7 @@ namespace dagui
             return nullptr;
         }
     private:
-        glm::ivec2 _pos;
+        glm::ivec2 _pos{0,0};
         using Properties=dagbase::SearchableMap<std::unordered_map<dagbase::Atom, dagbase::Variant>>;
         Properties _props;
         dagbase::Atom _id;
