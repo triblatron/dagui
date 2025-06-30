@@ -825,3 +825,23 @@ TEST_P(Batcher_testSort, testExpectedOrder)
 INSTANTIATE_TEST_SUITE_P(Batcher, Batcher_testSort, ::testing::Values(
         std::make_tuple("data/tests/Batcher/TwoBins.lua", dagui::RenderBinKey{1,1,1,0}, dagui::RenderBinKey{2,1,1,0})
         ));
+
+class RenderBinKey_testOrder : public ::testing::TestWithParam<std::tuple<dagui::RenderBinKey, dagui::RenderBinKey>>
+{
+
+};
+
+TEST_P(RenderBinKey_testOrder, testExpectedOrder)
+{
+    auto key1 = std::get<0>(GetParam());
+    auto key2 = std::get<1>(GetParam());
+
+    EXPECT_LT(key1, key2);
+}
+
+INSTANTIATE_TEST_SUITE_P(RenderBinKey, RenderBinKey_testOrder, ::testing::Values(
+        std::make_tuple(dagui::RenderBinKey{1,1,1,0}, dagui::RenderBinKey{2,1,1,0}),
+        std::make_tuple(dagui::RenderBinKey{1,1,1,0}, dagui::RenderBinKey{1,2,1,0}),
+        std::make_tuple(dagui::RenderBinKey{1,2,1,0}, dagui::RenderBinKey{1,2,2,0}),
+        std::make_tuple(dagui::RenderBinKey{1,2,1,0}, dagui::RenderBinKey{1,2,1,1})
+        ));
