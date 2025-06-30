@@ -6,7 +6,9 @@
 
 #include "config/Export.h"
 
-#include <vector>
+#include "core/RenderBin.h"
+
+#include <map>
 
 namespace dagbase
 {
@@ -15,30 +17,38 @@ namespace dagbase
 
 namespace dagui
 {
-    class RenderBin;
-
     class DAGUI_API Batcher
     {
     public:
+        using RenderBinMap = std::map<RenderBinKey, RenderBin*>;
+    public:
         void configure(dagbase::ConfigurationElement& config);
 
-        void addRenderBin(RenderBin* bin)
+        void addRenderBin(const RenderBinKey& key, RenderBin* bin)
         {
             if (bin)
-                _renderBins.emplace_back(bin);
+                _renderBins.emplace(key, bin);
         }
 
-        RenderBin* operator[](std::size_t index)
+        RenderBinMap::iterator findRenderBin(const RenderBinKey& key)
         {
-            return index<_renderBins.size()?_renderBins[index]:nullptr;
+            return _renderBins.find(key);
         }
 
-        const RenderBin* operator[](std::size_t index) const
+        RenderBinMap::iterator end()
         {
-            return index<_renderBins.size()?_renderBins[index]:nullptr;
+            return _renderBins.end();
         }
+//        RenderBin* operator[](std::size_t index)
+//        {
+//            return index<_renderBins.size()?_renderBins[index]:nullptr;
+//        }
+//
+//        const RenderBin* operator[](std::size_t index) const
+//        {
+//            return index<_renderBins.size()?_renderBins[index]:nullptr;
+//        }
     private:
-        using RenderBinArray = std::vector<RenderBin*>;
-        RenderBinArray _renderBins;
+        RenderBinMap _renderBins;
     };
 }

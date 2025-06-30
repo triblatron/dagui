@@ -800,7 +800,7 @@ INSTANTIATE_TEST_SUITE_P(DrawCommandBuffer, DrawCommandBuffer_testShapeGenerates
         std::make_tuple("data/tests/DrawCommandBuffer/rectangle.lua", "commands[0].rect.height", 100.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
 
-class Batcher_testSort : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::size_t>>
+class Batcher_testSort : public ::testing::TestWithParam<std::tuple<const char*, dagui::RenderBinKey, dagui::RenderBinKey>>
 {
 
 };
@@ -813,15 +813,15 @@ TEST_P(Batcher_testSort, testExpectedOrder)
     ASSERT_NE(nullptr, config);
     dagui::Batcher sut;
     sut.configure(*config);
-    auto firstIndex = std::get<1>(GetParam());
-    auto secondIndex = std::get<2>(GetParam());
-    auto firstElement = sut[firstIndex];
-    ASSERT_NE(nullptr, firstElement);
-    auto secondElement = sut[secondIndex];
-    ASSERT_NE(nullptr, secondElement);
-    EXPECT_LT(*firstElement, *secondElement);
+    auto firstKey = std::get<1>(GetParam());
+    auto secondKey = std::get<2>(GetParam());
+    auto firstIter = sut.findRenderBin(firstKey);
+    auto secondIter = sut.findRenderBin(secondKey);
+    ASSERT_NE(sut.end(), firstIter);
+    ASSERT_NE(sut.end(), secondIter);
+    EXPECT_LT(firstIter->first, secondIter->first);
 }
 
 INSTANTIATE_TEST_SUITE_P(Batcher, Batcher_testSort, ::testing::Values(
-        std::make_tuple("data/tests/Batcher/TwoBins.lua", 0, 1)
+        std::make_tuple("data/tests/Batcher/TwoBins.lua", dagui::RenderBinKey{1,1,1,0}, dagui::RenderBinKey{2,1,1,0})
         ));

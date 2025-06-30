@@ -3,12 +3,28 @@ root=
 	bins=
 	{
 		{
-			material=1,
-			layer=0
+			key=
+			{
+				material=1,
+				texture=1,
+				shader=1,
+				layer=0,
+			},
+			value=
+			{
+			}
 		},
 		{
-			material=2,
-			layer=0
+			key=
+			{
+				material=2,
+				texture=1,
+				shader=1,
+				layer=0
+			},
+			value=
+			{
+			},
 		}
 	}
 }

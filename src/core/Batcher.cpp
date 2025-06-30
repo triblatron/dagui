@@ -16,9 +16,17 @@ namespace dagui
         if (auto element = config.findElement("bins"); element)
         {
             element->eachChild([this](dagbase::ConfigurationElement& child) {
-                RenderBin* bin = new RenderBin();
-                bin->configure(child);
-                addRenderBin(bin);
+                auto bin = new RenderBin();
+                RenderBinKey key;
+                if (auto keyElement=child.findElement("key"); keyElement)
+                {
+                    key.configure(*keyElement);
+                }
+                if (auto valueElement = child.findElement("value"); valueElement)
+                {
+                    bin->configure(child);
+                }
+                addRenderBin(key, bin);
 
                 return true;
             });
