@@ -82,6 +82,11 @@ namespace dagui
         {
             return _data.data();
         }
+
+        dagbase::Variant find(std::string_view path) const override
+        {
+            return {};
+        }
     private:
         using VertexArray = std::vector<Vertex>;
         VertexArray _data;

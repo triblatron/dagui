@@ -5,6 +5,7 @@
 #include "config/config.h"
 
 #include "gfx/OpaqueAttributeArray.h"
+#include "util/Searchable.h"
 
 #include <algorithm>
 #include <iterator>
@@ -45,5 +46,10 @@ namespace dagui
                     std::copy_n(static_cast<const char*>(data())+elementSize()*index+a.elementOffset, a.attr.size(), static_cast<char*>(buffer)+a.offset);
             }
         }
+    }
+
+    dagbase::Variant OpaqueAttributeArray::find(std::string_view path) const
+    {
+        return {};
     }
 }

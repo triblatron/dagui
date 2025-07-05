@@ -847,7 +847,7 @@ INSTANTIATE_TEST_SUITE_P(RenderBinKey, RenderBinKey_testOrder, ::testing::Values
         std::make_tuple(dagui::RenderBinKey{1,2,1,0}, dagui::RenderBinKey{1,2,1,1})
         ));
 
-class Shape_testTessellate : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+class Shape_testTessellate : public ::testing::TestWithParam<std::tuple<const char*, const char*, std::size_t, const char*, dagbase::Variant, std::size_t, std::uint16_t>>
 {
 
 };
@@ -868,15 +868,23 @@ TEST_P(Shape_testTessellate, testExpectedValue)
     dagui::ShapeMesh mesh;
     mesh.configure(*meshConfig);
     sut->tessellate(mesh);
-    auto path = std::get<2>(GetParam());
-    auto value = std::get<3>(GetParam());
-    auto tolerance = std::get<4>(GetParam());
-    auto op = std::get<5>(GetParam());
-    auto actualValue = mesh.find(path);
-    assertComparison(value, actualValue, tolerance, op);
+    auto vertIndex = std::get<2>(GetParam());
+    auto vertexPath = std::get<3>(GetParam());
+    auto component = std::get<4>(GetParam());
+    auto indexIndex = std::get<5>(GetParam());
+    auto indexValue = std::get<6>(GetParam());
+    dagui::ShapeVertex actualVertex;
+    mesh.getVertex(vertIndex, &actualVertex);
+    auto actualComponent = actualVertex.find(vertexPath);
+    EXPECT_EQ(component, actualComponent);
+    std::uint16_t actualIndex;
+    mesh.getIndex(indexIndex, &actualIndex);
+    EXPECT_EQ(indexValue, actualIndex);
 }
 
 INSTANTIATE_TEST_SUITE_P(Shape, Shape_testTessellate, ::testing::Values(
-        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", "numVertices", std::int64_t{4}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", "numIndices", std::int64_t{6}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 1, "x", 100.0, 1, 1),
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 1, "y", 0.0, 3, 2),
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 3, "x", 0.0, 4, 3),
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 3, "y", 200.0, 4, 3)
         ));

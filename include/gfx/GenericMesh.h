@@ -13,6 +13,7 @@
 #include "core/ConfigurationElement.h"
 #include "core/Mesh.h"
 #include "util/Searchable.h"
+#include "util/SearchableArray.h"
 
 namespace dagbase
 {
@@ -39,7 +40,7 @@ namespace dagui
 
         ~GenericMesh()
         {
-            for (auto a : _data)
+            for (auto a : _data.a)
                 delete a;
         }
 
@@ -47,7 +48,7 @@ namespace dagui
         {
             bool vertexAdded = false;
 
-            for (auto a : _data)
+            for (auto a : _data.a)
             {
                 a->addVertex(&v, sizeof(Vertex));
                 vertexAdded = true;
@@ -70,7 +71,7 @@ namespace dagui
         {
             if (v)
             {
-                for (auto a : _data)
+                for (auto a : _data.a)
                 {
                     a->getVertex(i, v, sizeof(Vertex));
                 }
@@ -81,7 +82,7 @@ namespace dagui
         {
             if (arrayIndex<_data.size())
             {
-                return _data[arrayIndex];
+                return _data.a[arrayIndex];
             }
 
             return nullptr;
@@ -91,15 +92,15 @@ namespace dagui
         {
             for (auto arrayIndex=0; arrayIndex<_data.size(); ++arrayIndex)
             {
-                for (auto attrIndex=0; attrIndex<_data[arrayIndex]->desciptor().size(); ++attrIndex)
+                for (auto attrIndex=0; attrIndex<_data.a[arrayIndex]->desciptor().size(); ++attrIndex)
                 {
-                    if (_data[arrayIndex]->desciptor().attributes[attrIndex].attr.usage == usage)
+                    if (_data.a[arrayIndex]->desciptor().attributes[attrIndex].attr.usage == usage)
                     {
                         if (outputAttrIndex)
                         {
                             *outputAttrIndex = attrIndex;
                         }
-                        return _data[arrayIndex];
+                        return _data.a[arrayIndex];
                     }
                 }
             }
@@ -143,7 +144,7 @@ namespace dagui
                     offsetSoFar += descriptor.size();
                     auto array = new OpaqueAttributeArray();
                     array->setDescriptor(descriptor);
-                    _data.push_back(array);
+                    _data.a.push_back(array);
                     return true;
                 });
             }
@@ -161,10 +162,14 @@ namespace dagui
             if (retval.has_value())
                 return retval;
 
+            retval = dagbase::findInternal(path, "vertices", _data);
+            if (retval.has_value())
+                return retval;
+
             return {};
         }
     private:
-        using AttributeArrays = std::vector<AttributeArray*>;
+        using AttributeArrays = dagbase::SearchableArray<std::vector<OpaqueAttributeArray*>>;
         AttributeArrays _data;
         std::size_t _numVertices{ 0 };
         using IndexAray = std::vector<std::uint16_t>;

@@ -13,6 +13,9 @@ namespace dagui
     class DAGUI_API OpaqueAttributeArray : public dagui::AttributeArray
     {
     public:
+        using VertexArray = std::vector<char>;
+        using value_type = VertexArray;
+    public:
         OpaqueAttributeArray() = default;
 
         ~OpaqueAttributeArray() = default;
@@ -35,8 +38,9 @@ namespace dagui
         {
             return _data.data();
         }
+
+        dagbase::Variant find(std::string_view path) const override;
     private:
-        using VertexArray = std::vector<char>;
         VertexArray _data;
         std::size_t _numVertices{0};
     };

@@ -7,6 +7,7 @@
 #include "config/Export.h"
 
 #include "ArrayDescriptor.h"
+#include "core/Variant.h"
 
 namespace dagui
 {
@@ -46,6 +47,8 @@ namespace dagui
         //! Get a pointer to the internal array.
         //! \note Useful for passing to glBufferData() et al.
         virtual const void* data() const = 0;
+
+        virtual dagbase::Variant find(std::string_view path) const = 0;
     protected:
         ArrayDescriptor _descriptor;
     };

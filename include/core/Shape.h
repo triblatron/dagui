@@ -28,6 +28,8 @@ namespace dagui
     {
         float x{0.0f};
         float y{0.0f};
+
+        dagbase::Variant find(std::string_view path) const;
     };
 
     using ShapeMesh = GenericMesh<ShapeVertex>;

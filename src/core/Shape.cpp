@@ -27,4 +27,19 @@ namespace dagui
     {
         // Do nothing.
     }
+
+    dagbase::Variant ShapeVertex::find(std::string_view path) const
+    {
+        dagbase::Variant retval;
+
+        retval = dagbase::findEndpoint(path, "x", x);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "y", y);
+        if (retval.has_value())
+            return retval;
+
+        return {};
+    }
 }
