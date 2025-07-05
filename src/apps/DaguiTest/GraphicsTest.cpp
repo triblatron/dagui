@@ -706,7 +706,7 @@ TEST_P(GenericMesh_addVertex, testValue)
 			TestVertex v;
 
 			v.configure(child);
-			sut.addVertex(v);
+			sut.addVertex((const char*)&v, sizeof(TestVertex));
 
 			return true;
 		});
