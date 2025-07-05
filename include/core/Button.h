@@ -7,6 +7,7 @@
 #include "config/Export.h"
 
 #include "core/Widget.h"
+#include "ShapeFactory.h"
 
 #include <string>
 
@@ -27,7 +28,8 @@ namespace dagui
             return _text;
         }
 
-        void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory) override;
+        void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory,
+                       dagui::ShapeFactory &shapeFactory) override;
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
     private:

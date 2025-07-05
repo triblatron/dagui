@@ -15,6 +15,7 @@
 #include "util/SearchableMap.h"
 #include "core/Atom.h"
 #include "core/Style.h"
+#include "ShapeFactory.h"
 
 namespace dagui
 {
@@ -25,7 +26,8 @@ namespace dagui
     public:
         RootWidget();
 
-        void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory) override;
+        void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory,
+                       dagui::ShapeFactory &shapeFactory) override;
 
         RootWidget* root() override
         {

@@ -778,7 +778,7 @@ TEST_P(DrawCommandBuffer_testShapeGeneratesGeometry, testExpectedValue)
     dagbase::Lua lua;
     auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
     ASSERT_NE(nullptr, config);
-    dagui::WidgetFactory factory;
+    dagui::ShapeFactory factory;
     auto shape = factory.createShape(*config);
     ASSERT_NE(nullptr, shape);
     auto path = std::get<1>(GetParam());
@@ -862,7 +862,7 @@ TEST_P(Shape_testTessellate, testExpectedValue)
     dagbase::Lua meshLua;
     auto meshConfig = dagbase::ConfigurationElement::fromFile(meshLua, meshConfigStr);
     ASSERT_NE(nullptr, meshConfig);
-    dagui::WidgetFactory factory;
+    dagui::ShapeFactory factory;
     auto sut = factory.createShape(*config);
     ASSERT_NE(nullptr, sut);
     dagui::ShapeMesh mesh;

@@ -11,6 +11,8 @@
 #include "core/DrawCommandBuffer.h"
 #include "core/Mesh.h"
 #include "gfx/AttributeDescriptor.h"
+#include "core/ShapeFactory.h"
+
 #include "gfx/AttributeArray.h"
 
 namespace dagui
@@ -87,7 +89,7 @@ namespace dagui
         return false;
     }
 
-    void Rectangle::configure(dagbase::ConfigurationElement &config, WidgetFactory &factory)
+    void Rectangle::configure(dagbase::ConfigurationElement &config, ShapeFactory &factory)
     {
         dagbase::ConfigurationElement::readConfig( config, "x", &_x);
         dagbase::ConfigurationElement::readConfig( config, "y", &_y);
@@ -168,4 +170,5 @@ namespace dagui
 //            }
 //        }
     }
+
 }

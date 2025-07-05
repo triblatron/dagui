@@ -7,6 +7,7 @@
 #include "core/Button.h"
 
 #include "util/Searchable.h"
+#include "core/ShapeFactory.h"
 
 namespace dagui
 {
@@ -17,9 +18,10 @@ namespace dagui
         // Do nothing.
     }
 
-    void Button::configure(dagbase::ConfigurationElement& config, WidgetFactory& factory)
+    void
+    Button::configure(dagbase::ConfigurationElement &config, WidgetFactory &factory, dagui::ShapeFactory &shapeFactory)
     {
-        Widget::configure(config, factory);
+        Widget::configure(config, factory, shapeFactory);
 
         if (auto element=config.findElement("text"); element)
         {

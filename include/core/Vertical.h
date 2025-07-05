@@ -8,6 +8,7 @@
 
 #include "core/Widget.h"
 #include "core/LayoutProperties.h"
+#include "ShapeFactory.h"
 
 namespace dagui
 {
@@ -30,7 +31,8 @@ namespace dagui
 
         void computeConstraints();
 
-        void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory) override;
+        void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory,
+                       dagui::ShapeFactory &shapeFactory) override;
 
         dagbase::Variant find(std::string_view path) const override;
     private:

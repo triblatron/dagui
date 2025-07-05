@@ -7,7 +7,7 @@
 #include "core/CompositeShape.h"
 #include "core/ConfigurationElement.h"
 #include "util/Searchable.h"
-#include "core/WidgetFactory.h"
+#include "core/ShapeFactory.h"
 
 namespace dagui
 {
@@ -40,7 +40,7 @@ namespace dagui
         }
     }
 
-    void CompositeShape::configure(dagbase::ConfigurationElement &config, WidgetFactory &factory)
+    void CompositeShape::configure(dagbase::ConfigurationElement &config, ShapeFactory &factory)
     {
         if (auto element = config.findElement("children"); element)
         {

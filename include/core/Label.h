@@ -5,6 +5,7 @@
 #pragma once
 
 #include "core/Widget.h"
+#include "ShapeFactory.h"
 
 namespace dagui
 {
@@ -26,7 +27,8 @@ namespace dagui
             return _text;
         }
 
-        void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory) override;
+        void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory,
+                       dagui::ShapeFactory &shapeFactory) override;
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
     private:

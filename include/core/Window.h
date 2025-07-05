@@ -69,7 +69,8 @@ namespace dagui
             return (_features & features) == features;
         }
 
-        void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory) override;
+        void
+        configure(dagbase::ConfigurationElement &config, WidgetFactory &factory, ShapeFactory &shapeFactory) override;
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
 

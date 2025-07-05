@@ -16,7 +16,7 @@
 
 namespace dagui
 {
-    Widget* WidgetFactory::create(dagbase::ConfigurationElement& config)
+    Widget * WidgetFactory::create(dagbase::ConfigurationElement &config, ShapeFactory &shapeFactory)
     {
         std::string className;
 
@@ -53,7 +53,7 @@ namespace dagui
 
         if (widget)
         {
-            widget->configure(config, *this);
+            widget->configure(config, *this, shapeFactory);
         }
 
         _parentStack.pop();
@@ -61,24 +61,24 @@ namespace dagui
         return widget;
     }
 
-    Shape *WidgetFactory::createShape(dagbase::ConfigurationElement &config)
-    {
-        std::string className;
-
-        dagbase::ConfigurationElement::readConfig(config, "class", &className);
-
-        Shape* shape = nullptr;
-
-        if (className == "Rectangle")
-        {
-            shape = new Rectangle();
-        }
-
-        if (shape)
-        {
-            shape->configure(config, *this);
-        }
-
-        return shape;
-    }
+//    Shape *WidgetFactory::createShape(dagbase::ConfigurationElement &config)
+//    {
+//        std::string className;
+//
+//        dagbase::ConfigurationElement::readConfig(config, "class", &className);
+//
+//        Shape* shape = nullptr;
+//
+//        if (className == "Rectangle")
+//        {
+//            shape = new Rectangle();
+//        }
+//
+//        if (shape)
+//        {
+//            shape->configure(config, *this);
+//        }
+//
+//        return shape;
+//    }
 }

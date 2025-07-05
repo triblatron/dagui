@@ -9,9 +9,10 @@
 
 namespace dagui
 {
-    void RootWidget::configure(dagbase::ConfigurationElement& config, WidgetFactory& factory)
+    void
+    RootWidget::configure(dagbase::ConfigurationElement &config, WidgetFactory &factory, ShapeFactory &shapeFactory)
     {
-        Widget::configure(config, factory);
+        Widget::configure(config, factory, shapeFactory);
         if (auto element = config.findElement("size"); element)
         {
             dagbase::ConfigurationElement::readConfig(*element, "width", &_size.x);

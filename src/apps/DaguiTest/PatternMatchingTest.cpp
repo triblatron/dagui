@@ -9,6 +9,7 @@
 #include "core/SceneNode.h"
 #include "core/SceneNodeFactory.h"
 #include "core/WidgetToSceneNodeConverter.h"
+#include "core/ShapeFactory.h"
 
 #include <gtest/gtest.h>
 
@@ -27,7 +28,8 @@ TEST_P(WidgetPattern_testMatch, testExpectedResult)
     auto widgetConfig = dagbase::ConfigurationElement::fromFile(lua, widgetConfigStr);
     ASSERT_NE(nullptr, widgetConfig);
     dagui::WidgetFactory factory;
-    auto widgetTree = factory.create(*widgetConfig);
+    dagui::ShapeFactory shapeFactory;
+    auto widgetTree = factory.create(*widgetConfig, shapeFactory);
     ASSERT_NE(nullptr, widgetTree);
     dagui::WidgetToSceneNodeConverter sut;
     sut.configure(*patternConfig);

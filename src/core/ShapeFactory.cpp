@@ -28,7 +28,7 @@ namespace dagui
 
         if (retval)
         {
-           // retval->configure(config, *this);
+            retval->configure(config, *this);
         }
 
         return retval;

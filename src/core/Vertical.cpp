@@ -9,9 +9,9 @@
 
 namespace dagui
 {
-    void Vertical::configure(dagbase::ConfigurationElement &config, WidgetFactory& factory)
+    void Vertical::configure(dagbase::ConfigurationElement &config, WidgetFactory &factory, ShapeFactory &shapeFactory)
     {
-        Widget::configure(config, factory);
+        Widget::configure(config, factory, shapeFactory);
         if (auto element=config.findElement("layoutProperties"); element)
         {
             _props.configure(*element);

@@ -30,7 +30,7 @@ namespace dagui
 
         void accept(ShapeVisitor &visitor) override;
 
-        void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory) override;
+        void configure(dagbase::ConfigurationElement &config, ShapeFactory &factory) override;
 
         dagbase::Variant find(std::string_view path) const override;
     private:

@@ -5,7 +5,6 @@
 #include "config/Export.h"
 
 #include "core/Shape.h"
-#include "WidgetFactory.h"
 
 namespace dagui
 {
@@ -55,7 +54,7 @@ namespace dagui
 
         bool isInside(float x, float y) override;
 
-        void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory) override;
+        void configure(dagbase::ConfigurationElement &config, ShapeFactory &factory) override;
 
         dagbase::Variant find(std::string_view path) const override;
 

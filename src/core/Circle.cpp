@@ -21,7 +21,7 @@ namespace dagui
         return (x - _x) * (x - _x) + (y - _y) * (y - _y) < _radius * _radius;
     }
 
-    void Circle::configure(dagbase::ConfigurationElement &config, WidgetFactory &factory)
+    void Circle::configure(dagbase::ConfigurationElement &config, ShapeFactory &factory)
     {
         dagbase::ConfigurationElement::readConfig(config, "radius", &_radius);
     }

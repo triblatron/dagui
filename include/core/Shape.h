@@ -8,7 +8,6 @@
 
 #include "core/Atom.h"
 #include "core/Variant.h"
-#include "WidgetFactory.h"
 #include "gfx/GenericMesh.h"
 
 #include <string_view>
@@ -23,6 +22,7 @@ namespace dagui
     class DrawCommandBuffer;
     class Mesh;
     class ShapeVisitor;
+    class ShapeFactory;
 
     struct ShapeVertex
     {
@@ -48,7 +48,7 @@ namespace dagui
 
         virtual bool isInside(float x, float y) = 0;
 
-        virtual void configure(dagbase::ConfigurationElement &config, dagui::WidgetFactory &factory) = 0;
+        virtual void configure(dagbase::ConfigurationElement &config, dagui::ShapeFactory &factory) = 0;
 
         virtual dagbase::Variant find(std::string_view path) const;
 

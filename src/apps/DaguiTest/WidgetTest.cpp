@@ -12,6 +12,7 @@
 #include "core/ConstraintSolverVisitor.h"
 #include "core/LayoutConstraintsCollectionVisitor.h"
 #include "core/LayoutProperties.h"
+#include "core/ShapeFactory.h"
 
 #include "test/TestUtils.h"
 
@@ -31,7 +32,8 @@ TEST_P(WidgetFactory_testCreate, testExpectedTree)
     auto config = (*createConfigFunc)(lua, configStr);
     ASSERT_NE(nullptr, config);
     dagui::WidgetFactory sut;
-    auto tree = sut.create(*config);
+    dagui::ShapeFactory shapeFactory;
+    auto tree = sut.create(*config, shapeFactory);
     auto isNotNull = std::get<2>(GetParam());
     ASSERT_EQ(isNotNull, tree!=nullptr);
     auto path = std::get<3>(GetParam());
@@ -72,7 +74,8 @@ TEST_P(Widget_testProperties, testExpectedValue)
     auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
     ASSERT_NE(nullptr, config);
     dagui::WidgetFactory factory;
-    auto sut = factory.create(*config);
+    dagui::ShapeFactory shapeFactory;
+    auto sut = factory.create(*config, shapeFactory);
     ASSERT_NE(nullptr, sut);
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
@@ -111,7 +114,8 @@ TEST_P(WidgetRef_testResolve, testExpectedNotNull)
     auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
     ASSERT_NE(nullptr, config);
     dagui::WidgetFactory factory;
-    auto widget = factory.create(*config);
+    dagui::ShapeFactory shapeFactory;
+    auto widget = factory.create(*config, shapeFactory);
     ASSERT_NE(nullptr, widget);
     dagui::WidgetRef sut;
     sut.setId(dagbase::Atom::intern(id));
@@ -138,7 +142,8 @@ TEST_P(ResolveWidgetRefsVisitor_testVisit, testExpectedValue)
     ASSERT_NE(nullptr, config);
     dagui::ResolveWidgetRefsVisitor sut;
     dagui::WidgetFactory factory;
-    auto widget = factory.create(*config);
+    dagui::ShapeFactory shapeFactory;
+    auto widget = factory.create(*config, shapeFactory);
     ASSERT_NE(nullptr, widget);
     widget->accept(sut);
     auto path = std::get<1>(GetParam());
@@ -171,7 +176,8 @@ TEST_P(ConstraintSolverVisitor_testVisit, testExpectedValue)
     auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
     ASSERT_NE(nullptr, config);
     dagui::WidgetFactory factory;
-    dagui::Widget* widgetTree = factory.create(*config);
+    dagui::ShapeFactory shapeFactory;
+    dagui::Widget* widgetTree = factory.create(*config, shapeFactory);
     ASSERT_NE(nullptr, widgetTree);
     dagui::ResolveWidgetRefsVisitor resolver;
     widgetTree->accept(resolver);
@@ -202,7 +208,8 @@ TEST_P(LayoutConstraintsCollectionVisitor_testVisit, testExpectedCount)
     ASSERT_NE(nullptr, config);
     dagui::LayoutConstraintsCollectionVisitor sut;
     dagui::WidgetFactory factory;
-    auto widgetTree = factory.create(*config);
+    dagui::ShapeFactory shapeFactory;
+    auto widgetTree = factory.create(*config, shapeFactory);
     ASSERT_NE(nullptr, widgetTree);
     widgetTree->accept(sut);
     auto path = std::get<1>(GetParam());

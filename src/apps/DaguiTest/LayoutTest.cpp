@@ -9,6 +9,7 @@
 #include "core/LuaInterface.h"
 #include "core/WidgetFactory.h"
 #include "core/Widget.h"
+#include "core/ShapeFactory.h"
 #include "test/TestUtils.h"
 
 #include <gtest/gtest.h>
@@ -25,7 +26,8 @@ TEST_P(Constraint_testConfigure, testExpectedValues)
     auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
     ASSERT_NE(nullptr, config);
     dagui::WidgetFactory factory;
-    auto widget = factory.create(*config);
+    dagui::ShapeFactory shapeFactory;
+    auto widget = factory.create(*config, shapeFactory);
     ASSERT_NE(nullptr, widget);
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());

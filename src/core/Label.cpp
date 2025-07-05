@@ -17,9 +17,9 @@ namespace dagui
         // Do nothing.
     }
 
-    void Label::configure(dagbase::ConfigurationElement &config, WidgetFactory& factory)
+    void Label::configure(dagbase::ConfigurationElement &config, WidgetFactory &factory, ShapeFactory &shapeFactory)
     {
-        Widget::configure(config, factory);
+        Widget::configure(config, factory, shapeFactory);
 
         if (auto element=config.findElement("text"); element)
         {

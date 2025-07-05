@@ -10,6 +10,7 @@
 #include "gfx/ArrayDescriptor.h"
 #include "util/Searchable.h"
 #include "core/Shape.h"
+#include "core/ShapeFactory.h"
 
 #include <utility>
 
@@ -23,7 +24,7 @@ namespace dagui
         // Do nothing.
     }
 
-    void Widget::configure(dagbase::ConfigurationElement& config, WidgetFactory& factory)
+    void Widget::configure(dagbase::ConfigurationElement& config, WidgetFactory& factory, ShapeFactory& shapeFactory)
     {
         if (auto element=config.findElement("id"); element)
         {
@@ -34,9 +35,9 @@ namespace dagui
 
         if (auto element=config.findElement("children"); element)
         {
-            element->eachChild([this, &factory](dagbase::ConfigurationElement& child)
+            element->eachChild([this, &factory, &shapeFactory](dagbase::ConfigurationElement& child)
             {
-                Widget* childWidget = factory.create(child);
+                Widget* childWidget = factory.create(child, shapeFactory);
 
                 if (childWidget)
                 {
@@ -64,7 +65,7 @@ namespace dagui
 
         if (auto element = config.findElement("shape"); element)
         {
-            _shape = factory.createShape(*element);
+            _shape = shapeFactory.createShape(*element);
         }
     }
 

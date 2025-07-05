@@ -24,6 +24,7 @@ namespace dagui
 {
     class SceneNode;
     class Shape;
+    class ShapeFactory;
     class Widget;
     class WidgetFactory;
 
@@ -71,7 +72,7 @@ namespace dagui
             _pos[1] = y;
         }
 
-        virtual void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory);
+        virtual void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory, ShapeFactory &shapeFactory);
 
         virtual Widget* root();
 
