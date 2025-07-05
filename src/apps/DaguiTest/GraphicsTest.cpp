@@ -715,7 +715,7 @@ TEST_P(GenericMesh_addVertex, testValue)
 	TestVertex actualVertex;
 	auto index = std::get<3>(GetParam());
 	auto value = std::get<4>(GetParam());
-	ASSERT_LT(index, sut.size());
+	ASSERT_LT(index, sut.numVertices());
 	sut.getVertex(index, &actualVertex);
 	EXPECT_EQ(value, actualVertex.*field);
 }

@@ -9,6 +9,7 @@
 #include "GenericAttributeArray.h"
 #include "OpaqueAttributeArray.h"
 #include "core/ConfigurationElement.h"
+#include "core/Mesh.h"
 
 namespace dagbase
 {
@@ -22,7 +23,7 @@ namespace dagui
     struct AttributeLayout;
 
     template<typename Vertex>
-    class GenericMesh
+    class GenericMesh : public Mesh
     {
     public:
         enum Flags : std::uint32_t
@@ -53,6 +54,15 @@ namespace dagui
                 ++_numVertices;
         }
 
+        void addVertex(const char* buf, std::size_t bufSize) override
+        {
+            if (bufSize>=sizeof(Vertex))
+            {
+                auto* vertexBuf = reinterpret_cast<const Vertex*>(buf);
+                addVertex(*vertexBuf);
+            }
+        }
+
         void getVertex(std::size_t i, Vertex* v)
         {
             if (v)
@@ -64,9 +74,37 @@ namespace dagui
             }
         }
 
-        std::size_t size() const
+        const AttributeArray* attributeArray(std::size_t arrayIndex) const override
+        {
+            if (arrayIndex<_data.size())
+            {
+                return _data[arrayIndex];
+            }
+
+            return nullptr;
+        }
+
+        void addIndex(std::uint16_t index) override
+        {
+            _indices.emplace_back(index);
+        }
+
+        void getIndex(std::size_t index, std::uint16_t *value)
+        {
+            if (value && index<_indices.size())
+            {
+                *value = _indices[index];
+            }
+        }
+
+        std::size_t numVertices() const override
         {
             return _numVertices;
+        }
+
+        std::size_t numIndices() const override
+        {
+            return _indices.size();
         }
 
         void configure(dagbase::ConfigurationElement& config)
@@ -91,5 +129,7 @@ namespace dagui
         using AttributeArrays = std::vector<AttributeArray*>;
         AttributeArrays _data;
         std::size_t _numVertices{ 0 };
+        using IndexAray = std::vector<std::uint16_t>;
+        IndexAray _indices;
     };
 }

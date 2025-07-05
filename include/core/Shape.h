@@ -20,6 +20,7 @@ namespace dagbase
 namespace dagui
 {
     class DrawCommandBuffer;
+    class Mesh;
     class ShapeVisitor;
 
     class DAGUI_API Shape
@@ -43,6 +44,8 @@ namespace dagui
         virtual dagbase::Variant find(std::string_view path) const;
 
         virtual void render(DrawCommandBuffer& buffer) {}
+
+        virtual void tessellate(Mesh& mesh) {};
     private:
         dagbase::Atom _className;
     };
