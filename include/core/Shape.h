@@ -9,6 +9,7 @@
 #include "core/Atom.h"
 #include "core/Variant.h"
 #include "WidgetFactory.h"
+#include "gfx/GenericMesh.h"
 
 #include <string_view>
 
@@ -22,6 +23,14 @@ namespace dagui
     class DrawCommandBuffer;
     class Mesh;
     class ShapeVisitor;
+
+    struct ShapeVertex
+    {
+        float x{0.0f};
+        float y{0.0f};
+    };
+
+    using ShapeMesh = GenericMesh<ShapeVertex>;
 
     class DAGUI_API Shape
     {
@@ -45,7 +54,7 @@ namespace dagui
 
         virtual void render(DrawCommandBuffer& buffer) {}
 
-        virtual void tessellate(Mesh& mesh) {};
+        virtual void tessellate(ShapeMesh& mesh) {};
     private:
         dagbase::Atom _className;
     };

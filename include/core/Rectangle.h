@@ -60,6 +60,8 @@ namespace dagui
         dagbase::Variant find(std::string_view path) const override;
 
         void render(DrawCommandBuffer& buffer) override;
+
+        void tessellate(ShapeMesh& mesh) override;
     private:
         float _x{0.0f};
         float _y{0.0f};

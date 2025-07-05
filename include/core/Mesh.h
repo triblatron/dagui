@@ -6,8 +6,12 @@
 
 #include "config/Export.h"
 
+#include "core/Variant.h"
+#include "gfx/AttributeDescriptor.h"
+
 #include <cstdlib>
 #include <cstdint>
+#include <string_view>
 
 namespace dagui
 {
@@ -26,10 +30,14 @@ namespace dagui
 
         //! \retval The attribute array with the given index
         //! \retval nullptr if the index is out of bounds
-        virtual const AttributeArray* attributeArray(std::size_t arrayIndex) const = 0;
+        virtual AttributeArray* attributeArray(std::size_t arrayIndex) = 0;
+
+        virtual AttributeArray* attributeArrayForUsage(AttributeDescriptor::Usage usage, std::size_t* attrIndex) = 0;
 
         virtual void addIndex(std::uint16_t value) = 0;
 
         virtual std::size_t numIndices() const = 0;
+
+        virtual dagbase::Variant find(std::string_view path) const = 0;
     };
 }

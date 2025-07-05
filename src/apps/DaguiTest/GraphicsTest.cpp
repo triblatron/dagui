@@ -23,6 +23,7 @@
 #include "core/DrawCommandBuffer.h"
 #include "core/Batcher.h"
 #include "core/RenderBin.h"
+#include "core/ShapeFactory.h"
 #include "test/TestUtils.h"
 
 #include <gtest/gtest.h>
@@ -844,4 +845,38 @@ INSTANTIATE_TEST_SUITE_P(RenderBinKey, RenderBinKey_testOrder, ::testing::Values
         std::make_tuple(dagui::RenderBinKey{1,1,1,0}, dagui::RenderBinKey{1,2,1,0}),
         std::make_tuple(dagui::RenderBinKey{1,2,1,0}, dagui::RenderBinKey{1,2,2,0}),
         std::make_tuple(dagui::RenderBinKey{1,2,1,0}, dagui::RenderBinKey{1,2,1,1})
+        ));
+
+class Shape_testTessellate : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+TEST_P(Shape_testTessellate, testExpectedValue)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    auto meshConfigStr = std::get<1>(GetParam());
+    dagbase::Lua meshLua;
+    auto meshConfig = dagbase::ConfigurationElement::fromFile(meshLua, meshConfigStr);
+    ASSERT_NE(nullptr, meshConfig);
+    dagui::WidgetFactory factory;
+    auto sut = factory.createShape(*config);
+    ASSERT_NE(nullptr, sut);
+    dagui::ShapeMesh mesh;
+    mesh.configure(*meshConfig);
+    sut->tessellate(mesh);
+    auto path = std::get<2>(GetParam());
+    auto value = std::get<3>(GetParam());
+    auto tolerance = std::get<4>(GetParam());
+    auto op = std::get<5>(GetParam());
+    auto actualValue = mesh.find(path);
+    assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(Shape, Shape_testTessellate, ::testing::Values(
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", "numVertices", std::int64_t{4}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", "numIndices", std::int64_t{6}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

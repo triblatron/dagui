@@ -9,6 +9,9 @@
 #include "core/ConfigurationElement.h"
 #include "util/Searchable.h"
 #include "core/DrawCommandBuffer.h"
+#include "core/Mesh.h"
+#include "gfx/AttributeDescriptor.h"
+#include "gfx/AttributeArray.h"
 
 namespace dagui
 {
@@ -125,5 +128,44 @@ namespace dagui
     void Rectangle::render(DrawCommandBuffer &buffer)
     {
         buffer.drawRect(*this);
+    }
+
+    void Rectangle::tessellate(ShapeMesh &mesh)
+    {
+        ShapeVertex v[]=
+                {
+                        {_x, _y},
+                        {_x+_width, _y},
+                        {_x+_width, _y+_height},
+                        {_x,_y+_height}
+                };
+        std::uint16_t indices[]=
+                {
+                    0,
+                    1,
+                    2,
+                    2,
+                    3,
+                    0,
+                };
+
+        for (auto i=0; i<4; ++i)
+        {
+            mesh.addVertex(v[i]);
+        }
+
+        for (auto i=0; i<6; ++i)
+        {
+            mesh.addIndex(indices[i]);
+        }
+//        std::size_t attrIndex = std::numeric_limits<std::size_t>::max();
+//        auto positionArray = mesh.attributeArrayForUsage(AttributeDescriptor::USAGE_POSITION, &attrIndex);
+//        if (positionArray)
+//        {
+//            for (auto i=0; i<4; ++i)
+//            {
+//                positionArray->addVertex(&v[i], 2 * sizeof(float));
+//            }
+//        }
     }
 }

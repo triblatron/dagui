@@ -2,6 +2,8 @@
 // Created by Tony Horrobin on 12/02/2025.
 //
 
+#pragma once
+
 #include "config/Export.h"
 
 #include <vector>
@@ -10,6 +12,7 @@
 #include "OpaqueAttributeArray.h"
 #include "core/ConfigurationElement.h"
 #include "core/Mesh.h"
+#include "util/Searchable.h"
 
 namespace dagbase
 {
@@ -74,11 +77,31 @@ namespace dagui
             }
         }
 
-        const AttributeArray* attributeArray(std::size_t arrayIndex) const override
+        AttributeArray* attributeArray(std::size_t arrayIndex) override
         {
             if (arrayIndex<_data.size())
             {
                 return _data[arrayIndex];
+            }
+
+            return nullptr;
+        }
+
+        AttributeArray* attributeArrayForUsage(AttributeDescriptor::Usage usage, std::size_t* outputAttrIndex) override
+        {
+            for (auto arrayIndex=0; arrayIndex<_data.size(); ++arrayIndex)
+            {
+                for (auto attrIndex=0; attrIndex<_data[arrayIndex]->desciptor().size(); ++attrIndex)
+                {
+                    if (_data[arrayIndex]->desciptor().attributes[attrIndex].attr.usage == usage)
+                    {
+                        if (outputAttrIndex)
+                        {
+                            *outputAttrIndex = attrIndex;
+                        }
+                        return _data[arrayIndex];
+                    }
+                }
             }
 
             return nullptr;
@@ -124,6 +147,21 @@ namespace dagui
                     return true;
                 });
             }
+        }
+
+        dagbase::Variant find(std::string_view path) const override
+        {
+            dagbase::Variant retval;
+
+            retval = dagbase::findEndpoint(path, "numVertices", std::int64_t(numVertices()));
+            if (retval.has_value())
+                return retval;
+
+            retval = dagbase::findEndpoint(path, "numIndices", std::int64_t(numIndices()));
+            if (retval.has_value())
+                return retval;
+
+            return {};
         }
     private:
         using AttributeArrays = std::vector<AttributeArray*>;
