@@ -47,15 +47,16 @@ namespace dagui
         }
 
         dagbase::Variant find(std::string_view path) const;
-//        RenderBin* operator[](std::size_t index)
-//        {
-//            return index<_renderBins.size()?_renderBins[index]:nullptr;
-//        }
-//
-//        const RenderBin* operator[](std::size_t index) const
-//        {
-//            return index<_renderBins.size()?_renderBins[index]:nullptr;
-//        }
+
+        RenderBin* operator[](std::size_t index)
+        {
+            return index<_renderBinArray.size()?_renderBinArray.a[index]:nullptr;
+        }
+
+        const RenderBin* operator[](std::size_t index) const
+        {
+            return index<_renderBinArray.size()?_renderBinArray.a[index]:nullptr;
+        }
     private:
         RenderBinMap _renderBins;
         RenderBinArray _renderBinArray;
