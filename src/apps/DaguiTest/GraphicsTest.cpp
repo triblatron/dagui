@@ -888,3 +888,28 @@ INSTANTIATE_TEST_SUITE_P(Shape, Shape_testTessellate, ::testing::Values(
         std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 3, "x", 0.0, 4, 3),
         std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 3, "y", 200.0, 4, 3)
         ));
+
+class Batcher_testConfigure : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+TEST_P(Batcher_testConfigure, testExpectedValue)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::Batcher sut;
+    sut.configure(*config);
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+    auto tolerance = std::get<3>(GetParam());
+    auto op = std::get<4>(GetParam());
+    auto actualValue = sut.find(path);
+    assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(Batcher, Batcher_testConfigure, ::testing::Values(
+        std::make_tuple("data/tests/Batcher/ShapeMesh.lua", "renderBins[0].mesh", true, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));

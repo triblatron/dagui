@@ -7,8 +7,10 @@
 #include "config/Export.h"
 
 #include "core/RenderBin.h"
+#include "util/SearchableMap.h"
 
 #include <map>
+#include <string_view>
 
 namespace dagbase
 {
@@ -20,25 +22,31 @@ namespace dagui
     class DAGUI_API Batcher
     {
     public:
-        using RenderBinMap = std::map<RenderBinKey, RenderBin*>;
+        using RenderBinMap = dagbase::SearchableMap<std::map<RenderBinKey, RenderBin*>>;
+        using RenderBinArray = dagbase::SearchableArray<std::vector<RenderBin*>>;
     public:
         void configure(dagbase::ConfigurationElement& config);
 
         void addRenderBin(const RenderBinKey& key, RenderBin* bin)
         {
             if (bin)
-                _renderBins.emplace(key, bin);
+            {
+                _renderBins.m.emplace(key, bin);
+                _renderBinArray.a.emplace_back(bin);
+            }
         }
 
         RenderBinMap::iterator findRenderBin(const RenderBinKey& key)
         {
-            return _renderBins.find(key);
+            return _renderBins.m.find(key);
         }
 
         RenderBinMap::iterator end()
         {
-            return _renderBins.end();
+            return _renderBins.m.end();
         }
+
+        dagbase::Variant find(std::string_view path) const;
 //        RenderBin* operator[](std::size_t index)
 //        {
 //            return index<_renderBins.size()?_renderBins[index]:nullptr;
@@ -50,5 +58,6 @@ namespace dagui
 //        }
     private:
         RenderBinMap _renderBins;
+        RenderBinArray _renderBinArray;
     };
 }

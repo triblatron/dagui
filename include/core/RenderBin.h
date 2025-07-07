@@ -6,7 +6,11 @@
 
 #include "config/Export.h"
 
+#include "core/Shape.h"
+#include "core/Variant.h"
+
 #include <cstdint>
+#include <string_view>
 
 namespace dagbase
 {
@@ -34,12 +38,15 @@ namespace dagui
 //
 //        virtual void render() = 0;
 
-        void configure(dagbase::ConfigurationElement& config);
+        Mesh * mesh()
+        {
+            return _mesh;
+        }
 
-        bool operator<(const RenderBin& other) const;
+        dagbase::Variant find(std::string_view path) const;
+
+        void configure(dagbase::ConfigurationElement& config);
     private:
-        std::int32_t _material{-1};
-        std::int32_t _texture{-1};
-        std::int32_t _layer{0};
+        Mesh* _mesh;
     };
 }

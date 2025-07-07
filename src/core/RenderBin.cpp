@@ -9,15 +9,32 @@
 
 namespace dagui
 {
-
-    bool RenderBin::operator<(const RenderBin &other) const
-    {
-        return _material<other._material;
-    }
-
     void RenderBin::configure(dagbase::ConfigurationElement &config)
     {
-        // TODO:Specify primitives
+        if (auto element = config.findElement("mesh"); element)
+        {
+            std::string meshClass;
+
+            dagbase::ConfigurationElement::readConfig(*element, "class", &meshClass);
+            delete _mesh;
+            _mesh = nullptr;
+
+            if (meshClass == "ShapeMesh")
+            {
+                _mesh = new ShapeMesh();
+            }
+        }
+    }
+
+    dagbase::Variant RenderBin::find(std::string_view path) const
+    {
+        dagbase::Variant retval;
+
+        retval = dagbase::findEndpoint(path, "mesh", _mesh!=nullptr);
+        if (retval.has_value())
+            return retval;
+
+        return {};
     }
 
     bool RenderBinKey::operator<(const RenderBinKey &other) const

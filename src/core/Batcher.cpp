@@ -7,6 +7,7 @@
 #include "core/Batcher.h"
 #include "core/ConfigurationElement.h"
 #include "core/RenderBin.h"
+#include "util/Searchable.h"
 
 namespace dagui
 {
@@ -24,12 +25,23 @@ namespace dagui
                 }
                 if (auto valueElement = child.findElement("value"); valueElement)
                 {
-                    bin->configure(child);
+                    bin->configure(* valueElement);
                 }
                 addRenderBin(key, bin);
 
                 return true;
             });
         }
+    }
+
+    dagbase::Variant Batcher::find(std::string_view path) const
+    {
+        dagbase::Variant retval;
+
+        retval = dagbase::findInternal(path, "renderBins", _renderBinArray);
+        if (retval.has_value())
+            return retval;
+
+        return {};
     }
 }

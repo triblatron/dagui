@@ -1,0 +1,19 @@
+root=
+{
+	bins=
+	{
+		{
+			key=
+			{
+				material=1,
+			},
+			value=
+			{
+				mesh=
+				{
+					class="ShapeMesh",
+				}
+			}
+		}
+	}
+}
