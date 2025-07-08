@@ -25,6 +25,7 @@
 
 GLFWwindow* window = nullptr;
 dagui::gl::VertexBuffer vertexBuffer;
+dagui::gl::VertexBuffer vertexBuffer2;
 struct Vertex
 {
     float x{0.0f};
@@ -44,7 +45,7 @@ struct Vertex
         dagbase::ConfigurationElement::readConfig(config, "a", &a);
     }
 };
-dagui::GenericMesh<Vertex> mesh;
+dagui::ShapeMesh    mesh;
 
 dagui::GenericAttributeArray<Vertex>* a = new dagui::GenericAttributeArray<Vertex>();
 GLfloat vertices[] = {
@@ -79,8 +80,9 @@ void display(dagui::Renderer& renderer)
     glEnd();
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
-
     vertexBuffer.draw(GL_TRIANGLES, 0, a->size());
+    glColor3f(1.0f, 0.0f, 1.0f);
+    vertexBuffer2.draw(GL_TRIANGLES, 0, mesh.attributeArray(0)->size());
     //std::cout << glGetError() << std::endl;
 //    mesh.unbind();
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -128,16 +130,32 @@ int main(int argc, char** argv)
         return -1;
     }
     dagui::ArrayDescriptor descriptor;
-    dagbase::Lua lua;
-    auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Vertex.lua");
-    descriptor.configure(*config);
-    a->setDescriptor(descriptor);
-    a->addVertex({-1.0f, -1.0, 1.0f, 0.0f, 0.0f, 1.0f});
-    a->addVertex({0.0f, -1.0, 0.0f, 1.0f, 0.0f, 1.0f});
-    a->addVertex({0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f});
-    vertexBuffer.setArray(a);
-    vertexBuffer.allocate();
-    vertexBuffer.submit();
+    {
+        dagbase::Lua lua;
+        auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Vertex.lua");
+        descriptor.configure(*config);
+        a->setDescriptor(descriptor);
+        a->addVertex({-1.0f, -1.0, 1.0f, 0.0f, 0.0f, 1.0f});
+        a->addVertex({0.0f, -1.0, 0.0f, 1.0f, 0.0f, 1.0f});
+        a->addVertex({0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f});
+        vertexBuffer.setArray(a);
+        vertexBuffer.allocate();
+        vertexBuffer.submit();
+    }
+    {
+        dagbase::Lua lua;
+        auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Mesh.lua");
+        if (!config)
+        {
+            std::cerr << "Failed to load mesh config, bailing\n";
+
+            return -1;
+        }
+        mesh.configure(*config);
+        vertexBuffer2.setArray(mesh.attributeArray(0));
+        vertexBuffer2.allocate();
+        vertexBuffer2.submit();
+    }
     std::cout << "sizeof(vertices): " << sizeof(vertices) << std::endl;
     //std::cout << glGetError() << std::endl;
     glm::mat4 model = glm::perspective(glm::radians(45.0),16.0/9.0, 0.1, 1000.0);
