@@ -23,6 +23,11 @@ namespace dagui
             {
                 _mesh = new ShapeMesh();
             }
+
+            if (_mesh)
+            {
+                _mesh->configure(*element);
+            }
         }
     }
 

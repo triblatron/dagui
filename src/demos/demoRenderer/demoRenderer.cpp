@@ -33,6 +33,16 @@ struct Vertex
     float g{0.0f};
     float b{0.0f};
     float a{0.0f};
+
+    void configure(dagbase::ConfigurationElement& config)
+    {
+        dagbase::ConfigurationElement::readConfig(config, "x", &x);
+        dagbase::ConfigurationElement::readConfig(config, "y", &y);
+        dagbase::ConfigurationElement::readConfig(config, "r", &r);
+        dagbase::ConfigurationElement::readConfig(config, "g", &g);
+        dagbase::ConfigurationElement::readConfig(config, "b", &b);
+        dagbase::ConfigurationElement::readConfig(config, "a", &a);
+    }
 };
 dagui::GenericMesh<Vertex> mesh;
 

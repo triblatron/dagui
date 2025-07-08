@@ -42,4 +42,10 @@ namespace dagui
 
         return {};
     }
+
+    void ShapeVertex::configure(dagbase::ConfigurationElement &config)
+    {
+        dagbase::ConfigurationElement::readConfig(config, "x", &x);
+        dagbase::ConfigurationElement::readConfig(config, "y", &y);
+    }
 }

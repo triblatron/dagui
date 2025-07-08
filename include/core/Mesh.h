@@ -28,6 +28,8 @@ namespace dagui
 
         virtual std::size_t numVertices() const = 0;
 
+        virtual void getVertex(std::size_t index, char* buf, std::size_t* bufferLen) = 0;
+
         //! \retval The attribute array with the given index
         //! \retval nullptr if the index is out of bounds
         virtual AttributeArray* attributeArray(std::size_t arrayIndex) = 0;
@@ -37,6 +39,10 @@ namespace dagui
         virtual void addIndex(std::uint16_t value) = 0;
 
         virtual std::size_t numIndices() const = 0;
+
+        virtual void getIndex(std::size_t index, std::uint16_t* value) = 0;
+
+        virtual void configure(dagbase::ConfigurationElement& config) = 0;
 
         virtual dagbase::Variant find(std::string_view path) const = 0;
     };

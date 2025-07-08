@@ -913,3 +913,40 @@ TEST_P(Batcher_testConfigure, testExpectedValue)
 INSTANTIATE_TEST_SUITE_P(Batcher, Batcher_testConfigure, ::testing::Values(
         std::make_tuple("data/tests/Batcher/ShapeMesh.lua", "renderBins[0].mesh", true, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
+
+class Batcher_testMesh : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::size_t, const char*, dagbase::Variant, std::size_t, std::uint16_t>>
+{
+
+};
+
+TEST_P(Batcher_testMesh, testExpectedValues)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::Batcher sut;
+    sut.configure(*config);
+    auto binIndex = std::get<1>(GetParam());
+    auto bin = sut[binIndex];
+    ASSERT_NE(nullptr, bin);
+    auto vertIndex = std::get<2>(GetParam());
+    ASSERT_NE(nullptr, bin->mesh());
+    dagui::ShapeVertex actualVert;
+    std::size_t actualVertSize = sizeof(dagui::ShapeVertex);
+    bin->mesh()->getVertex(vertIndex, (char*)&actualVert, &actualVertSize);
+    auto path = std::get<3>(GetParam());
+    auto actualValue = actualVert.find(path);
+    auto value = std::get<4>(GetParam());
+    EXPECT_EQ(value, actualValue);
+    auto indexIndex = std::get<5>(GetParam());
+    auto indexValue = std::get<6>(GetParam());
+    ASSERT_LT(indexIndex,bin->mesh()->numIndices());
+    std::uint16_t actualIndex;
+    bin->mesh()->getIndex(indexIndex, &actualIndex);
+    EXPECT_EQ(indexValue, actualIndex);
+}
+
+INSTANTIATE_TEST_SUITE_P(Batcher, Batcher_testMesh, ::testing::Values(
+        std::make_tuple("data/tests/Batcher/ShapeMesh.lua", 0, 1, "x", 100.0, 0, 0)
+        ));

@@ -78,6 +78,14 @@ namespace dagui
             }
         }
 
+        void getVertex(std::size_t i, char* buf, std::size_t* bufLen) override
+        {
+            if (buf && bufLen && *bufLen >= sizeof(Vertex))
+            {
+                getVertex(i, (Vertex*)buf);
+            }
+        }
+
         AttributeArray* attributeArray(std::size_t arrayIndex) override
         {
             if (arrayIndex<_data.size())
@@ -113,7 +121,7 @@ namespace dagui
             _indices.emplace_back(index);
         }
 
-        void getIndex(std::size_t index, std::uint16_t *value)
+        void getIndex(std::size_t index, std::uint16_t *value) override
         {
             if (value && index<_indices.size())
             {
@@ -131,7 +139,7 @@ namespace dagui
             return _indices.size();
         }
 
-        void configure(dagbase::ConfigurationElement& config)
+        void configure(dagbase::ConfigurationElement& config) override
         {
             if (auto element = config.findElement("arrays"); element)
             {
@@ -145,6 +153,26 @@ namespace dagui
                     auto array = new OpaqueAttributeArray();
                     array->setDescriptor(descriptor);
                     _data.a.push_back(array);
+                    return true;
+                });
+            }
+
+            if (auto element = config.findElement("vertices"); element)
+            {
+                element->eachChild([this](dagbase::ConfigurationElement& child) {
+                    Vertex v;
+                    v.configure(child);
+                    addVertex(v);
+
+                    return true;
+                });
+            }
+
+            if (auto element = config.findElement("indices"); element)
+            {
+                element->eachChild([this](dagbase::ConfigurationElement& child) {
+                    std::uint16_t index = child.asInteger();
+                    _indices.emplace_back(index);
                     return true;
                 });
             }
