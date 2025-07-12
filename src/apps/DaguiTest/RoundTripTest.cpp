@@ -223,6 +223,7 @@ TEST_P(AttributeDataType_testRoundTrip, testRoundtrip)
 INSTANTIATE_TEST_SUITE_P(AttributeDataType, AttributeDataType_testRoundTrip, ::testing::Values(
     std::make_tuple("TYPE_UNKNOWN", dagui::AttributeDescriptor::TYPE_UNKNOWN),
     std::make_tuple("TYPE_BYTE", dagui::AttributeDescriptor::TYPE_BYTE),
+    std::make_tuple("TYPE_UINT16", dagui::AttributeDescriptor::TYPE_UINT16),
     std::make_tuple("TYPE_UINT32", dagui::AttributeDescriptor::TYPE_UINT32),
     std::make_tuple("TYPE_INT32", dagui::AttributeDescriptor::TYPE_INT32),
     std::make_tuple("TYPE_FLOAT", dagui::AttributeDescriptor::TYPE_FLOAT),

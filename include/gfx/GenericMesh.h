@@ -10,6 +10,7 @@
 
 #include "GenericAttributeArray.h"
 #include "OpaqueAttributeArray.h"
+#include "OpaqueIndexArray.h"
 #include "core/ConfigurationElement.h"
 #include "core/Mesh.h"
 #include "util/Searchable.h"
@@ -116,17 +117,18 @@ namespace dagui
             return nullptr;
         }
 
-        void addIndex(std::uint16_t index) override
+        void addIndex(const char* buf, std::size_t bufLen) override
         {
-            _indices.emplace_back(index);
+            if (_indices && buf && bufLen>=_indices->descriptor().size())
+            {
+                _indices->addIndex(buf, bufLen);
+            }
         }
 
-        void getIndex(std::size_t index, std::uint16_t *value) override
+        void getIndex(std::size_t i, char* buf, std::size_t bufLen) override
         {
-            if (value && index<_indices.size())
-            {
-                *value = _indices[index];
-            }
+            if (_indices)
+                _indices->getIndex(i, buf, bufLen);
         }
 
         std::size_t numVertices() const override
@@ -134,9 +136,17 @@ namespace dagui
             return _numVertices;
         }
 
+        IndexArray* indexArray() override
+        {
+            return _indices;
+        }
+
         std::size_t numIndices() const override
         {
-            return _indices.size();
+            if (_indices)
+                return _indices->size();
+            else
+                return 0;
         }
 
         void configure(dagbase::ConfigurationElement& config) override
@@ -168,11 +178,20 @@ namespace dagui
                 });
             }
 
+            if (auto element = config.findElement("indexArray"); element)
+            {
+                IndexArrayDescriptor descriptor;
+
+                descriptor.configure(*element);
+                _indices = new OpaqueIndexArray();
+                _indices->setDescriptor(descriptor);
+            }
+
             if (auto element = config.findElement("indices"); element)
             {
                 element->eachChild([this](dagbase::ConfigurationElement& child) {
                     std::uint16_t index = child.asInteger();
-                    _indices.emplace_back(index);
+                    _indices->addIndex(&index, sizeof(std::uint16_t));
                     return true;
                 });
             }
@@ -200,7 +219,6 @@ namespace dagui
         using AttributeArrays = dagbase::SearchableArray<std::vector<OpaqueAttributeArray*>>;
         AttributeArrays _data;
         std::size_t _numVertices{ 0 };
-        using IndexAray = std::vector<std::uint16_t>;
-        IndexAray _indices;
+        OpaqueIndexArray* _indices{nullptr};
     };
 }

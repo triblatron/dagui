@@ -16,6 +16,7 @@
 namespace dagui
 {
     class AttributeArray;
+    class IndexArray;
 
     //! \class Mesh
     //! Abstract base class for meshes consisting of index triangle lists
@@ -34,13 +35,15 @@ namespace dagui
         //! \retval nullptr if the index is out of bounds
         virtual AttributeArray* attributeArray(std::size_t arrayIndex) = 0;
 
+        virtual IndexArray* indexArray() = 0;
+
         virtual AttributeArray* attributeArrayForUsage(AttributeDescriptor::Usage usage, std::size_t* attrIndex) = 0;
 
-        virtual void addIndex(std::uint16_t value) = 0;
+        virtual void addIndex(const char* buf, std::size_t bufLen) = 0;
 
         virtual std::size_t numIndices() const = 0;
 
-        virtual void getIndex(std::size_t index, std::uint16_t* value) = 0;
+        virtual void getIndex(std::size_t i, char* buf, std::size_t bufLen) = 0;
 
         virtual void configure(dagbase::ConfigurationElement& config) = 0;
 

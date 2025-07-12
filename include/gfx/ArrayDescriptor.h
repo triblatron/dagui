@@ -23,4 +23,13 @@ namespace dagui
 
         std::size_t size() const;
     };
+
+    struct DAGUI_API IndexArrayDescriptor
+    {
+        AttributeDescriptor::DataType dataType{AttributeDescriptor::TYPE_UNKNOWN};
+
+        void configure(dagbase::ConfigurationElement& config);
+
+        std::size_t size() const;
+    };
 }

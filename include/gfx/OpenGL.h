@@ -24,6 +24,7 @@
 namespace dagui
 {
     class AttributeArray;
+    class IndexArray;
 
     namespace gl
     {
@@ -84,8 +85,15 @@ namespace dagui
         class DAGUI_API IndexBuffer : public Buffer
         {
         public:
+            void setArray(const IndexArray* a)
+            {
+                _a = a;
+            }
             void bind();
             void unbind();
+            void submit();
+        private:
+            const IndexArray* _a{nullptr};
         };
 
         class DAGUI_API OpenGL

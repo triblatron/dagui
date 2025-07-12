@@ -5,6 +5,7 @@
 
 #include "gfx/OpenGL.h"
 #include "gfx/AttributeArray.h"
+#include "gfx/IndexArray.h"
 
 #include <iostream>
 
@@ -95,6 +96,13 @@ namespace dagui
         void IndexBuffer::unbind()
         {
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
+        }
+
+        void IndexBuffer::submit()
+        {
+            bind();
+            if (_a)
+                glBufferData(GL_ARRAY_BUFFER, _a->elementSize()*_a->size(), _a->data(), GL_STATIC_DRAW);
         }
     }
 }

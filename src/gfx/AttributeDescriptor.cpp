@@ -60,6 +60,7 @@ namespace dagui
         {
             ENUM_NAME(TYPE_UNKNOWN)
             ENUM_NAME(TYPE_BYTE)
+            ENUM_NAME(TYPE_UINT16)
             ENUM_NAME(TYPE_INT32)
             ENUM_NAME(TYPE_UINT32)
             ENUM_NAME(TYPE_FLOAT)
@@ -73,6 +74,7 @@ namespace dagui
     {
         TEST_ENUM(TYPE_UNKNOWN, str);
         TEST_ENUM(TYPE_BYTE, str);
+        TEST_ENUM(TYPE_UINT16, str);
         TEST_ENUM(TYPE_INT32, str);
         TEST_ENUM(TYPE_UINT32, str);
         TEST_ENUM(TYPE_FLOAT, str);

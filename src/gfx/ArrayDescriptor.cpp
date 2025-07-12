@@ -45,4 +45,22 @@ namespace dagui
 
         return total;
     }
+
+    void IndexArrayDescriptor::configure(dagbase::ConfigurationElement &config)
+    {
+        dagbase::ConfigurationElement::readConfig<AttributeDescriptor::DataType>(config, "dataType", &AttributeDescriptor::parseDataType, &dataType);
+    }
+
+    std::size_t IndexArrayDescriptor::size() const
+    {
+        switch (dataType)
+        {
+            case AttributeDescriptor::TYPE_UINT16:
+                return sizeof(std::uint16_t);
+            case AttributeDescriptor::TYPE_UINT32:
+                return sizeof(std::uint32_t);
+            default:
+                return 0;
+        }
+    }
 }

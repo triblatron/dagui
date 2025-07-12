@@ -26,6 +26,8 @@ namespace dagui
             TYPE_UNKNOWN,
             //! 8bit unsigned integer
             TYPE_BYTE,
+            //! 16bit unsigned integer
+            TYPE_UINT16,
             // 32bit signed integer
             TYPE_INT32,
             //! 32bit unsigned integer

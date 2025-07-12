@@ -748,6 +748,44 @@ INSTANTIATE_TEST_SUITE_P(GenericMesh, GenericMesh_addVertex, ::testing::Values(
 	std::make_tuple("data/tests/GenericMesh/addVertex.lua", "interleaved", &TestVertex::a, 2, 1.0f)
 ));
 
+class GenericMesh_addIndex : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::uint16_t>>
+{
+
+};
+
+TEST_P(GenericMesh_addIndex, testValue)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::GenericMesh<TestVertex> sut;
+    if (auto element = config->findElement("mesh"); element)
+        sut.configure(*element);
+    if (auto element = config->findElement("indices"); element)
+    {
+        element->eachChild([&sut](dagbase::ConfigurationElement& child)
+        {
+            auto index = std::uint16_t(child.asInteger());
+            sut.addIndex((const char*)&index, sizeof(std::uint16_t));
+
+            return true;
+        });
+    }
+    std::size_t i=std::get<1>(GetParam());
+    std::uint16_t index=std::get<2>(GetParam());
+    std::vector<char> actualIndex(sut.indexArray()->descriptor().size());
+    sut.getIndex(i, actualIndex.data(), actualIndex.size());
+    ASSERT_EQ(sizeof(index), actualIndex.size());
+    EXPECT_EQ(0, std::memcmp(&index, actualIndex.data(), actualIndex.size()));
+}
+
+INSTANTIATE_TEST_SUITE_P(GenericMesh, GenericMesh_addIndex, ::testing::Values(
+        std::make_tuple("data/tests/GenericMesh/addIndex.lua", 0, 0),
+        std::make_tuple("data/tests/GenericMesh/addIndex.lua", 1, 1),
+        std::make_tuple("data/tests/GenericMesh/addIndex.lua", 4, 3)
+        ));
+
 class DrawCommandBuffer_testShapeGeneratesGeometry : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
 {
 
@@ -878,7 +916,7 @@ TEST_P(Shape_testTessellate, testExpectedValue)
     auto actualComponent = actualVertex.find(vertexPath);
     EXPECT_EQ(component, actualComponent);
     std::uint16_t actualIndex;
-    mesh.getIndex(indexIndex, &actualIndex);
+    mesh.getIndex(indexIndex, (char*)&actualIndex, sizeof(std::uint16_t));
     EXPECT_EQ(indexValue, actualIndex);
 }
 
@@ -943,7 +981,7 @@ TEST_P(Batcher_testMesh, testExpectedValues)
     auto indexValue = std::get<6>(GetParam());
     ASSERT_LT(indexIndex,bin->mesh()->numIndices());
     std::uint16_t actualIndex;
-    bin->mesh()->getIndex(indexIndex, &actualIndex);
+    bin->mesh()->getIndex(indexIndex, (char*)&actualIndex, sizeof(std::uint16_t));
     EXPECT_EQ(indexValue, actualIndex);
 }
 

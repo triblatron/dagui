@@ -158,7 +158,7 @@ namespace dagui
 
         for (auto i=0; i<6; ++i)
         {
-            mesh.addIndex(indices[i]);
+            mesh.addIndex((const char*)&indices[i], sizeof(std::uint16_t));
         }
 //        std::size_t attrIndex = std::numeric_limits<std::size_t>::max();
 //        auto positionArray = mesh.attributeArrayForUsage(AttributeDescriptor::USAGE_POSITION, &attrIndex);
