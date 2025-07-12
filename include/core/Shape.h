@@ -24,7 +24,7 @@ namespace dagui
     class ShapeVisitor;
     class ShapeFactory;
 
-    struct ShapeVertex
+    struct DAGUI_API ShapeVertex
     {
         float x{0.0f};
         float y{0.0f};
