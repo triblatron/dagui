@@ -11,7 +11,7 @@ namespace dagui
 
     std::size_t OpaqueIndexArray::size() const
     {
-        return 0;
+        return _array.size() / descriptor().size();
     }
 
     void OpaqueIndexArray::addIndex(const void *buffer, std::size_t bufferSize)

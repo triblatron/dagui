@@ -915,7 +915,7 @@ TEST_P(Shape_testTessellate, testExpectedValue)
     mesh.getVertex(vertIndex, &actualVertex);
     auto actualComponent = actualVertex.find(vertexPath);
     EXPECT_EQ(component, actualComponent);
-    std::uint16_t actualIndex;
+    std::uint16_t actualIndex = 0;
     mesh.getIndex(indexIndex, (char*)&actualIndex, sizeof(std::uint16_t));
     EXPECT_EQ(indexValue, actualIndex);
 }

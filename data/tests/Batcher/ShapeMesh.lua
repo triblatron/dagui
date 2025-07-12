@@ -27,6 +27,10 @@ root=
 							},
 						},
 					},
+					indexArray=
+					{
+						dataType="TYPE_UINT16",
+					},
 					vertices=
 					{
 						{
