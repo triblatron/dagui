@@ -187,7 +187,7 @@ namespace dagui
                 _indices->setDescriptor(descriptor);
             }
 
-            if (auto element = config.findElement("indices"); element)
+            if (auto element = config.findElement("indices"); element && _indices)
             {
                 element->eachChild([this](dagbase::ConfigurationElement& child) {
                     std::uint16_t index = child.asInteger();
