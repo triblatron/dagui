@@ -26,6 +26,8 @@
 GLFWwindow* window = nullptr;
 dagui::gl::VertexBuffer vertexBuffer;
 dagui::gl::VertexBuffer vertexBuffer2;
+dagui::gl::IndexBuffer indexBuffer;
+
 struct Vertex
 {
     float x{0.0f};
@@ -82,9 +84,12 @@ void display(dagui::Renderer& renderer)
     glEnableClientState(GL_COLOR_ARRAY);
     vertexBuffer.draw(GL_TRIANGLES, 0, a->size());
     glColor3f(1.0f, 0.0f, 1.0f);
-    vertexBuffer2.draw(GL_TRIANGLES, 0, mesh.attributeArray(0)->size());
+    vertexBuffer2.bind();
+    vertexBuffer2.setPointers();
+    //vertexBuffer2.draw(GL_TRIANGLES, 0, mesh.attributeArray(0)->size());
     //std::cout << glGetError() << std::endl;
 //    mesh.unbind();
+    indexBuffer.draw(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
     glfwSwapBuffers(window);
@@ -155,6 +160,9 @@ int main(int argc, char** argv)
         vertexBuffer2.setArray(mesh.attributeArray(0));
         vertexBuffer2.allocate();
         vertexBuffer2.submit();
+        indexBuffer.setArray(mesh.indexArray());
+        indexBuffer.allocate();
+        indexBuffer.submit();
     }
     std::cout << "sizeof(vertices): " << sizeof(vertices) << std::endl;
     //std::cout << glGetError() << std::endl;

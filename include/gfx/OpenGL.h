@@ -77,6 +77,7 @@ namespace dagui
             void bind();
             void unbind();
             void submit();
+            void setPointers();
             void draw(GLenum mode, GLint first, GLsizei count);
         private:
             const AttributeArray* _a{nullptr};
@@ -85,6 +86,9 @@ namespace dagui
         class DAGUI_API IndexBuffer : public Buffer
         {
         public:
+            IndexBuffer() = default;
+            explicit IndexBuffer(const IndexArray* a);
+
             void setArray(const IndexArray* a)
             {
                 _a = a;
@@ -92,6 +96,7 @@ namespace dagui
             void bind();
             void unbind();
             void submit();
+            void draw(GLenum mode, GLsizei count, GLenum type);
         private:
             const IndexArray* _a{nullptr};
         };

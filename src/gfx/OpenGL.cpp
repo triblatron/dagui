@@ -40,27 +40,35 @@ namespace dagui
         void VertexBuffer::draw(GLenum mode, GLint first, GLsizei count)
         {
             bind();
+            setPointers();
+            if (_a)
+                glDrawArrays(mode, first, count);
+            }
+
+        void VertexBuffer::setPointers()
+        {
             if (_a)
             {
                 std::size_t size = _a->size();
                 std::size_t elementSize = _a->elementSize();
-                for (auto i=0; i<_a->desciptor().attributes.size(); ++i)
+                for (auto i = 0; i < _a->desciptor().attributes.size(); ++i)
                 {
-                    const AttributeLayout& layout = _a->desciptor().attributes[i];
+                    const AttributeLayout &layout = _a->desciptor().attributes[i];
                     switch (layout.attr.usage)
                     {
-                    case AttributeDescriptor::USAGE_POSITION:
-                        glVertexPointer(layout.attr.numComponents, dataTypeToGL(layout.attr.dataType), elementSize, (void*)layout.offset);
-                        break;
-                    case AttributeDescriptor::USAGE_COLOUR:
-                        glColorPointer(layout.attr.numComponents, dataTypeToGL(layout.attr.dataType), elementSize, (void*)layout.offset);
-                        break;
+                        case AttributeDescriptor::USAGE_POSITION:
+                            glVertexPointer(layout.attr.numComponents, dataTypeToGL(layout.attr.dataType), elementSize,
+                                            (void *) layout.offset);
+                            break;
+                        case AttributeDescriptor::USAGE_COLOUR:
+                            glColorPointer(layout.attr.numComponents, dataTypeToGL(layout.attr.dataType), elementSize,
+                                           (void *) layout.offset);
+                            break;
                     }
                 }
-                glDrawArrays(mode, first, count);
             }
-            //std::cout << glGetError() << std::endl;
         }
+        //std::cout << glGetError() << std::endl;
 
         void Buffer::allocate()
         {
@@ -75,6 +83,8 @@ namespace dagui
                 return GL_NONE;
             case dagui::AttributeDescriptor::TYPE_BYTE:
                 return GL_UNSIGNED_BYTE;
+            case dagui::AttributeDescriptor::TYPE_UINT16:
+                return GL_UNSIGNED_SHORT;
             case dagui::AttributeDescriptor::TYPE_INT32:
                 return GL_INT;
             case dagui::AttributeDescriptor::TYPE_UINT32:
@@ -102,7 +112,23 @@ namespace dagui
         {
             bind();
             if (_a)
-                glBufferData(GL_ARRAY_BUFFER, _a->elementSize()*_a->size(), _a->data(), GL_STATIC_DRAW);
+            {
+                auto size = _a->elementSize()*_a->size();
+                glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, _a->data(), GL_STATIC_DRAW);
+            }
+        }
+
+        IndexBuffer::IndexBuffer(const IndexArray *a)
+        :
+        _a(a)
+        {
+            // Do nothing.
+        }
+
+        void IndexBuffer::draw(GLenum mode, GLsizei count, GLenum type)
+        {
+            if (_a)
+                glDrawElements(mode, count, type, (void*)0);
         }
     }
 }
