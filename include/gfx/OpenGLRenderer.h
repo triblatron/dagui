@@ -36,6 +36,7 @@ namespace dagui
         void makeItSo(DrawCommandBuffer& buffer) override;
         void drawRect(const Rectangle& rect) override;
         void drawText(FT_Face face, TextureAtlas& atlas, std::string_view text) override;
+        void drawMesh(Mesh& mesh) override;
         void drawMesh2D(const Mesh2D& mesh) override;
         void generateTextureCoordinates(ImageDef& imageDef, BinImageDef& binImageDef) override;
     private:

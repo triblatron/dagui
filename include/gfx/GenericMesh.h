@@ -15,6 +15,7 @@
 #include "core/Mesh.h"
 #include "util/Searchable.h"
 #include "util/SearchableArray.h"
+#include "gfx/MeshBackend.h"
 
 namespace dagbase
 {
@@ -214,6 +215,22 @@ namespace dagui
                 return retval;
 
             return {};
+        }
+
+        void sendToBackend() override
+        {
+            if (backend())
+            {
+                backend()->allocate();
+                for (auto arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
+                {
+                    auto attrArray = _data.a[arrayIndex];
+
+                    backend()->uploadVertices(*attrArray);
+                }
+                if (indexArray())
+                    backend()->uploadIndices(*indexArray());
+            }
         }
     private:
         using AttributeArrays = dagbase::SearchableArray<std::vector<OpaqueAttributeArray*>>;

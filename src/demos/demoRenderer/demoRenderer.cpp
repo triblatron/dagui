@@ -19,6 +19,8 @@
 #include "gfx/OpenGLRenderer.h"
 #include "util/glmOutput.h"
 #include "core/Rectangle.h"
+#include "core/ShapeFactory.h"
+#include "gfx/OpenGLMesh.h"
 
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
@@ -27,6 +29,9 @@ GLFWwindow* window = nullptr;
 dagui::gl::VertexBuffer vertexBuffer;
 dagui::gl::VertexBuffer vertexBuffer2;
 dagui::gl::IndexBuffer indexBuffer;
+dagui::OpenGLRenderer renderer;
+dagui::Rectangle rect;
+dagui::OpenGLMesh* backend = nullptr;
 
 struct Vertex
 {
@@ -84,12 +89,12 @@ void display(dagui::Renderer& renderer)
     glEnableClientState(GL_COLOR_ARRAY);
     vertexBuffer.draw(GL_TRIANGLES, 0, a->size());
     glColor3f(1.0f, 0.0f, 1.0f);
-    vertexBuffer2.bind();
-    vertexBuffer2.setPointers();
+//    vertexBuffer2.bind();
+//    vertexBuffer2.setPointers();
     //vertexBuffer2.draw(GL_TRIANGLES, 0, mesh.attributeArray(0)->size());
     //std::cout << glGetError() << std::endl;
 //    mesh.unbind();
-    indexBuffer.draw(GL_TRIANGLES);
+    backend->draw();
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
     glfwSwapBuffers(window);
@@ -138,6 +143,12 @@ int main(int argc, char** argv)
     {
         dagbase::Lua lua;
         auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Vertex.lua");
+        if (!config)
+        {
+            std::cerr << "Failed to load vertex config, bailing\n";
+
+            return -1;
+        }
         descriptor.configure(*config);
         a->setDescriptor(descriptor);
         a->addVertex({-1.0f, -1.0, 1.0f, 0.0f, 0.0f, 1.0f});
@@ -157,18 +168,32 @@ int main(int argc, char** argv)
             return -1;
         }
         mesh.configure(*config);
-        vertexBuffer2.setArray(mesh.attributeArray(0));
-        vertexBuffer2.allocate();
-        vertexBuffer2.submit();
-        indexBuffer.setArray(mesh.indexArray());
-        indexBuffer.allocate();
-        indexBuffer.submit();
+        backend = new dagui::OpenGLMesh(&mesh);
+        mesh.setBackend(backend);
+        mesh.sendToBackend();
+//        vertexBuffer2.setArray(mesh.attributeArray(0));
+//        vertexBuffer2.allocate();
+//        vertexBuffer2.submit();
+//        indexBuffer.setArray(mesh.indexArray());
+//        indexBuffer.allocate();
+//        indexBuffer.submit();
     }
+//    dagui::ShapeFactory shapeFactory;
+//    {
+//        dagbase::Lua lua;
+//        auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Rect.lua");
+//        if (!config)
+//        {
+//            std::cerr << "Failed to load rectangle config, bailing\n";
+//
+//            return -1;
+//        }
+//        rect.configure(*config, shapeFactory);
+//    }
     std::cout << "sizeof(vertices): " << sizeof(vertices) << std::endl;
     //std::cout << glGetError() << std::endl;
     glm::mat4 model = glm::perspective(glm::radians(45.0),16.0/9.0, 0.1, 1000.0);
     std::cout << "model: " << model << std::endl;
-    dagui::OpenGLRenderer renderer;
     while (!glfwWindowShouldClose(window))
     {
         int width, height;

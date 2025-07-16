@@ -17,6 +17,7 @@ namespace dagui
 {
     class AttributeArray;
     class IndexArray;
+    class MeshBackend;
 
     //! \class Mesh
     //! Abstract base class for meshes consisting of index triangle lists
@@ -48,5 +49,19 @@ namespace dagui
         virtual void configure(dagbase::ConfigurationElement& config) = 0;
 
         virtual dagbase::Variant find(std::string_view path) const = 0;
+
+        virtual void sendToBackend() = 0;
+
+        void setBackend(MeshBackend* backend)
+        {
+            _backend = backend;
+        }
+
+        MeshBackend* backend()
+        {
+            return _backend;
+        }
+    private:
+        MeshBackend* _backend{nullptr};
     };
 }

@@ -16,6 +16,7 @@
 #include "core/DrawCommandBuffer.h"
 #include "core/DrawCommand.h"
 #include "core/Rectangle.h"
+#include "core/Mesh.h"
 
 #if defined(__linux__) || defined(_WIN32)
 #include <GL/glut.h>
@@ -148,5 +149,10 @@ namespace dagui
         glVertex2f(rect.x() + rect.width(), rect.y() + rect.height());
         glVertex2f(rect.x(), rect.y() + rect.height());
         glEnd();
+    }
+
+    void OpenGLRenderer::drawMesh(Mesh &mesh)
+    {
+        mesh.backend()->draw();
     }
 }
