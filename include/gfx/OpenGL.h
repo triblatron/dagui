@@ -96,7 +96,7 @@ namespace dagui
             void bind();
             void unbind();
             void submit();
-            void draw(GLenum mode, GLsizei count, GLenum type);
+            void draw(GLenum mode);
         private:
             const IndexArray* _a{nullptr};
         };

@@ -125,10 +125,12 @@ namespace dagui
             // Do nothing.
         }
 
-        void IndexBuffer::draw(GLenum mode, GLsizei count, GLenum type)
+        void IndexBuffer::draw(GLenum mode)
         {
             if (_a)
-                glDrawElements(mode, count, type, (void*)0);
+            {
+                glDrawElements(mode, _a->size(), dataTypeToGL(_a->descriptor().dataType), nullptr);
+            }
         }
     }
 }

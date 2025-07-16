@@ -89,7 +89,7 @@ void display(dagui::Renderer& renderer)
     //vertexBuffer2.draw(GL_TRIANGLES, 0, mesh.attributeArray(0)->size());
     //std::cout << glGetError() << std::endl;
 //    mesh.unbind();
-    indexBuffer.draw(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT);
+    indexBuffer.draw(GL_TRIANGLES);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
     glfwSwapBuffers(window);
