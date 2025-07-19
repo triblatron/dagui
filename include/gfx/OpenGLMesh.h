@@ -23,6 +23,13 @@ namespace dagui
         void uploadIndices(IndexArray& a) override;
 
         void draw() override;
+
+        dagbase::Variant find(std::string_view path) const override;
+
+        std::size_t numVertexBuffers() const
+        {
+            return 1;
+        }
     private:
         Mesh* _mesh{nullptr};
         gl::VertexBuffer _vertices;

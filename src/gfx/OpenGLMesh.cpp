@@ -5,6 +5,9 @@
 #include "config/config.h"
 
 #include "gfx/OpenGLMesh.h"
+#include "util/Searchable.h"
+
+#include <cstdint>
 
 namespace dagui
 {
@@ -39,5 +42,16 @@ namespace dagui
         _vertices.setPointers();
         _indices.bind();
         _indices.draw(GL_TRIANGLES);
+    }
+
+    dagbase::Variant OpenGLMesh::find(std::string_view path) const
+    {
+        dagbase::Variant retval;
+
+        retval = dagbase::findEndpoint(path, "numVertexBuffers", std::uint32_t(numVertexBuffers()));
+        if (retval.has_value())
+            return retval;
+
+        return {};
     }
 }

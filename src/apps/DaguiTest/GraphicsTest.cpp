@@ -24,6 +24,9 @@
 #include "core/Batcher.h"
 #include "core/RenderBin.h"
 #include "core/ShapeFactory.h"
+#include "gfx/OpenGLBackendFactory.h"
+#include "gfx/OpenGLMesh.h"
+#include "core/Rectangle.h"
 #include "test/TestUtils.h"
 
 #include <gtest/gtest.h>
@@ -992,4 +995,47 @@ TEST_P(Batcher_testMesh, testExpectedValues)
 
 INSTANTIATE_TEST_SUITE_P(Batcher, Batcher_testMesh, ::testing::Values(
         std::make_tuple("data/tests/Batcher/ShapeMesh.lua", 0, 1, "x", 100.0, 0, 0)
+        ));
+
+class OpenGLBackendFactory_testCreateMesh : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+TEST_P(OpenGLBackendFactory_testCreateMesh, testExpectedResult)
+{
+    const char* configStr = std::get<0>(GetParam());
+    const char* shapeConfigStr = std::get<1>(GetParam());
+
+    dagbase::ConfigurationElement* config = nullptr;
+    dagbase::ConfigurationElement* shapeConfig = nullptr;
+    {
+        dagbase::Lua lua;
+        config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    }
+    {
+        dagbase::Lua lua;
+        shapeConfig = dagbase::ConfigurationElement::fromFile(lua, shapeConfigStr);
+    }
+    ASSERT_NE(nullptr, config);
+    ASSERT_NE(nullptr, shapeConfig);
+    auto mesh = new dagui::ShapeMesh;
+    mesh->configure(*config);
+    dagui::ShapeFactory shapeFactory;
+    auto shape = shapeFactory.createShape(*shapeConfig);
+    dagui::OpenGLBackendFactory sut;
+    auto backendMesh = sut.createMesh(mesh);
+    ASSERT_NE(nullptr, backendMesh);
+    auto path = std::get<2>(GetParam());
+    auto value = std::get<3>(GetParam());
+    auto tolerance = std::get<4>(GetParam());
+    auto op = std::get<5>(GetParam());
+    auto actualValue = backendMesh->find(path);
+    assertComparison(value, actualValue, tolerance, op);
+    delete shape;
+    delete mesh;
+}
+
+INSTANTIATE_TEST_SUITE_P(OpenGLBackendFactory, OpenGLBackendFactory_testCreateMesh, ::testing::Values(
+        std::make_tuple("etc/ShapeMesh.lua", "data/tests/Shape/Rectangle.lua", "numVertexBuffers", std::uint32_t{1}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

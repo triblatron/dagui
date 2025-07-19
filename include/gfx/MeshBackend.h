@@ -6,6 +6,10 @@
 
 #include "config/Export.h"
 
+#include "core/Variant.h"
+
+#include <string_view>
+
 namespace dagui
 {
     class AttributeArray;
@@ -23,5 +27,7 @@ namespace dagui
         virtual void uploadIndices(IndexArray& a) = 0;
 
         virtual void draw() = 0;
+
+        virtual dagbase::Variant find(std::string_view path) const = 0;
     };
 }
