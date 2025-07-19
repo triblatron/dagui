@@ -28,6 +28,10 @@ namespace dagui
     {
         float x{0.0f};
         float y{0.0f};
+        float r{0.0f};
+        float g{0.0f};
+        float b{0.0f};
+        float a{0.0f};
 
         void configure(dagbase::ConfigurationElement& config);
 

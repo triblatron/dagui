@@ -13,18 +13,16 @@ root=
 				},
 				-- offset and stride are automatically computed
 			},
+			{
+				attribute=
+				{
+					name="colour",
+					dataType="TYPE_FLOAT",
+					numComponents=4,
+					usage="USAGE_COLOUR",
+				},
+			}
 		},
-		--~ {
-			--~ {
-				--~ attribute=
-				--~ {
-					--~ name="colour",
-					--~ dataType="TYPE_FLOAT",
-					--~ numComponents=4,
-					--~ usage="USAGE_COLOUR",
-				--~ },
-			--~ },
-		--~ }
 	},
 	indexArray=
 	{

@@ -40,6 +40,23 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
+        retval = dagbase::findEndpoint(path, "r", r);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "g", g);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "b", b);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "a", a);
+        if (retval.has_value())
+            return retval;
+
+
         return {};
     }
 
@@ -47,5 +64,9 @@ namespace dagui
     {
         dagbase::ConfigurationElement::readConfig(config, "x", &x);
         dagbase::ConfigurationElement::readConfig(config, "y", &y);
+        dagbase::ConfigurationElement::readConfig(config, "r", &r);
+        dagbase::ConfigurationElement::readConfig(config, "g", &g);
+        dagbase::ConfigurationElement::readConfig(config, "b", &b);
+        dagbase::ConfigurationElement::readConfig(config, "a", &a);
     }
 }

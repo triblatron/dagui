@@ -136,10 +136,10 @@ namespace dagui
     {
         ShapeVertex v[]=
                 {
-                        {_x, _y},
-                        {_x+_width, _y},
-                        {_x+_width, _y+_height},
-                        {_x,_y+_height}
+                        {_x, _y, 0.0f, 1.0f, 0.0f, 1.0f},
+                        {_x+_width, _y, 0.0f, 1.0f, 0.0f, 1.0f},
+                        {_x+_width, _y+_height, 0.0f, 1.0f, 0.0f, 1.0f},
+                        {_x,_y+_height, 0.0f, 1.0f, 0.0f, 1.0f}
                 };
         std::uint16_t indices[]=
                 {

@@ -924,7 +924,12 @@ INSTANTIATE_TEST_SUITE_P(Shape, Shape_testTessellate, ::testing::Values(
         std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 1, "x", 100.0, 1, 1),
         std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 1, "y", 0.0, 3, 2),
         std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 3, "x", 0.0, 4, 3),
-        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 3, "y", 200.0, 4, 3)
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 3, "y", 200.0, 4, 3),
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 0, "r", 0.0, 4, 3),
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 0, "g", 1.0, 4, 3),
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 0, "b", 0.0, 4, 3),
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 0, "a", 1.0, 4, 3),
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", 1, "g", 1.0, 4, 3)
         ));
 
 class Batcher_testConfigure : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
