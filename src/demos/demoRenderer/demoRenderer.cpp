@@ -88,12 +88,6 @@ void display(dagui::Renderer& renderer)
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
     vertexBuffer.draw(GL_TRIANGLES, 0, a->size());
-    glColor3f(1.0f, 0.0f, 1.0f);
-//    vertexBuffer2.bind();
-//    vertexBuffer2.setPointers();
-    //vertexBuffer2.draw(GL_TRIANGLES, 0, mesh.attributeArray(0)->size());
-    //std::cout << glGetError() << std::endl;
-//    mesh.unbind();
     backend->draw();
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
