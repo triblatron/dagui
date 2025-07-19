@@ -72,7 +72,7 @@ void onReshape(int width, int height)
 
 void display(dagui::Renderer& renderer)
 {
-    glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
     glColor3f(1.0f, 1.0f, 0.0f);
@@ -160,7 +160,7 @@ int main(int argc, char** argv)
     }
     {
         dagbase::Lua lua;
-        auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Mesh.lua");
+        auto config = dagbase::ConfigurationElement::fromFile(lua, "etc/ShapeMesh.lua");
         if (!config)
         {
             std::cerr << "Failed to load mesh config, bailing\n";
@@ -168,16 +168,30 @@ int main(int argc, char** argv)
             return -1;
         }
         mesh.configure(*config);
-        backend = new dagui::OpenGLMesh(&mesh);
-        mesh.setBackend(backend);
-        mesh.sendToBackend();
+    }
+    dagui::Rectangle rect;
+    {
+        dagbase::Lua lua;
+        auto rectConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Rectangle.lua");
+        if (!rectConfig)
+        {
+            std::cerr << "Failed to load rectangle config, bailing\n";
+
+            return -1;
+        }
+        dagui::ShapeFactory shapeFactory;
+        rect.configure(*rectConfig,shapeFactory);
+    }
+    rect.tessellate(mesh);
+    backend = new dagui::OpenGLMesh(&mesh);
+    mesh.setBackend(backend);
+    mesh.sendToBackend();
 //        vertexBuffer2.setArray(mesh.attributeArray(0));
 //        vertexBuffer2.allocate();
 //        vertexBuffer2.submit();
 //        indexBuffer.setArray(mesh.indexArray());
 //        indexBuffer.allocate();
 //        indexBuffer.submit();
-    }
 //    dagui::ShapeFactory shapeFactory;
 //    {
 //        dagbase::Lua lua;
