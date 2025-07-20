@@ -1066,3 +1066,43 @@ INSTANTIATE_TEST_SUITE_P(Tessellation, Tessellation_testConfigure, ::testing::Va
         std::make_tuple("data/tests/Tessellation/TriangleFan.lua", "numVertices", std::uint32_t{6}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Tessellation/TriangleFan.lua", "numTriangles", std::uint32_t{2}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
+
+class Rectangle_testTessellate : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+TEST_P(Rectangle_testTessellate, testExpectedValue)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::ConfigurationElement* config = nullptr;
+
+    {
+        dagbase::Lua lua;
+        config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    }
+    ASSERT_NE(nullptr, config);
+    dagui::ShapeFactory shapeFactory;
+    auto shape = shapeFactory.createShape(*config);
+    ASSERT_NE(nullptr, shape);
+    dagui::ShapeMesh mesh;
+    auto meshConfigStr = std::get<1>(GetParam());
+    dagbase::ConfigurationElement* meshConfig = nullptr;
+    {
+        dagbase::Lua lua;
+        meshConfig = dagbase::ConfigurationElement::fromFile(lua, meshConfigStr);
+    }
+    ASSERT_NE(nullptr, meshConfig);
+    mesh.configure(*meshConfig);
+    shape->tessellate(mesh);
+    auto path = std::get<2>(GetParam());
+    auto value = std::get<3>(GetParam());
+    auto tolerance = std::get<4>(GetParam());
+    auto op = std::get<5>(GetParam());
+    auto actualValue = mesh.find(path);
+    assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(Rectangle, Rectangle_testTessellate, ::testing::Values(
+        std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", "numVertices", std::uint32_t(4), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));

@@ -202,11 +202,11 @@ namespace dagui
         {
             dagbase::Variant retval;
 
-            retval = dagbase::findEndpoint(path, "numVertices", std::int64_t(numVertices()));
+            retval = dagbase::findEndpoint(path, "numVertices", std::uint32_t(numVertices()));
             if (retval.has_value())
                 return retval;
 
-            retval = dagbase::findEndpoint(path, "numIndices", std::int64_t(numIndices()));
+            retval = dagbase::findEndpoint(path, "numIndices", std::uint32_t(numIndices()));
             if (retval.has_value())
                 return retval;
 
