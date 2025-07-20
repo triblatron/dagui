@@ -9,7 +9,7 @@ The understanding is that linking to these components is allowed as long as user
 
 ## Release schedule
 
-This library is developed in my spare time for fun.  As such, there is no release schedule except to say when I deem it ready.  Its primary purpose is to serve as the GUI for another side project so I am not overly concerned by timing of a release.
+This library is developed in my spare time for fun.  As such, there is no release schedule except to say when I deem it ready.  Its primary purpose is to serve as the GUI for another side project, so I am not overly concerned by timing of a release.
 
 ## Collaboration
 
@@ -162,7 +162,7 @@ Eventually, there will be automated integration tests that typically assert the 
 
 There will also be automated performance tests that render to texture as a proxy for the screen.  Alongside these will be microbenchmarks that measure performance of various idioms used to implement the library.
 
-Finally there will be manual usability tests that require running the full system and a tester with some UX experience.
+Finally, there will be manual usability tests that require running the full system and a tester with some UX experience.
 
 ## Known failing platforms
 none
