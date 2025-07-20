@@ -49,7 +49,6 @@ namespace dagui
         {
             if (_a)
             {
-                std::size_t size = _a->size();
                 std::size_t elementSize = _a->elementSize();
                 for (auto i = 0; i < _a->desciptor().attributes.size(); ++i)
                 {

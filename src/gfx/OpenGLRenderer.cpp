@@ -110,14 +110,6 @@ namespace dagui
                 vertices.setData(mesh.vertices(), mesh.numVertices());
                 _gl->drawArray(vertices);
             }
-            // glBegin(GL_TRIANGLES);
-            // for (auto i=0; i<mesh.numVertices(); i++)
-            // {
-            //     glVertex2f(mesh.vertices()[i].x, mesh.vertices()[i].y);
-            //     glVertex2f(mesh.vertices()[i+1].x, mesh.vertices()[i+1].y);
-            //     glVertex2f(mesh.vertices()[i].x, mesh.vertices()[i].y);
-            // }
-            // glEnd();
             break;
         }
     }

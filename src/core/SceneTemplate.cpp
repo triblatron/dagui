@@ -82,4 +82,10 @@ namespace dagui
 
         return node;
     }
+
+    SceneTemplate::~SceneTemplate()
+    {
+        for (auto child : _children.a)
+            delete child;
+    }
 }

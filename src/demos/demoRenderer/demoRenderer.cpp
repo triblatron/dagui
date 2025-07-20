@@ -96,10 +96,10 @@ void display(dagui::Renderer& renderer)
 
 static void error_callback(int error, const char* description)
 {
-    fprintf(stderr, "Error: %s\n", description);
+    fprintf(stderr, "Error:%d(%s)\n", error, description);
 }
 
-int main(int argc, char** argv)
+int main()
 {
     glfwSetErrorCallback(error_callback);
     if (!glfwInit())
@@ -206,7 +206,6 @@ int main(int argc, char** argv)
     {
         int width, height;
         glfwGetFramebufferSize(window, &width, &height);
-        const float ratio = width / (float) height;
 
         glViewport(0, 0, width, height);
 

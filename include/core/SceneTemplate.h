@@ -29,6 +29,8 @@ namespace dagui
     public:
         SceneTemplate() = default;
 
+        ~SceneTemplate();
+
         void configure(dagbase::ConfigurationElement& config);
 
         void addChild(SceneTemplate* child)
