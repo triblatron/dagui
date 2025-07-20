@@ -27,6 +27,7 @@
 #include "gfx/OpenGLBackendFactory.h"
 #include "gfx/OpenGLMesh.h"
 #include "core/Rectangle.h"
+#include "core/Tessellation.h"
 #include "test/TestUtils.h"
 
 #include <gtest/gtest.h>
@@ -1038,4 +1039,30 @@ TEST_P(OpenGLBackendFactory_testCreateMesh, testExpectedResult)
 
 INSTANTIATE_TEST_SUITE_P(OpenGLBackendFactory, OpenGLBackendFactory_testCreateMesh, ::testing::Values(
         std::make_tuple("etc/ShapeMesh.lua", "data/tests/Shape/Rectangle.lua", "numVertexBuffers", std::uint32_t{1}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));
+
+class Tessellation_testConfigure : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+TEST_P(Tessellation_testConfigure, testExpectedValue)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::Tessellation sut;
+    sut.configure(*config);
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+    auto tolerance = std::get<3>(GetParam());
+    auto op = std::get<4>(GetParam());
+    auto actualValue = sut.find(path);
+    assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(Tessellation, Tessellation_testConfigure, ::testing::Values(
+        std::make_tuple("data/tests/Tessellation/TriangleFan.lua", "numVertices", std::uint32_t{6}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Tessellation/TriangleFan.lua", "numTriangles", std::uint32_t{2}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

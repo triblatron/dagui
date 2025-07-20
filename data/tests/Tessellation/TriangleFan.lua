@@ -1,0 +1,23 @@
+root=
+{
+	primitiveType="PRIMITIVE_TRIANGLE_FAN",
+	vertices=
+	{
+		{
+			x=0.0,
+			y=0.0,
+		},
+		{
+			x=-0.5,
+			y=0.0,
+		},
+		{
+			x=-1.0,
+			y=0.5,
+		},
+		{
+			x=0.0,
+			y=1.0,
+		},
+	}
+}
