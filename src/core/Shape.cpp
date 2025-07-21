@@ -69,4 +69,17 @@ namespace dagui
         dagbase::ConfigurationElement::readConfig(config, "b", &b);
         dagbase::ConfigurationElement::readConfig(config, "a", &a);
     }
+
+    bool ShapeVertex::operator<(const ShapeVertex &other) const
+    {
+        if (x<other.x)
+        {
+            return true;
+        }
+        else if (std::abs(x-other.x)<0.001 && y<other.y)
+        {
+            return true;
+        }
+        return false;
+    }
 }

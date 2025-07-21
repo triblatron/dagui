@@ -63,4 +63,25 @@ namespace dagui
         }
         _numTriangles += vertices.size() - 2;
     }
+
+    void Tessellation::write(Mesh &mesh)
+    {
+        for (auto v : _vertices)
+        {
+            mesh.addVertex((const char*)&v,sizeof(ShapeVertex));
+        }
+        for (auto i : _indices)
+        {
+            mesh.addIndex((const char*)&i, sizeof(std::uint16_t));
+        }
+    }
+
+    void Tessellation::addQuad(const ShapeVertex v[4])
+    {
+        for (int i=0; i<4; ++i)
+        {
+            addVertex(v[i]);
+        }
+        _numTriangles+=2;
+    }
 }

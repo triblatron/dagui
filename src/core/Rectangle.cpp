@@ -12,6 +12,7 @@
 #include "core/Mesh.h"
 #include "gfx/AttributeDescriptor.h"
 #include "core/ShapeFactory.h"
+#include "core/Tessellation.h"
 
 #include "gfx/AttributeArray.h"
 
@@ -96,6 +97,7 @@ namespace dagui
         dagbase::ConfigurationElement::readConfig( config, "width", &_width);
         dagbase::ConfigurationElement::readConfig( config, "height", &_height);
         dagbase::ConfigurationElement::readConfig(config, "cornerRadius", &_cornerRadius);
+        dagbase::ConfigurationElement::readConfig(config, "numCornerVertices", &_numCornerVertices);
     }
 
     dagbase::Variant Rectangle::find(std::string_view path) const
@@ -134,41 +136,79 @@ namespace dagui
 
     void Rectangle::tessellate(ShapeMesh &mesh)
     {
+
+        if (_cornerRadius==0.0)
+        {
+            ShapeVertex v[]=
+                    {
+                            {_x, _y, 0.0f, 1.0f, 0.0f, 1.0f},
+                            {_x+_width, _y, 0.0f, 1.0f, 0.0f, 1.0f},
+                            {_x+_width, _y+_height, 0.0f, 1.0f, 0.0f, 1.0f},
+                            {_x,_y+_height, 0.0f, 1.0f, 0.0f, 1.0f}
+                    };
+            std::uint16_t indices[]=
+                    {
+                            0,
+                            1,
+                            2,
+                            2,
+                            3,
+                            0,
+                    };
+            for (auto i=0; i<4; ++i)
+            {
+                mesh.addVertex(v[i]);
+            }
+
+            for (auto i=0; i<6; ++i)
+            {
+                mesh.addIndex((const char*)&indices[i], sizeof(std::uint16_t));
+            }
+        }
+        else
+        {
+            Tessellation tess;
+
+            addSubRectangle(_x+_cornerRadius, _y, _width-2.0f*_cornerRadius, _cornerRadius, tess);
+            addSubRectangle(_x+_width-_cornerRadius, _y+_cornerRadius, _cornerRadius, _height - 2.0f * _cornerRadius, tess);
+            addSubRectangle(_x+_cornerRadius, _y+_height-_cornerRadius, _width-2.0f*_cornerRadius, _cornerRadius, tess);
+            addSubRectangle(_x, _y+_cornerRadius, _cornerRadius, _height-2.0f*_cornerRadius, tess);
+            addSubRectangle(_x+_cornerRadius, _y+_cornerRadius, _width-2.0f*_cornerRadius, _height-2.0f*_cornerRadius, tess);
+            addCorner(_x+_cornerRadius, _y+_cornerRadius, -_cornerRadius, -_cornerRadius, tess);
+            addCorner(_x+(_width-_cornerRadius), _y+_cornerRadius, _cornerRadius, -_cornerRadius, tess);
+            addCorner(_x+_cornerRadius, _y+(_height-_cornerRadius), -_cornerRadius, _cornerRadius, tess);
+            addCorner(_x+(_width-_cornerRadius), _y+(_height-_cornerRadius), _cornerRadius, _cornerRadius, tess);
+            tess.write(mesh);
+        }
+    }
+
+    void Rectangle::addSubRectangle(float x, float y, float width, float height, Tessellation& tess)
+    {
         ShapeVertex v[]=
                 {
-                        {_x, _y, 0.0f, 1.0f, 0.0f, 1.0f},
-                        {_x+_width, _y, 0.0f, 1.0f, 0.0f, 1.0f},
-                        {_x+_width, _y+_height, 0.0f, 1.0f, 0.0f, 1.0f},
-                        {_x,_y+_height, 0.0f, 1.0f, 0.0f, 1.0f}
-                };
-        std::uint16_t indices[]=
-                {
-                    0,
-                    1,
-                    2,
-                    2,
-                    3,
-                    0,
+                        {x, y, 0.0, 1.0f, 0.0, 1.0f},
+                        {x+width, y, 0.0f, 1.0f, 0.0, 1.0f},
+                        {x+width, y+height, 0.0f, 1.0f, 0.0f, 1.0f},
+                        {x, y+height, 0.0f, 1.0f, 0.0f, 1.0f}
                 };
 
-        for (auto i=0; i<4; ++i)
-        {
-            mesh.addVertex(v[i]);
-        }
+        tess.addQuad(v);
+    }
 
-        for (auto i=0; i<6; ++i)
+    void Rectangle::addCorner(float x, float y, float xRadius, float yRadius, Tessellation &tess)
+    {
+        std::vector<ShapeVertex> v(_numCornerVertices + 1);
+
+        v[0].x = x;
+        v[0].y = y;
+        v[0].g = 1.0f;
+        v[0].a = 1.0f;
+        for (auto i=1; i<v.size(); ++i)
         {
-            mesh.addIndex((const char*)&indices[i], sizeof(std::uint16_t));
+            float theta = float(i-1) * M_PI_2 / (_numCornerVertices-1);
+            v[i] = { x + xRadius * cos(theta), y + yRadius * sin(theta), 0.0f, 1.0f, 0.0f, 1.0 };
         }
-//        std::size_t attrIndex = std::numeric_limits<std::size_t>::max();
-//        auto positionArray = mesh.attributeArrayForUsage(AttributeDescriptor::USAGE_POSITION, &attrIndex);
-//        if (positionArray)
-//        {
-//            for (auto i=0; i<4; ++i)
-//            {
-//                positionArray->addVertex(&v[i], 2 * sizeof(float));
-//            }
-//        }
+        tess.addTriangleFan(v);
     }
 
 }

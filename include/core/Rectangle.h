@@ -8,6 +8,8 @@
 
 namespace dagui
 {
+    class Tessellation;
+
     class DAGUI_API Rectangle : public Shape
     {
     public:
@@ -67,7 +69,9 @@ namespace dagui
         float _width{0.0f};
         float _height{0.0f};
         float _cornerRadius{0.0f};
-
+        std::uint32_t _numCornerVertices{0};
         bool isInCorner(float x, float y, float d, float d1);
+        void addSubRectangle(float x, float y, float width, float height, Tessellation& tess);
+        void addCorner(float x, float y, float xRadius, float yRadius, Tessellation& tess);
     };
 }

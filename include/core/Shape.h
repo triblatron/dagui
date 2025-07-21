@@ -36,6 +36,8 @@ namespace dagui
         void configure(dagbase::ConfigurationElement& config);
 
         dagbase::Variant find(std::string_view path) const;
+
+        bool operator<(const ShapeVertex& other) const;
     };
 
     using ShapeMesh = GenericMesh<ShapeVertex>;

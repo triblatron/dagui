@@ -10,6 +10,7 @@
 #include "core/Shape.h"
 
 #include <string_view>
+#include <map>
 #include <vector>
 
 namespace dagbase
@@ -28,8 +29,20 @@ namespace dagui
 
         void addVertex(const ShapeVertex& v)
         {
-            _vertices.emplace_back(v);
+            if (auto it=_uniqueVertices.find(v); it==_uniqueVertices.end())
+            {
+                std::size_t index = _vertices.size();
+                _uniqueVertices.emplace(v, index);
+                _vertices.emplace_back(v);
+                _indices.emplace_back(index);
+            }
+            else
+            {
+                _indices.emplace_back(it->second);
+            }
         }
+
+        void addQuad(const ShapeVertex v[4]);
 
         std::size_t numVertices() const
         {
@@ -43,9 +56,13 @@ namespace dagui
 
         void configure(dagbase::ConfigurationElement& config);
 
+        void write(Mesh& mesh);
+
         dagbase::Variant find(std::string_view path) const;
     private:
+        std::map<ShapeVertex, std::size_t> _uniqueVertices;
         std::vector<ShapeVertex> _vertices;
+        std::vector<std::uint16_t> _indices;
         std::size_t _numTriangles{0};
     };
 }
