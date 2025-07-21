@@ -49,6 +49,11 @@ namespace dagui
             return _vertices.size();
         }
 
+        std::size_t numIndices() const
+        {
+            return _indices.size();
+        }
+
         std::size_t numTriangles() const
         {
             return _numTriangles;

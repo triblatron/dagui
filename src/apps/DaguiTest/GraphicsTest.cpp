@@ -1063,7 +1063,8 @@ TEST_P(Tessellation_testConfigure, testExpectedValue)
 }
 
 INSTANTIATE_TEST_SUITE_P(Tessellation, Tessellation_testConfigure, ::testing::Values(
-        std::make_tuple("data/tests/Tessellation/TriangleFan.lua", "numVertices", std::uint32_t{6}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Tessellation/TriangleFan.lua", "numVertices", std::uint32_t{4}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Tessellation/TriangleFan.lua", "numIndices", std::uint32_t{6}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Tessellation/TriangleFan.lua", "numTriangles", std::uint32_t{2}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
 

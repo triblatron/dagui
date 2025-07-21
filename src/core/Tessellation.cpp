@@ -45,6 +45,10 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
+        retval = dagbase::findEndpoint(path, "numIndices", std::uint32_t(numIndices()));
+        if (retval.has_value())
+            return retval;
+
         retval = dagbase::findEndpoint(path, "numTriangles", std::uint32_t(numTriangles()));
         if (retval.has_value())
             return retval;
