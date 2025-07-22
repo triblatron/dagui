@@ -11,6 +11,7 @@
 #include "util/Searchable.h"
 #include "core/Shape.h"
 #include "core/ShapeFactory.h"
+#include "core/Batcher.h"
 
 #include <utility>
 
@@ -189,5 +190,18 @@ namespace dagui
         auto lookup = root()->styleLookup();
         if (lookup)
             _style.resolve(lookup);
+    }
+
+    void Widget::draw(Batcher &batcher)
+    {
+        auto it = batcher.findRenderBin({-1,-1,-1,0});
+        if (it != batcher.end())
+        {
+            if (_shape && it->second->mesh())
+            {
+                _shape->tessellate(*it->second->mesh());
+            }
+
+        }
     }
 }

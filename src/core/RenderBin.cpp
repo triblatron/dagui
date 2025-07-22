@@ -35,9 +35,12 @@ namespace dagui
     {
         dagbase::Variant retval;
 
-        retval = dagbase::findEndpoint(path, "mesh", _mesh!=nullptr);
-        if (retval.has_value())
-            return retval;
+        if (_mesh)
+        {
+            retval = dagbase::findInternal(path, "mesh", _mesh);
+            if (retval.has_value())
+                return retval;
+        }
 
         return {};
     }

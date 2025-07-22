@@ -6,6 +6,7 @@
 
 #include "core/Label.h"
 #include "util/Searchable.h"
+#include "core/Batcher.h"
 
 namespace dagui
 {
@@ -49,5 +50,10 @@ namespace dagui
             return retval;
 
         return {};
+    }
+
+    void Label::draw(Batcher &batcher)
+    {
+        Widget::draw(batcher);
     }
 }

@@ -22,6 +22,7 @@
 
 namespace dagui
 {
+    class Batcher;
     class SceneNode;
     class Shape;
     class ShapeFactory;
@@ -109,6 +110,8 @@ namespace dagui
         {
             return nullptr;
         }
+
+        virtual void draw(Batcher& batcher);
     private:
         glm::ivec2 _pos{0,0};
         using Properties=dagbase::SearchableMap<std::unordered_map<dagbase::Atom, dagbase::Variant>>;

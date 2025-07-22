@@ -31,6 +31,8 @@ namespace dagui
                        dagui::ShapeFactory &shapeFactory) override;
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
+
+        void draw(Batcher& batcher) override;
     private:
         std::string _text;
         dagbase::Vec2 _bounds;

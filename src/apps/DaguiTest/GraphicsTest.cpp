@@ -958,7 +958,7 @@ TEST_P(Batcher_testConfigure, testExpectedValue)
 }
 
 INSTANTIATE_TEST_SUITE_P(Batcher, Batcher_testConfigure, ::testing::Values(
-        std::make_tuple("data/tests/Batcher/ShapeMesh.lua", "renderBins[0].mesh", true, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/Batcher/ShapeMesh.lua", "renderBins[0].mesh.numVertices", std::uint32_t(4), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
 
 class Batcher_testMesh : public ::testing::TestWithParam<std::tuple<const char*, std::size_t, std::size_t, const char*, dagbase::Variant, std::size_t, std::uint16_t>>

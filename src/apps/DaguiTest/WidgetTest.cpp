@@ -13,7 +13,7 @@
 #include "core/LayoutConstraintsCollectionVisitor.h"
 #include "core/LayoutProperties.h"
 #include "core/ShapeFactory.h"
-
+#include "core/Batcher.h"
 #include "test/TestUtils.h"
 
 #include <gtest/gtest.h>
@@ -228,4 +228,46 @@ INSTANTIATE_TEST_SUITE_P(LayoutConstraintsCollectionVisitor, LayoutConstraintsCo
         std::make_tuple("data/tests/LayoutConstraintsCollectionVisitor/Vertical.lua", "constraints[0].firstAttribute", std::string("Attribute::WIDTH"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/LayoutConstraintsCollectionVisitor/Vertical.lua", "constraints[0].relation", std::string("Relation::GE"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/LayoutConstraintsCollectionVisitor/Vertical.lua", "constraints[0].constant", 50.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));
+
+class Widget_testDraw : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+TEST_P(Widget_testDraw, testExpectedValue)
+{
+    auto widgetConfigStr = std::get<0>(GetParam());
+    dagbase::ConfigurationElement* widgetConfig = nullptr;
+    {
+        dagbase::Lua lua;
+
+        widgetConfig = dagbase::ConfigurationElement::fromFile(lua, widgetConfigStr);
+        ASSERT_NE(nullptr, widgetConfig);
+    }
+    auto batcherConfigStr = std::get<1>(GetParam());
+    dagbase::ConfigurationElement* batcherConfig = nullptr;
+    {
+        dagbase::Lua lua;
+
+        batcherConfig = dagbase::ConfigurationElement::fromFile(lua, batcherConfigStr);
+        ASSERT_NE(nullptr, batcherConfig);
+    }
+    dagui::WidgetFactory widgetFactory;
+    dagui::ShapeFactory shapeFactory;
+    auto widgetTree = widgetFactory.create(*widgetConfig, shapeFactory);
+    ASSERT_NE(nullptr, widgetTree);
+    dagui::Batcher batcher;
+    batcher.configure(*batcherConfig);
+    widgetTree->draw(batcher);
+    auto path = std::get<2>(GetParam());
+    auto value = std::get<3>(GetParam());
+    auto tolerance = std::get<4>(GetParam());
+    auto op = std::get<5>(GetParam());
+    auto actualValue = batcher.find(path);
+    assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(Widget, Widget_testDraw, ::testing::Values(
+        std::make_tuple("data/tests/Widget/Label.lua", "data/tests/Widget/TwoBins.lua", "renderBins[0].mesh.numVertices", std::uint32_t(0), 0.0, dagbase::ConfigurationElement::RELOP_GT)
         ));

@@ -38,7 +38,7 @@ namespace dagui
 //
 //        virtual void render() = 0;
 
-        Mesh * mesh()
+        ShapeMesh * mesh()
         {
             return _mesh;
         }
@@ -47,6 +47,6 @@ namespace dagui
 
         void configure(dagbase::ConfigurationElement& config);
     private:
-        Mesh* _mesh;
+        ShapeMesh* _mesh;
     };
 }
