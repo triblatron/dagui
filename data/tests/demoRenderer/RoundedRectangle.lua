@@ -7,4 +7,11 @@ root=
 	height=0.5,
 	cornerRadius=0.05,
 	numCornerVertices=9,
+	colour=
+	{
+		1.0,
+		0.0,
+		1.0,
+		1.0,
+	}
 }
