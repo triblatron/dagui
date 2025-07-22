@@ -73,7 +73,7 @@ namespace dagui
     //! Emit vertices and indices to the given Mesh
     //! \note Assumes the mesh has ShapeVertex as
     //! its Vertex type and std::uint16_t as its index type.
-    void Tessellation::write(Mesh &mesh)
+    void Tessellation::write(ShapeMesh &mesh)
     {
         for (auto v : _vertices)
         {

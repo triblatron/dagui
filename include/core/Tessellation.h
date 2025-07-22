@@ -61,7 +61,7 @@ namespace dagui
 
         void configure(dagbase::ConfigurationElement& config);
 
-        void write(Mesh& mesh);
+        void write(ShapeMesh& mesh);
 
         dagbase::Variant find(std::string_view path) const;
     private:
