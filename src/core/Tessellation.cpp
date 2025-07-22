@@ -11,7 +11,6 @@
 
 namespace dagui
 {
-
     void Tessellation::configure(dagbase::ConfigurationElement &config)
     {
         Mesh2D::PrimitiveType primitiveType = Mesh2D::PRIMITIVE_UNKNOWN;
@@ -56,6 +55,9 @@ namespace dagui
         return {};
     }
 
+    //! Add a triangle fan to the tessellation.
+    //! Creates a series of triangles because we use index triangle
+    //! lists internally which are allegedly efficient o modern GPU hardware.
     void Tessellation::addTriangleFan(const std::vector<ShapeVertex> &vertices)
     {
         // Convert to triangle list.
@@ -68,6 +70,9 @@ namespace dagui
         _numTriangles += vertices.size() - 2;
     }
 
+    //! Emit vertices and indices to the given Mesh
+    //! \note Assumes the mesh has ShapeVertex as
+    //! its Vertex type and std::uint16_t as its index type.
     void Tessellation::write(Mesh &mesh)
     {
         for (auto v : _vertices)
@@ -80,6 +85,8 @@ namespace dagui
         }
     }
 
+    //! Add a quadrilateral to the tessellation.
+    //! \note Assumes counter clock-wise winding.
     void Tessellation::addQuad(const ShapeVertex v[4])
     {
         addVertex(v[0]);
