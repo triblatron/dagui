@@ -166,7 +166,7 @@ int main()
     dagui::Rectangle rect;
     {
         dagbase::Lua lua;
-        auto rectConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Rectangle.lua");
+        auto rectConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/RoundedRectangle.lua");
         if (!rectConfig)
         {
             std::cerr << "Failed to load rectangle config, bailing\n";

@@ -1107,5 +1107,5 @@ TEST_P(Rectangle_testTessellate, testExpectedValue)
 INSTANTIATE_TEST_SUITE_P(Rectangle, Rectangle_testTessellate, ::testing::Values(
         std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", "numVertices", std::uint32_t(4), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Shape/RoundedRectangle.lua", "data/tests/Shape/Mesh.lua", "numVertices", std::uint32_t(16), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/Shape/RoundedRectangle.lua", "data/tests/Shape/Mesh.lua", "numIndices", std::uint32_t(44), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/Shape/RoundedRectangle.lua", "data/tests/Shape/Mesh.lua", "numIndices", std::uint32_t(54), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

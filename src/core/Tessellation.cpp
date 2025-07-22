@@ -82,10 +82,12 @@ namespace dagui
 
     void Tessellation::addQuad(const ShapeVertex v[4])
     {
-        for (int i=0; i<4; ++i)
-        {
-            addVertex(v[i]);
-        }
+        addVertex(v[0]);
+        addVertex(v[1]);
+        addVertex(v[2]);
+        addVertex(v[2]);
+        addVertex(v[3]);
+        addVertex(v[0]);
         _numTriangles+=2;
     }
 }

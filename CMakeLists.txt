@@ -143,7 +143,7 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         src/core/LayoutProperties.cpp
         src/core/Constraint.cpp
         src/core/ResolveWidgetRefsVisitor.cpp
-        src/ConstraintSolverVisitor.cpp
+        src/core/ConstraintSolverVisitor.cpp
         src/core/LayoutConstraintsCollectionVisitor.cpp
         src/core/Style.cpp
         src/core/DrawCommandBuffer.cpp

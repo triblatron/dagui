@@ -1,0 +1,10 @@
+root=
+{
+	class="Rectangle",
+	x=-1.0,
+	y=0.5,
+	width=0.5,
+	height=0.5,
+	cornerRadius=0.05,
+	numCornerVertices=9,
+}
