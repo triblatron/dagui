@@ -5,6 +5,7 @@
 #include "config/Export.h"
 
 #include "core/Shape.h"
+#include <glm/glm.hpp>
 
 namespace dagui
 {
@@ -70,6 +71,7 @@ namespace dagui
         float _height{0.0f};
         float _cornerRadius{0.0f};
         std::uint32_t _numCornerVertices{0};
+        glm::vec4 _colour{};
         bool isInCorner(float x, float y, float d, float d1);
         void addSubRectangle(float x, float y, float width, float height, Tessellation& tess);
         void addCorner(float x, float y, float xRadius, float yRadius, Tessellation& tess);

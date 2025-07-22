@@ -98,6 +98,13 @@ namespace dagui
         dagbase::ConfigurationElement::readConfig( config, "height", &_height);
         dagbase::ConfigurationElement::readConfig(config, "cornerRadius", &_cornerRadius);
         dagbase::ConfigurationElement::readConfig(config, "numCornerVertices", &_numCornerVertices);
+        if (auto element = config.findElement("colour"); element && element->numChildren()==4)
+        {
+            _colour.r = float(element->child(0)->asDouble());
+            _colour.g = float(element->child(1)->asDouble());
+            _colour.b = float(element->child(2)->asDouble());
+            _colour.a = float(element->child(3)->asDouble());
+        }
     }
 
     dagbase::Variant Rectangle::find(std::string_view path) const
@@ -141,10 +148,10 @@ namespace dagui
         {
             ShapeVertex v[]=
                     {
-                            {_x, _y, 0.0f, 1.0f, 0.0f, 1.0f},
-                            {_x+_width, _y, 0.0f, 1.0f, 0.0f, 1.0f},
-                            {_x+_width, _y+_height, 0.0f, 1.0f, 0.0f, 1.0f},
-                            {_x,_y+_height, 0.0f, 1.0f, 0.0f, 1.0f}
+                            {_x, _y, _colour.r, _colour.g, _colour.b, _colour.a},
+                            {_x+_width, _y, _colour.r, _colour.g, _colour.b, _colour.a},
+                            {_x+_width, _y+_height, _colour.r, _colour.g, _colour.b, _colour.a},
+                            {_x,_y+_height, _colour.r, _colour.g, _colour.b, _colour.a}
                     };
             std::uint16_t indices[]=
                     {
@@ -186,10 +193,10 @@ namespace dagui
     {
         ShapeVertex v[]=
                 {
-                        {x, y, 0.0, 1.0f, 0.0, 1.0f},
-                        {x+width, y, 0.0f, 1.0f, 0.0, 1.0f},
-                        {x+width, y+height, 0.0f, 1.0f, 0.0f, 1.0f},
-                        {x, y+height, 0.0f, 1.0f, 0.0f, 1.0f}
+                        {x, y, _colour.r, _colour.g, _colour.b, _colour.a},
+                        {x+width, y, _colour.r, _colour.g, _colour.b, _colour.a},
+                        {x+width, y+height, _colour.r, _colour.g, _colour.b, _colour.a},
+                        {x, y+height, _colour.r, _colour.g, _colour.b, _colour.a}
                 };
 
         tess.addQuad(v);
@@ -201,12 +208,14 @@ namespace dagui
 
         v[0].x = x;
         v[0].y = y;
-        v[0].g = 1.0f;
-        v[0].a = 1.0f;
+        v[0].r = _colour.r;
+        v[0].g = _colour.g;
+        v[0].b = _colour.b;
+        v[0].a = _colour.a;
         for (auto i=1; i<v.size(); ++i)
         {
             float theta = float(i-1) * M_PI_2 / (_numCornerVertices-1);
-            v[i] = { x + xRadius * cos(theta), y + yRadius * sin(theta), 0.0f, 1.0f, 0.0f, 1.0 };
+            v[i] = { x + xRadius * cos(theta), y + yRadius * sin(theta), _colour.r, _colour.g, _colour.b, _colour.a };
         }
         tess.addTriangleFan(v);
     }
