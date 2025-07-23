@@ -5,6 +5,7 @@
 #include "core/SpaceTree.h"
 #include "gfx/TextureAtlas.h"
 #include "gfx/Mesh2D.h"
+#include "core/Shape.h"
 
 #include <gtest/gtest.h>
 
@@ -377,4 +378,23 @@ INSTANTIATE_TEST_SUITE_P(ConstraintAnchorType, ConstraintAnchorType_testRoundTri
         std::make_tuple("AnchorType::RELATIVE", dagui::Constraint::AnchorType::RELATIVE),
         std::make_tuple("AnchorType::PARENT_RELATIVE", dagui::Constraint::AnchorType::PARENT_RELATIVE),
         std::make_tuple("AnchorType::SIBLING_RELATIVE", dagui::Constraint::AnchorType::SIBLING_RELATIVE)
+        ));
+
+class ShapeFlags_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Shape::Flags>>
+{
+
+};
+
+TEST_P(ShapeFlags_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_EQ(str, dagui::Shape::flagsToString(value));
+    EXPECT_EQ(value, dagui::Shape::parseFlags(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(ShapeFlags, ShapeFlags_testRoundTrip, ::testing::Values(
+        std::make_tuple("FLAGS_NONE", dagui::Shape::FLAGS_NONE),
+        std::make_tuple("FLAGS_DIRTY_BIT", dagui::Shape::FLAGS_DIRTY_BIT)
         ));

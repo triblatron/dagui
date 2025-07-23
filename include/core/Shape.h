@@ -45,6 +45,12 @@ namespace dagui
     class DAGUI_API Shape
     {
     public:
+        enum Flags : std::uint32_t
+        {
+            FLAGS_NONE,
+            FLAGS_DIRTY_BIT = 1<<0
+        };
+    public:
         Shape(dagbase::Atom className);
 
         virtual ~Shape() = default;
@@ -65,7 +71,12 @@ namespace dagui
         virtual void render(DrawCommandBuffer& buffer) {}
 
         virtual void tessellate(ShapeMesh& mesh) {};
+
+        static std::string flagsToString(Flags value);
+
+        static Flags parseFlags(const std::string& str);
     private:
         dagbase::Atom _className;
+        Flags _flags{FLAGS_NONE};
     };
 }

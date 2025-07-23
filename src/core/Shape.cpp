@@ -5,6 +5,7 @@
 #include "config/config.h"
 #include "core/Shape.h"
 #include "util/Searchable.h"
+#include "util/enums.h"
 
 namespace dagui
 {
@@ -26,6 +27,32 @@ namespace dagui
     _className(className)
     {
         // Do nothing.
+    }
+
+    std::string Shape::flagsToString(Shape::Flags value)
+    {
+        std::string retval;
+
+        BIT_NAME(value, FLAGS_DIRTY_BIT, retval)
+
+        if (!retval.empty() && retval.back()==' ')
+        {
+            retval = retval.substr(0, retval.length()-1);
+        }
+
+        if (retval.empty())
+            retval = "FLAGS_NONE";
+
+        return retval;
+    }
+
+    Shape::Flags Shape::parseFlags(const std::string& str)
+    {
+        Flags value = FLAGS_NONE;
+
+        TEST_BIT(FLAGS_DIRTY_BIT, str, value);
+
+        return value;
     }
 
     dagbase::Variant ShapeVertex::find(std::string_view path) const
