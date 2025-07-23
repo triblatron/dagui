@@ -60,6 +60,21 @@ namespace dagui
             return _className;
         }
 
+        void setFlag(Flags mask)
+        {
+            _flags = static_cast<Flags>(_flags | mask);
+        }
+
+        void clearFlag(Flags mask)
+        {
+            _flags = static_cast<Flags>(_flags & ~mask);
+        }
+
+        bool isFlagSet(Flags mask) const
+        {
+            return (_flags & mask) != FLAGS_NONE;
+        }
+
         virtual void accept(ShapeVisitor& visitor) = 0;
 
         virtual bool isInside(float x, float y) = 0;
