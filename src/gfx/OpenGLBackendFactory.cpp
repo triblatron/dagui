@@ -12,6 +12,6 @@ namespace dagui
 {
     MeshBackend *OpenGLBackendFactory::createMesh(Mesh* mesh)
     {
-        return new OpenGLMesh(mesh);
+        return new OpenGLMesh();
     }
 }

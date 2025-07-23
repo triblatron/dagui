@@ -177,7 +177,7 @@ int main()
         rect.configure(*rectConfig,shapeFactory);
     }
     rect.tessellate(mesh);
-    backend = new dagui::OpenGLMesh(&mesh);
+    backend = new dagui::OpenGLMesh();
     mesh.setBackend(backend);
     mesh.sendToBackend();
 //        vertexBuffer2.setArray(mesh.attributeArray(0));

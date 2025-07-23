@@ -14,7 +14,7 @@ namespace dagui
     class DAGUI_API OpenGLMesh : public MeshBackend
     {
     public:
-        explicit OpenGLMesh(Mesh* mesh);
+        explicit OpenGLMesh();
 
         void allocate() override;
 
@@ -31,7 +31,6 @@ namespace dagui
             return 1;
         }
     private:
-        Mesh* _mesh{nullptr};
         gl::VertexBuffer _vertices;
         gl::IndexBuffer _indices;
     };

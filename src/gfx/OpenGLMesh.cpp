@@ -11,9 +11,7 @@
 
 namespace dagui
 {
-    OpenGLMesh::OpenGLMesh(Mesh *mesh)
-    :
-    _mesh(mesh)
+    OpenGLMesh::OpenGLMesh()
     {
         // Do nothing.
     }
