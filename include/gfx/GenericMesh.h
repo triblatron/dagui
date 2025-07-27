@@ -221,11 +221,14 @@ namespace dagui
         {
             if (backend())
             {
+                for (auto arrayIndex = 0; arrayIndex < _data.size(); ++arrayIndex)
+                {
+                    backend()->addVertexBuffer();
+                }
                 backend()->allocate();
                 for (auto arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
                 {
                     auto attrArray = _data.a[arrayIndex];
-
                     backend()->uploadVertices(*attrArray);
                 }
                 if (indexArray())

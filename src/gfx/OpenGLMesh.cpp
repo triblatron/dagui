@@ -16,16 +16,27 @@ namespace dagui
         // Do nothing.
     }
 
-    void OpenGLMesh::allocate()
+    void OpenGLMesh::addVertexBuffer()
     {
-        _vertices.allocate();
-        _indices.allocate();
+        _vertexBuffers.emplace_back(new gl::VertexBuffer());
     }
 
+    void OpenGLMesh::allocate()
+    {
+        for (auto vb : _vertexBuffers)
+        {
+            vb->allocate();
+        }
+        _indices.allocate();
+    }
+        
     void OpenGLMesh::uploadVertices(AttributeArray &a)
     {
-        _vertices.setArray(&a);
-        _vertices.submit();
+        if (!_vertexBuffers.empty())
+        {
+            _vertexBuffers.back()->setArray(&a);
+            _vertexBuffers.back()->submit();
+        }
     }
 
     void OpenGLMesh::uploadIndices(IndexArray &a)
@@ -36,8 +47,11 @@ namespace dagui
 
     void OpenGLMesh::draw()
     {
-        _vertices.bind();
-        _vertices.setPointers();
+        for (auto vb : _vertexBuffers)
+        {
+            vb->bind();
+            vb->setPointers();
+        }
         _indices.bind();
         _indices.draw(GL_TRIANGLES);
     }

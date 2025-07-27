@@ -20,6 +20,8 @@ namespace dagui
     public:
         virtual ~MeshBackend() = default;
 
+        virtual void addVertexBuffer() = 0;
+
         virtual void allocate() = 0;
 
         virtual void uploadVertices(AttributeArray& a) = 0;

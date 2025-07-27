@@ -7,6 +7,8 @@
 #include "gfx/MeshBackend.h"
 #include "gfx/OpenGL.h"
 
+#include <vector>
+
 namespace dagui
 {
     class Mesh;
@@ -15,6 +17,8 @@ namespace dagui
     {
     public:
         explicit OpenGLMesh();
+
+        void addVertexBuffer() override;
 
         void allocate() override;
 
@@ -31,7 +35,8 @@ namespace dagui
             return 1;
         }
     private:
-        gl::VertexBuffer _vertices;
+        using VertexBufferArray = std::vector<gl::VertexBuffer*>;
+        VertexBufferArray _vertexBuffers;
         gl::IndexBuffer _indices;
     };
 }
