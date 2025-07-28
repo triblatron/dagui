@@ -21,6 +21,7 @@
 #include "core/Rectangle.h"
 #include "core/ShapeFactory.h"
 #include "gfx/OpenGLMesh.h"
+#include "gfx/OpenGLBackendFactory.h"
 
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
@@ -31,7 +32,7 @@ dagui::gl::VertexBuffer vertexBuffer2;
 dagui::gl::IndexBuffer indexBuffer;
 dagui::OpenGLRenderer renderer;
 dagui::Rectangle rect;
-dagui::OpenGLMesh* backend = nullptr;
+dagui::MeshBackend* backend = nullptr;
 
 struct Vertex
 {
@@ -99,9 +100,15 @@ static void error_callback(int error, const char* description)
     fprintf(stderr, "Error:%d(%s)\n", error, description);
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     glfwSetErrorCallback(error_callback);
+    if (argc != 2)
+    {
+        std::cerr << "Usage " << argv[0] << " <meshConfigFilename>\n";
+
+        return -1;
+    }
     if (!glfwInit())
     {
         std::cerr << "Failed to initialize GLFW" << '\n';
@@ -154,7 +161,7 @@ int main()
     }
     {
         dagbase::Lua lua;
-        auto config = dagbase::ConfigurationElement::fromFile(lua, "etc/ShapeMesh.lua");
+        auto config = dagbase::ConfigurationElement::fromFile(lua, argv[1]);
         if (!config)
         {
             std::cerr << "Failed to load mesh config, bailing\n";
@@ -163,7 +170,7 @@ int main()
         }
         mesh.configure(*config);
     }
-    dagui::Rectangle rect;
+    dagui::Shape* shape = nullptr;
     {
         dagbase::Lua lua;
         auto rectConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/RoundedRectangle.lua");
@@ -174,10 +181,11 @@ int main()
             return -1;
         }
         dagui::ShapeFactory shapeFactory;
-        rect.configure(*rectConfig,shapeFactory);
+        shape = shapeFactory.createShape(*rectConfig);
     }
-    rect.tessellate(mesh);
-    backend = new dagui::OpenGLMesh();
+    shape->tessellate(mesh);
+    dagui::OpenGLBackendFactory factory;
+    backend = factory.createMesh(&mesh);
     mesh.setBackend(backend);
     mesh.sendToBackend();
 //        vertexBuffer2.setArray(mesh.attributeArray(0));
