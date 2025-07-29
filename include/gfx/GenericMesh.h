@@ -217,7 +217,7 @@ namespace dagui
             return {};
         }
 
-        void sendToBackend() override
+        void allocateBuffers() override
         {
             if (backend())
             {
@@ -225,11 +225,18 @@ namespace dagui
                 {
                     backend()->addVertexBuffer();
                 }
+            }
+        }
+
+        void sendToBackend() override
+        {
+            if (backend())
+            {
                 backend()->allocate();
                 for (auto arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
                 {
                     auto attrArray = _data.a[arrayIndex];
-                    backend()->uploadVertices(*attrArray);
+                    backend()->uploadVertices(arrayIndex, *attrArray);
                 }
                 if (indexArray())
                     backend()->uploadIndices(*indexArray());

@@ -985,7 +985,7 @@ TEST_P(Batcher_testMesh, testExpectedValues)
     auto path = std::get<3>(GetParam());
     auto actualValue = actualVert.find(path);
     auto value = std::get<4>(GetParam());
-    EXPECT_EQ(value, actualValue);
+    assertComparison(value, actualValue, 0.0, dagbase::ConfigurationElement::RELOP_EQ);
     auto indexIndex = std::get<5>(GetParam());
     auto indexValue = std::get<6>(GetParam());
     ASSERT_LT(indexIndex,bin->mesh()->numIndices());
@@ -995,7 +995,9 @@ TEST_P(Batcher_testMesh, testExpectedValues)
 }
 
 INSTANTIATE_TEST_SUITE_P(Batcher, Batcher_testMesh, ::testing::Values(
-        std::make_tuple("data/tests/Batcher/ShapeMesh.lua", 0, 1, "x", 100.0, 0, 0)
+        std::make_tuple("data/tests/Batcher/ShapeMesh.lua", 0, 1, "x", 100.0, 0, 0),
+        std::make_tuple("data/tests/Batcher/ShapeMeshSeparate.lua", 0, 1, "x", 100.0, 0, 0),
+        std::make_tuple("data/tests/Batcher/ShapeMeshSeparate.lua", 0, 0, "r", 1.0, 0, 0)
         ));
 
 class OpenGLBackendFactory_testCreateMesh : public ::testing::TestWithParam<std::tuple<const char*, const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
@@ -1027,6 +1029,8 @@ TEST_P(OpenGLBackendFactory_testCreateMesh, testExpectedResult)
     dagui::OpenGLBackendFactory sut;
     auto backendMesh = sut.createMesh(mesh);
     ASSERT_NE(nullptr, backendMesh);
+    mesh->setBackend(backendMesh);
+    mesh->allocateBuffers();
     auto path = std::get<2>(GetParam());
     auto value = std::get<3>(GetParam());
     auto tolerance = std::get<4>(GetParam());
@@ -1038,7 +1042,8 @@ TEST_P(OpenGLBackendFactory_testCreateMesh, testExpectedResult)
 }
 
 INSTANTIATE_TEST_SUITE_P(OpenGLBackendFactory, OpenGLBackendFactory_testCreateMesh, ::testing::Values(
-        std::make_tuple("etc/ShapeMesh.lua", "data/tests/Shape/Rectangle.lua", "numVertexBuffers", std::uint32_t{1}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("etc/ShapeMesh.lua", "data/tests/Shape/Rectangle.lua", "numVertexBuffers", std::uint32_t{1}, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("etc/ShapeMeshSeparate.lua", "data/tests/Shape/Rectangle.lua", "numVertexBuffers", std::uint32_t{2}, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
 
 class Tessellation_testConfigure : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
@@ -1109,5 +1114,7 @@ TEST_P(Rectangle_testTessellate, testExpectedValue)
 INSTANTIATE_TEST_SUITE_P(Rectangle, Rectangle_testTessellate, ::testing::Values(
         std::make_tuple("data/tests/Shape/Rectangle.lua", "data/tests/Shape/Mesh.lua", "numVertices", std::uint32_t(4), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Shape/RoundedRectangle.lua", "data/tests/Shape/Mesh.lua", "numVertices", std::uint32_t(16), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/Shape/RoundedRectangle.lua", "data/tests/Shape/Mesh.lua", "numIndices", std::uint32_t(54), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/Shape/RoundedRectangle.lua", "data/tests/Shape/Mesh.lua", "numIndices", std::uint32_t(54), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Shape/RoundedRectangle.lua", "etc/ShapeMeshSeparate.lua", "numVertices", std::uint32_t(16), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Shape/RoundedRectangle.lua", "etc/ShapeMeshSeparate.lua", "numIndices", std::uint32_t(54), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

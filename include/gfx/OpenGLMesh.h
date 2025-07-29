@@ -22,7 +22,7 @@ namespace dagui
 
         void allocate() override;
 
-        void uploadVertices(AttributeArray& a) override;
+        void uploadVertices(std::size_t bufferIndex, AttributeArray& a) override;
 
         void uploadIndices(IndexArray& a) override;
 
@@ -32,7 +32,7 @@ namespace dagui
 
         std::size_t numVertexBuffers() const
         {
-            return 1;
+            return _vertexBuffers.size();
         }
     private:
         using VertexBufferArray = std::vector<gl::VertexBuffer*>;

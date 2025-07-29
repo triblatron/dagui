@@ -187,6 +187,7 @@ int main(int argc, char* argv[])
     dagui::OpenGLBackendFactory factory;
     backend = factory.createMesh(&mesh);
     mesh.setBackend(backend);
+    mesh.allocateBuffers();
     mesh.sendToBackend();
 //        vertexBuffer2.setArray(mesh.attributeArray(0));
 //        vertexBuffer2.allocate();

@@ -24,7 +24,7 @@ namespace dagui
 
         virtual void allocate() = 0;
 
-        virtual void uploadVertices(AttributeArray& a) = 0;
+        virtual void uploadVertices(std::size_t bufferIndex, AttributeArray& a) = 0;
 
         virtual void uploadIndices(IndexArray& a) = 0;
 

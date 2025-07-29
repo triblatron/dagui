@@ -30,12 +30,12 @@ namespace dagui
         _indices.allocate();
     }
         
-    void OpenGLMesh::uploadVertices(AttributeArray &a)
+    void OpenGLMesh::uploadVertices(std::size_t bufferIndex, AttributeArray &a)
     {
-        if (!_vertexBuffers.empty())
+        if (bufferIndex<_vertexBuffers.size())
         {
-            _vertexBuffers.back()->setArray(&a);
-            _vertexBuffers.back()->submit();
+            _vertexBuffers[bufferIndex]->setArray(&a);
+            _vertexBuffers[bufferIndex]->submit();
         }
     }
 

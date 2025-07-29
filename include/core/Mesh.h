@@ -50,6 +50,8 @@ namespace dagui
 
         virtual dagbase::Variant find(std::string_view path) const = 0;
 
+        virtual void allocateBuffers() = 0;
+
         virtual void sendToBackend() = 0;
 
         void setBackend(MeshBackend* backend)
