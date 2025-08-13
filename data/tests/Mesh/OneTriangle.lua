@@ -1,0 +1,45 @@
+root=
+{
+}
+root=
+{
+	class="ShapeMesh",
+	arrays=
+	{
+		{
+			{
+				attribute=
+				{
+					name="position",
+					dataType="TYPE_FLOAT",
+					numComponents=2,
+					usage="USAGE_POSITION",
+				},
+				-- offset and stride are automatically computed
+			},
+		},
+	},
+	indexArray=
+	{
+		dataType="TYPE_UINT16",
+	},
+	vertices=
+	{
+		{
+			x=0.0,
+			y=0.0,
+		},
+		{
+			x=0.5,
+			y=0.0,
+		},
+		{
+			x=0.5,
+			y=0.5,
+		},
+	},
+	indices=
+	{
+		0,1,2,
+	}
+}

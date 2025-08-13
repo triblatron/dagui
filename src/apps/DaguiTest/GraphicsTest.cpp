@@ -1118,3 +1118,31 @@ INSTANTIATE_TEST_SUITE_P(Rectangle, Rectangle_testTessellate, ::testing::Values(
         std::make_tuple("data/tests/Shape/RoundedRectangle.lua", "etc/ShapeMeshSeparate.lua", "numVertices", std::uint32_t(16), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Shape/RoundedRectangle.lua", "etc/ShapeMeshSeparate.lua", "numIndices", std::uint32_t(54), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
+
+class Mesh_testInterface : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+TEST_P(Mesh_testInterface, testExpectedValue)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::Mesh* sut = new dagui::ShapeMesh;
+    sut->configure(*config);
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+    auto tolerance = std::get<3>(GetParam());
+    auto op = std::get<4>(GetParam());
+    auto actualValue = sut->find(path);
+    assertComparison(value, actualValue, tolerance, op);
+    delete sut;
+}
+
+INSTANTIATE_TEST_SUITE_P(Mesh, Mesh_testInterface, ::testing::Values(
+        std::make_tuple("data/tests/Mesh/OneTriangle.lua", "numVertices", std::uint32_t(3), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Mesh/OneTriangle.lua", "numIndices", std::uint32_t(3), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Mesh/OneTriangle.lua", "numTriangles", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));
