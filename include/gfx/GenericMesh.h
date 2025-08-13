@@ -150,6 +150,11 @@ namespace dagui
                 return 0;
         }
 
+        std::size_t numTriangles() const override
+        {
+            return numIndices()/3;
+        }
+
         void configure(dagbase::ConfigurationElement& config) override
         {
             if (auto element = config.findElement("arrays"); element)

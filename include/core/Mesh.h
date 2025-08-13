@@ -30,6 +30,8 @@ namespace dagui
 
         virtual std::size_t numVertices() const = 0;
 
+        virtual std::size_t numTriangles() const = 0;
+
         virtual void getVertex(std::size_t index, char* buf, std::size_t* bufferLen) = 0;
 
         //! \retval The attribute array with the given index

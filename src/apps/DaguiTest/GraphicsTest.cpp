@@ -1146,3 +1146,29 @@ INSTANTIATE_TEST_SUITE_P(Mesh, Mesh_testInterface, ::testing::Values(
         std::make_tuple("data/tests/Mesh/OneTriangle.lua", "numIndices", std::uint32_t(3), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Mesh/OneTriangle.lua", "numTriangles", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
+
+TEST(Mesh, testCreateTriangle)
+{
+    dagui::Mesh* sut = new dagui::ShapeMesh;
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/Mesh/ShapeMesh.lua");
+    ASSERT_NE(nullptr, config);
+    sut->configure(*config);
+    dagui::ShapeVertex v1;
+    v1.x = 1.0f;
+    v1.y = 1.0f;
+    sut->addVertex((const char*)&v1, sizeof(dagui::ShapeVertex));
+    v1.x = 2.0f;
+    sut->addVertex((const char*)&v1, sizeof(dagui::ShapeVertex));
+    v1.y = 2.0f;
+    sut->addVertex((const char*)&v1, sizeof(dagui::ShapeVertex));
+    std::uint16_t index = 0;
+    sut->addIndex((const char*)&index, sizeof(std::uint16_t));
+    index = 1;
+    sut->addIndex((const char*)&index, sizeof(std::uint16_t));
+    index = 2;
+    sut->addIndex((const char*)&index, sizeof(std::uint16_t));
+    EXPECT_EQ(std::uint32_t(3), sut->numVertices());
+    EXPECT_EQ(std::uint32_t(3), sut->numIndices());
+    EXPECT_EQ(std::uint32_t(1), sut->numTriangles());
+}
