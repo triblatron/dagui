@@ -17,6 +17,8 @@
 #include "util/SearchableArray.h"
 #include "gfx/MeshBackend.h"
 
+#include <limits>
+
 namespace dagbase
 {
     class ConfigurationElement;
