@@ -36,7 +36,7 @@ namespace dagui
         void addChild(SceneTemplate* child)
         {
             if (child)
-                _children.a.push_back(child);
+                _children.a.emplace_back(child);
         }
 
         SceneNode* instantiate(SceneNodeFactory& factory, Widget& widget);

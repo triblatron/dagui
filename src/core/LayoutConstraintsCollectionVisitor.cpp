@@ -29,7 +29,7 @@ namespace dagui
     {
         registerHandler(dagbase::Atom::intern("*"), [this](Widget& widget) {
             widget.eachConstraint([this](Constraint& constraint) {
-                _constraints.a.push_back(constraint);
+                _constraints.a.emplace_back(constraint);
                 return true;
             });
         });

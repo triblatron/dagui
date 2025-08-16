@@ -58,7 +58,7 @@ namespace dagui
         if (child)
         {
             child->setParent(this);
-            _children.a.push_back(child);
+            _children.a.emplace_back(child);
         }
     }
 }

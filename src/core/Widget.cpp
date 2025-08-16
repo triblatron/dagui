@@ -85,7 +85,7 @@ namespace dagui
     void Widget::addChild(Widget* child)
     {
         if (child)
-            _children.push_back(child);
+            _children.emplace_back(child);
     }
 
     Widget* Widget::lookup(dagbase::Atom name)

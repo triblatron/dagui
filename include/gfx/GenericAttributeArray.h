@@ -29,7 +29,7 @@ namespace dagui
         void addAttribute(std::size_t attrIndex, const ComponentType* attr, std::size_t size)
         {
             Vertex vertex;
-            _data.push_back(vertex);
+            _data.emplace_back(vertex);
             //std::copy(attr, attr + size, static_cast<char*>(&_data.back()) + _descriptor.attributes[attrIndex].offset);;
             std::memcpy((char*)&_data.back() + _descriptor.attributes[attrIndex].offset, (const char*)attr, size);
         }
@@ -57,7 +57,7 @@ namespace dagui
 
         void addVertex(const Vertex& vertex)
         {
-            _data.push_back(vertex);
+            _data.emplace_back(vertex);
         }
 
         Vertex vertex(std::size_t index) const

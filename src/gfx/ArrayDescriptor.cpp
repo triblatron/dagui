@@ -23,7 +23,7 @@ namespace dagui
             layout.offset = offset;
             offset += layout.attr.size();
             elementOffset = offset;
-            attributes.push_back(layout);
+            attributes.emplace_back(layout);
 
             return true;
         }));

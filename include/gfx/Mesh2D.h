@@ -56,8 +56,8 @@ namespace dagui
 
         void addVertex(const Vec2f& vertex)
         {
-            _vertices.push_back(vertex.x);
-            _vertices.push_back(vertex.y);
+            _vertices.emplace_back(vertex.x);
+            _vertices.emplace_back(vertex.y);
         }
 
         const float* vertices() const
@@ -72,10 +72,10 @@ namespace dagui
 
         void addColour(float r, float g, float b, float a)
         {
-            _colours.push_back(r);
-            _colours.push_back(g);
-            _colours.push_back(b);
-            _colours.push_back(a);
+            _colours.emplace_back(r);
+            _colours.emplace_back(g);
+            _colours.emplace_back(b);
+            _colours.emplace_back(a);
         }
 
         const float* colours() const
@@ -90,7 +90,7 @@ namespace dagui
 
         void addIndex(const std::size_t index)
         {
-            _indices.push_back(index);
+            _indices.emplace_back(index);
         }
 
         const std::uint32_t* indices() const

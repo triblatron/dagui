@@ -36,7 +36,7 @@ namespace dagui
     {
         if (shape != nullptr)
         {
-            _shapes.push_back(shape);
+            _shapes.emplace_back(shape);
         }
     }
 

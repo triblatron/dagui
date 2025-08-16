@@ -55,7 +55,7 @@ namespace dagui
                         }
                         else
                         {
-                            matches.push_back(partialMatch);
+                            matches.emplace_back(partialMatch);
                         }
                     }
                     return;

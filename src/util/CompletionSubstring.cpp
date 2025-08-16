@@ -17,13 +17,13 @@ namespace dagui
         {
             if ((*it).find(substring)!=std::string::npos)
             {
-                matches.push_back(*it);
+                matches.emplace_back(*it);
             }
         }
     }
 
     void CompletionSubstring::addWord(std::string word)
     {
-        _words.push_back(word);
+        _words.emplace_back(word);
     }
 }

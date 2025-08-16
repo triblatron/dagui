@@ -24,7 +24,7 @@ namespace dagui
         {
             if (child != nullptr)
             {
-                _children.push_back(child);
+                _children.emplace_back(child);
             }
         }
 
