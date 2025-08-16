@@ -176,7 +176,7 @@ namespace dagui
                     offsetSoFar += descriptor.size();
                     auto array = new OpaqueAttributeArray();
                     array->setDescriptor(descriptor);
-                    _data.a.push_back(array);
+                    _data.a.emplace_back(array);
                     return true;
                 });
             }

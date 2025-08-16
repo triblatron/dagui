@@ -1201,5 +1201,7 @@ TEST_P(Mesh_testAttributeArrayForUsage, testExpectedValue)
 INSTANTIATE_TEST_SUITE_P(Mesh, Mesh_testAttributeArrayForUsage, ::testing::Values(
         std::make_tuple("etc/ShapeMesh.lua", dagui::AttributeDescriptor::USAGE_POSITION, 0, 0),
         std::make_tuple("etc/ShapeMesh.lua", dagui::AttributeDescriptor::USAGE_COLOUR, 0, 1),
-        std::make_tuple("etc/ShapeMesh.lua", dagui::AttributeDescriptor::USAGE_TEXCOORD, std::numeric_limits<std::size_t>::max(), std::numeric_limits<std::size_t>::max())
+        std::make_tuple("etc/ShapeMesh.lua", dagui::AttributeDescriptor::USAGE_TEXCOORD, std::numeric_limits<std::size_t>::max(), std::numeric_limits<std::size_t>::max()),
+        std::make_tuple("data/tests/Mesh/ShapeMeshSeparate.lua", dagui::AttributeDescriptor::USAGE_POSITION, 0, 0),
+        std::make_tuple("data/tests/Mesh/ShapeMeshSeparate.lua", dagui::AttributeDescriptor::USAGE_COLOUR, 1, 0)
         ));
