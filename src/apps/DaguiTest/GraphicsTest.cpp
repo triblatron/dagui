@@ -1172,3 +1172,34 @@ TEST(Mesh, testCreateTriangle)
     EXPECT_EQ(std::uint32_t(3), sut->numIndices());
     EXPECT_EQ(std::uint32_t(1), sut->numTriangles());
 }
+
+class Mesh_testAttributeArrayForUsage : public ::testing::TestWithParam<std::tuple<const char*, dagui::AttributeDescriptor::Usage, std::size_t, std::size_t>>
+{
+
+};
+
+TEST_P(Mesh_testAttributeArrayForUsage, testExpectedValue)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    auto mesh = new dagui::ShapeMesh();
+    mesh->configure(*config);
+    auto usage = std::get<1>(GetParam());
+    std::size_t actualArrayIndex = std::numeric_limits<std::size_t>::max()-1;
+    std::size_t actualAttrIndex = std::numeric_limits<std::size_t>::max()-1;
+    mesh->attributeArrayForUsage(usage,&actualArrayIndex, &actualAttrIndex);
+    auto arrayIndex = std::get<2>(GetParam());
+    auto attrIndex = std::get<3>(GetParam());
+    EXPECT_EQ(attrIndex, actualAttrIndex);
+    EXPECT_EQ(arrayIndex, actualArrayIndex);
+    delete mesh;
+    delete config;
+}
+
+INSTANTIATE_TEST_SUITE_P(Mesh, Mesh_testAttributeArrayForUsage, ::testing::Values(
+        std::make_tuple("etc/ShapeMesh.lua", dagui::AttributeDescriptor::USAGE_POSITION, 0, 0),
+        std::make_tuple("etc/ShapeMesh.lua", dagui::AttributeDescriptor::USAGE_COLOUR, 0, 1),
+        std::make_tuple("etc/ShapeMesh.lua", dagui::AttributeDescriptor::USAGE_TEXCOORD, std::numeric_limits<std::size_t>::max(), std::numeric_limits<std::size_t>::max())
+        ));

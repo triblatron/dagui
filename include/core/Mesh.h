@@ -40,7 +40,7 @@ namespace dagui
 
         virtual IndexArray* indexArray() = 0;
 
-        virtual AttributeArray* attributeArrayForUsage(AttributeDescriptor::Usage usage, std::size_t* attrIndex) = 0;
+        virtual AttributeArray* attributeArrayForUsage(AttributeDescriptor::Usage usage, std::size_t* outputArrayIndex, std::size_t* attrIndex) = 0;
 
         virtual void addIndex(const char* buf, std::size_t bufLen) = 0;
 

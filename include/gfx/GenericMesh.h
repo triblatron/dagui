@@ -98,7 +98,7 @@ namespace dagui
             return nullptr;
         }
 
-        AttributeArray* attributeArrayForUsage(AttributeDescriptor::Usage usage, std::size_t* outputAttrIndex) override
+        AttributeArray* attributeArrayForUsage(AttributeDescriptor::Usage usage, std::size_t* outputArrayIndex, std::size_t* outputAttrIndex) override
         {
             for (auto arrayIndex=0; arrayIndex<_data.size(); ++arrayIndex)
             {
@@ -106,14 +106,22 @@ namespace dagui
                 {
                     if (_data.a[arrayIndex]->desciptor().attributes[attrIndex].attr.usage == usage)
                     {
+                        if (outputArrayIndex)
+                            *outputArrayIndex = arrayIndex;
+
                         if (outputAttrIndex)
-                        {
                             *outputAttrIndex = attrIndex;
-                        }
+
                         return _data.a[arrayIndex];
                     }
                 }
             }
+
+            if (outputArrayIndex)
+                *outputArrayIndex = std::numeric_limits<std::size_t>::max();
+
+            if (outputAttrIndex)
+                *outputAttrIndex = std::numeric_limits<std::size_t>::max();
 
             return nullptr;
         }
