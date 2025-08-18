@@ -31,4 +31,3 @@ root=
 		dataType="TYPE_UINT16",
 	}
 }
-		
