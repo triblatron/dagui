@@ -4,7 +4,6 @@ PROJECT( Dagui )
 SET(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-FIND_PACKAGE(GLUT REQUIRED)
 FIND_PACKAGE(glfw3 REQUIRED)
 FIND_PACKAGE(OpenGL COMPONENTS OpenGL REQUIRED)
 FIND_PACKAGE(Freetype REQUIRED)
@@ -177,7 +176,7 @@ TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_B
 
 set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
 LINK_DIRECTORIES( ${DEP_ROOT}/lib )
-TARGET_LINK_LIBRARIES( dagui PRIVATE dagbase ${LUA_LIBRARY} GLEW::glew GLUT::GLUT OpenGL::GL OpenGL::GLU Freetype::Freetype glm::glm )
+TARGET_LINK_LIBRARIES( dagui PRIVATE dagbase ${LUA_LIBRARY} GLEW::glew OpenGL::GL OpenGL::GLU Freetype::Freetype glm::glm )
 #~ add_subdirectory(ThirdParty/dagbase)
 add_subdirectory(ThirdParty/dag)
 add_subdirectory(src/apps/DaguiTest)

@@ -88,13 +88,13 @@ void display(dagui::Renderer& renderer)
     glEnd();
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
+    glColor3f(1.0f, 0.0f, 1.0f);
     vertexBuffer.draw(GL_TRIANGLES, 0, a->size());
     backend->draw();
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
     glfwSwapBuffers(window);
 }
-
 static void error_callback(int error, const char* description)
 {
     fprintf(stderr, "Error:%d(%s)\n", error, description);
@@ -119,7 +119,6 @@ int main(int argc, char* argv[])
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
     glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
-    // glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH/* | GLUT_3_2_CORE_PROFILE*/);
     window = glfwCreateWindow(640, 480, "My Title", NULL, NULL);
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
