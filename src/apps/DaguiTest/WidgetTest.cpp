@@ -15,6 +15,7 @@
 #include "core/ShapeFactory.h"
 #include "core/Batcher.h"
 #include "test/TestUtils.h"
+#include "core/GraphicsBackendFactory.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
@@ -242,6 +243,41 @@ class Widget_testDraw : public ::testing::TestWithParam<std::tuple<const char*, 
 
 };
 
+class MockMeshBackend : public dagui::MeshBackend
+{
+public:
+    MOCK_METHOD(void, addVertexBuffer, (), (override));
+
+    MOCK_METHOD(void, allocate, (), (override));
+
+    MOCK_METHOD(void, uploadVertices, (std::size_t bufferIndex, dagui::AttributeArray& a), (override));
+
+    MOCK_METHOD(void, uploadIndices, (dagui::IndexArray& a), (override));
+
+    MOCK_METHOD(void, draw, (), (override));
+
+    MOCK_METHOD(dagbase::Variant, find, (std::string_view path), (const, override));
+};
+
+class MockGraphicsBackendFactory : public dagui::GraphicsBackendFactory
+{
+public:
+    MockGraphicsBackendFactory()
+    {
+        ON_CALL(*this, createMesh).WillByDefault([this](dagui::Mesh* mesh) {
+            auto backend = new MockMeshBackend();
+            EXPECT_CALL(*backend, addVertexBuffer()).Times(::testing::AnyNumber());
+            EXPECT_CALL(*backend, allocate()).Times(::testing::AnyNumber());
+            EXPECT_CALL(*backend, uploadVertices(::testing::_, ::testing::_)).Times(::testing::AnyNumber());
+            EXPECT_CALL(*backend, uploadIndices(::testing::_)).Times(::testing::AnyNumber());
+
+            return backend;
+        });
+    }
+
+    MOCK_METHOD(dagui::MeshBackend*, createMesh, (dagui::Mesh*), (override));
+};
+
 TEST_P(Widget_testDraw, testExpectedValue)
 {
     auto widgetConfigStr = std::get<0>(GetParam());
@@ -266,7 +302,10 @@ TEST_P(Widget_testDraw, testExpectedValue)
     ASSERT_NE(nullptr, widgetTree);
     dagui::Batcher batcher;
     batcher.configure(*batcherConfig);
-    widgetTree->draw(batcher);
+    MockGraphicsBackendFactory backendFactory;
+    EXPECT_CALL(backendFactory, createMesh(::testing::_)).Times(::testing::AtLeast(1));
+
+    widgetTree->draw(batcher, backendFactory);
     auto path = std::get<2>(GetParam());
     auto value = std::get<3>(GetParam());
     auto tolerance = std::get<4>(GetParam());

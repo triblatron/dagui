@@ -12,6 +12,7 @@
 #include "core/Shape.h"
 #include "core/ShapeFactory.h"
 #include "core/Batcher.h"
+#include "core/GraphicsBackendFactory.h"
 
 #include <utility>
 
@@ -204,7 +205,7 @@ namespace dagui
             _style.resolve(lookup);
     }
 
-    void Widget::draw(Batcher &batcher)
+    void Widget::draw(Batcher &batcher, GraphicsBackendFactory& factory)
     {
         auto it = batcher.findRenderBin({-1,-1,-1,0});
         if (it != batcher.end())
@@ -212,6 +213,13 @@ namespace dagui
             for (auto shape : _shapes.a)
             {
                 shape->tessellate(*it->second->mesh());
+            }
+            auto backend = factory.createMesh(it->second->mesh());
+            if (backend)
+            {
+                it->second->mesh()->setBackend(backend);
+                it->second->mesh()->allocateBuffers();
+                it->second->mesh()->sendToBackend();
             }
         }
     }

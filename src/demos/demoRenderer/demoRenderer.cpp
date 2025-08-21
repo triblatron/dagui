@@ -22,6 +22,9 @@
 #include "core/ShapeFactory.h"
 #include "gfx/OpenGLMesh.h"
 #include "gfx/OpenGLBackendFactory.h"
+#include "core/WidgetFactory.h"
+#include "core/Widget.h"
+#include "core/Batcher.h"
 
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
@@ -181,31 +184,53 @@ int main(int argc, char* argv[])
         }
         dagui::ShapeFactory shapeFactory;
         shape = shapeFactory.createShape(*rectConfig);
+        if (!shape)
+        {
+            std::cerr << "Failed to create Shape, bailing\n";
+
+            return -1;
+        }
     }
     shape->tessellate(mesh);
+    dagui::Widget* widgetTree = nullptr;
+    {
+        dagbase::Lua lua;
+        auto widgetConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/WidgetFactory/rootWithLabel.lua");
+        if (!widgetConfig)
+        {
+            std::cerr << "Failed to load widget config, bailing\n";
+
+            return -1;
+        }
+        dagui::WidgetFactory widgetFactory;
+        dagui::ShapeFactory shapeFactory;
+        widgetTree = widgetFactory.create(*widgetConfig, shapeFactory);
+        if (!widgetTree)
+        {
+            std::cerr << "Failed to create Widget tree, bailing\n";
+
+            return -1;
+        }
+    }
+    dagui::Batcher batcher;
+    {
+        dagbase::Lua lua;
+        auto batcherConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/Batcher/ShapeMesh.lua");
+        if (!batcherConfig)
+        {
+            std::cout << "Failed to load batcher config, bailing\n";
+
+            return -1;
+        }
+        batcher.configure(*batcherConfig);
+    }
     dagui::OpenGLBackendFactory factory;
+    widgetTree->draw(batcher, factory);
+
     backend = factory.createMesh(&mesh);
     mesh.setBackend(backend);
     mesh.allocateBuffers();
     mesh.sendToBackend();
-//        vertexBuffer2.setArray(mesh.attributeArray(0));
-//        vertexBuffer2.allocate();
-//        vertexBuffer2.submit();
-//        indexBuffer.setArray(mesh.indexArray());
-//        indexBuffer.allocate();
-//        indexBuffer.submit();
-//    dagui::ShapeFactory shapeFactory;
-//    {
-//        dagbase::Lua lua;
-//        auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Rect.lua");
-//        if (!config)
-//        {
-//            std::cerr << "Failed to load rectangle config, bailing\n";
-//
-//            return -1;
-//        }
-//        rect.configure(*config, shapeFactory);
-//    }
     std::cout << "sizeof(vertices): " << sizeof(vertices) << std::endl;
     //std::cout << glGetError() << std::endl;
     glm::mat4 model = glm::perspective(glm::radians(45.0),16.0/9.0, 0.1, 1000.0);

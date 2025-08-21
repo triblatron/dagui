@@ -61,8 +61,8 @@ namespace dagui
         return {};
     }
 
-    void Label::draw(Batcher &batcher)
+    void Label::draw(Batcher &batcher, GraphicsBackendFactory& factory)
     {
-        Widget::draw(batcher);
+        Widget::draw(batcher, factory);
     }
 }
