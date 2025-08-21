@@ -21,10 +21,16 @@ namespace dagui
     {
         Widget::configure(config, factory, shapeFactory);
 
+        if (auto element = config.findElement("face"); element)
+        {
+            _face = shapeFactory.createShape(*element);
+            addShape(_face);
+        }
+
         if (auto element=config.findElement("text"); element)
         {
-            _text = new Text();
-            _text->setText(element->asString());
+            _text = dynamic_cast<Text*>(shapeFactory.createShape(*element));
+            addShape(_text);
         }
 
         if (auto element=config.findElement("bounds"); element)

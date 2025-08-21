@@ -7,6 +7,7 @@
 #include "core/ShapeFactory.h"
 #include "core/ConfigurationElement.h"
 #include "core/Rectangle.h"
+#include "core/Text.h"
 
 namespace dagui
 {
@@ -24,6 +25,10 @@ namespace dagui
         if (className == "Rectangle")
         {
             retval = new Rectangle();
+        }
+        else if (className == "Text")
+        {
+            retval = new Text();
         }
 
         if (retval)

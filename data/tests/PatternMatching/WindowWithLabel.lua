@@ -5,7 +5,11 @@ root=
 	{
 		{
 			class="Label",
-			text="test",
+			text=
+			{
+				class="Text",
+				text="test",
+			},
 		}
 	}
 }

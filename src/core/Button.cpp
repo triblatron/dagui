@@ -25,7 +25,8 @@ namespace dagui
 
         if (auto element=config.findElement("text"); element)
         {
-            _text->setText(element->asString());
+            _text = dynamic_cast<Text*>(shapeFactory.createShape(*element));
+            addShape(_text);
         }
     }
 

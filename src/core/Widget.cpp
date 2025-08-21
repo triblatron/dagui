@@ -64,10 +64,10 @@ namespace dagui
         _styleClass = dagbase::Atom::intern(styleClass);
         _style.setId(_styleClass);
 
-        if (auto element = config.findElement("shape"); element)
-        {
-            addShape(shapeFactory.createShape(*element));
-        }
+//        if (auto element = config.findElement("shape"); element)
+//        {
+//            addShape(shapeFactory.createShape(*element));
+//        }
     }
 
     Widget* Widget::root()

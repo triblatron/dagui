@@ -27,9 +27,13 @@ root=
 				{
 					class="Label",
 					id="label1",
-					text="Hello, world!",
+					text=
+					{
+						class="Text",
+						text="Hello, world!",
+					},
 					styleClass="label",
-					shape=
+					face=
 					{
 						class="Rectangle",
 						cornerRadius=16.0,

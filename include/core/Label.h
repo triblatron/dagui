@@ -10,6 +10,7 @@
 
 namespace dagui
 {
+    class Rectangle;
 
     class DAGUI_API Label : public Widget
     {
@@ -35,6 +36,7 @@ namespace dagui
 
         void draw(Batcher& batcher) override;
     private:
+        Shape* _face{nullptr};
         Text* _text{nullptr};
         dagbase::Vec2 _bounds;
     };

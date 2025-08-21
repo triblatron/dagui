@@ -9,11 +9,19 @@ root=
 			{
 				{
 					class="Label",
-					text="test",
+					text=
+					{
+						class="Text",
+						text="test",
+					},
 				},
 				{
 					class="Button",
-					text="Click me",
+					text=
+					{
+						class="Text",
+						text="Click me",
+					},
 				}
 			}
 		},

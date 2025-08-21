@@ -1,8 +1,12 @@
 root=
 {
 	class="Label",
-	text="test",
-	shape=
+	text=
+	{
+		class="Text",
+		text="test",
+	},
+	face=
 	{
 		class="Rectangle",
 		x=0.0,
