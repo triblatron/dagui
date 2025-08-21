@@ -6,6 +6,7 @@
 
 #include "gfx/OpaqueIndexArray.h"
 
+#include <algorithm>
 #include <iterator>
 
 namespace dagui

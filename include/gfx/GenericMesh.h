@@ -104,7 +104,7 @@ namespace dagui
         {
             for (auto arrayIndex=0; arrayIndex<_data.size(); ++arrayIndex)
             {
-                for (auto attrIndex=0; attrIndex<_data.a[arrayIndex]->desciptor().size(); ++attrIndex)
+                for (auto attrIndex=0; attrIndex<_data.a[arrayIndex]->desciptor().attributes.size(); ++attrIndex)
                 {
                     if (_data.a[arrayIndex]->desciptor().attributes[attrIndex].attr.usage == usage)
                     {
