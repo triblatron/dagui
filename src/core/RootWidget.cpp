@@ -6,6 +6,7 @@
 
 #include "core/RootWidget.h"
 #include "core/Style.h"
+#include "gfx/FontImageSource.h"
 
 namespace dagui
 {
@@ -27,6 +28,18 @@ namespace dagui
                 dagbase::ConfigurationElement::readConfig(child, "name", &name);
                 style->configure(child);
                 addStyle(dagbase::Atom::intern(name), style);
+                return true;
+            });
+        }
+
+        if (auto element = config.findElement("fontImageSources"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                auto source = new FontImageSource(_freeTypeLib);
+                std::string name;
+                dagbase::ConfigurationElement::readConfig(child, "name", &name);
+                source->configure(child);
+                addFontImageSource(dagbase::Atom::intern(name), source);
                 return true;
             });
         }
@@ -66,6 +79,10 @@ namespace dagui
             return retval;
 
         retval = dagbase::findInternal(path, "lookup", _widgetLookup);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findInternal(path, "fontImageSourceLookup", _fontImageSourceLookup);
         if (retval.has_value())
             return retval;
 

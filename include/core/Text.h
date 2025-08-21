@@ -12,6 +12,9 @@
 
 namespace dagui
 {
+    struct FT_FaceRec_;
+    class TextureAtlas;
+
     class DAGUI_API Text : public Shape
     {
     public:
@@ -36,5 +39,7 @@ namespace dagui
         dagbase::Variant find(std::string_view path) const override;
     private:
         std::string _text;
+        dagbase::Atom _face;
+        TextureAtlas* _atlas{nullptr};
     };
 }

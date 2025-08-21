@@ -10,6 +10,9 @@
 
 #include <vector>
 #include <cstdint>
+#include "core/Variant.h"
+
+#include <string_view>
 
 namespace dagbase
 {
@@ -35,6 +38,8 @@ namespace dagui
 		explicit FontImageSource(FT_Library library);
 
 		void configure(dagbase::ConfigurationElement& config);
+
+        dagbase::Variant find(std::string_view path) const;
 
 		bool ok() const
 		{

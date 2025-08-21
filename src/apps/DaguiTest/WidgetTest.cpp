@@ -15,6 +15,8 @@
 #include "core/ShapeFactory.h"
 #include "core/Batcher.h"
 #include "test/TestUtils.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
@@ -33,6 +35,9 @@ TEST_P(WidgetFactory_testCreate, testExpectedTree)
     ASSERT_NE(nullptr, config);
     dagui::WidgetFactory sut;
     dagui::ShapeFactory shapeFactory;
+    FT_Library freeTypeLib = nullptr;
+    FT_Init_FreeType(&freeTypeLib);
+    sut.setFreeType(freeTypeLib);
     auto tree = sut.create(*config, shapeFactory);
     auto isNotNull = std::get<2>(GetParam());
     ASSERT_EQ(isNotNull, tree!=nullptr);
@@ -47,6 +52,7 @@ TEST_P(WidgetFactory_testCreate, testExpectedTree)
     }
     delete tree;
     delete config;
+    FT_Done_FreeType(freeTypeLib);
 }
 
 INSTANTIATE_TEST_SUITE_P(WidgetFactory, WidgetFactory_testCreate, ::testing::Values(
@@ -56,6 +62,7 @@ INSTANTIATE_TEST_SUITE_P(WidgetFactory, WidgetFactory_testCreate, ::testing::Val
     std::make_tuple("data/tests/WidgetFactory/rootWithNestedChildren.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.test.title", std::string("Hello, Dagui!"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/rootWithNestedChildren.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.clickme.text.text", std::string("Click me"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/rootWithNestedChildren.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.root.numChildren", std::int64_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+    std::make_tuple("data/tests/WidgetFactory/rootWithNestedChildren.lua", &dagbase::ConfigurationElement::fromFile, true, "fontImageSourceLookup.regular.estimateCount", std::uint32_t(95), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.vertical.numChildren", std::int64_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.label.text.text", std::string("A label"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "width", std::int64_t{ 1920 }, 0.0, dagbase::ConfigurationElement::RELOP_EQ),

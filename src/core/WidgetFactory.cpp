@@ -30,7 +30,8 @@ namespace dagui
         if (className == "RootWidget")
         {
             widget = new RootWidget();
-            _root = widget;
+            _root = dynamic_cast<RootWidget*>(widget);
+            _root->setFreeTypeLib(_freeTypeLib);
         }
         else if (className == "Window")
         {
@@ -60,25 +61,4 @@ namespace dagui
 
         return widget;
     }
-
-//    Shape *WidgetFactory::createShape(dagbase::ConfigurationElement &config)
-//    {
-//        std::string className;
-//
-//        dagbase::ConfigurationElement::readConfig(config, "class", &className);
-//
-//        Shape* shape = nullptr;
-//
-//        if (className == "Rectangle")
-//        {
-//            shape = new Rectangle();
-//        }
-//
-//        if (shape)
-//        {
-//            shape->configure(config, *this);
-//        }
-//
-//        return shape;
-//    }
 }

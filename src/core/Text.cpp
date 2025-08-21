@@ -7,6 +7,9 @@
 #include "core/Text.h"
 #include "util/Searchable.h"
 #include "core/ShapeVisitor.h"
+#include "gfx/TextureAtlas.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 namespace dagui
 {
@@ -43,6 +46,17 @@ namespace dagui
 
     void Text::configure(dagbase::ConfigurationElement &config, ShapeFactory& shapeFactory)
     {
+        if (auto element = config.findElement("atlas"); element)
+        {
+            _atlas = new TextureAtlas();
+            _atlas->configure(*element);
+        }
+
+        if (auto element = config.findElement("face"); element)
+        {
+            _face = dagbase::Atom::intern(element->asString());
+        }
+
         dagbase::ConfigurationElement::readConfig(config, "text", &_text);
     }
 }

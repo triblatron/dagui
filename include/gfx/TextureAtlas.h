@@ -4,11 +4,11 @@
 
 #include "core/Atlas.h"
 #include "gfx/BinImageDef.h"
+#include "util/VectorMap.h"
 
 #include <cstdint>
 #include <vector>
 #include <cstdlib>
-#include "util/VectorMap.h"
 
 namespace dagbase
 {
