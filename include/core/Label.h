@@ -5,7 +5,8 @@
 #pragma once
 
 #include "core/Widget.h"
-#include "ShapeFactory.h"
+#include "core/ShapeFactory.h"
+#include "core/Text.h"
 
 namespace dagui
 {
@@ -19,12 +20,12 @@ namespace dagui
 
         void setText(const std::string& text)
         {
-            _text = text;
+            _text->setText(text);
         }
 
         const std::string& text() const
         {
-            return _text;
+            return _text->text();
         }
 
         void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory,
@@ -34,7 +35,7 @@ namespace dagui
 
         void draw(Batcher& batcher) override;
     private:
-        std::string _text;
+        Text* _text{nullptr};
         dagbase::Vec2 _bounds;
     };
 }

@@ -85,7 +85,7 @@ namespace dagui
     void Widget::addChild(Widget* child)
     {
         if (child)
-            _children.emplace_back(child);
+            _children.a.emplace_back(child);
     }
 
     Widget* Widget::lookup(dagbase::Atom name)
@@ -114,6 +114,10 @@ namespace dagui
                 return retval;
         }
 
+        retval = dagbase::findEndpoint(path, "class", std::string(_typeName.value()));
+        if (retval.has_value())
+            return retval;
+
         retval = dagbase::findEndpoint(path, "numChildren", std::int64_t(_children.size()));
         if (retval.has_value())
             return retval;
@@ -136,6 +140,14 @@ namespace dagui
             if (retval.has_value())
                 return retval;
         }
+
+        retval = dagbase::findEndpoint(path, "parent", _parent!=nullptr);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findInternal(path, "children", _children);
+        if (retval.has_value())
+            return retval;
 
         if (_style.ref())
         {
@@ -166,7 +178,7 @@ namespace dagui
     void Widget::eachChild(std::function<bool(Widget &)> f)
     {
         if (f)
-            for (auto child : _children)
+            for (auto child : _children.a)
             {
                 if (!f(*child))
                 {

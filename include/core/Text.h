@@ -6,29 +6,32 @@
 
 #include "config/Export.h"
 
-#include "core/SceneNode.h"
+#include "core/Shape.h"
+
+#include <string>
 
 namespace dagui
 {
-    class DAGUI_API Text : public SceneNode
+    class DAGUI_API Text : public Shape
     {
     public:
-        explicit Text(dagbase::IdentifierGenerator::Identifier id, Widget* widget);
-
-        void accept(SceneNodeVisitor& visitor) override
-        {
-            // Do nothing.
-        }
-
-        void eachChild(std::function<bool(SceneNode*)> f) override
-        {
-            // Do nothing.
-        }
+        explicit Text();
 
         void setText(const std::string& text)
         {
             _text = text;
         }
+
+        const std::string& text() const
+        {
+            return _text;
+        }
+
+        void configure(dagbase::ConfigurationElement& config, ShapeFactory& shapeFactory) override;
+
+        bool isInside(float x, float y) override;
+
+        void accept(ShapeVisitor& visitor) override;
 
         dagbase::Variant find(std::string_view path) const override;
     private:

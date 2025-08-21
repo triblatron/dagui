@@ -27,10 +27,6 @@ namespace dagui
         {
             node = new Border(id, widget);
         }
-        else if (className == "Text")
-        {
-            node = new Text(id, widget);
-        }
         else if (className == "ClipGroup")
         {
             node = new ClipGroup(id, widget);

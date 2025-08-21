@@ -6,20 +6,13 @@
 
 #include "core/Text.h"
 #include "util/Searchable.h"
+#include "core/ShapeVisitor.h"
 
 namespace dagui
 {
-
-    Text::Text(dagbase::IdentifierGenerator::Identifier id, Widget *widget)
-    :
-    SceneNode(dagbase::Atom::intern("Text"), id, widget)
-    {
-        // Do nothing.
-    }
-
     dagbase::Variant Text::find(std::string_view path) const
     {
-        auto retval = SceneNode::find(path);
+        auto retval = Shape::find(path);
 
         if (retval.has_value())
             return retval;
@@ -29,5 +22,27 @@ namespace dagui
             return retval;
 
         return {};
+    }
+
+    Text::Text()
+    :
+    Shape(dagbase::Atom::intern("Text"))
+    {
+        // Do nothing.s
+    }
+
+    bool Text::isInside(float x, float y)
+    {
+        return false;
+    }
+
+    void Text::accept(ShapeVisitor &visitor)
+    {
+        //visitor.(*this);
+    }
+
+    void Text::configure(dagbase::ConfigurationElement &config, ShapeFactory& shapeFactory)
+    {
+        dagbase::ConfigurationElement::readConfig(config, "text", &_text);
     }
 }

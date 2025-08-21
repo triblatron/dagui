@@ -15,7 +15,6 @@ namespace dagui
     :
     Widget(dagbase::Atom::intern("Label"), parent)
     {
-        // Do nothing.
     }
 
     void Label::configure(dagbase::ConfigurationElement &config, WidgetFactory &factory, ShapeFactory &shapeFactory)
@@ -24,7 +23,8 @@ namespace dagui
 
         if (auto element=config.findElement("text"); element)
         {
-            _text = element->asString();
+            _text = new Text();
+            _text->setText(element->asString());
         }
 
         if (auto element=config.findElement("bounds"); element)
@@ -41,9 +41,12 @@ namespace dagui
             return retval;
         }
 
-        retval = dagbase::findEndpoint(path, "text", text());
-        if (retval.has_value())
-            return retval;
+        if (_text)
+        {
+            retval = dagbase::findInternal(path, "text", *_text);
+            if (retval.has_value())
+                return retval;
+        }
 
         retval = dagbase::findEndpoint(path, "bounds", dagbase::Variant(_bounds));
         if (retval.has_value())

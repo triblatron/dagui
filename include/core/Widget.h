@@ -117,7 +117,7 @@ namespace dagui
         using Properties=dagbase::SearchableMap<std::unordered_map<dagbase::Atom, dagbase::Variant>>;
         Properties _props;
         dagbase::Atom _id;
-        using ChildArray = std::vector<Widget*>;
+        using ChildArray = dagbase::SearchableArray<std::vector<Widget*>>;
         ChildArray _children;
         using ConstraintArray = dagbase::SearchableArray<std::vector<Constraint>>;
         ConstraintArray _constraints;

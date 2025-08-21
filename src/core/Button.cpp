@@ -15,7 +15,7 @@ namespace dagui
         :
     Widget(dagbase::Atom::intern("Button"), parent)
     {
-        // Do nothing.
+        _text = new Text();
     }
 
     void
@@ -25,7 +25,7 @@ namespace dagui
 
         if (auto element=config.findElement("text"); element)
         {
-            _text = element->asString();
+            _text->setText(element->asString());
         }
     }
 
@@ -35,9 +35,12 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
-        retval = dagbase::findEndpoint(path, "text", _text);
-        if (retval.has_value())
-            return retval;
+        if (_text)
+        {
+            retval = dagbase::findInternal(path, "text", _text);
+            if (retval.has_value())
+                return retval;
+        }
 
         return {};
     }
