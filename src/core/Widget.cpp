@@ -66,7 +66,7 @@ namespace dagui
 
         if (auto element = config.findElement("shape"); element)
         {
-            _shape = shapeFactory.createShape(*element);
+            addShape(shapeFactory.createShape(*element));
         }
     }
 
@@ -156,9 +156,9 @@ namespace dagui
                 return retval;
         }
 
-        if (_shape)
+        if (!_shapes.a.empty())
         {
-            retval = dagbase::findInternal(path, "shape", *_shape);
+            retval = dagbase::findInternal(path, "shape", _shapes);
             if (retval.has_value())
                 return retval;
         }
@@ -209,11 +209,10 @@ namespace dagui
         auto it = batcher.findRenderBin({-1,-1,-1,0});
         if (it != batcher.end())
         {
-            if (_shape && it->second->mesh())
+            for (auto shape : _shapes.a)
             {
-                _shape->tessellate(*it->second->mesh());
+                shape->tessellate(*it->second->mesh());
             }
-
         }
     }
 }

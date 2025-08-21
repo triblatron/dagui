@@ -48,19 +48,10 @@ namespace dagui
             return _id;
         }
 
-        void setShape(Shape* shape)
+        void addShape(Shape* shape)
         {
-            _shape = shape;
-        }
-
-        Shape* shape()
-        {
-            return _shape;
-        }
-
-        const Shape* shape() const
-        {
-            return _shape;
+            if (shape)
+                _shapes.a.emplace_back(shape);
         }
 
         void setX(int x)
@@ -125,6 +116,7 @@ namespace dagui
         dagbase::Atom _styleClass;
         StyleRef _style;
         Widget* _parent{nullptr};
-        Shape* _shape{nullptr};
+        using ShapeArray = dagbase::SearchableArray<std::vector<Shape*>>;
+        ShapeArray _shapes;
     };
 }
