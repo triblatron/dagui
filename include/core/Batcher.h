@@ -11,6 +11,7 @@
 
 #include <map>
 #include <string_view>
+#include <cstdint>
 
 namespace dagbase
 {
@@ -34,6 +35,11 @@ namespace dagui
                 _renderBins.m.emplace(key, bin);
                 _renderBinArray.a.emplace_back(bin);
             }
+        }
+
+        std::int32_t allocateTexture()
+        {
+            return _nextTextureIndex++;
         }
 
         RenderBinMap::iterator findRenderBin(const RenderBinKey& key)
@@ -60,5 +66,6 @@ namespace dagui
     private:
         RenderBinMap _renderBins;
         RenderBinArray _renderBinArray;
+        std::int32_t _nextTextureIndex{0};
     };
 }

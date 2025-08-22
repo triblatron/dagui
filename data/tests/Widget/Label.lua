@@ -5,6 +5,7 @@ root=
 	{
 		class="Text",
 		text="test",
+		fontFace="regular",
 	},
 	face=
 	{
@@ -21,5 +22,5 @@ root=
 			0.0,
 			1.0,
 		}
-	}
+	},
 }

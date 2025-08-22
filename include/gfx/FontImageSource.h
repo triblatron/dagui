@@ -1,17 +1,18 @@
+#pragma once
+
 #include "config/Export.h"
 
 #include "gfx/ImageSource.h"
-
-#include <string>
+#include "core/Variant.h"
+#include "util/SearchableMap.h"
 
 #include <ft2build.h>
 
 #include FT_FREETYPE_H
 
+#include <string>
 #include <vector>
 #include <cstdint>
-#include "core/Variant.h"
-
 #include <string_view>
 
 namespace dagbase
@@ -76,4 +77,5 @@ namespace dagui
 		void init(FT_Library library, const char* filename);
 		FT_Library _library;
 	};
+    using FontImageSourceLookup = dagbase::SearchableMapFromAtom<std::unordered_map<dagbase::Atom, FontImageSource*>>;
 }

@@ -55,6 +55,16 @@ namespace dagui
         return value;
     }
 
+    FontImageSource *Shape::lookupFontImageSource(dagbase::Atom name)
+    {
+        if (_fontImageSourceLookup)
+        {
+            return _fontImageSourceLookup->lookup(name);
+        }
+
+        return nullptr;
+    }
+
     dagbase::Variant ShapeVertex::find(std::string_view path) const
     {
         dagbase::Variant retval;
@@ -83,6 +93,13 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
+        retval = dagbase::findEndpoint(path, "u", u);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "v", v);
+        if (retval.has_value())
+            return retval;
 
         return {};
     }
@@ -95,6 +112,8 @@ namespace dagui
         dagbase::ConfigurationElement::readConfig(config, "g", &g);
         dagbase::ConfigurationElement::readConfig(config, "b", &b);
         dagbase::ConfigurationElement::readConfig(config, "a", &a);
+        dagbase::ConfigurationElement::readConfig(config, "u", &u);
+        dagbase::ConfigurationElement::readConfig(config, "v", &v);
     }
 
     bool ShapeVertex::operator<(const ShapeVertex &other) const

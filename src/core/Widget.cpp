@@ -207,20 +207,21 @@ namespace dagui
 
     void Widget::draw(Batcher &batcher, GraphicsBackendFactory& factory)
     {
-        auto it = batcher.findRenderBin({-1,-1,-1,0});
-        if (it != batcher.end())
-        {
             for (auto shape : _shapes.a)
             {
-                shape->tessellate(*it->second->mesh());
-            }
-            auto backend = factory.createMesh(it->second->mesh());
-            if (backend)
-            {
-                it->second->mesh()->setBackend(backend);
-                it->second->mesh()->allocateBuffers();
-                it->second->mesh()->sendToBackend();
+                shape->allocateResources(batcher);
+
+                if (auto it=batcher.findRenderBin(shape->renderBinKey()); it!=batcher.end())
+                {
+                    shape->tessellate(*it->second->mesh());
+                    auto backend = factory.createMesh(it->second->mesh());
+                    if (backend)
+                    {
+                        it->second->mesh()->setBackend(backend);
+                        it->second->mesh()->allocateBuffers();
+                        it->second->mesh()->sendToBackend();
+                    }
+                }
             }
         }
-    }
 }

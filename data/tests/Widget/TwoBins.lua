@@ -1,3 +1,46 @@
+function defineShapeMesh()
+	return {
+		class="ShapeMesh",
+		arrays=
+		{
+			{
+				{
+					attribute=
+					{
+						name="position",
+						dataType="TYPE_FLOAT",
+						numComponents=2,
+						usage="USAGE_POSITION",
+					},
+					-- offset and stride are automatically computed
+				},
+				{
+					attribute=
+					{
+						name="colour",
+						dataType="TYPE_FLOAT",
+						numComponents=4,
+						usage="USAGE_COLOUR",
+					},
+				},
+				{
+					attribute=
+					{
+						name="texcoord",
+						dataType="TYPE_FLOAT",
+						numComponents=2,
+						usage="USAGE_TEXCOORD",
+					},
+				},
+			},
+		},
+		indexArray=
+		{
+			dataType="TYPE_UINT16",
+		},
+	}
+end
+
 root=
 {
 	bins=
@@ -12,50 +55,20 @@ root=
 			},
 			value=
 			{
-				mesh=
-				{
-					class="ShapeMesh",
-					arrays=
-					{
-						{
-							{
-								attribute=
-								{
-									name="position",
-									dataType="TYPE_FLOAT",
-									numComponents=2,
-									usage="USAGE_POSITION",
-								},
-								-- offset and stride are automatically computed
-							},
-							{
-								attribute=
-								{
-									name="colour",
-									dataType="TYPE_FLOAT",
-									numComponents=4,
-									usage="USAGE_COLOUR",
-								},
-							}
-						},
-					},
-					indexArray=
-					{
-						dataType="TYPE_UINT16",
-					},
-				}
+				mesh=defineShapeMesh(),
 			}
 		},
 		{
 			key=
 			{
-				material=2,
-				texture=1,
-				shader=1,
+				material=-1,
+				texture=0,
+				shader=-1,
 				layer=0
 			},
 			value=
 			{
+				mesh=defineShapeMesh(),
 			},
 		}
 	}

@@ -271,11 +271,22 @@ public:
             EXPECT_CALL(*backend, uploadVertices(::testing::_, ::testing::_)).Times(::testing::AnyNumber());
             EXPECT_CALL(*backend, uploadIndices(::testing::_)).Times(::testing::AnyNumber());
 
+            _objs.emplace_back(backend);
+
             return backend;
         });
     }
 
+    ~MockGraphicsBackendFactory()
+    {
+        for (auto obj : _objs)
+        {
+            delete obj;
+        }
+    }
     MOCK_METHOD(dagui::MeshBackend*, createMesh, (dagui::Mesh*), (override));
+private:
+    std::vector<MockMeshBackend*> _objs;
 };
 
 TEST_P(Widget_testDraw, testExpectedValue)
@@ -296,8 +307,20 @@ TEST_P(Widget_testDraw, testExpectedValue)
         batcherConfig = dagbase::ConfigurationElement::fromFile(lua, batcherConfigStr);
         ASSERT_NE(nullptr, batcherConfig);
     }
+
     dagui::WidgetFactory widgetFactory;
     dagui::ShapeFactory shapeFactory;
+    FT_Library lib = nullptr;
+    FT_Init_FreeType(&lib);
+    shapeFactory.setFreeTypeLib(lib);
+    dagbase::ConfigurationElement* shapeFactoryConfig = nullptr;
+    {
+        dagbase::Lua lua;
+
+        shapeFactoryConfig = dagbase::ConfigurationElement::fromFile(lua, "etc/ShapeFactory.lua");
+        ASSERT_NE(nullptr, shapeFactoryConfig);
+    }
+    shapeFactory.configure(*shapeFactoryConfig);
     auto widgetTree = widgetFactory.create(*widgetConfig, shapeFactory);
     ASSERT_NE(nullptr, widgetTree);
     dagui::Batcher batcher;
@@ -312,8 +335,13 @@ TEST_P(Widget_testDraw, testExpectedValue)
     auto op = std::get<5>(GetParam());
     auto actualValue = batcher.find(path);
     assertComparison(value, actualValue, tolerance, op);
+    FT_Done_FreeType(lib);
+    delete batcherConfig;
+    delete widgetTree;
+    delete widgetConfig;
 }
 
 INSTANTIATE_TEST_SUITE_P(Widget, Widget_testDraw, ::testing::Values(
-        std::make_tuple("data/tests/Widget/Label.lua", "data/tests/Widget/TwoBins.lua", "renderBins[0].mesh.numVertices", std::uint32_t(0), 0.0, dagbase::ConfigurationElement::RELOP_GT)
+        std::make_tuple("data/tests/Widget/Label.lua", "data/tests/Widget/TwoBins.lua", "renderBins[0].mesh.numVertices", std::uint32_t(0), 0.0, dagbase::ConfigurationElement::RELOP_GT),
+        std::make_tuple("data/tests/Widget/Label.lua", "data/tests/Widget/TwoBins.lua", "renderBins[1].mesh.numTriangles", std::uint32_t(8), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
