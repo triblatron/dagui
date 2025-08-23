@@ -11,6 +11,7 @@
 #include "core/Tessellation.h"
 #include "core/ShapeFactory.h"
 #include "core/Batcher.h"
+#include "core/GraphicsBackendFactory.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -131,12 +132,13 @@ namespace dagui
         clearFlag(FLAGS_DIRTY_TESSELLATION_BIT);
     }
 
-    void Text::allocateResources(Batcher &batcher)
+    void Text::allocateResources(Batcher &batcher, GraphicsBackendFactory& factory)
     {
         if (!isFlagSet(FLAGS_DIRTY_RESOURCES_BIT))
             return;
 
         _texture = batcher.allocateTexture();
+        _atlas->setBackend(factory.createTextureAtlas(_atlas));
 
         clearFlag(FLAGS_DIRTY_RESOURCES_BIT);
     }

@@ -41,7 +41,7 @@ namespace dagui
             return {-1, _texture, -1, 0};
         }
 
-        void allocateResources(Batcher& batcher) override;
+        void allocateResources(Batcher& batcher, GraphicsBackendFactory& factory) override;
 
         void tessellate(ShapeMesh& mesh) override;
 

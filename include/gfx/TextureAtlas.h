@@ -21,7 +21,8 @@ namespace dagui
 	class Image;
 	class ImageDef;
 	class ImageSource;
-	
+	class TextureAtlasBackend;
+
 	struct ImageBounds
 	{
 		std::size_t x{0};
@@ -95,6 +96,16 @@ namespace dagui
 
 		void allocateImage(unsigned long id, ImageDef* inputImage) override;
 
+        void setBackend(TextureAtlasBackend* backend)
+        {
+            _backend = backend;
+        }
+
+        TextureAtlasBackend* backend()
+        {
+            return _backend;
+        }
+
 		static const char* errorToString(Error error);
 		
 		static Error parseError(const char* str);
@@ -103,7 +114,6 @@ namespace dagui
 		{
 			return (value & (value-1))==0;
 		}
-
 	private:
 		Error _errod{ERR_UNKNOWN};
 		std::size_t _numComponents{0};
@@ -115,5 +125,6 @@ namespace dagui
 		std::size_t _numAllocations{0};
         using ImageMap = dagbase::VectorMap<unsigned long, ImageDef*>;
         ImageMap _images;
+        TextureAtlasBackend* _backend{nullptr};
 	};
 }

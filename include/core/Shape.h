@@ -23,6 +23,7 @@ namespace dagui
 {
     class Batcher;
     class DrawCommandBuffer;
+    class GraphicsBackendFactory;
     class Mesh;
     class ShapeVisitor;
     class ShapeFactory;
@@ -103,7 +104,7 @@ namespace dagui
             return {-1,-1,-1,0};
         }
 
-        virtual void allocateResources(Batcher& batcher) {}
+        virtual void allocateResources(Batcher& batcher, GraphicsBackendFactory& factory) {}
 
         virtual void tessellate(ShapeMesh& mesh) {}
 

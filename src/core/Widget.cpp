@@ -210,7 +210,7 @@ namespace dagui
             for (auto shape : _shapes.a)
             {
                 if (shape->isFlagSet(Shape::FLAGS_DIRTY_RESOURCES_BIT))
-                    shape->allocateResources(batcher);
+                    shape->allocateResources(batcher, factory );
 
                 if (auto it= batcher.findOrCreateRenderBin(shape->renderBinKey()); it != batcher.end())
                 {
@@ -218,6 +218,7 @@ namespace dagui
                     {
                         shape->tessellate(*it->second->mesh());
                     }
+
                     if (!it->second->mesh()->backend())
                     {
                         auto backend = factory.createMesh(it->second->mesh());
