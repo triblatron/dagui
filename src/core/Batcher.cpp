@@ -14,6 +14,11 @@ namespace dagui
 
     void Batcher::configure(dagbase::ConfigurationElement &config)
     {
+        if (auto element = config.findElement("mesh"); element)
+        {
+            _meshProto = new ShapeMesh();
+            _meshProto->configure(*element);
+        }
         if (auto element = config.findElement("bins"); element)
         {
             element->eachChild([this](dagbase::ConfigurationElement& child) {

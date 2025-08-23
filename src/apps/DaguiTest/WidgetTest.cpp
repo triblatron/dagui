@@ -284,6 +284,7 @@ public:
         }
     }
     MOCK_METHOD(dagui::MeshBackend*, createMesh, (dagui::Mesh*), (override));
+    MOCK_METHOD(dagui::TextureAtlasBackend*, createTextureAtlas, (dagui::TextureAtlas *atlas), (override));
 private:
     std::vector<MockMeshBackend*> _objs;
 };

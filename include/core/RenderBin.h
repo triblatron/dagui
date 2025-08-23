@@ -27,6 +27,11 @@ namespace dagui
 //
 //        virtual void render() = 0;
 
+        void setMesh(ShapeMesh* mesh)
+        {
+            _mesh = mesh;
+        }
+
         ShapeMesh * mesh()
         {
             return _mesh;

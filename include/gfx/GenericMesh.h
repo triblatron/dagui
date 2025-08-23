@@ -42,7 +42,7 @@ namespace dagui
     public:
         GenericMesh() = default;
 
-        ~GenericMesh()
+        ~GenericMesh() override
         {
             for (auto a : _data.a)
                 delete a;
@@ -261,10 +261,66 @@ namespace dagui
                     backend()->uploadIndices(*indexArray());
             }
         }
+
+        bool operator==(const GenericMesh<Vertex>& other) const;
+
+        bool operator!=(const GenericMesh<Vertex>& other) const
+        {
+            return !(*this == other);
+        }
+
+        GenericMesh(const GenericMesh<Vertex>& other)
+        {
+            _data = other._data;
+            _numVertices = other._numVertices;
+            if (other._indices)
+            {
+                _indices = new OpaqueIndexArray(*other._indices);
+            }
+        }
+
+        GenericMesh<Vertex>& operator=(const GenericMesh<Vertex>& other)
+        {
+            if (this != &other)
+            {
+                for (auto a : _data.a)
+                {
+                    delete a;
+                }
+                _data = other._data;
+                _numVertices = other._numVertices;
+                delete _indices;
+                if (other._indices)
+                {
+                    _indices = new OpaqueIndexArray(*other._indices);
+                }
+            }
+            return *this;
+        }
     private:
         using AttributeArrays = dagbase::SearchableArray<std::vector<OpaqueAttributeArray*>>;
         AttributeArrays _data;
         std::size_t _numVertices{ 0 };
         OpaqueIndexArray* _indices{nullptr};
     };
+
+    template<typename Vertex>
+    bool GenericMesh<Vertex>::operator==(const GenericMesh<Vertex> &other) const
+    {
+        if (!(_data == other._data))
+        {
+            return false;
+        }
+
+        if (_numVertices != other._numVertices)
+            return false;
+
+        if ((_indices && !other._indices) || (!_indices && other._indices))
+            return false;
+
+        if (_indices && other._indices && !(*_indices == *other._indices))
+            return false;
+
+        return true;
+    }
 }

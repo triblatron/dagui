@@ -10,6 +10,8 @@ namespace dagui
 {
     class Mesh;
     class MeshBackend;
+    class TextureAtlas;
+    class TextureAtlasBackend;
 
     class DAGUI_API GraphicsBackendFactory
     {
@@ -17,5 +19,7 @@ namespace dagui
         virtual ~GraphicsBackendFactory() = default;
 
         virtual MeshBackend* createMesh(Mesh* mesh) = 0;
+
+        virtual TextureAtlasBackend* createTextureAtlas(TextureAtlas* atlas) = 0;
     };
 }
