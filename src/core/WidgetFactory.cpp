@@ -31,7 +31,6 @@ namespace dagui
         {
             widget = new RootWidget();
             _root = dynamic_cast<RootWidget*>(widget);
-            _root->setFreeTypeLib(_freeTypeLib);
         }
         else if (className == "Window")
         {

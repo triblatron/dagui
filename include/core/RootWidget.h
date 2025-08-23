@@ -32,11 +32,6 @@ namespace dagui
         void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory,
                        dagui::ShapeFactory &shapeFactory) override;
 
-        void setFreeTypeLib(FT_Library freeTypeLib)
-        {
-            _freeTypeLib = freeTypeLib;
-        }
-
         RootWidget* root() override
         {
             return this;
@@ -47,11 +42,6 @@ namespace dagui
         void addStyle(dagbase::Atom name, Style* style)
         {
             _styles.m.emplace(name, style);
-        }
-
-        void addFontImageSource(dagbase::Atom name, FontImageSource* source)
-        {
-            _fontImageSourceLookup.m.emplace(name, source);
         }
 
         Widget* lookup(dagbase::Atom name) override;
@@ -65,9 +55,6 @@ namespace dagui
     private:
         using WidgetLookup = dagbase::SearchableMapFromAtom<std::unordered_map<dagbase::Atom, Widget*>>;
         WidgetLookup _widgetLookup;
-        FT_Library _freeTypeLib{nullptr};
-        using FontImageSourceLookup = dagbase::SearchableMapFromAtom<std::unordered_map<dagbase::Atom, FontImageSource*>>;
-        FontImageSourceLookup _fontImageSourceLookup;
         StyleLookup _styles;
         glm::ivec2 _size{};
     };
