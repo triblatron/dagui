@@ -53,7 +53,8 @@ namespace dagui
         enum Flags : std::uint32_t
         {
             FLAGS_NONE,
-            FLAGS_DIRTY_BIT = 1<<0
+            FLAGS_DIRTY_TESSELLATION_BIT = 1 << 0,
+            FLAGS_DIRTY_RESOURCES_BIT = 1 << 1
         };
     public:
         Shape(dagbase::Atom className);
@@ -112,6 +113,6 @@ namespace dagui
     private:
         FontImageSourceLookup* _fontImageSourceLookup{nullptr};
         dagbase::Atom _className;
-        Flags _flags{FLAGS_NONE};
+        Flags _flags{FLAGS_DIRTY_TESSELLATION_BIT|FLAGS_DIRTY_RESOURCES_BIT};
     };
 }

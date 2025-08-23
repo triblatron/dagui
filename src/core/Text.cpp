@@ -108,6 +108,8 @@ namespace dagui
 
     void Text::tessellate(ShapeMesh &mesh)
     {
+        if (!isFlagSet(FLAGS_DIRTY_TESSELLATION_BIT))
+            return;
         Tessellation tess;
         float x = 0, y = 0;
         tess.begin(Tessellation::PRIMTYPE_TRIANGLES);
@@ -126,11 +128,16 @@ namespace dagui
         // Get the texture coordinates for the glyph
         tess.end();
         tess.write(mesh);
-        clearFlag(FLAGS_DIRTY_BIT);
+        clearFlag(FLAGS_DIRTY_TESSELLATION_BIT);
     }
 
     void Text::allocateResources(Batcher &batcher)
     {
+        if (!isFlagSet(FLAGS_DIRTY_RESOURCES_BIT))
+            return;
+
         _texture = batcher.allocateTexture();
+
+        clearFlag(FLAGS_DIRTY_RESOURCES_BIT);
     }
 }

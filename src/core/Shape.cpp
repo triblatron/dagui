@@ -33,7 +33,7 @@ namespace dagui
     {
         std::string retval;
 
-        BIT_NAME(value, FLAGS_DIRTY_BIT, retval)
+        BIT_NAME(value, FLAGS_DIRTY_TESSELLATION_BIT, retval)
 
         if (!retval.empty() && retval.back()==' ')
         {
@@ -50,7 +50,7 @@ namespace dagui
     {
         Flags value = FLAGS_NONE;
 
-        TEST_BIT(FLAGS_DIRTY_BIT, str, value);
+        TEST_BIT(FLAGS_DIRTY_TESSELLATION_BIT, str, value);
 
         return value;
     }

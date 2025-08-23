@@ -1100,9 +1100,9 @@ TEST_P(Rectangle_testTessellate, testExpectedValue)
     }
     ASSERT_NE(nullptr, meshConfig);
     mesh.configure(*meshConfig);
-    shape->setFlag(dagui::Shape::FLAGS_DIRTY_BIT);
+    shape->setFlag(dagui::Shape::FLAGS_DIRTY_TESSELLATION_BIT);
     shape->tessellate(mesh);
-    EXPECT_FALSE(shape->isFlagSet(dagui::Shape::FLAGS_DIRTY_BIT));
+    EXPECT_FALSE(shape->isFlagSet(dagui::Shape::FLAGS_DIRTY_TESSELLATION_BIT));
     auto path = std::get<2>(GetParam());
     auto value = std::get<3>(GetParam());
     auto tolerance = std::get<4>(GetParam());

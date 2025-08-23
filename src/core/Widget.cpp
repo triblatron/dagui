@@ -209,17 +209,24 @@ namespace dagui
     {
             for (auto shape : _shapes.a)
             {
-                shape->allocateResources(batcher);
+                if (shape->isFlagSet(Shape::FLAGS_DIRTY_RESOURCES_BIT))
+                    shape->allocateResources(batcher);
 
                 if (auto it=batcher.findRenderBin(shape->renderBinKey()); it!=batcher.end())
                 {
-                    shape->tessellate(*it->second->mesh());
-                    auto backend = factory.createMesh(it->second->mesh());
-                    if (backend)
+                    if (shape->isFlagSet(Shape::FLAGS_DIRTY_TESSELLATION_BIT))
                     {
-                        it->second->mesh()->setBackend(backend);
-                        it->second->mesh()->allocateBuffers();
-                        it->second->mesh()->sendToBackend();
+                        shape->tessellate(*it->second->mesh());
+                    }
+                    if (!it->second->mesh()->backend())
+                    {
+                        auto backend = factory.createMesh(it->second->mesh());
+                        if (backend)
+                        {
+                            it->second->mesh()->setBackend(backend);
+                            it->second->mesh()->allocateBuffers();
+                            it->second->mesh()->sendToBackend();
+                        }
                     }
                 }
             }
