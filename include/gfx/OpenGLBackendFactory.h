@@ -14,5 +14,7 @@ namespace dagui
         OpenGLBackendFactory() = default;
 
         MeshBackend* createMesh(Mesh * mesh) override;
+
+        TextureAtlasBackend* createTextureAtlas(TextureAtlas* atlas) override;
     };
 }

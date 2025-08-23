@@ -37,4 +37,12 @@ namespace dagui
         else
             return nullptr;
     }
+
+    bool OpaqueIndexArray::operator==(const OpaqueIndexArray &other) const
+    {
+        if (!(_array == other._array))
+            return false;
+
+        return true;
+    }
 }

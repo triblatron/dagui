@@ -37,6 +37,8 @@ namespace dagui
         //! Get a pointer to the internal array.
         //! \note Useful for passing to glBufferData() et al.
         const void* data() const override;
+
+        bool operator==(const OpaqueIndexArray& other) const;
     private:
         IndexArray _array;
     };

@@ -212,7 +212,7 @@ namespace dagui
                 if (shape->isFlagSet(Shape::FLAGS_DIRTY_RESOURCES_BIT))
                     shape->allocateResources(batcher);
 
-                if (auto it=batcher.findRenderBin(shape->renderBinKey()); it!=batcher.end())
+                if (auto it= batcher.findOrCreateRenderBin(shape->renderBinKey()); it != batcher.end())
                 {
                     if (shape->isFlagSet(Shape::FLAGS_DIRTY_TESSELLATION_BIT))
                     {

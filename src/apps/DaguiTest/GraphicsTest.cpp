@@ -790,6 +790,30 @@ INSTANTIATE_TEST_SUITE_P(GenericMesh, GenericMesh_addIndex, ::testing::Values(
         std::make_tuple("data/tests/GenericMesh/addIndex.lua", 4, 3)
         ));
 
+class Mesh_testCopyConstructor : public ::testing::TestWithParam<std::tuple<const char*>>
+{
+
+};
+
+TEST_P(Mesh_testCopyConstructor, testExpectedCopy)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    auto sut = new dagui::ShapeMesh();
+    sut->configure(*config);
+    auto copy = new dagui::ShapeMesh(*sut);
+    dagui::ShapeVertex v;
+
+    sut->addVertex(v);
+    EXPECT_NE(*sut, *copy);
+}
+
+INSTANTIATE_TEST_SUITE_P(Mesh, Mesh_testCopyConstructor, ::testing::Values(
+        std::make_tuple("etc/ShapeMesh.lua")
+        ));
+
 class DrawCommandBuffer_testShapeGeneratesGeometry : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
 {
 
@@ -858,8 +882,8 @@ TEST_P(Batcher_testSort, testExpectedOrder)
     sut.configure(*config);
     auto firstKey = std::get<1>(GetParam());
     auto secondKey = std::get<2>(GetParam());
-    auto firstIter = sut.findRenderBin(firstKey);
-    auto secondIter = sut.findRenderBin(secondKey);
+    auto firstIter = sut.findOrCreateRenderBin(firstKey);
+    auto secondIter = sut.findOrCreateRenderBin(secondKey);
     ASSERT_NE(sut.end(), firstIter);
     ASSERT_NE(sut.end(), secondIter);
     EXPECT_LT(firstIter->first, secondIter->first);
@@ -1201,7 +1225,7 @@ TEST_P(Mesh_testAttributeArrayForUsage, testExpectedValue)
 INSTANTIATE_TEST_SUITE_P(Mesh, Mesh_testAttributeArrayForUsage, ::testing::Values(
         std::make_tuple("etc/ShapeMesh.lua", dagui::AttributeDescriptor::USAGE_POSITION, 0, 0),
         std::make_tuple("etc/ShapeMesh.lua", dagui::AttributeDescriptor::USAGE_COLOUR, 0, 1),
-        std::make_tuple("etc/ShapeMesh.lua", dagui::AttributeDescriptor::USAGE_TEXCOORD, std::numeric_limits<std::size_t>::max(), std::numeric_limits<std::size_t>::max()),
+        std::make_tuple("etc/ShapeMesh.lua", dagui::AttributeDescriptor::USAGE_NORMAL, std::numeric_limits<std::size_t>::max(), std::numeric_limits<std::size_t>::max()),
         std::make_tuple("data/tests/Mesh/ShapeMeshSeparate.lua", dagui::AttributeDescriptor::USAGE_POSITION, 0, 0),
         std::make_tuple("data/tests/Mesh/ShapeMeshSeparate.lua", dagui::AttributeDescriptor::USAGE_COLOUR, 1, 0)
         ));
