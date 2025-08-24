@@ -718,6 +718,5 @@ TEST_P(SceneNodeFactory_testCreateNode, testExpectedNotNull)
 INSTANTIATE_TEST_SUITE_P(SceneNodeFactory, SceneNodeFactory_testCreateNode, ::testing::Values(
         std::make_tuple("Group", true),
         std::make_tuple("Border", true),
-        std::make_tuple("Text", true),
         std::make_tuple("Spoo", false)
         ));

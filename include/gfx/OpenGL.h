@@ -14,10 +14,6 @@
 
 #if defined(_WIN32) || defined(__linux__)
 #include <GL/glew.h>
-#if defined(_WIN32)
-#include <GL/glut.h>
-#include <GL/wglew.h>
-#endif // _WIN32
 #elif defined(__APPLE__)
 #include <OpenGL/gl.h>
 #endif

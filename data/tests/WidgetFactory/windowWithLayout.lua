@@ -23,12 +23,20 @@ root=
 						{
 							class="Label",
 							id="label",
-							text="A label",
+							text=
+							{
+								class="Text",
+								text="A label",
+							},
 						},
 						{
 							class="Button",
 							id="clickme",
-							text="Click me",
+							text=
+							{
+								class="Text",
+								text="Click me",
+							},
 						},
 					}
 				},

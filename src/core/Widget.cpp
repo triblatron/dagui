@@ -12,6 +12,7 @@
 #include "core/Shape.h"
 #include "core/ShapeFactory.h"
 #include "core/Batcher.h"
+#include "core/GraphicsBackendFactory.h"
 
 #include <utility>
 
@@ -64,10 +65,10 @@ namespace dagui
         _styleClass = dagbase::Atom::intern(styleClass);
         _style.setId(_styleClass);
 
-        if (auto element = config.findElement("shape"); element)
-        {
-            _shape = shapeFactory.createShape(*element);
-        }
+//        if (auto element = config.findElement("shape"); element)
+//        {
+//            addShape(shapeFactory.createShape(*element));
+//        }
     }
 
     Widget* Widget::root()
@@ -85,7 +86,7 @@ namespace dagui
     void Widget::addChild(Widget* child)
     {
         if (child)
-            _children.emplace_back(child);
+            _children.a.emplace_back(child);
     }
 
     Widget* Widget::lookup(dagbase::Atom name)
@@ -114,6 +115,10 @@ namespace dagui
                 return retval;
         }
 
+        retval = dagbase::findEndpoint(path, "class", std::string(_typeName.value()));
+        if (retval.has_value())
+            return retval;
+
         retval = dagbase::findEndpoint(path, "numChildren", std::int64_t(_children.size()));
         if (retval.has_value())
             return retval;
@@ -137,6 +142,14 @@ namespace dagui
                 return retval;
         }
 
+        retval = dagbase::findEndpoint(path, "parent", _parent!=nullptr);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findInternal(path, "children", _children);
+        if (retval.has_value())
+            return retval;
+
         if (_style.ref())
         {
             retval = dagbase::findInternal(path, "style", *_style.ref());
@@ -144,9 +157,9 @@ namespace dagui
                 return retval;
         }
 
-        if (_shape)
+        if (!_shapes.a.empty())
         {
-            retval = dagbase::findInternal(path, "shape", *_shape);
+            retval = dagbase::findInternal(path, "shape", _shapes);
             if (retval.has_value())
                 return retval;
         }
@@ -166,7 +179,7 @@ namespace dagui
     void Widget::eachChild(std::function<bool(Widget &)> f)
     {
         if (f)
-            for (auto child : _children)
+            for (auto child : _children.a)
             {
                 if (!f(*child))
                 {
@@ -192,16 +205,31 @@ namespace dagui
             _style.resolve(lookup);
     }
 
-    void Widget::draw(Batcher &batcher)
+    void Widget::draw(Batcher &batcher, GraphicsBackendFactory& factory)
     {
-        auto it = batcher.findRenderBin({-1,-1,-1,0});
-        if (it != batcher.end())
-        {
-            if (_shape && it->second->mesh())
+            for (auto shape : _shapes.a)
             {
-                _shape->tessellate(*it->second->mesh());
-            }
+                if (shape->isFlagSet(Shape::FLAGS_DIRTY_RESOURCES_BIT))
+                    shape->allocateResources(batcher, factory );
 
+                if (auto it= batcher.findOrCreateRenderBin(shape->renderBinKey()); it != batcher.end())
+                {
+                    if (shape->isFlagSet(Shape::FLAGS_DIRTY_TESSELLATION_BIT))
+                    {
+                        shape->tessellate(*it->second->mesh());
+                    }
+
+                    if (!it->second->mesh()->backend())
+                    {
+                        auto backend = factory.createMesh(it->second->mesh());
+                        if (backend)
+                        {
+                            it->second->mesh()->setBackend(backend);
+                            it->second->mesh()->allocateBuffers();
+                            it->second->mesh()->sendToBackend();
+                        }
+                    }
+                }
+            }
         }
-    }
 }

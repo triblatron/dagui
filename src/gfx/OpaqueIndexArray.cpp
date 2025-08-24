@@ -6,6 +6,7 @@
 
 #include "gfx/OpaqueIndexArray.h"
 
+#include <algorithm>
 #include <iterator>
 
 namespace dagui
@@ -35,5 +36,13 @@ namespace dagui
             return _array.data();
         else
             return nullptr;
+    }
+
+    bool OpaqueIndexArray::operator==(const OpaqueIndexArray &other) const
+    {
+        if (!(_array == other._array))
+            return false;
+
+        return true;
     }
 }

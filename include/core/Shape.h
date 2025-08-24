@@ -9,6 +9,8 @@
 #include "core/Atom.h"
 #include "core/Variant.h"
 #include "gfx/GenericMesh.h"
+#include "gfx/FontImageSource.h"
+#include "core/RenderBinKey.h"
 
 #include <string_view>
 
@@ -19,7 +21,9 @@ namespace dagbase
 
 namespace dagui
 {
+    class Batcher;
     class DrawCommandBuffer;
+    class GraphicsBackendFactory;
     class Mesh;
     class ShapeVisitor;
     class ShapeFactory;
@@ -32,6 +36,8 @@ namespace dagui
         float g{0.0f};
         float b{0.0f};
         float a{0.0f};
+        float u{0.0f};
+        float v{0.0f};
 
         void configure(dagbase::ConfigurationElement& config);
 
@@ -48,7 +54,8 @@ namespace dagui
         enum Flags : std::uint32_t
         {
             FLAGS_NONE,
-            FLAGS_DIRTY_BIT = 1<<0
+            FLAGS_DIRTY_TESSELLATION_BIT = 1 << 0,
+            FLAGS_DIRTY_RESOURCES_BIT = 1 << 1
         };
     public:
         Shape(dagbase::Atom className);
@@ -75,6 +82,13 @@ namespace dagui
             return (_flags & mask) != FLAGS_NONE;
         }
 
+        void setFontImageSourceLookup(FontImageSourceLookup* lookup)
+        {
+            _fontImageSourceLookup = lookup;
+        }
+
+        FontImageSource* lookupFontImageSource(dagbase::Atom name);
+
         virtual void accept(ShapeVisitor& visitor) = 0;
 
         virtual bool isInside(float x, float y) = 0;
@@ -85,13 +99,21 @@ namespace dagui
 
         virtual void render(DrawCommandBuffer& buffer) {}
 
-        virtual void tessellate(ShapeMesh& mesh) {};
+        virtual RenderBinKey renderBinKey() const
+        {
+            return {-1,-1,-1,0};
+        }
+
+        virtual void allocateResources(Batcher& batcher, GraphicsBackendFactory& factory) {}
+
+        virtual void tessellate(ShapeMesh& mesh) {}
 
         static std::string flagsToString(Flags value);
 
         static Flags parseFlags(const std::string& str);
     private:
+        FontImageSourceLookup* _fontImageSourceLookup{nullptr};
         dagbase::Atom _className;
-        Flags _flags{FLAGS_NONE};
+        Flags _flags{FLAGS_DIRTY_TESSELLATION_BIT|FLAGS_DIRTY_RESOURCES_BIT};
     };
 }

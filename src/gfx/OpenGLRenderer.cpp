@@ -18,12 +18,6 @@
 #include "core/Rectangle.h"
 #include "core/Mesh.h"
 
-#if defined(__linux__) || defined(_WIN32)
-#include <GL/glut.h>
-#else
-#include <glut.h>
-#endif // __linux__ || _WIN32
-
 namespace dagui
 {
     void OpenGLRenderer::drawTexturedQuad(float x, float y, const ImageDef* imageDef)

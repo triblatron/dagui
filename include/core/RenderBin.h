@@ -11,6 +11,7 @@
 
 #include <cstdint>
 #include <string_view>
+#include "core/RenderBinKey.h"
 
 namespace dagbase
 {
@@ -19,24 +20,17 @@ namespace dagbase
 
 namespace dagui
 {
-    struct DAGUI_API RenderBinKey
-    {
-        std::int32_t material{-1};
-        std::int32_t texture{-1};
-        std::int32_t shader{-1};
-        std::int32_t layer{0};
-
-        void configure(dagbase::ConfigurationElement& config);
-
-        bool operator<(const RenderBinKey& other) const;
-    };
-
     class DAGUI_API RenderBin
     {
     public:
 //        virtual ~RenderBin() = default;
 //
 //        virtual void render() = 0;
+
+        void setMesh(ShapeMesh* mesh)
+        {
+            _mesh = mesh;
+        }
 
         ShapeMesh * mesh()
         {

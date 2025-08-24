@@ -15,6 +15,7 @@
 #include "gfx/GlyphImageDef.h"
 
 #include "core/ConfigurationElement.h"
+#include "util/Searchable.h"
 
 namespace dagui
 {
@@ -35,6 +36,7 @@ namespace dagui
 	void FontImageSource::configure(dagbase::ConfigurationElement& config)
 	{
 		std::string fontFilename;
+
 		if (auto element = config.findElement("fontFilename"); element)
 		{
 			fontFilename = element->asString();
@@ -225,5 +227,16 @@ namespace dagui
 		}
 
         return count;
+    }
+
+    dagbase::Variant FontImageSource::find(std::string_view path) const
+    {
+        dagbase::Variant retval;
+
+        retval = dagbase::findEndpoint(path, "estimateCount", std::uint32_t(estimateCount()));
+        if (retval.has_value())
+            return retval;
+
+        return {};
     }
 }

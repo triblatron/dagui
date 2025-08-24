@@ -64,8 +64,8 @@ namespace dagui
 		if (_buffer != nullptr && source != nullptr)
 		{
 			size_t destRow{destOriginRow}, destCol{destOriginCol};
-			std::cout << "Copying to row " << destOriginRow << " col " << destOriginCol << std::endl;
-			std::cout << "Source image has " << source->count(255,255,255) << " white pixels\n";
+//			std::cout << "Copying to row " << destOriginRow << " col " << destOriginCol << std::endl;
+//			std::cout << "Source image has " << source->count(255,255,255) << " white pixels\n";
 			switch (_numComponents)
 			{
 			case 3:
@@ -100,6 +100,6 @@ namespace dagui
 				break;
 			}
 		}
-		std::cout << "Destination image has " << this->count(255,255,255) << " white pixels\n";
+//		std::cout << "Destination image has " << this->count(255,255,255) << " white pixels\n";
 	}
 }

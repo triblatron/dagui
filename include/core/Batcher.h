@@ -11,6 +11,7 @@
 
 #include <map>
 #include <string_view>
+#include <cstdint>
 
 namespace dagbase
 {
@@ -27,18 +28,44 @@ namespace dagui
     public:
         void configure(dagbase::ConfigurationElement& config);
 
-        void addRenderBin(const RenderBinKey& key, RenderBin* bin)
+        RenderBinMap::iterator addRenderBin(const RenderBinKey& key, RenderBin* bin)
         {
             if (bin)
             {
-                _renderBins.m.emplace(key, bin);
+                auto p = _renderBins.m.emplace(key, bin);
                 _renderBinArray.a.emplace_back(bin);
+                return p.first;
+            }
+            else
+            {
+                return end();
             }
         }
 
-        RenderBinMap::iterator findRenderBin(const RenderBinKey& key)
+        std::int32_t allocateTexture()
         {
-            return _renderBins.m.find(key);
+            return _nextTextureIndex++;
+        }
+
+        RenderBinMap::iterator findOrCreateRenderBin(const RenderBinKey& key)
+        {
+            if (auto it = _renderBins.m.find(key); it!=_renderBins.m.end())
+            {
+                return it;
+            }
+            else
+            {
+                if (_meshProto)
+                {
+                    auto *bin = new RenderBin();
+                    bin->setMesh(new ShapeMesh(*_meshProto));
+                    return addRenderBin(key, bin);
+                }
+                else
+                {
+                    return end();
+                }
+            }
         }
 
         RenderBinMap::iterator end()
@@ -60,5 +87,7 @@ namespace dagui
     private:
         RenderBinMap _renderBins;
         RenderBinArray _renderBinArray;
+        ShapeMesh* _meshProto{nullptr};
+        std::int32_t _nextTextureIndex{0};
     };
 }

@@ -16,9 +16,12 @@
 #include "core/Atom.h"
 #include "core/Style.h"
 #include "ShapeFactory.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 namespace dagui
 {
+    class FontImageSource;
     class Style;
 
     class DAGUI_API RootWidget : public dagui::Widget
@@ -52,7 +55,6 @@ namespace dagui
     private:
         using WidgetLookup = dagbase::SearchableMapFromAtom<std::unordered_map<dagbase::Atom, Widget*>>;
         WidgetLookup _widgetLookup;
-
         StyleLookup _styles;
         glm::ivec2 _size{};
     };

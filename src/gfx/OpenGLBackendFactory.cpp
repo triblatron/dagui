@@ -14,4 +14,9 @@ namespace dagui
     {
         return new OpenGLMesh();
     }
+
+    TextureAtlasBackend *OpenGLBackendFactory::createTextureAtlas(TextureAtlas *atlas)
+    {
+        return nullptr;
+    }
 }

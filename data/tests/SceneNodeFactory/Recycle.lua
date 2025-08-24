@@ -11,7 +11,7 @@ root=
 	},
 	{
 		cmd="create",
-		class="Text",
+		class="ClipGroup",
 		expectedId=0,
 	}
 }

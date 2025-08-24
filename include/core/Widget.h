@@ -23,6 +23,7 @@
 namespace dagui
 {
     class Batcher;
+    class GraphicsBackendFactory;
     class SceneNode;
     class Shape;
     class ShapeFactory;
@@ -48,19 +49,10 @@ namespace dagui
             return _id;
         }
 
-        void setShape(Shape* shape)
+        void addShape(Shape* shape)
         {
-            _shape = shape;
-        }
-
-        Shape* shape()
-        {
-            return _shape;
-        }
-
-        const Shape* shape() const
-        {
-            return _shape;
+            if (shape)
+                _shapes.a.emplace_back(shape);
         }
 
         void setX(int x)
@@ -111,13 +103,13 @@ namespace dagui
             return nullptr;
         }
 
-        virtual void draw(Batcher& batcher);
+        virtual void draw(Batcher& batcher, GraphicsBackendFactory& factory);
     private:
         glm::ivec2 _pos{0,0};
         using Properties=dagbase::SearchableMap<std::unordered_map<dagbase::Atom, dagbase::Variant>>;
         Properties _props;
         dagbase::Atom _id;
-        using ChildArray = std::vector<Widget*>;
+        using ChildArray = dagbase::SearchableArray<std::vector<Widget*>>;
         ChildArray _children;
         using ConstraintArray = dagbase::SearchableArray<std::vector<Constraint>>;
         ConstraintArray _constraints;
@@ -125,6 +117,7 @@ namespace dagui
         dagbase::Atom _styleClass;
         StyleRef _style;
         Widget* _parent{nullptr};
-        Shape* _shape{nullptr};
+        using ShapeArray = dagbase::SearchableArray<std::vector<Shape*>>;
+        ShapeArray _shapes;
     };
 }

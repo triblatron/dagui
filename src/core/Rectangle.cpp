@@ -193,7 +193,7 @@ namespace dagui
             addCorner(_x+(_width-_cornerRadius), _y+(_height-_cornerRadius), _cornerRadius, _cornerRadius, tess);
             tess.write(mesh);
         }
-        clearFlag(FLAGS_DIRTY_BIT);
+        clearFlag(FLAGS_DIRTY_TESSELLATION_BIT);
     }
 
     void Rectangle::addSubRectangle(float x, float y, float width, float height, Tessellation& tess)

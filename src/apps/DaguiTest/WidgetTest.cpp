@@ -15,6 +15,11 @@
 #include "core/ShapeFactory.h"
 #include "core/Batcher.h"
 #include "test/TestUtils.h"
+#include "core/GraphicsBackendFactory.h"
+#include "gfx/TextureAtlas.h"
+#include "gfx/TextureAtlasBackend.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
@@ -33,6 +38,9 @@ TEST_P(WidgetFactory_testCreate, testExpectedTree)
     ASSERT_NE(nullptr, config);
     dagui::WidgetFactory sut;
     dagui::ShapeFactory shapeFactory;
+    FT_Library freeTypeLib = nullptr;
+    FT_Init_FreeType(&freeTypeLib);
+    sut.setFreeType(freeTypeLib);
     auto tree = sut.create(*config, shapeFactory);
     auto isNotNull = std::get<2>(GetParam());
     ASSERT_EQ(isNotNull, tree!=nullptr);
@@ -47,6 +55,7 @@ TEST_P(WidgetFactory_testCreate, testExpectedTree)
     }
     delete tree;
     delete config;
+    FT_Done_FreeType(freeTypeLib);
 }
 
 INSTANTIATE_TEST_SUITE_P(WidgetFactory, WidgetFactory_testCreate, ::testing::Values(
@@ -54,10 +63,10 @@ INSTANTIATE_TEST_SUITE_P(WidgetFactory, WidgetFactory_testCreate, ::testing::Val
     std::make_tuple("data/tests/WidgetFactory/oneWindow.lua", &dagbase::ConfigurationElement::fromFile, true, "id", std::string("test"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/oneWindowWithChild.lua", &dagbase::ConfigurationElement::fromFile, true, "numChildren", std::int64_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/rootWithNestedChildren.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.test.title", std::string("Hello, Dagui!"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-    std::make_tuple("data/tests/WidgetFactory/rootWithNestedChildren.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.clickme.text", std::string("Click me"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+    std::make_tuple("data/tests/WidgetFactory/rootWithNestedChildren.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.clickme.text.text", std::string("Click me"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/rootWithNestedChildren.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.root.numChildren", std::int64_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.vertical.numChildren", std::int64_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-    std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.label.text", std::string("A label"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+    std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.label.text.text", std::string("A label"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "width", std::int64_t{ 1920 }, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "height", std::int64_t{ 1080 }, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
     ));
@@ -88,15 +97,15 @@ TEST_P(Widget_testProperties, testExpectedValue)
 }
 
 INSTANTIATE_TEST_SUITE_P(Widget, Widget_testProperties, ::testing::Values(
-        std::make_tuple("data/tests/Widget/Label.lua", "text", "test", 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Widget/Label.lua", "text.text", "test", 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.test.layoutProperties.horizAlign", std::int64_t(dagui::LayoutProperties::HORIZ_ALIGN_CENTRE), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.test.layoutProperties.verticalAlign", std::int64_t(dagui::LayoutProperties::VERTICAL_ALIGN_CENTRE), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.test.layoutProperties.spacing", 5.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.test.layoutProperties.padding[0]", 1.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.styleClass", std::string("label"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.shape.class", std::string("Rectangle"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.shapes[0].class", std::string("Rectangle"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "styles.label.border", 4.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.shape.cornerRadius", 16.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.shapes[0].cornerRadius", 16.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/WindowWithVerticalLayout.lua", "lookup.label1.style.border", 4.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
 
@@ -235,6 +244,80 @@ class Widget_testDraw : public ::testing::TestWithParam<std::tuple<const char*, 
 
 };
 
+class MockMeshBackend : public dagui::MeshBackend
+{
+public:
+    MOCK_METHOD(void, addVertexBuffer, (), (override));
+
+    MOCK_METHOD(void, allocate, (), (override));
+
+    MOCK_METHOD(void, uploadVertices, (std::size_t bufferIndex, dagui::AttributeArray& a), (override));
+
+    MOCK_METHOD(void, uploadIndices, (dagui::IndexArray& a), (override));
+
+    MOCK_METHOD(void, draw, (), (override));
+
+    MOCK_METHOD(dagbase::Variant, find, (std::string_view path), (const, override));
+};
+
+class MockTextureAtlasBackend : public dagui::TextureAtlasBackend
+{
+public:
+    MOCK_METHOD(void, allocate, (), (override));
+    MOCK_METHOD(void, bind, (), (override));
+    MOCK_METHOD(void, setParameters, (), (override));
+    MOCK_METHOD(void, upload, (dagui::Image&), (override));
+};
+
+class MockGraphicsBackendFactory : public dagui::GraphicsBackendFactory
+{
+public:
+    MockGraphicsBackendFactory()
+    {
+        ON_CALL(*this, createMesh).WillByDefault([this](dagui::Mesh* mesh) {
+            auto backend = new MockMeshBackend();
+            EXPECT_CALL(*backend, addVertexBuffer()).Times(::testing::AnyNumber());
+            EXPECT_CALL(*backend, allocate()).Times(::testing::AnyNumber());
+            EXPECT_CALL(*backend, uploadVertices(::testing::_, ::testing::_)).Times(::testing::AnyNumber());
+            EXPECT_CALL(*backend, uploadIndices(::testing::_)).Times(::testing::AnyNumber());
+
+            _meshes.emplace_back(backend);
+
+            return backend;
+        });
+
+        ON_CALL(*this, createTextureAtlas).WillByDefault([this](dagui::TextureAtlas* atlas) {
+            auto backend = new MockTextureAtlasBackend();
+            EXPECT_CALL(*backend, allocate()).Times(::testing::AnyNumber());
+            EXPECT_CALL(*backend, bind()).Times(::testing::AnyNumber());
+            EXPECT_CALL(*backend, setParameters()).Times(::testing::AnyNumber());
+            EXPECT_CALL(*backend, upload(::testing::_)).Times(::testing::AnyNumber());
+
+            _atlases.emplace_back(backend);
+
+            return backend;
+        });
+    }
+
+    ~MockGraphicsBackendFactory() override
+    {
+        for (auto obj : _meshes)
+        {
+            delete obj;
+        }
+
+        for (auto obj : _atlases)
+        {
+            delete obj;
+        }
+    }
+    MOCK_METHOD(dagui::MeshBackend*, createMesh, (dagui::Mesh*), (override));
+    MOCK_METHOD(dagui::TextureAtlasBackend*, createTextureAtlas, (dagui::TextureAtlas *atlas), (override));
+private:
+    std::vector<MockMeshBackend*> _meshes;
+    std::vector<MockTextureAtlasBackend*> _atlases;
+};
+
 TEST_P(Widget_testDraw, testExpectedValue)
 {
     auto widgetConfigStr = std::get<0>(GetParam());
@@ -253,21 +336,41 @@ TEST_P(Widget_testDraw, testExpectedValue)
         batcherConfig = dagbase::ConfigurationElement::fromFile(lua, batcherConfigStr);
         ASSERT_NE(nullptr, batcherConfig);
     }
+
     dagui::WidgetFactory widgetFactory;
     dagui::ShapeFactory shapeFactory;
+    FT_Library lib = nullptr;
+    FT_Init_FreeType(&lib);
+    shapeFactory.setFreeTypeLib(lib);
+    dagbase::ConfigurationElement* shapeFactoryConfig = nullptr;
+    {
+        dagbase::Lua lua;
+
+        shapeFactoryConfig = dagbase::ConfigurationElement::fromFile(lua, "etc/ShapeFactory.lua");
+        ASSERT_NE(nullptr, shapeFactoryConfig);
+    }
+    shapeFactory.configure(*shapeFactoryConfig);
     auto widgetTree = widgetFactory.create(*widgetConfig, shapeFactory);
     ASSERT_NE(nullptr, widgetTree);
     dagui::Batcher batcher;
     batcher.configure(*batcherConfig);
-    widgetTree->draw(batcher);
+    MockGraphicsBackendFactory backendFactory;
+    EXPECT_CALL(backendFactory, createMesh(::testing::_)).Times(::testing::AtLeast(1));
+    EXPECT_CALL(backendFactory, createTextureAtlas(::testing::_)).Times(::testing::AtLeast(1));
+    widgetTree->draw(batcher, backendFactory);
     auto path = std::get<2>(GetParam());
     auto value = std::get<3>(GetParam());
     auto tolerance = std::get<4>(GetParam());
     auto op = std::get<5>(GetParam());
     auto actualValue = batcher.find(path);
     assertComparison(value, actualValue, tolerance, op);
+    FT_Done_FreeType(lib);
+    delete batcherConfig;
+    delete widgetTree;
+    delete widgetConfig;
 }
 
 INSTANTIATE_TEST_SUITE_P(Widget, Widget_testDraw, ::testing::Values(
-        std::make_tuple("data/tests/Widget/Label.lua", "data/tests/Widget/TwoBins.lua", "renderBins[0].mesh.numVertices", std::uint32_t(0), 0.0, dagbase::ConfigurationElement::RELOP_GT)
+        std::make_tuple("data/tests/Widget/Label.lua", "data/tests/Widget/TwoBins.lua", "renderBins[0].mesh.numVertices", std::uint32_t(0), 0.0, dagbase::ConfigurationElement::RELOP_GT),
+        std::make_tuple("data/tests/Widget/Label.lua", "data/tests/Widget/TwoBins.lua", "renderBins[1].mesh.numTriangles", std::uint32_t(8), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

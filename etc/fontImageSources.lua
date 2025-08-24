@@ -1,0 +1,14 @@
+root=
+{
+	{
+		name="regular",
+		fontFilename="data/liberation-fonts-ttf-2.1.5/LiberationMono-Regular.ttf",
+		ranges=
+		{
+			{
+				first=0x20,
+				last=0x7e
+			},
+		}
+	},
+}

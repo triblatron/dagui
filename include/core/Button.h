@@ -10,6 +10,7 @@
 #include "ShapeFactory.h"
 
 #include <string>
+#include "core/Text.h"
 
 namespace dagui
 {
@@ -20,12 +21,12 @@ namespace dagui
 
         void setText(const std::string& text)
         {
-            _text = text;
+            _text->setText(text);
         }
 
         const std::string& text() const
         {
-            return _text;
+            return _text->text();
         }
 
         void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory,
@@ -33,6 +34,6 @@ namespace dagui
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
     private:
-        std::string _text;
+        Text* _text{nullptr};
     };
 }

@@ -36,7 +36,7 @@ namespace dagui
 
         if (_face->glyph->format != FT_GLYPH_FORMAT_BITMAP)
         {
-            std::cout << "Rendering glyph\n";
+//            std::cout << "Rendering glyph\n";
 
             int error = FT_Render_Glyph( _face->glyph,   /* glyph slot  */
                                      FT_RENDER_MODE_NORMAL ); /* render mode */
@@ -49,7 +49,7 @@ namespace dagui
             }
         }
         auto image = new Image(width, height, 1, Image::ORIGIN_TOP_LEFT, _face->glyph->bitmap.buffer);
-        std::cout << "Image has " << image->count(255,255,255) << " white pixels\n";
+//        std::cout << "Image has " << image->count(255,255,255) << " white pixels\n";
         return image;
     }
 }

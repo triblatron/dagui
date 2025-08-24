@@ -23,9 +23,17 @@ namespace dagui
     class DAGUI_API Tessellation
     {
     public:
+        enum PrimitiveType : std::uint32_t
+        {
+            PRIMTYPE_UNKNOWN,
+            PRIMTYPE_TRIANGLES
+        };
+    public:
         Tessellation() = default;
 
         void addTriangleFan(const std::vector<ShapeVertex>& vertices);
+
+        void addVertex(float x, float y, float r, float g, float b, float a, float u, float v);
 
         void addVertex(const ShapeVertex& v)
         {
@@ -41,6 +49,12 @@ namespace dagui
                 _indices.emplace_back(it->second);
             }
         }
+
+        void begin(PrimitiveType primType);
+
+        void end();
+
+        void addTriangle();
 
         void addQuad(const ShapeVertex v[4]);
 
@@ -68,6 +82,9 @@ namespace dagui
         std::map<ShapeVertex, std::size_t> _uniqueVertices;
         std::vector<ShapeVertex> _vertices;
         std::vector<std::uint16_t> _indices;
+        using VertexBuffer = std::vector<ShapeVertex>;
+        VertexBuffer _primVertices;
         std::size_t _numTriangles{0};
+        bool _in{false};
     };
 }

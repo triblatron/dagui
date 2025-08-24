@@ -3,14 +3,13 @@
 //
 #include "config/config.h"
 #include <cstdlib>
-#if defined(HAVE_WINDOWS_H)
-#include <Windows.h>
-#endif
-#if defined(__linux__) || defined(_WIN32)
-#include <GL/glut.h>
-#else
-#include <glut.h>
-#endif // __linux__ || _WIN32
+#if defined(__APPLE__)
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#elif defined(__linux__) || defined(_WIN32)
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#endif // __APPLE__
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include <iostream>
@@ -32,6 +31,7 @@ static FT_Face     face{nullptr};      /* handle to face object */
 static dagui::TextureAtlas atlas;//(512, 512, 1);
 static dagui::OpenGLRenderer renderer;
 static std::string text;
+GLFWwindow* window = nullptr;
 
 void copyGlyphToImage(FT_GlyphSlot glyph, dagui::Image* image)
 {
@@ -85,7 +85,7 @@ void onReshape(int width, int height)
     glLoadIdentity();
 }
 
-void onDisplay()
+void display(dagui::Renderer& renderer)
 {
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glEnable(GL_TEXTURE_2D);
@@ -105,15 +105,51 @@ void onDisplay()
     // glTexCoord2d(0.0,1.0);
     // glVertex2d(0.0,512.0);
     // glEnd();
-    glutSwapBuffers();
+    glfwSwapBuffers(window);
     glDisable(GL_TEXTURE_2D);
+}
+
+static void error_callback(int error, const char* description)
+{
+    fprintf(stderr, "Error:%d(%s)\n", error, description);
 }
 
 int main(int argc, char *argv[])
 {
+    glfwSetErrorCallback(error_callback);
     if (argc != 3)
     {
         std::cerr << "Usage: " << argv[0] << " <fontFilename> <text>\n";
+
+        return -1;
+    }
+    if (!glfwInit())
+    {
+        std::cerr << "Failed to initialize GLFW" << '\n';
+
+        return -1;
+    }
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
+    glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
+    window = glfwCreateWindow(512, 512, "My Title", NULL, NULL);
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+    if (!window)
+    {
+        // Window or OpenGL context creation failed
+        std::cerr << "Failed to open GLFW window." << '\n';
+
+        glfwTerminate();
+        return -1;
+    }
+    std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+    GLenum err = glewInit();
+
+    if (GLEW_OK != err)
+    {
+        std::cerr << "Failed to init GLEW with error: " << glewGetErrorString(err) << ", bailing\n";
 
         return -1;
     }
@@ -159,13 +195,19 @@ int main(int argc, char *argv[])
     //         return -6;
     //     }
     // }
-    glutInit(&argc, argv);
-    glutInitWindowPosition(0,0);
-    glutInitWindowSize(512,512);
-    glutInitDisplayMode(GLUT_RGBA|GLUT_DEPTH|GLUT_DOUBLE);
-    glutCreateWindow("demoText");
     init();
-    glutReshapeFunc(onReshape);
-    glutDisplayFunc(onDisplay);
-    glutMainLoop();
+    while (!glfwWindowShouldClose(window))
+    {
+        int width, height;
+        glfwGetFramebufferSize(window, &width, &height);
+
+        //glViewport(0, 0, width, height);
+        onReshape(width, height);
+        display(renderer);
+        glfwPollEvents();
+    }
+    glfwDestroyWindow(window);
+    glfwTerminate();
+
+    return 0;
 }

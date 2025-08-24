@@ -6,6 +6,7 @@
 
 #include "core/RootWidget.h"
 #include "core/Style.h"
+#include "gfx/FontImageSource.h"
 
 namespace dagui
 {

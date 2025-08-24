@@ -5,10 +5,12 @@
 #pragma once
 
 #include "core/Widget.h"
-#include "ShapeFactory.h"
+#include "core/ShapeFactory.h"
+#include "core/Text.h"
 
 namespace dagui
 {
+    class Rectangle;
 
     class DAGUI_API Label : public Widget
     {
@@ -19,12 +21,12 @@ namespace dagui
 
         void setText(const std::string& text)
         {
-            _text = text;
+            _text->setText(text);
         }
 
         const std::string& text() const
         {
-            return _text;
+            return _text->text();
         }
 
         void configure(dagbase::ConfigurationElement &config, WidgetFactory &factory,
@@ -32,9 +34,10 @@ namespace dagui
 
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
 
-        void draw(Batcher& batcher) override;
+        void draw(Batcher& batcher, GraphicsBackendFactory& factory) override;
     private:
-        std::string _text;
+        Shape* _face{nullptr};
+        Text* _text{nullptr};
         dagbase::Vec2 _bounds;
     };
 }

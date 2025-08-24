@@ -97,4 +97,48 @@ namespace dagui
         addVertex(v[0]);
         _numTriangles+=2;
     }
+
+    void Tessellation::addTriangle()
+    {
+        if (_in && !_primVertices.empty() && _primVertices.size() % 3 == 0)
+        {
+            for (auto v: _primVertices)
+            {
+                addVertex(v);
+            }
+            _primVertices.clear();
+            _numTriangles++;
+        }
+    }
+
+    void Tessellation::addVertex(float x, float y, float r, float g, float b, float a, float u, float v)
+    {
+        ShapeVertex vert;
+        vert.x = x;
+        vert.y = y;
+        vert.r = r;
+        vert.g = g;
+        vert.b = b;
+        vert.a = a;
+        vert.u = u;
+        vert.v = v;
+        if (_in)
+        {
+            _primVertices.emplace_back(vert);
+        }
+        else
+        {
+            addVertex(vert);
+        }
+    }
+
+    void Tessellation::begin(Tessellation::PrimitiveType primType)
+    {
+        _in = true;
+    }
+
+    void Tessellation::end()
+    {
+        _in = false;
+    }
 }

@@ -396,5 +396,5 @@ TEST_P(ShapeFlags_testRoundTrip, testRoundTrip)
 
 INSTANTIATE_TEST_SUITE_P(ShapeFlags, ShapeFlags_testRoundTrip, ::testing::Values(
         std::make_tuple("FLAGS_NONE", dagui::Shape::FLAGS_NONE),
-        std::make_tuple("FLAGS_DIRTY_BIT", dagui::Shape::FLAGS_DIRTY_BIT)
+        std::make_tuple("FLAGS_DIRTY_TESSELLATION_BIT", dagui::Shape::FLAGS_DIRTY_TESSELLATION_BIT)
         ));

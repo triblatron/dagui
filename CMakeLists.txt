@@ -4,7 +4,6 @@ PROJECT( Dagui )
 SET(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-FIND_PACKAGE(GLUT REQUIRED)
 FIND_PACKAGE(glfw3 REQUIRED)
 FIND_PACKAGE(OpenGL COMPONENTS OpenGL REQUIRED)
 FIND_PACKAGE(Freetype REQUIRED)
@@ -89,6 +88,9 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
 		include/core/GraphicsBackendFactory.h
 		include/gfx/OpenGLBackendFactory.h
 		include/core/Tessellation.h
+		include/core/RenderBinKey.h
+		include/gfx/TextureAtlasBackend.h
+		include/gfx/OpenGLTextureAtlas.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -154,6 +156,9 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
 		src/gfx/OpenGLMesh.cpp
 		src/gfx/OpenGLBackendFactory.cpp
 		src/core/Tessellation.cpp
+		src/core/RenderBinKey.cpp
+		src/gfx/TextureAtlasBackend.cpp
+		src/gfx/OpenGLTextureAtlas.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")
@@ -177,7 +182,7 @@ TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_B
 
 set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
 LINK_DIRECTORIES( ${DEP_ROOT}/lib )
-TARGET_LINK_LIBRARIES( dagui PRIVATE dagbase ${LUA_LIBRARY} GLEW::glew GLUT::GLUT OpenGL::GL OpenGL::GLU Freetype::Freetype glm::glm )
+TARGET_LINK_LIBRARIES( dagui PRIVATE dagbase ${LUA_LIBRARY} GLEW::glew OpenGL::GL OpenGL::GLU Freetype::Freetype glm::glm )
 #~ add_subdirectory(ThirdParty/dagbase)
 add_subdirectory(ThirdParty/dag)
 add_subdirectory(src/apps/DaguiTest)

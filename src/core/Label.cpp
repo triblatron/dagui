@@ -15,16 +15,22 @@ namespace dagui
     :
     Widget(dagbase::Atom::intern("Label"), parent)
     {
-        // Do nothing.
     }
 
     void Label::configure(dagbase::ConfigurationElement &config, WidgetFactory &factory, ShapeFactory &shapeFactory)
     {
         Widget::configure(config, factory, shapeFactory);
 
+        if (auto element = config.findElement("face"); element)
+        {
+            _face = shapeFactory.createShape(*element);
+            addShape(_face);
+        }
+
         if (auto element=config.findElement("text"); element)
         {
-            _text = element->asString();
+            _text = dynamic_cast<Text*>(shapeFactory.createShape(*element));
+            addShape(_text);
         }
 
         if (auto element=config.findElement("bounds"); element)
@@ -41,9 +47,12 @@ namespace dagui
             return retval;
         }
 
-        retval = dagbase::findEndpoint(path, "text", text());
-        if (retval.has_value())
-            return retval;
+        if (_text)
+        {
+            retval = dagbase::findInternal(path, "text", *_text);
+            if (retval.has_value())
+                return retval;
+        }
 
         retval = dagbase::findEndpoint(path, "bounds", dagbase::Variant(_bounds));
         if (retval.has_value())
@@ -52,8 +61,8 @@ namespace dagui
         return {};
     }
 
-    void Label::draw(Batcher &batcher)
+    void Label::draw(Batcher &batcher, GraphicsBackendFactory& factory)
     {
-        Widget::draw(batcher);
+        Widget::draw(batcher, factory);
     }
 }

@@ -2,6 +2,20 @@ root=
 {
 	class="RootWidget",
 	id="root",
+	fontImageSources=
+	{
+		{
+			name="regular",
+			fontFilename="data/liberation-fonts-ttf-2.1.5/LiberationMono-Regular.ttf",
+			ranges=
+			{
+				{
+					first=0x20,
+					last=0x7e
+				},
+			}
+		},
+	},
 	children=
 	{
 		{
@@ -13,7 +27,11 @@ root=
 				{
 					class="Button",
 					id="clickme",
-					text="Click me",
+					text=
+					{
+						class="Text",
+						text="Click me",
+					},
 				},
 			},
 		}

@@ -22,6 +22,9 @@
 #include "core/ShapeFactory.h"
 #include "gfx/OpenGLMesh.h"
 #include "gfx/OpenGLBackendFactory.h"
+#include "core/WidgetFactory.h"
+#include "core/Widget.h"
+#include "core/Batcher.h"
 
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
@@ -88,13 +91,13 @@ void display(dagui::Renderer& renderer)
     glEnd();
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
+    glColor3f(1.0f, 0.0f, 1.0f);
     vertexBuffer.draw(GL_TRIANGLES, 0, a->size());
     backend->draw();
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
     glfwSwapBuffers(window);
 }
-
 static void error_callback(int error, const char* description)
 {
     fprintf(stderr, "Error:%d(%s)\n", error, description);
@@ -119,7 +122,6 @@ int main(int argc, char* argv[])
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
     glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
-    // glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH/* | GLUT_3_2_CORE_PROFILE*/);
     window = glfwCreateWindow(640, 480, "My Title", NULL, NULL);
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
@@ -182,31 +184,53 @@ int main(int argc, char* argv[])
         }
         dagui::ShapeFactory shapeFactory;
         shape = shapeFactory.createShape(*rectConfig);
+        if (!shape)
+        {
+            std::cerr << "Failed to create Shape, bailing\n";
+
+            return -1;
+        }
     }
     shape->tessellate(mesh);
+    dagui::Widget* widgetTree = nullptr;
+    {
+        dagbase::Lua lua;
+        auto widgetConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/WidgetFactory/rootWithLabel.lua");
+        if (!widgetConfig)
+        {
+            std::cerr << "Failed to load widget config, bailing\n";
+
+            return -1;
+        }
+        dagui::WidgetFactory widgetFactory;
+        dagui::ShapeFactory shapeFactory;
+        widgetTree = widgetFactory.create(*widgetConfig, shapeFactory);
+        if (!widgetTree)
+        {
+            std::cerr << "Failed to create Widget tree, bailing\n";
+
+            return -1;
+        }
+    }
+    dagui::Batcher batcher;
+    {
+        dagbase::Lua lua;
+        auto batcherConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/Batcher/ShapeMesh.lua");
+        if (!batcherConfig)
+        {
+            std::cout << "Failed to load batcher config, bailing\n";
+
+            return -1;
+        }
+        batcher.configure(*batcherConfig);
+    }
     dagui::OpenGLBackendFactory factory;
+    widgetTree->draw(batcher, factory);
+
     backend = factory.createMesh(&mesh);
     mesh.setBackend(backend);
     mesh.allocateBuffers();
     mesh.sendToBackend();
-//        vertexBuffer2.setArray(mesh.attributeArray(0));
-//        vertexBuffer2.allocate();
-//        vertexBuffer2.submit();
-//        indexBuffer.setArray(mesh.indexArray());
-//        indexBuffer.allocate();
-//        indexBuffer.submit();
-//    dagui::ShapeFactory shapeFactory;
-//    {
-//        dagbase::Lua lua;
-//        auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Rect.lua");
-//        if (!config)
-//        {
-//            std::cerr << "Failed to load rectangle config, bailing\n";
-//
-//            return -1;
-//        }
-//        rect.configure(*config, shapeFactory);
-//    }
     std::cout << "sizeof(vertices): " << sizeof(vertices) << std::endl;
     //std::cout << glGetError() << std::endl;
     glm::mat4 model = glm::perspective(glm::radians(45.0),16.0/9.0, 0.1, 1000.0);
