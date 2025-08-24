@@ -8,6 +8,10 @@
 
 #include "config/Export.h"
 
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif // !NOMINMAX
+
 #if defined(_WIN32) || defined(__linux__)
 #include <GL/glew.h>
 #if defined(_WIN32)
