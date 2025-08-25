@@ -50,14 +50,6 @@ struct Vertex
         dagbase::ConfigurationElement::readConfig(config, "a", &a);
     }
 };
-dagui::ShapeMesh    mesh;
-
-dagui::GenericAttributeArray<Vertex>* a = new dagui::GenericAttributeArray<Vertex>();
-GLfloat vertices[] = {
-    -0.5f, -0.5f, 0.0f,  // Bottom-left
-     0.5f, -0.5f, 0.0f,  // Bottom-right
-     0.0f,  0.5f, 0.0f   // Top
-};
 
 void onReshape(int width, int height)
 {
@@ -77,7 +69,6 @@ void display(dagui::Batcher& batcher)
     glColor3f(1.0f, 1.0f, 0.0f);
     dagui::Rectangle rect;
     rect.setSize(1.0f,0.5f);
-//    renderer.drawRect(rect);
     glBegin(GL_TRIANGLES);
     glColor3f(1.0f, 0.0f, 0.0f);
     glVertex2f(0.0f, 0.0f);
@@ -88,8 +79,6 @@ void display(dagui::Batcher& batcher)
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glColor3f(1.0f, 0.0f, 1.0f);
-//    vertexBuffer.draw(GL_TRIANGLES, 0, a->size());
-//    backend->draw();
     batcher.draw();
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
@@ -140,36 +129,6 @@ int main(int argc, char* argv[])
 
         return -1;
     }
-    dagui::ArrayDescriptor descriptor;
-    {
-        dagbase::Lua lua;
-        auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/Vertex.lua");
-        if (!config)
-        {
-            std::cerr << "Failed to load vertex config, bailing\n";
-
-            return -1;
-        }
-        descriptor.configure(*config);
-        a->setDescriptor(descriptor);
-        a->addVertex({-1.0f, -1.0, 1.0f, 0.0f, 0.0f, 1.0f});
-        a->addVertex({0.0f, -1.0, 0.0f, 1.0f, 0.0f, 1.0f});
-        a->addVertex({0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f});
-//        vertexBuffer.setArray(a);
-//        vertexBuffer.allocate();
-//        vertexBuffer.submit();
-    }
-    {
-        dagbase::Lua lua;
-        auto config = dagbase::ConfigurationElement::fromFile(lua, argv[1]);
-        if (!config)
-        {
-            std::cerr << "Failed to load mesh config, bailing\n";
-
-            return -1;
-        }
-        mesh.configure(*config);
-    }
     dagbase::ConfigurationElement* shapeFactoryConfig = nullptr;
     dagui::ShapeFactory shapeFactory;
     FT_Library lib = nullptr;
@@ -188,25 +147,6 @@ int main(int argc, char* argv[])
         }
         shapeFactory.configure(*shapeFactoryConfig);
     }
-//    dagui::Shape* shape = nullptr;
-//    {
-//        dagbase::Lua lua;
-//        auto rectConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/RoundedRectangle.lua");
-//        if (!rectConfig)
-//        {
-//            std::cerr << "Failed to load rectangle config, bailing\n";
-//
-//            return -1;
-//        }
-//        shape = shapeFactory.createShape(*rectConfig);
-//        if (!shape)
-//        {
-//            std::cerr << "Failed to create Shape, bailing\n";
-//
-//            return -1;
-//        }
-//    }
-//    shape->tessellate(mesh);
     dagui::Widget* widgetTree = nullptr;
     {
         dagbase::Lua lua;
@@ -243,12 +183,6 @@ int main(int argc, char* argv[])
 
     widgetTree->draw(batcher, factory);
 
-//    backend = factory.createMesh(&mesh);
-//    mesh.setBackend(backend);
-//    mesh.allocateBuffers();
-//    mesh.sendToBackend();
-//    std::cout << "sizeof(vertices): " << sizeof(vertices) << std::endl;
-    //std::cout << glGetError() << std::endl;
     glm::mat4 model = glm::perspective(glm::radians(45.0),16.0/9.0, 0.1, 1000.0);
     std::cout << "model: " << model << std::endl;
     while (!glfwWindowShouldClose(window))
