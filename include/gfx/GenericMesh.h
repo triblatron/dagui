@@ -280,7 +280,11 @@ namespace dagui
 
         GenericMesh(const GenericMesh<Vertex>& other)
         {
-            _data = other._data;
+            _data.a.reserve(other._data.size());
+            for (auto a : other._data.a)
+            {
+                _data.a.emplace_back(new OpaqueAttributeArray(*a));
+            }
             _numVertices = other._numVertices;
             if (other._indices)
             {
@@ -296,7 +300,11 @@ namespace dagui
                 {
                     delete a;
                 }
-                _data = other._data;
+                _data.a.reserve(other._data.size());
+                for (auto a : other._data.a)
+                {
+                    _data.a.emplace_back(new OpaqueAttributeArray(*a));
+                }
                 _numVertices = other._numVertices;
                 delete _indices;
                 if (other._indices)

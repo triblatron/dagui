@@ -7,6 +7,8 @@
 #include "gfx/OpenGLTextureAtlas.h"
 #include "gfx/Image.h"
 
+#include <GL/glew.h>
+
 namespace dagui
 {
     void OpenGLTextureAtlas::allocate()

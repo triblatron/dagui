@@ -7,6 +7,7 @@
 
 #include "gfx/OpenGLBackendFactory.h"
 #include "gfx/OpenGLMesh.h"
+#include "gfx/OpenGLTextureAtlas.h"
 
 namespace dagui
 {
@@ -17,6 +18,6 @@ namespace dagui
 
     TextureAtlasBackend *OpenGLBackendFactory::createTextureAtlas(TextureAtlas *atlas)
     {
-        return nullptr;
+        return new OpenGLTextureAtlas();
     }
 }

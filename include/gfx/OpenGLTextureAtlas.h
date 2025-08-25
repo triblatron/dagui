@@ -8,7 +8,7 @@
 
 #include "gfx/TextureAtlasBackend.h"
 
-#include <GL/glew.h>
+#include <cstdint>
 
 namespace dagui
 {
@@ -23,7 +23,7 @@ namespace dagui
 
         void upload(Image& image) override;
     private:
-        GLuint _handle{0};
+        std::uint32_t _handle{0};
         bool _allocated{false};
         bool _haveSetParameters{false};
         bool _haveUploaded{false};
