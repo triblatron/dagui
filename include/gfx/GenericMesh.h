@@ -18,6 +18,7 @@
 #include "gfx/MeshBackend.h"
 
 #include <limits>
+#include <algorithm>
 
 namespace dagbase
 {
