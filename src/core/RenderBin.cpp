@@ -6,6 +6,7 @@
 
 #include "core/RenderBin.h"
 #include "core/ConfigurationElement.h"
+#include "gfx/TextureAtlas.h"
 
 namespace dagui
 {
@@ -47,6 +48,10 @@ namespace dagui
 
     void RenderBin::draw()
     {
+        if (_atlas)
+        {
+            _atlas->makeItSo();
+        }
         if (_mesh)
         {
             _mesh->draw();

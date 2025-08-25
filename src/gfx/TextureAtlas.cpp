@@ -5,10 +5,11 @@
 #include "gfx/Image.h"
 #include "gfx/ImageSource.h"
 #include "gfx/BinImageDef.h"
-
-#include <cstring>
 #include "core/BinPackingStrategy.h"
 #include "core/ConfigurationElement.h"
+#include "gfx/TextureAtlasBackend.h"
+
+#include <cstring>
 
 namespace dagui {
 	TextureAtlas::TextureAtlas(std::size_t width, std::size_t height, std::size_t numComponents)
@@ -117,4 +118,16 @@ namespace dagui {
 		
 		return ERR_UNKNOWN;
 	}
+
+    void TextureAtlas::makeItSo()
+    {
+        if (_backend)
+        {
+            _backend->allocate();
+            _backend->bind();
+            _backend->setParameters();
+            if (_binImage)
+                _backend->upload(*_binImage);
+        }
+    }
 }

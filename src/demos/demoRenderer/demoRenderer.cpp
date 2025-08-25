@@ -70,11 +70,12 @@ void onReshape(int width, int height)
     glViewport(0,0,width,height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+    gluOrtho2D(0.0, width, 0.0, height);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
 
-void display(dagui::Renderer& renderer)
+void display(dagui::Renderer& renderer, dagui::Batcher& batcher)
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -94,6 +95,7 @@ void display(dagui::Renderer& renderer)
     glColor3f(1.0f, 0.0f, 1.0f);
     vertexBuffer.draw(GL_TRIANGLES, 0, a->size());
     backend->draw();
+    batcher.draw();
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
     glfwSwapBuffers(window);
@@ -172,6 +174,24 @@ int main(int argc, char* argv[])
         }
         mesh.configure(*config);
     }
+    dagbase::ConfigurationElement* shapeFactoryConfig = nullptr;
+    dagui::ShapeFactory shapeFactory;
+    FT_Library lib = nullptr;
+    FT_Init_FreeType(&lib);
+    shapeFactory.setFreeTypeLib(lib);
+
+    {
+        dagbase::Lua lua;
+
+        shapeFactoryConfig = dagbase::ConfigurationElement::fromFile(lua, "etc/ShapeFactory.lua");
+        if (!shapeFactoryConfig)
+        {
+            std::cerr << "Failed to load ShapeFactory config, bailing\n";
+
+            return -1;
+        }
+        shapeFactory.configure(*shapeFactoryConfig);
+    }
     dagui::Shape* shape = nullptr;
     {
         dagbase::Lua lua;
@@ -182,7 +202,6 @@ int main(int argc, char* argv[])
 
             return -1;
         }
-        dagui::ShapeFactory shapeFactory;
         shape = shapeFactory.createShape(*rectConfig);
         if (!shape)
         {
@@ -195,7 +214,7 @@ int main(int argc, char* argv[])
     dagui::Widget* widgetTree = nullptr;
     {
         dagbase::Lua lua;
-        auto widgetConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/WidgetFactory/rootWithLabel.lua");
+        auto widgetConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/Widget/RootWithLabel.lua");
         if (!widgetConfig)
         {
             std::cerr << "Failed to load widget config, bailing\n";
@@ -203,7 +222,6 @@ int main(int argc, char* argv[])
             return -1;
         }
         dagui::WidgetFactory widgetFactory;
-        dagui::ShapeFactory shapeFactory;
         widgetTree = widgetFactory.create(*widgetConfig, shapeFactory);
         if (!widgetTree)
         {
@@ -215,7 +233,7 @@ int main(int argc, char* argv[])
     dagui::Batcher batcher;
     {
         dagbase::Lua lua;
-        auto batcherConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/Batcher/ShapeMesh.lua");
+        auto batcherConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/Widget/TwoBins.lua");
         if (!batcherConfig)
         {
             std::cout << "Failed to load batcher config, bailing\n";
@@ -224,7 +242,9 @@ int main(int argc, char* argv[])
         }
         batcher.configure(*batcherConfig);
     }
+
     dagui::OpenGLBackendFactory factory;
+
     widgetTree->draw(batcher, factory);
 
     backend = factory.createMesh(&mesh);
@@ -240,9 +260,14 @@ int main(int argc, char* argv[])
         int width, height;
         glfwGetFramebufferSize(window, &width, &height);
 
-        glViewport(0, 0, width, height);
+        glViewport(0,0,width,height);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluOrtho2D(0.0, width, 0.0, height);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
 
-        display(renderer);
+        display(renderer, batcher);
         glfwPollEvents();
     }
     glfwDestroyWindow(window);

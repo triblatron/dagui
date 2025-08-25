@@ -20,6 +20,8 @@ namespace dagbase
 
 namespace dagui
 {
+    class TextureAtlas;
+
     class DAGUI_API RenderBin
     {
     public:
@@ -43,6 +45,7 @@ namespace dagui
 
         void draw();
     private:
-        ShapeMesh* _mesh;
+        ShapeMesh* _mesh{nullptr};
+        TextureAtlas* _atlas{nullptr};
     };
 }

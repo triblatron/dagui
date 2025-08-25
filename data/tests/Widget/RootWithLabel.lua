@@ -1,0 +1,33 @@
+root=
+{
+	class="RootWidget",
+	children=
+	{
+		{
+			class="Label",
+			text=
+			{
+				class="Text",
+				text="test",
+				fontFace="regular",
+			},
+			face=
+			{
+				class="Rectangle",
+				x=0.0,
+				y=0.0,
+				width=200.0,
+				height=100.0,
+				cornerRadius=10.0,
+				numCornerVertices=9,
+				colour=
+				{
+					1.0,
+					0.0,
+					0.0,
+					1.0,
+				}
+			},
+		}
+	}
+}

@@ -101,6 +101,8 @@ namespace dagui
             _backend = backend;
         }
 
+        void makeItSo();
+
         TextureAtlasBackend* backend()
         {
             return _backend;

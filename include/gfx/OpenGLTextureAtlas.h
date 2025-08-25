@@ -24,5 +24,8 @@ namespace dagui
         void upload(Image& image) override;
     private:
         GLuint _handle{0};
+        bool _allocated{false};
+        bool _haveSetParameters{false};
+        bool _haveUploaded{false};
     };
 }
