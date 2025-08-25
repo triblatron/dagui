@@ -53,7 +53,6 @@ namespace dagui
     private:
         std::string _text;
         FT_FaceRec_* _face{nullptr};
-        TextureAtlas* _atlas{nullptr};
         std::int32_t _texture{-1};
         void drawTexturedQuad(Tessellation& tess, float x, float y, const ImageDef* imageDef);
         void generateTextureCoordinates(ImageDef& imageDef, BinImageDef& binImageDef);

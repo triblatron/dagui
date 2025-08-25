@@ -56,5 +56,9 @@ namespace dagui
         {
             _mesh->draw();
         }
+        if (_atlas)
+        {
+            _atlas->unMakeItSo();
+        }
     }
 }

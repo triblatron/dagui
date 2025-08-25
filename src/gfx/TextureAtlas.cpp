@@ -130,4 +130,12 @@ namespace dagui {
                 _backend->upload(*_binImage);
         }
     }
+
+    void TextureAtlas::unMakeItSo()
+    {
+        if (_backend)
+        {
+            _backend->unbind();
+        }
+    }
 }

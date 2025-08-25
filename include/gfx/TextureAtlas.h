@@ -103,6 +103,8 @@ namespace dagui
 
         void makeItSo();
 
+        void unMakeItSo();
+
         TextureAtlasBackend* backend()
         {
             return _backend;

@@ -39,6 +39,16 @@ namespace dagui
             return _mesh;
         }
 
+        void setAtlas(TextureAtlas* atlas)
+        {
+            _atlas = atlas;
+        }
+
+        TextureAtlas* atlas()
+        {
+            return _atlas;
+        }
+
         dagbase::Variant find(std::string_view path) const;
 
         void configure(dagbase::ConfigurationElement& config);

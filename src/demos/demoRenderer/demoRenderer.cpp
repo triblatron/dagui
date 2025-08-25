@@ -30,12 +30,6 @@
 #include <glm/ext/matrix_clip_space.hpp>
 
 GLFWwindow* window = nullptr;
-dagui::gl::VertexBuffer vertexBuffer;
-dagui::gl::VertexBuffer vertexBuffer2;
-dagui::gl::IndexBuffer indexBuffer;
-dagui::OpenGLRenderer renderer;
-dagui::Rectangle rect;
-dagui::MeshBackend* backend = nullptr;
 
 struct Vertex
 {
@@ -75,7 +69,7 @@ void onReshape(int width, int height)
     glLoadIdentity();
 }
 
-void display(dagui::Renderer& renderer, dagui::Batcher& batcher)
+void display(dagui::Batcher& batcher)
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -83,7 +77,7 @@ void display(dagui::Renderer& renderer, dagui::Batcher& batcher)
     glColor3f(1.0f, 1.0f, 0.0f);
     dagui::Rectangle rect;
     rect.setSize(1.0f,0.5f);
-    renderer.drawRect(rect);
+//    renderer.drawRect(rect);
     glBegin(GL_TRIANGLES);
     glColor3f(1.0f, 0.0f, 0.0f);
     glVertex2f(0.0f, 0.0f);
@@ -92,12 +86,14 @@ void display(dagui::Renderer& renderer, dagui::Batcher& batcher)
     glEnd();
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glColor3f(1.0f, 0.0f, 1.0f);
-    vertexBuffer.draw(GL_TRIANGLES, 0, a->size());
-    backend->draw();
+//    vertexBuffer.draw(GL_TRIANGLES, 0, a->size());
+//    backend->draw();
     batcher.draw();
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glfwSwapBuffers(window);
 }
 static void error_callback(int error, const char* description)
@@ -159,9 +155,9 @@ int main(int argc, char* argv[])
         a->addVertex({-1.0f, -1.0, 1.0f, 0.0f, 0.0f, 1.0f});
         a->addVertex({0.0f, -1.0, 0.0f, 1.0f, 0.0f, 1.0f});
         a->addVertex({0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f});
-        vertexBuffer.setArray(a);
-        vertexBuffer.allocate();
-        vertexBuffer.submit();
+//        vertexBuffer.setArray(a);
+//        vertexBuffer.allocate();
+//        vertexBuffer.submit();
     }
     {
         dagbase::Lua lua;
@@ -192,25 +188,25 @@ int main(int argc, char* argv[])
         }
         shapeFactory.configure(*shapeFactoryConfig);
     }
-    dagui::Shape* shape = nullptr;
-    {
-        dagbase::Lua lua;
-        auto rectConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/RoundedRectangle.lua");
-        if (!rectConfig)
-        {
-            std::cerr << "Failed to load rectangle config, bailing\n";
-
-            return -1;
-        }
-        shape = shapeFactory.createShape(*rectConfig);
-        if (!shape)
-        {
-            std::cerr << "Failed to create Shape, bailing\n";
-
-            return -1;
-        }
-    }
-    shape->tessellate(mesh);
+//    dagui::Shape* shape = nullptr;
+//    {
+//        dagbase::Lua lua;
+//        auto rectConfig = dagbase::ConfigurationElement::fromFile(lua, "data/tests/demoRenderer/RoundedRectangle.lua");
+//        if (!rectConfig)
+//        {
+//            std::cerr << "Failed to load rectangle config, bailing\n";
+//
+//            return -1;
+//        }
+//        shape = shapeFactory.createShape(*rectConfig);
+//        if (!shape)
+//        {
+//            std::cerr << "Failed to create Shape, bailing\n";
+//
+//            return -1;
+//        }
+//    }
+//    shape->tessellate(mesh);
     dagui::Widget* widgetTree = nullptr;
     {
         dagbase::Lua lua;
@@ -247,11 +243,11 @@ int main(int argc, char* argv[])
 
     widgetTree->draw(batcher, factory);
 
-    backend = factory.createMesh(&mesh);
-    mesh.setBackend(backend);
-    mesh.allocateBuffers();
-    mesh.sendToBackend();
-    std::cout << "sizeof(vertices): " << sizeof(vertices) << std::endl;
+//    backend = factory.createMesh(&mesh);
+//    mesh.setBackend(backend);
+//    mesh.allocateBuffers();
+//    mesh.sendToBackend();
+//    std::cout << "sizeof(vertices): " << sizeof(vertices) << std::endl;
     //std::cout << glGetError() << std::endl;
     glm::mat4 model = glm::perspective(glm::radians(45.0),16.0/9.0, 0.1, 1000.0);
     std::cout << "model: " << model << std::endl;
@@ -267,7 +263,7 @@ int main(int argc, char* argv[])
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
-        display(renderer, batcher);
+        display(batcher);
         glfwPollEvents();
     }
     glfwDestroyWindow(window);

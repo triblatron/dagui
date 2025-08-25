@@ -27,6 +27,7 @@ namespace dagui
     class Mesh;
     class ShapeVisitor;
     class ShapeFactory;
+    class TextureAtlas;
 
     struct DAGUI_API ShapeVertex
     {
@@ -87,6 +88,16 @@ namespace dagui
             _fontImageSourceLookup = lookup;
         }
 
+        void setAtlas(TextureAtlas* atlas)
+        {
+            _atlas = atlas;
+        }
+
+        TextureAtlas* atlas()
+        {
+            return _atlas;
+        }
+
         FontImageSource* lookupFontImageSource(dagbase::Atom name);
 
         virtual void accept(ShapeVisitor& visitor) = 0;
@@ -113,6 +124,7 @@ namespace dagui
         static Flags parseFlags(const std::string& str);
     private:
         FontImageSourceLookup* _fontImageSourceLookup{nullptr};
+        TextureAtlas* _atlas{nullptr};
         dagbase::Atom _className;
         Flags _flags{FLAGS_DIRTY_TESSELLATION_BIT|FLAGS_DIRTY_RESOURCES_BIT};
     };

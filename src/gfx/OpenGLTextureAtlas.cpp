@@ -22,6 +22,8 @@ namespace dagui
 
     void OpenGLTextureAtlas::bind()
     {
+        glEnable(GL_TEXTURE_2D);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glBindTexture(GL_TEXTURE_2D, _handle);
     }
 
@@ -47,5 +49,10 @@ namespace dagui
 
             _haveUploaded = true;
         }
+    }
+
+    void OpenGLTextureAtlas::unbind()
+    {
+        glDisable(GL_TEXTURE_2D);
     }
 }

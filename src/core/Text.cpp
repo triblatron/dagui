@@ -53,8 +53,8 @@ namespace dagui
     {
         if (auto element = config.findElement("atlas"); element)
         {
-            _atlas = new TextureAtlas();
-            _atlas->configure(*element);
+            setAtlas(new TextureAtlas());
+            atlas()->configure(*element);
         }
 
         dagbase::Atom faceName;
@@ -71,7 +71,7 @@ namespace dagui
             {
                 _face = source->face();
             }
-            _atlas = shapeFactory.lookupAtlas(faceName);
+            setAtlas(shapeFactory.lookupAtlas(faceName));
         }
         dagbase::ConfigurationElement::readConfig(config, "text", &_text);
     }
@@ -118,10 +118,10 @@ namespace dagui
         for (std::size_t i = 0; i < _text.size(); i++)
         {
             FT_UInt glyphIndex = FT_Get_Char_Index(_face, _text[i]);
-            ImageDef* imageDef = _atlas->imageForGlyphIndex(glyphIndex);
+            ImageDef* imageDef = atlas()->imageForGlyphIndex(glyphIndex);
             if (imageDef)
             {
-                generateTextureCoordinates(*imageDef, *_atlas->binImageDef());
+                generateTextureCoordinates(*imageDef, *atlas()->binImageDef());
                 drawTexturedQuad(tess, x, y, imageDef);
                 x+=imageDef->advance();
             }
@@ -138,9 +138,9 @@ namespace dagui
             return;
 
         _texture = batcher.allocateTexture();
-        if (_atlas)
+        if (atlas())
         {
-            _atlas->setBackend(factory.createTextureAtlas(_atlas));
+            atlas()->setBackend(factory.createTextureAtlas(atlas()));
         }
 
         clearFlag(FLAGS_DIRTY_RESOURCES_BIT);

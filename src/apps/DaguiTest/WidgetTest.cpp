@@ -267,6 +267,7 @@ public:
     MOCK_METHOD(void, bind, (), (override));
     MOCK_METHOD(void, setParameters, (), (override));
     MOCK_METHOD(void, upload, (dagui::Image&), (override));
+    MOCK_METHOD(void, unbind, (), (override));
 };
 
 class MockGraphicsBackendFactory : public dagui::GraphicsBackendFactory

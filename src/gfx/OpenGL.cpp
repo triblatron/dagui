@@ -63,6 +63,10 @@ namespace dagui
                             glColorPointer(layout.attr.numComponents, dataTypeToGL(layout.attr.dataType), elementSize,
                                            (void *) layout.offset);
                             break;
+                        case AttributeDescriptor::USAGE_TEXCOORD:
+                            glTexCoordPointer(layout.attr.numComponents, dataTypeToGL(layout.attr.dataType), elementSize, (void *)layout.offset);
+
+                            break;
                     }
                 }
             }

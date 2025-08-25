@@ -13,6 +13,8 @@
 #include "core/ShapeFactory.h"
 #include "core/Batcher.h"
 #include "core/GraphicsBackendFactory.h"
+#include "gfx/TextureAtlas.h"
+#include "gfx/TextureAtlasBackend.h"
 
 #include <utility>
 
@@ -223,6 +225,11 @@ namespace dagui
                     shape->tessellate(*it->second->mesh());
                 }
 
+                if (shape->atlas())
+                {
+                    it->second->setAtlas(shape->atlas());
+                    it->second->atlas()->makeItSo();
+                }
                 if (!it->second->mesh()->backend())
                 {
                     auto backend = factory.createMesh(it->second->mesh());

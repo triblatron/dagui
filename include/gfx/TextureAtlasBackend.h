@@ -22,5 +22,7 @@ namespace dagui
         virtual void setParameters() = 0;
 
         virtual void upload(Image& image) = 0;
+
+        virtual void unbind() = 0;
     };
 }

@@ -22,6 +22,8 @@ namespace dagui
         void setParameters() override;
 
         void upload(Image& image) override;
+
+        void unbind() override;
     private:
         std::uint32_t _handle{0};
         bool _allocated{false};
