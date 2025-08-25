@@ -16,7 +16,7 @@
 
 #include <utility>
 
-namespace dagui
+qnamespace dagui
 {
     Widget::Widget(dagbase::Atom typeName, Widget *parent)
     :
@@ -207,29 +207,33 @@ namespace dagui
 
     void Widget::draw(Batcher &batcher, GraphicsBackendFactory& factory)
     {
-            for (auto shape : _shapes.a)
+        for (auto child : _children.a)
+        {
+            child->draw(batcher, factory);
+        }
+        for (auto shape: _shapes.a)
+        {
+            if (shape->isFlagSet(Shape::FLAGS_DIRTY_RESOURCES_BIT))
+                shape->allocateResources(batcher, factory);
+
+            if (auto it = batcher.findOrCreateRenderBin(shape->renderBinKey()); it != batcher.end())
             {
-                if (shape->isFlagSet(Shape::FLAGS_DIRTY_RESOURCES_BIT))
-                    shape->allocateResources(batcher, factory );
-
-                if (auto it= batcher.findOrCreateRenderBin(shape->renderBinKey()); it != batcher.end())
+                if (shape->isFlagSet(Shape::FLAGS_DIRTY_TESSELLATION_BIT))
                 {
-                    if (shape->isFlagSet(Shape::FLAGS_DIRTY_TESSELLATION_BIT))
-                    {
-                        shape->tessellate(*it->second->mesh());
-                    }
+                    shape->tessellate(*it->second->mesh());
+                }
 
-                    if (!it->second->mesh()->backend())
+                if (!it->second->mesh()->backend())
+                {
+                    auto backend = factory.createMesh(it->second->mesh());
+                    if (backend)
                     {
-                        auto backend = factory.createMesh(it->second->mesh());
-                        if (backend)
-                        {
-                            it->second->mesh()->setBackend(backend);
-                            it->second->mesh()->allocateBuffers();
-                            it->second->mesh()->sendToBackend();
-                        }
+                        it->second->mesh()->setBackend(backend);
+                        it->second->mesh()->allocateBuffers();
+                        it->second->mesh()->sendToBackend();
                     }
                 }
             }
         }
+    }
 }

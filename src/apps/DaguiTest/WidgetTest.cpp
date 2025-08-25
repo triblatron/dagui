@@ -372,5 +372,6 @@ TEST_P(Widget_testDraw, testExpectedValue)
 
 INSTANTIATE_TEST_SUITE_P(Widget, Widget_testDraw, ::testing::Values(
         std::make_tuple("data/tests/Widget/Label.lua", "data/tests/Widget/TwoBins.lua", "renderBins[0].mesh.numVertices", std::uint32_t(0), 0.0, dagbase::ConfigurationElement::RELOP_GT),
-        std::make_tuple("data/tests/Widget/Label.lua", "data/tests/Widget/TwoBins.lua", "renderBins[1].mesh.numTriangles", std::uint32_t(8), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/Widget/Label.lua", "data/tests/Widget/TwoBins.lua", "renderBins[1].mesh.numTriangles", std::uint32_t(8), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Widget/RootWithLabel.lua", "data/tests/Widget/TwoBins.lua", "renderBins[1].mesh.numTriangles", std::uint32_t(8), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
