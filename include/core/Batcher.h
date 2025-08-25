@@ -84,6 +84,8 @@ namespace dagui
         {
             return index<_renderBinArray.size()?_renderBinArray.a[index]:nullptr;
         }
+
+        void draw();
     private:
         RenderBinMap _renderBins;
         RenderBinArray _renderBinArray;

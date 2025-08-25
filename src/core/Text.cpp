@@ -138,7 +138,10 @@ namespace dagui
             return;
 
         _texture = batcher.allocateTexture();
-        _atlas->setBackend(factory.createTextureAtlas(_atlas));
+        if (_atlas)
+        {
+            _atlas->setBackend(factory.createTextureAtlas(_atlas));
+        }
 
         clearFlag(FLAGS_DIRTY_RESOURCES_BIT);
     }

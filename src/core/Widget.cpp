@@ -16,7 +16,7 @@
 
 #include <utility>
 
-qnamespace dagui
+namespace dagui
 {
     Widget::Widget(dagbase::Atom typeName, Widget *parent)
     :

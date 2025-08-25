@@ -65,6 +65,8 @@ namespace dagui
         {
             return _backend;
         }
+
+        virtual void draw() = 0;
     private:
         MeshBackend* _backend{nullptr};
     };

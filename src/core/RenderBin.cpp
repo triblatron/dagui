@@ -44,4 +44,12 @@ namespace dagui
 
         return {};
     }
+
+    void RenderBin::draw()
+    {
+        if (_mesh)
+        {
+            _mesh->draw();
+        }
+    }
 }

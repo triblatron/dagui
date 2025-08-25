@@ -49,4 +49,12 @@ namespace dagui
 
         return {};
     }
+
+    void Batcher::draw()
+    {
+        for (auto bin : _renderBinArray.a)
+        {
+            bin->draw();
+        }
+    }
 }

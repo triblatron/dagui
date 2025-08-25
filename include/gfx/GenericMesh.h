@@ -262,6 +262,14 @@ namespace dagui
             }
         }
 
+        void draw() override
+        {
+            if (backend())
+            {
+                backend()->draw();
+            }
+        }
+
         bool operator==(const GenericMesh<Vertex>& other) const;
 
         bool operator!=(const GenericMesh<Vertex>& other) const

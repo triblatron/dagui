@@ -40,6 +40,8 @@ namespace dagui
         dagbase::Variant find(std::string_view path) const;
 
         void configure(dagbase::ConfigurationElement& config);
+
+        void draw();
     private:
         ShapeMesh* _mesh;
     };
