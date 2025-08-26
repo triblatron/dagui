@@ -23,13 +23,16 @@ namespace dagbase
 
 namespace dagui
 {
+    class GraphicsBackendFactory;
+    class PositionStack;
+
     class DAGUI_API Batcher
     {
     public:
         using RenderBinMap = dagbase::SearchableMap<std::map<RenderBinKey, RenderBin*>>;
         using RenderBinArray = dagbase::SearchableArray<std::vector<RenderBin*>>;
     public:
-        void configure(dagbase::ConfigurationElement& config);
+        void configure(dagbase::ConfigurationElement& config, GraphicsBackendFactory& factory);
 
         RenderBinMap::iterator addRenderBin(const RenderBinKey& key, RenderBin* bin)
         {
@@ -99,9 +102,7 @@ namespace dagui
         RenderBinMap _renderBins;
         RenderBinArray _renderBinArray;
         ShapeMesh* _meshProto{nullptr};
-        glm::vec2 _translation{};
-        using PositionStack = std::stack<glm::vec2>;
-        PositionStack _positionStack;
+        PositionStack* _positionStack{nullptr};
         std::int32_t _nextTextureIndex{0};
     };
 }

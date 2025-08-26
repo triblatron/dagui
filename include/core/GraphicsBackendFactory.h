@@ -10,6 +10,7 @@ namespace dagui
 {
     class Mesh;
     class MeshBackend;
+    class PositionStack;
     class TextureAtlas;
     class TextureAtlasBackend;
 
@@ -21,5 +22,7 @@ namespace dagui
         virtual MeshBackend* createMesh(Mesh* mesh) = 0;
 
         virtual TextureAtlasBackend* createTextureAtlas(TextureAtlas* atlas) = 0;
+
+        virtual PositionStack* createPositionStack() = 0;
     };
 }

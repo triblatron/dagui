@@ -8,6 +8,7 @@
 #include "gfx/OpenGLBackendFactory.h"
 #include "gfx/OpenGLMesh.h"
 #include "gfx/OpenGLTextureAtlas.h"
+#include "gfx/OpenGLPositionStack.h"
 
 namespace dagui
 {
@@ -19,5 +20,10 @@ namespace dagui
     TextureAtlasBackend *OpenGLBackendFactory::createTextureAtlas(TextureAtlas *atlas)
     {
         return new OpenGLTextureAtlas();
+    }
+
+    PositionStack *OpenGLBackendFactory::createPositionStack()
+    {
+        return new OpenGLPositionStack();
     }
 }

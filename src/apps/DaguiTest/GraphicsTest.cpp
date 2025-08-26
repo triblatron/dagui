@@ -28,6 +28,7 @@
 #include "gfx/OpenGLMesh.h"
 #include "core/Rectangle.h"
 #include "core/Tessellation.h"
+#include "MockGraphicsBackendFactory.h"
 #include "test/TestUtils.h"
 
 #include <gtest/gtest.h>
@@ -879,7 +880,9 @@ TEST_P(Batcher_testSort, testExpectedOrder)
     auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
     ASSERT_NE(nullptr, config);
     dagui::Batcher sut;
-    sut.configure(*config);
+    MockGraphicsBackendFactory backendFactory;
+    EXPECT_CALL(backendFactory, createPositionStack()).Times(1);
+    sut.configure(*config, backendFactory);
     auto firstKey = std::get<1>(GetParam());
     auto secondKey = std::get<2>(GetParam());
     auto firstIter = sut.findOrCreateRenderBin(firstKey);
@@ -972,7 +975,9 @@ TEST_P(Batcher_testConfigure, testExpectedValue)
     auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
     ASSERT_NE(nullptr, config);
     dagui::Batcher sut;
-    sut.configure(*config);
+    MockGraphicsBackendFactory backendFactory;
+    EXPECT_CALL(backendFactory, createPositionStack()).Times(1);
+    sut.configure(*config, backendFactory);
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
     auto tolerance = std::get<3>(GetParam());
@@ -997,7 +1002,9 @@ TEST_P(Batcher_testMesh, testExpectedValues)
     auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
     ASSERT_NE(nullptr, config);
     dagui::Batcher sut;
-    sut.configure(*config);
+    MockGraphicsBackendFactory backendFactory;
+    EXPECT_CALL(backendFactory, createPositionStack()).Times(1);
+    sut.configure(*config, backendFactory);
     auto binIndex = std::get<1>(GetParam());
     auto bin = sut[binIndex];
     ASSERT_NE(nullptr, bin);

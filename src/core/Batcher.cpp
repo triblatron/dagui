@@ -8,17 +8,21 @@
 #include "core/ConfigurationElement.h"
 #include "core/RenderBin.h"
 #include "util/Searchable.h"
+#include "core/PositionStack.h"
+#include "core/GraphicsBackendFactory.h"
 
 namespace dagui
 {
 
-    void Batcher::configure(dagbase::ConfigurationElement &config)
+    void Batcher::configure(dagbase::ConfigurationElement &config, GraphicsBackendFactory& factory)
     {
         if (auto element = config.findElement("mesh"); element)
         {
             _meshProto = new ShapeMesh();
             _meshProto->configure(*element);
         }
+        _positionStack = factory.createPositionStack();
+
         if (auto element = config.findElement("bins"); element)
         {
             element->eachChild([this](dagbase::ConfigurationElement& child) {
@@ -47,13 +51,16 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
-        retval = dagbase::findEndpoint(path, "x", _translation.x);
-        if (retval.has_value())
-            return retval;
+        if (_positionStack)
+        {
+            retval = dagbase::findEndpoint(path, "x", _positionStack->top().x);
+            if (retval.has_value())
+                return retval;
 
-        retval = dagbase::findEndpoint(path, "y", _translation.y);
-        if (retval.has_value())
-            return retval;
+            retval = dagbase::findEndpoint(path, "y", _positionStack->top().y);
+            if (retval.has_value())
+                return retval;
+        }
 
         return {};
     }
@@ -68,20 +75,23 @@ namespace dagui
 
     void Batcher::translate(float x, float y)
     {
-        _translation = {x,y};
+        if (_positionStack)
+        {
+            _positionStack->translate(x,y);
+        }
     }
 
     void Batcher::pushTranslate()
     {
-        _positionStack.push(_translation);
+        if (_positionStack)
+            _positionStack->push();
     }
 
     void Batcher::popTranslate()
     {
-        if (!_positionStack.empty())
+        if (_positionStack && !_positionStack->empty())
         {
-            _translation = _positionStack.top();
-            _positionStack.pop();
+            _positionStack->pop();
         }
     }
 }

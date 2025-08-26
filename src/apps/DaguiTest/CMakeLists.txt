@@ -6,7 +6,8 @@ SET( DaguiTest_SRC DaguiTest.cpp RoundTripTest.cpp
         ../../../ThirdParty/dag/thirdparty/dagbase/src/test/TestUtils.cpp
         PatternMatchingTest.cpp
         SceneNodeTest.cpp
-        LayoutTest.cpp)
+        LayoutTest.cpp
+        MockGraphicsBackendFactory.h)
 ADD_EXECUTABLE( DaguiTest ${DaguiTest_SRC} )
 IF (UNIX)
 LIST(APPEND LUA_LIBRARIES dl)

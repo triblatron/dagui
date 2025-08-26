@@ -61,7 +61,7 @@ void onReshape(int width, int height)
     glLoadIdentity();
 }
 
-void display(dagui::Batcher& batcher)
+void display(dagui::Widget& widgetTree, dagui::GraphicsBackendFactory& backendFactory, dagui::Batcher& batcher)
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -79,6 +79,7 @@ void display(dagui::Batcher& batcher)
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glColor3f(1.0f, 0.0f, 1.0f);
+    widgetTree.draw(batcher,backendFactory);
     batcher.draw();
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
@@ -166,6 +167,8 @@ int main(int argc, char* argv[])
             return -1;
         }
     }
+    dagui::OpenGLBackendFactory backendFactory;
+
     dagui::Batcher batcher;
     {
         dagbase::Lua lua;
@@ -176,12 +179,8 @@ int main(int argc, char* argv[])
 
             return -1;
         }
-        batcher.configure(*batcherConfig);
+        batcher.configure(*batcherConfig, backendFactory);
     }
-
-    dagui::OpenGLBackendFactory factory;
-
-    widgetTree->draw(batcher, factory);
 
     glm::mat4 model = glm::perspective(glm::radians(45.0),16.0/9.0, 0.1, 1000.0);
     std::cout << "model: " << model << std::endl;
@@ -197,7 +196,7 @@ int main(int argc, char* argv[])
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
-        display(batcher);
+        display(*widgetTree, backendFactory, batcher);
         glfwPollEvents();
     }
     glfwDestroyWindow(window);

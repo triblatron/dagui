@@ -20,6 +20,7 @@
 #include "gfx/TextureAtlasBackend.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include "MockGraphicsBackendFactory.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
@@ -246,81 +247,6 @@ class Widget_testDraw : public ::testing::TestWithParam<std::tuple<const char*, 
 
 };
 
-class MockMeshBackend : public dagui::MeshBackend
-{
-public:
-    MOCK_METHOD(void, addVertexBuffer, (), (override));
-
-    MOCK_METHOD(void, allocate, (), (override));
-
-    MOCK_METHOD(void, uploadVertices, (std::size_t bufferIndex, dagui::AttributeArray& a), (override));
-
-    MOCK_METHOD(void, uploadIndices, (dagui::IndexArray& a), (override));
-
-    MOCK_METHOD(void, draw, (), (override));
-
-    MOCK_METHOD(dagbase::Variant, find, (std::string_view path), (const, override));
-};
-
-class MockTextureAtlasBackend : public dagui::TextureAtlasBackend
-{
-public:
-    MOCK_METHOD(void, allocate, (), (override));
-    MOCK_METHOD(void, bind, (), (override));
-    MOCK_METHOD(void, setParameters, (), (override));
-    MOCK_METHOD(void, upload, (dagui::Image&), (override));
-    MOCK_METHOD(void, unbind, (), (override));
-};
-
-class MockGraphicsBackendFactory : public dagui::GraphicsBackendFactory
-{
-public:
-    MockGraphicsBackendFactory()
-    {
-        ON_CALL(*this, createMesh).WillByDefault([this](dagui::Mesh* mesh) {
-            auto backend = new MockMeshBackend();
-            EXPECT_CALL(*backend, addVertexBuffer()).Times(::testing::AnyNumber());
-            EXPECT_CALL(*backend, allocate()).Times(::testing::AnyNumber());
-            EXPECT_CALL(*backend, uploadVertices(::testing::_, ::testing::_)).Times(::testing::AnyNumber());
-            EXPECT_CALL(*backend, uploadIndices(::testing::_)).Times(::testing::AnyNumber());
-
-            _meshes.emplace_back(backend);
-
-            return backend;
-        });
-
-        ON_CALL(*this, createTextureAtlas).WillByDefault([this](dagui::TextureAtlas* atlas) {
-            auto backend = new MockTextureAtlasBackend();
-            EXPECT_CALL(*backend, allocate()).Times(::testing::AnyNumber());
-            EXPECT_CALL(*backend, bind()).Times(::testing::AnyNumber());
-            EXPECT_CALL(*backend, setParameters()).Times(::testing::AnyNumber());
-            EXPECT_CALL(*backend, upload(::testing::_)).Times(::testing::AnyNumber());
-
-            _atlases.emplace_back(backend);
-
-            return backend;
-        });
-    }
-
-    ~MockGraphicsBackendFactory() override
-    {
-        for (auto obj : _meshes)
-        {
-            delete obj;
-        }
-
-        for (auto obj : _atlases)
-        {
-            delete obj;
-        }
-    }
-    MOCK_METHOD(dagui::MeshBackend*, createMesh, (dagui::Mesh*), (override));
-    MOCK_METHOD(dagui::TextureAtlasBackend*, createTextureAtlas, (dagui::TextureAtlas *atlas), (override));
-private:
-    std::vector<MockMeshBackend*> _meshes;
-    std::vector<MockTextureAtlasBackend*> _atlases;
-};
-
 TEST_P(Widget_testDraw, testExpectedValue)
 {
     auto widgetConfigStr = std::get<0>(GetParam());
@@ -356,8 +282,9 @@ TEST_P(Widget_testDraw, testExpectedValue)
     auto widgetTree = widgetFactory.create(*widgetConfig, shapeFactory);
     ASSERT_NE(nullptr, widgetTree);
     dagui::Batcher batcher;
-    batcher.configure(*batcherConfig);
     MockGraphicsBackendFactory backendFactory;
+    EXPECT_CALL(backendFactory, createPositionStack()).Times(::testing::AtLeast(1));
+    batcher.configure(*batcherConfig, backendFactory);
     EXPECT_CALL(backendFactory, createMesh(::testing::_)).Times(::testing::AtLeast(1));
     EXPECT_CALL(backendFactory, createTextureAtlas(::testing::_)).Times(::testing::AtLeast(1));
     widgetTree->draw(batcher, backendFactory);

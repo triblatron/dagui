@@ -16,5 +16,7 @@ namespace dagui
         MeshBackend* createMesh(Mesh * mesh) override;
 
         TextureAtlasBackend* createTextureAtlas(TextureAtlas* atlas) override;
+
+        PositionStack* createPositionStack() override;
     };
 }
