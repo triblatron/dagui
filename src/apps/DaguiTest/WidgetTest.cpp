@@ -68,7 +68,9 @@ INSTANTIATE_TEST_SUITE_P(WidgetFactory, WidgetFactory_testCreate, ::testing::Val
     std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.vertical.numChildren", std::int64_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.label.text.text", std::string("A label"), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
     std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "width", std::int64_t{ 1920 }, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-    std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "height", std::int64_t{ 1080 }, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+    std::make_tuple("data/tests/WidgetFactory/windowWithLayout.lua", &dagbase::ConfigurationElement::fromFile, true, "height", std::int64_t{ 1080 }, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+    std::make_tuple("data/tests/WidgetFactory/rootWithLabel.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.greeting.x", std::int64_t{ 256 }, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+    std::make_tuple("data/tests/WidgetFactory/rootWithLabel.lua", &dagbase::ConfigurationElement::fromFile, true, "lookup.greeting.y", std::int64_t{ 128 }, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
     ));
 
 class Widget_testProperties : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::ConfigurationElement::ValueType, double, dagbase::ConfigurationElement::RelOp>>

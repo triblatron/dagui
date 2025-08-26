@@ -67,6 +67,8 @@ namespace dagui
         _styleClass = dagbase::Atom::intern(styleClass);
         _style.setId(_styleClass);
 
+        dagbase::ConfigurationElement::readConfig(config, "x", &_pos.x);
+        dagbase::ConfigurationElement::readConfig(config, "y", &_pos.y);
 //        if (auto element = config.findElement("shape"); element)
 //        {
 //            addShape(shapeFactory.createShape(*element));

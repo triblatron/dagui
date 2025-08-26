@@ -12,6 +12,8 @@ root=
 				class="Text",
 				text="Hello, Dagui!",
 			},
+			x=256,
+			y=128,
 		},
 	}
 }
