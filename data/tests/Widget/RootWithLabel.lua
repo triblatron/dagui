@@ -5,6 +5,8 @@ root=
 	{
 		{
 			class="Label",
+			x=256,
+			y=128,
 			text=
 			{
 				class="Text",
@@ -14,8 +16,6 @@ root=
 			face=
 			{
 				class="Rectangle",
-				x=0.0,
-				y=0.0,
 				width=200.0,
 				height=100.0,
 				cornerRadius=10.0,

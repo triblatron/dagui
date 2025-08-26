@@ -9,9 +9,12 @@
 #include "core/RenderBin.h"
 #include "util/SearchableMap.h"
 
+#include <glm/glm.hpp>
+
 #include <map>
 #include <string_view>
 #include <cstdint>
+#include <stack>
 
 namespace dagbase
 {
@@ -85,11 +88,20 @@ namespace dagui
             return index<_renderBinArray.size()?_renderBinArray.a[index]:nullptr;
         }
 
+        void translate(float x, float y);
+
+        void pushTranslate();
+
+        void popTranslate();
+
         void draw();
     private:
         RenderBinMap _renderBins;
         RenderBinArray _renderBinArray;
         ShapeMesh* _meshProto{nullptr};
+        glm::vec2 _translation{};
+        using PositionStack = std::stack<glm::vec2>;
+        PositionStack _positionStack;
         std::int32_t _nextTextureIndex{0};
     };
 }

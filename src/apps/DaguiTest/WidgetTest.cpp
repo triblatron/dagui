@@ -378,5 +378,7 @@ INSTANTIATE_TEST_SUITE_P(Widget, Widget_testDraw, ::testing::Values(
         std::make_tuple("data/tests/Widget/Label.lua", "data/tests/Widget/TwoBins.lua", "renderBins[1].mesh.numTriangles", std::uint32_t(8), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/RootWithLabel.lua", "data/tests/Widget/TwoBins.lua", "renderBins[1].mesh.numTriangles", std::uint32_t(8), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/RootWithLabel.lua", "data/tests/Widget/TwoBins.lua", "renderBins[0].mesh.numVertices", std::uint32_t(1280/32), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/Widget/RootWithLabel.lua", "data/tests/Widget/TwoBins.lua", "renderBins[1].mesh.numVertices", std::uint32_t(1280/32), 0.0, dagbase::ConfigurationElement::RELOP_LT)
+        std::make_tuple("data/tests/Widget/RootWithLabel.lua", "data/tests/Widget/TwoBins.lua", "renderBins[1].mesh.numVertices", std::uint32_t(1280/32), 0.0, dagbase::ConfigurationElement::RELOP_LT),
+        std::make_tuple("data/tests/Widget/RootWithLabel.lua", "data/tests/Widget/TwoBins.lua", "x", 256.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/Widget/RootWithLabel.lua", "data/tests/Widget/TwoBins.lua", "y", 128.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

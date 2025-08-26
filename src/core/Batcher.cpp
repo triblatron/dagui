@@ -47,6 +47,14 @@ namespace dagui
         if (retval.has_value())
             return retval;
 
+        retval = dagbase::findEndpoint(path, "x", _translation.x);
+        if (retval.has_value())
+            return retval;
+
+        retval = dagbase::findEndpoint(path, "y", _translation.y);
+        if (retval.has_value())
+            return retval;
+
         return {};
     }
 
@@ -55,6 +63,25 @@ namespace dagui
         for (auto bin : _renderBinArray.a)
         {
             bin->draw();
+        }
+    }
+
+    void Batcher::translate(float x, float y)
+    {
+        _translation = {x,y};
+    }
+
+    void Batcher::pushTranslate()
+    {
+        _positionStack.push(_translation);
+    }
+
+    void Batcher::popTranslate()
+    {
+        if (!_positionStack.empty())
+        {
+            _translation = _positionStack.top();
+            _positionStack.pop();
         }
     }
 }

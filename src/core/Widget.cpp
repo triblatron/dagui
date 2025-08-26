@@ -211,6 +211,9 @@ namespace dagui
 
     void Widget::draw(Batcher &batcher, GraphicsBackendFactory& factory)
     {
+        // Position the visual representation
+        batcher.translate(_pos.x, _pos.y);
+
         for (auto child : _children.a)
         {
             child->draw(batcher, factory);
