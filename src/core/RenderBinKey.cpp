@@ -12,10 +12,10 @@ namespace dagui
 
     bool RenderBinKey::operator<(const RenderBinKey &other) const
     {
-        return material<other.material ||
-               (material==other.material && texture<other.texture) ||
-               (texture==other.texture && layer < other.layer) ||
-               (texture==other.texture && shader < other.shader );
+        return (texture==other.texture && layer < other.layer) ||
+            (material<other.material) ||
+            (material==other.material && texture<other.texture) ||
+            (texture==other.texture && shader < other.shader );
     }
 
     void RenderBinKey::configure(dagbase::ConfigurationElement &config)

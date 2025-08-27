@@ -9,6 +9,7 @@
 #include "gfx/OpenGLMesh.h"
 #include "gfx/OpenGLTextureAtlas.h"
 #include "gfx/OpenGLPositionStack.h"
+#include "gfx/OpenGLBlending.h"
 
 namespace dagui
 {
@@ -25,5 +26,10 @@ namespace dagui
     PositionStack *OpenGLBackendFactory::createPositionStack()
     {
         return new OpenGLPositionStack();
+    }
+
+    Blending *OpenGLBackendFactory::createBlending()
+    {
+        return new OpenGLBlending();
     }
 }

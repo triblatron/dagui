@@ -287,6 +287,7 @@ TEST_P(Widget_testDraw, testExpectedValue)
     batcher.configure(*batcherConfig, backendFactory);
     EXPECT_CALL(backendFactory, createMesh(::testing::_)).Times(::testing::AtLeast(1));
     EXPECT_CALL(backendFactory, createTextureAtlas(::testing::_)).Times(::testing::AtLeast(1));
+    EXPECT_CALL(backendFactory, createBlending()).Times(::testing::AtLeast(1));
     widgetTree->draw(batcher, backendFactory);
     auto path = std::get<2>(GetParam());
     auto value = std::get<3>(GetParam());

@@ -93,6 +93,8 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
 		include/gfx/OpenGLTextureAtlas.h
 		include/core/PositionStack.h
 		include/gfx/OpenGLPositionStack.h
+		include/core/Blending.h
+		include/gfx/OpenGLBlending.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -163,6 +165,7 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
 		src/gfx/OpenGLTextureAtlas.cpp
 		src/core/PositionStack.cpp
 		src/gfx/OpenGLPositionStack.cpp
+		src/gfx/OpenGLBlending.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")

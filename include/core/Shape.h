@@ -22,6 +22,7 @@ namespace dagbase
 namespace dagui
 {
     class Batcher;
+    class Blending;
     class DrawCommandBuffer;
     class GraphicsBackendFactory;
     class Mesh;
@@ -98,6 +99,16 @@ namespace dagui
             return _atlas;
         }
 
+        void setBlending(Blending* blending)
+        {
+            _blending = blending;
+        }
+
+        Blending* blending()
+        {
+            return _blending;
+        }
+
         FontImageSource* lookupFontImageSource(dagbase::Atom name);
 
         virtual void accept(ShapeVisitor& visitor) = 0;
@@ -125,6 +136,7 @@ namespace dagui
     private:
         FontImageSourceLookup* _fontImageSourceLookup{nullptr};
         TextureAtlas* _atlas{nullptr};
+        Blending* _blending{nullptr};
         dagbase::Atom _className;
         Flags _flags{FLAGS_DIRTY_TESSELLATION_BIT|FLAGS_DIRTY_RESOURCES_BIT};
     };

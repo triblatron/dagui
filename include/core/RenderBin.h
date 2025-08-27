@@ -20,15 +20,12 @@ namespace dagbase
 
 namespace dagui
 {
+    class Blending;
     class TextureAtlas;
 
     class DAGUI_API RenderBin
     {
     public:
-//        virtual ~RenderBin() = default;
-//
-//        virtual void render() = 0;
-
         void setMesh(ShapeMesh* mesh)
         {
             _mesh = mesh;
@@ -49,6 +46,16 @@ namespace dagui
             return _atlas;
         }
 
+        void setBlending(Blending* blending)
+        {
+            _blending = blending;
+        }
+
+        Blending* blending()
+        {
+            return _blending;
+        }
+
         dagbase::Variant find(std::string_view path) const;
 
         void configure(dagbase::ConfigurationElement& config);
@@ -57,5 +64,6 @@ namespace dagui
     private:
         ShapeMesh* _mesh{nullptr};
         TextureAtlas* _atlas{nullptr};
+        Blending* _blending{nullptr};
     };
 }

@@ -8,6 +8,7 @@
 #include "gfx/MeshBackend.h"
 #include "gfx/TextureAtlasBackend.h"
 #include "core/PositionStack.h"
+#include "core/Blending.h"
 
 #include <gmock/gmock.h>
 #include <stack>
@@ -81,6 +82,14 @@ private:
     glm::vec2 _position;
 };
 
+class MockBlending : public dagui::Blending
+{
+public:
+    MOCK_METHOD(void, enable, (), (override));
+    MOCK_METHOD(void, makeItSo, (), (override));
+    MOCK_METHOD(void, disable, (), (override));
+};
+
 class MockGraphicsBackendFactory : public dagui::GraphicsBackendFactory
 {
 public:
@@ -122,6 +131,18 @@ public:
 
             return backend;
         });
+
+        ON_CALL(*this, createBlending).WillByDefault([this]() {
+            auto backend = new MockBlending();
+
+            EXPECT_CALL(*backend, enable()).Times(::testing::AnyNumber());
+            EXPECT_CALL(*backend, makeItSo()).Times(::testing::AnyNumber());
+            EXPECT_CALL(*backend, disable()).Times(::testing::AnyNumber());
+
+            _blendings.emplace_back(backend);
+
+            return backend;
+        });
     }
 
     ~MockGraphicsBackendFactory() override
@@ -140,12 +161,19 @@ public:
         {
             delete obj;
         }
+
+        for (auto obj : _blendings)
+        {
+            delete obj;
+        }
     }
     MOCK_METHOD(dagui::MeshBackend*, createMesh, (dagui::Mesh*), (override));
     MOCK_METHOD(dagui::TextureAtlasBackend*, createTextureAtlas, (dagui::TextureAtlas *atlas), (override));
     MOCK_METHOD(dagui::PositionStack*, createPositionStack, (), (override));
+    MOCK_METHOD(dagui::Blending*, createBlending, (), (override));
 private:
     std::vector<MockMeshBackend*> _meshes;
     std::vector<MockTextureAtlasBackend*> _atlases;
     std::vector<MockPositionStack*> _positionStacks;
+    std::vector<MockBlending*> _blendings;
 };

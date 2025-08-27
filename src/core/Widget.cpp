@@ -234,6 +234,12 @@ namespace dagui
                 {
                     it->second->setAtlas(shape->atlas());
                 }
+
+                if (shape->blending())
+                {
+                    it->second->setBlending(shape->blending());
+                }
+
                 if (!it->second->mesh()->backend())
                 {
                     auto backend = factory.createMesh(it->second->mesh());

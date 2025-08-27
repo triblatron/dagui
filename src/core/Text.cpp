@@ -73,6 +73,7 @@ namespace dagui
             }
             setAtlas(shapeFactory.lookupAtlas(faceName));
         }
+
         dagbase::ConfigurationElement::readConfig(config, "text", &_text);
     }
 
@@ -141,6 +142,7 @@ namespace dagui
         if (atlas())
         {
             atlas()->setBackend(factory.createTextureAtlas(atlas()));
+            setBlending(factory.createBlending());
         }
 
         clearFlag(FLAGS_DIRTY_RESOURCES_BIT);

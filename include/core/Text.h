@@ -38,7 +38,7 @@ namespace dagui
 
         RenderBinKey renderBinKey() const override
         {
-            return {-1, _texture, -1, 0};
+            return {-1, _texture, -1, 1};
         }
 
         void allocateResources(Batcher& batcher, GraphicsBackendFactory& factory) override;

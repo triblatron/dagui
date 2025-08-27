@@ -18,5 +18,7 @@ namespace dagui
         TextureAtlasBackend* createTextureAtlas(TextureAtlas* atlas) override;
 
         PositionStack* createPositionStack() override;
+
+        Blending* createBlending() override;
     };
 }

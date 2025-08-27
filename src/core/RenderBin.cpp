@@ -7,6 +7,7 @@
 #include "core/RenderBin.h"
 #include "core/ConfigurationElement.h"
 #include "gfx/TextureAtlas.h"
+#include "core/Blending.h"
 
 namespace dagui
 {
@@ -52,9 +53,18 @@ namespace dagui
         {
             _atlas->makeItSo();
         }
+        if (_blending)
+        {
+            _blending->enable();
+            _blending->makeItSo();
+        }
         if (_mesh)
         {
             _mesh->draw();
+        }
+        if (_blending)
+        {
+            _blending->disable();
         }
         if (_atlas)
         {
