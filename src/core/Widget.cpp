@@ -233,7 +233,6 @@ namespace dagui
                 if (shape->atlas())
                 {
                     it->second->setAtlas(shape->atlas());
-                    it->second->atlas()->makeItSo();
                 }
                 if (!it->second->mesh()->backend())
                 {
