@@ -79,7 +79,7 @@ public:
 private:
     using Stack = std::stack<glm::vec2>;
     Stack _stack;
-    glm::vec2 _position;
+    glm::vec2 _position{};
 };
 
 class MockBlending : public dagui::Blending
