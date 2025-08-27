@@ -26,6 +26,8 @@ namespace dagui
             case Blending::FACTOR_ONE_MINUS_SRC_ALPHA:
                 return GL_ONE_MINUS_SRC_ALPHA;
         }
+
+        return GL_ONE;
     }
 
     void OpenGLBlending::enable()
