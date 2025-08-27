@@ -11,6 +11,10 @@ The understanding is that linking to these components is allowed as long as user
 
 This library is developed in my spare time for fun.  As such, there is no release schedule except to say when I deem it ready.  Its primary purpose is to serve as the GUI for another side project, so I am not overly concerned by timing of a release.
 
+### 20250827
+We have hit Prototype1, rendering of a Widget tree, namely a Label with a face and some text.
+Next up, Prototype2 with layout and more complex Widgets.
+
 ## Collaboration
 
 Pull requests will be allowed at some point. There will be a coding style and probably automated linting which could be a barrier to contribution.
