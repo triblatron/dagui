@@ -416,11 +416,15 @@ TEST_P(Event_testRoundTrip, testRoundTrip)
 
 INSTANTIATE_TEST_SUITE_P(Event, Event_testRoundTrip, ::testing::Values(
     std::make_tuple("TYPE_POINTER_MOVE", dagui::Event::TYPE_POINTER_MOVE),
+    std::make_tuple("TYPE_POINTER_HOVER", dagui::Event::TYPE_POINTER_HOVER),
     std::make_tuple("TYPE_BUTTON_PRESS", dagui::Event::TYPE_BUTTON_PRESS),
     std::make_tuple("TYPE_BUTTON_RELEASE", dagui::Event::TYPE_BUTTON_RELEASE),
     std::make_tuple("TYPE_BUTTON_CLICK", dagui::Event::TYPE_BUTTON_CLICK),
     std::make_tuple("TYPE_KEY_PRESS", dagui::Event::TYPE_KEY_PRESS),
     std::make_tuple("TYPE_KEY_RELEASE", dagui::Event::TYPE_KEY_RELEASE),
     std::make_tuple("TYPE_ENTER_WIDGET", dagui::Event::TYPE_ENTER_WIDGET),
-    std::make_tuple("TYPE_LEAVE_WIDGET", dagui::Event::TYPE_LEAVE_WIDGET)
+    std::make_tuple("TYPE_LEAVE_WIDGET", dagui::Event::TYPE_LEAVE_WIDGET),
+    std::make_tuple("TYPE_DRAG_START", dagui::Event::TYPE_DRAG_START),
+    std::make_tuple("TYPE_DRAGGING", dagui::Event::TYPE_DRAGGING),
+    std::make_tuple("TYPE_DRAG_STOP", dagui::Event::TYPE_DRAG_STOP)
 ));

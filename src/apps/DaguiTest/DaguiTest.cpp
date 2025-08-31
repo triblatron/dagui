@@ -22,6 +22,7 @@
 #include "util/VectorMap.h"
 #include "core/Vec2f.h"
 #include "core/SceneNodeFactory.h"
+#include "core/EventSystem.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -720,3 +721,23 @@ INSTANTIATE_TEST_SUITE_P(SceneNodeFactory, SceneNodeFactory_testCreateNode, ::te
         std::make_tuple("Border", true),
         std::make_tuple("Spoo", false)
         ));
+
+class EventSystem_testGenerateSecondaryEvents : public ::testing::TestWithParam<std::tuple<const char*>>
+{
+
+};
+
+TEST_P(EventSystem_testGenerateSecondaryEvents, testExpectedEvents)
+{
+    //auto configStr = std::get<0>(GetParam());
+    //dagbase::Lua lua;
+    //auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    //ASSERT_NE(nullptr, config);
+    //dagui::EventSystem sut;
+    //sut.configure(*config);
+    //sut.step();
+}
+
+INSTANTIATE_TEST_SUITE_P(EventSystem, EventSystem_testGenerateSecondaryEvents, ::testing::Values(
+    std::make_tuple("data/tests/EventSystem/Click.lua")
+));
