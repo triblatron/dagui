@@ -15,6 +15,9 @@ This library is developed in my spare time for fun.  As such, there is no releas
 We have hit Prototype1, rendering of a Widget tree, namely a Label with a face and some text.
 Next up, Prototype2 with layout and more complex Widgets.
 
+### 20250831
+We are removing the dependency on GLUT.
+
 ## Collaboration
 
 Pull requests will be allowed at some point. There will be a coding style and probably automated linting which could be a barrier to contribution.
@@ -56,13 +59,13 @@ Pull requests will be allowed at some point. There will be a coding style and pr
   * required to create an Orthographic projection
 * Packages for Linux Debian based
 ```bash
-sudo apt-get install g++ cmake make freeglut3-dev libfreetype-dev libpango1.0-dev liblua5.4-dev git libglew-dev
+sudo apt-get install g++ cmake make libfreetype-dev libpango1.0-dev liblua5.4-dev git libglew-dev
 ```
 * Packages from Linux Red Hat based
 ```bash
 su
 dnf config-manager --enable devel
-dnf install freetype-devel freeglut-devel lua-devel
+dnf install freetype-devel lua-devel
 exit
 ```
 ## Build instructions 
