@@ -6,6 +6,7 @@
 #include "gfx/TextureAtlas.h"
 #include "gfx/Mesh2D.h"
 #include "core/Shape.h"
+#include "core/Event.h"
 
 #include <gtest/gtest.h>
 
@@ -398,3 +399,28 @@ INSTANTIATE_TEST_SUITE_P(ShapeFlags, ShapeFlags_testRoundTrip, ::testing::Values
         std::make_tuple("FLAGS_NONE", dagui::Shape::FLAGS_NONE),
         std::make_tuple("FLAGS_DIRTY_TESSELLATION_BIT", dagui::Shape::FLAGS_DIRTY_TESSELLATION_BIT)
         ));
+
+class Event_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Event::Type>>
+{
+
+};
+
+TEST_P(Event_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::Event::typeToString(value));
+    EXPECT_EQ(value, dagui::Event::parseType(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(Event, Event_testRoundTrip, ::testing::Values(
+    std::make_tuple("TYPE_POINTER_MOVE", dagui::Event::TYPE_POINTER_MOVE),
+    std::make_tuple("TYPE_BUTTON_PRESS", dagui::Event::TYPE_BUTTON_PRESS),
+    std::make_tuple("TYPE_BUTTON_RELEASE", dagui::Event::TYPE_BUTTON_RELEASE),
+    std::make_tuple("TYPE_BUTTON_CLICK", dagui::Event::TYPE_BUTTON_CLICK),
+    std::make_tuple("TYPE_KEY_PRESS", dagui::Event::TYPE_KEY_PRESS),
+    std::make_tuple("TYPE_KEY_RELEASE", dagui::Event::TYPE_KEY_RELEASE),
+    std::make_tuple("TYPE_ENTER_WIDGET", dagui::Event::TYPE_ENTER_WIDGET),
+    std::make_tuple("TYPE_LEAVE_WIDGET", dagui::Event::TYPE_LEAVE_WIDGET)
+));
