@@ -33,8 +33,7 @@ Pull requests will be allowed at some point. There will be a coding style and pr
 * VulkanSceneGraph for integration demos
 * freetype for text rasterisation
 * pango for text layout including underlining
-* freeglut for OpenGL text demo
-* glfw for the OpenGL renderer demo
+* glfw for the OpenGL text, renderer demos
 * glew for OpenGL support beyond version 1.1 on Windows
 * md4c for markdown parsing
 * svgpp for SVG parsing
@@ -110,7 +109,7 @@ brew install freetype
 brew install lua
 brew install glfw
 ```
-* Note that OpenGL and GLUT are included as part of the developer SDK.
+* Note that OpenGL is included as part of the developer SDK.
 ### macOS X 10.15 Catalina Intel
 ```bash
 git clone https://github.com/triblatron/dagui
