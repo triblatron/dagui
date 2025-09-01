@@ -1,7 +1,8 @@
-#include "config/config.h"
+#include "config/config.h"	
 
 #include "core/Event.h"
 #include "util/enums.h"
+#include "core/ConfigurationElement.h"
 
 namespace dagui
 {
@@ -11,6 +12,28 @@ namespace dagui
 		_data(data)
 	{
 		// Do nothing.
+	}
+
+	bool Event::operator==(const Event& other) const
+	{
+		return _type == other._type && _data == other._data;
+	}
+
+	void Event::configure(dagbase::ConfigurationElement& config)
+	{
+		dagbase::ConfigurationElement::readConfig<Type>(config, "type", Event::parseType, &_type);
+		switch (_type)
+		{
+		case TYPE_POINTER_MOVE:
+			{
+				PointerEvent pointerEvent;
+				dagbase::ConfigurationElement::readConfig(config, "x", &pointerEvent.x);
+				dagbase::ConfigurationElement::readConfig(config, "y", &pointerEvent.y);
+				_data = pointerEvent;
+
+				break;
+			}
+		}
 	}
 
 	const char* Event::typeToString(Type type)
@@ -52,5 +75,49 @@ namespace dagui
 		TEST_ENUM(TYPE_DRAG_STOP, str);
 
 		return TYPE_UNKNOWN;
+	}
+
+	bool PointerEvent::operator==(const PointerEvent& other) const
+	{
+		return x == other.x && y == other.y && buttons == other.buttons;
+	}
+
+	bool KeyEvent::operator==(const KeyEvent& other) const
+	{
+		return code == other.code;
+	}
+
+	bool WidgetEvent::operator==(const WidgetEvent& other) const
+	{
+		return widget == other.widget;
+	}
+
+	std::string buttonMaskToString(ButtonMask value)
+	{
+		std::string retval;
+
+		BIT_NAME(value, BUTTON_PRIMARY_BIT, retval)
+		BIT_NAME(value, BUTTON_SECONDARY_BIT, retval)
+		BIT_NAME(value, BUTTON_MIDDLE_BIT, retval)
+
+		if (!retval.empty())
+		{
+			retval = retval.substr(0, retval.length() - 1);
+
+			return retval;
+		}
+
+		return "BUTTON_NONE";
+	}
+
+	ButtonMask parseButtonMask(const std::string& str)
+	{
+		ButtonMask retval = BUTTON_NONE;
+
+		TEST_BIT(BUTTON_PRIMARY_BIT, str, retval);
+		TEST_BIT(BUTTON_SECONDARY_BIT, str, retval);
+		TEST_BIT(BUTTON_MIDDLE_BIT, str, retval);
+
+		return retval;
 	}
 }

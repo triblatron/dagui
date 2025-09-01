@@ -428,3 +428,24 @@ INSTANTIATE_TEST_SUITE_P(Event, Event_testRoundTrip, ::testing::Values(
     std::make_tuple("TYPE_DRAGGING", dagui::Event::TYPE_DRAGGING),
     std::make_tuple("TYPE_DRAG_STOP", dagui::Event::TYPE_DRAG_STOP)
 ));
+
+class ButtonMask_testRoundTrip : public ::testing::TestWithParam<std::tuple<std::string, dagui::ButtonMask>>
+{
+
+};
+
+TEST_P(ButtonMask_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_EQ(str, dagui::buttonMaskToString(value));
+    EXPECT_EQ(value, dagui::parseButtonMask(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(ButtonMask, ButtonMask_testRoundTrip, ::testing::Values(
+    std::make_tuple("BUTTON_PRIMARY_BIT", dagui::BUTTON_PRIMARY_BIT),
+    std::make_tuple("BUTTON_SECONDARY_BIT", dagui::BUTTON_SECONDARY_BIT),
+    std::make_tuple("BUTTON_MIDDLE_BIT", dagui::BUTTON_MIDDLE_BIT),
+    std::make_tuple("BUTTON_PRIMARY_BIT BUTTON_SECONDARY_BIT", static_cast<dagui::ButtonMask>(dagui::BUTTON_PRIMARY_BIT|dagui::BUTTON_SECONDARY_BIT))
+));

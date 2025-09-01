@@ -724,18 +724,58 @@ INSTANTIATE_TEST_SUITE_P(SceneNodeFactory, SceneNodeFactory_testCreateNode, ::te
 
 class EventSystem_testGenerateSecondaryEvents : public ::testing::TestWithParam<std::tuple<const char*>>
 {
+public:
+    void configure(dagbase::ConfigurationElement& config)
+    {
+        if (auto element = config.findElement("inputEvents"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                dagui::Event event;
 
+                event.configure(child);
+                _inputEvents.emplace_back(event);
+                _itInput = _inputEvents.begin();
+                return true;
+                });
+        }
+
+        if (auto element = config.findElement("outputEvents"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                dagui::Event event;
+
+                event.configure(child);
+                _outputEvents.emplace_back(event);
+
+                return true;
+                });
+        }
+    }
+protected:
+    using EventList = std::vector<dagui::Event>;
+    EventList _inputEvents;
+    EventList::iterator _itInput;
+    EventList _outputEvents;
 };
 
 TEST_P(EventSystem_testGenerateSecondaryEvents, testExpectedEvents)
 {
-    //auto configStr = std::get<0>(GetParam());
-    //dagbase::Lua lua;
-    //auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
-    //ASSERT_NE(nullptr, config);
-    //dagui::EventSystem sut;
-    //sut.configure(*config);
-    //sut.step();
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::EventSystem sut;
+    configure(*config);
+    if (auto element = config->findElement("eventSys"); element)
+    {
+        sut.configure(*element);
+    }
+    for (auto itInput = _inputEvents.begin(); itInput != _inputEvents.end(); ++itInput)
+    {
+        sut.onInput(*itInput);
+    }
+    sut.step();
+    EXPECT_EQ(_outputEvents, sut.outputEvents());
 }
 
 INSTANTIATE_TEST_SUITE_P(EventSystem, EventSystem_testGenerateSecondaryEvents, ::testing::Values(
