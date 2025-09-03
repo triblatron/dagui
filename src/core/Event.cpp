@@ -33,6 +33,8 @@ namespace dagui
 
 				break;
 			}
+        default:
+            break;
 		}
 	}
 

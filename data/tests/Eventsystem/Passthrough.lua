@@ -1,0 +1,29 @@
+root=
+{
+	inputEvents=
+	{
+		{
+			type="TYPE_BUTTON_PRESS",
+			x=0,
+			y=0,
+		},
+	},
+	outputEvents=
+	{
+		{
+			type="TYPE_BUTTON_RELEASE",
+			x=0,
+			y=0,
+		},
+	},
+	eventSys=
+	{
+		filters=
+		{
+			{
+				class="PassthroughEventFilter",
+				eventType="TYPE_BUTTON_PRESS",
+			}
+		}
+	},
+}
