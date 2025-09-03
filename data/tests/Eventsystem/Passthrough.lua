@@ -7,11 +7,21 @@ root=
 			x=0,
 			y=0,
 		},
+		{
+			type="TYPE_BUTTON_RELEASE",
+			x=0,
+			y=0,
+		},
 	},
 	outputEvents=
 	{
 		{
 			type="TYPE_BUTTON_PRESS",
+			x=0,
+			y=0,
+		},
+		{
+			type="TYPE_BUTTON_RELEASE",
 			x=0,
 			y=0,
 		},
@@ -22,7 +32,7 @@ root=
 		{
 			{
 				class="PassthroughEventFilter",
-				eventType="TYPE_BUTTON_PRESS",
+				eventTypes="BUTTON_PRESS_BIT BUTTON_RELEASE_BIT",
 			}
 		}
 	},

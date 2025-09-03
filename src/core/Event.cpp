@@ -81,7 +81,53 @@ namespace dagui
 		return TYPE_UNKNOWN;
 	}
 
-	bool PointerEvent::operator==(const PointerEvent& other) const
+    std::string Event::typeMaskToString(Event::TypeMask value)
+    {
+        std::string retval;
+
+        if (value == EVENT_NONE)
+            return "EVENT_NONE";
+
+        BIT_NAME(value, POINTER_MOVE_BIT, retval)
+        BIT_NAME(value, POINTER_HOVER_BIT, retval)
+        BIT_NAME(value, BUTTON_PRESS_BIT, retval)
+        BIT_NAME(value, BUTTON_RELEASE_BIT, retval)
+        BIT_NAME(value, BUTTON_CLICK_BIT, retval)
+        BIT_NAME(value, KEY_PRESS_BIT, retval)
+        BIT_NAME(value, KEY_RELEASE_BIT, retval)
+        BIT_NAME(value, ENTER_WIDGET_BIT, retval)
+        BIT_NAME(value, LEAVE_WIDGET_BIT, retval)
+        BIT_NAME(value, DRAG_START_BIT, retval)
+        BIT_NAME(value, DRAGGING_BIT, retval)
+        BIT_NAME(value, DRAG_STOP_BIT, retval)
+
+        if (!retval.empty())
+            retval = retval.substr(0, retval.length()-1);
+
+        return retval;
+    }
+
+    Event::TypeMask Event::parseTypeMask(const std::string &str)
+    {
+        TypeMask retval = EVENT_NONE;
+
+        TEST_BIT(POINTER_MOVE_BIT, str, retval)
+        TEST_BIT(POINTER_HOVER_BIT, str, retval)
+        TEST_BIT(BUTTON_PRESS_BIT, str, retval)
+        TEST_BIT(BUTTON_RELEASE_BIT, str, retval)
+        TEST_BIT(BUTTON_CLICK_BIT, str, retval)
+        TEST_BIT(KEY_PRESS_BIT, str, retval)
+        TEST_BIT(KEY_RELEASE_BIT, str, retval)
+        TEST_BIT(ENTER_WIDGET_BIT, str, retval)
+        TEST_BIT(LEAVE_WIDGET_BIT, str, retval)
+        TEST_BIT(DRAG_START_BIT, str, retval)
+        TEST_BIT(DRAGGING_BIT, str, retval)
+        TEST_BIT(DRAG_STOP_BIT, str, retval)
+
+        return retval;
+    }
+
+    bool PointerEvent::operator==(const PointerEvent& other) const
 	{
 		return x == other.x && y == other.y && buttons == other.buttons;
 	}

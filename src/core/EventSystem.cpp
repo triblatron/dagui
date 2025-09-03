@@ -9,10 +9,10 @@ namespace dagui
 {
 	void EventFilter::configure(dagbase::ConfigurationElement& config)
 	{
-		std::string eventType;
+		std::string eventTypes;
 
-		dagbase::ConfigurationElement::readConfig(config, "eventType", &eventType);
-		_type = Event::parseType(eventType.c_str());
+		dagbase::ConfigurationElement::readConfig(config, "eventTypes", &eventTypes);
+		_types = Event::parseTypeMask(eventTypes.c_str());
 	}
 
 	void PassthroughEventFilter::onInput(const Event& event, EventSystem& eventSys)
@@ -66,7 +66,7 @@ namespace dagui
 
 			for (auto itFilter = _filters.begin(); itFilter != _filters.end(); ++itFilter)
 			{
-				if ((*itFilter)->type() == inputEvent.type())
+				if ((*itFilter)->types() & (1<<inputEvent.type()))
 				{
 					(*itFilter)->onInput(inputEvent, *this);
 				}

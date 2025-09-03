@@ -92,6 +92,22 @@ namespace dagui
 			//! Generated when a drag operation finishes
 			TYPE_DRAG_STOP
 		};
+        enum TypeMask : std::uint32_t
+        {
+            EVENT_NONE,
+            POINTER_MOVE_BIT = 1<<TYPE_POINTER_MOVE,
+            POINTER_HOVER_BIT = 1<<TYPE_POINTER_HOVER,
+            BUTTON_PRESS_BIT = 1<<TYPE_BUTTON_PRESS,
+            BUTTON_RELEASE_BIT = 1<<TYPE_BUTTON_RELEASE,
+            BUTTON_CLICK_BIT = 1<<TYPE_BUTTON_CLICK,
+            KEY_PRESS_BIT = 1<<TYPE_KEY_PRESS,
+            KEY_RELEASE_BIT = 1<<TYPE_KEY_RELEASE,
+            ENTER_WIDGET_BIT = 1<<TYPE_ENTER_WIDGET,
+            LEAVE_WIDGET_BIT = 1<<TYPE_LEAVE_WIDGET,
+            DRAG_START_BIT = 1<<TYPE_DRAG_START,
+            DRAGGING_BIT = 1<<TYPE_DRAGGING,
+            DRAG_STOP_BIT = 1<<TYPE_DRAG_STOP
+        };
 	public:
 		Event() = default;
 
@@ -114,6 +130,10 @@ namespace dagui
 		static const char* typeToString(Type value);
 
 		static Type parseType(const char* str);
+
+        static std::string typeMaskToString(TypeMask value);
+
+        static TypeMask parseTypeMask(const std::string& str);
 	private:
 		Type _type{ TYPE_UNKNOWN };
 		

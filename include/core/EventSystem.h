@@ -21,16 +21,16 @@ namespace dagui
 	class DAGUI_API EventFilter
 	{
 	public:
-		Event::Type type() const
+		Event::TypeMask types() const
 		{
-			return _type;
+			return _types;
 		}
 
 		virtual void configure(dagbase::ConfigurationElement& config);
 
 		virtual void onInput(const Event& inputEvent, EventSystem& eventSys) = 0;
 	private:
-		Event::Type _type{ Event::TYPE_UNKNOWN };
+		Event::TypeMask _types{ Event::EVENT_NONE };
 	};
 
 	class DAGUI_API PassthroughEventFilter : public EventFilter
