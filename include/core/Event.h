@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <variant>
 #include <string>
+#include <iosfwd>
 
 namespace dagbase
 {
@@ -118,4 +119,6 @@ namespace dagui
 		
 		ContentType _data;
 	};
+
+    std::ostream& DAGUI_API operator<<(std::ostream& str, const Event& obj);
 }

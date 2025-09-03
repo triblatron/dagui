@@ -4,6 +4,8 @@
 #include "util/enums.h"
 #include "core/ConfigurationElement.h"
 
+#include <iostream>
+
 namespace dagui
 {
 	dagui::Event::Event(Type type, ContentType data)
@@ -122,4 +124,11 @@ namespace dagui
 
 		return retval;
 	}
+
+    std::ostream &operator<<(std::ostream &str, const Event &obj)
+    {
+        str << "Event {  type: " << Event::typeToString(obj.type()) << " }";
+
+        return str;
+    }
 }
