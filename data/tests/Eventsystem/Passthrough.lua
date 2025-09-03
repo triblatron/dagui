@@ -11,7 +11,7 @@ root=
 	outputEvents=
 	{
 		{
-			type="TYPE_BUTTON_RELEASE",
+			type="TYPE_BUTTON_PRESS",
 			x=0,
 			y=0,
 		},
