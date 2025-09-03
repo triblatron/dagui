@@ -770,9 +770,9 @@ TEST_P(EventSystem_testGenerateSecondaryEvents, testExpectedEvents)
     {
         sut.configure(*element);
     }
-    for (auto itInput = _inputEvents.begin(); itInput != _inputEvents.end(); ++itInput)
+    for (auto event : _inputEvents)
     {
-        sut.onInput(*itInput);
+        sut.onInput(event);
     }
     sut.step();
     EXPECT_EQ(_outputEvents, sut.outputEvents());
