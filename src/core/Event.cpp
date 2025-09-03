@@ -127,7 +127,22 @@ namespace dagui
 
     std::ostream &operator<<(std::ostream &str, const Event &obj)
     {
-        str << "Event {  type: " << Event::typeToString(obj.type()) << " }";
+        str << "Event {  type: " << Event::typeToString(obj.type());
+        switch (obj.type())
+        {
+            case Event::TYPE_BUTTON_PRESS:
+            case Event::TYPE_BUTTON_RELEASE:
+            case Event::TYPE_POINTER_MOVE:
+            {
+                const auto& data = std::get<PointerEvent>(obj.data());
+                str << ", x: " << data.x << ", y: " << data.y;
+                str << ", buttonMask: " << buttonMaskToString(data.buttons);
+                break;
+            }
+            default:
+                break;
+        }
+        str << " }";
 
         return str;
     }
