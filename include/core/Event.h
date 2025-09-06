@@ -130,6 +130,11 @@ namespace dagui
 			return _type;
 		}
 
+        void setTimestamp(double timestamp)
+        {
+            _timestamp = timestamp;
+        }
+
         double timestamp() const
         {
             return _timestamp;

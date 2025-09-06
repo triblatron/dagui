@@ -16,6 +16,20 @@ root=
 			x=1,
 			y=2,
 		},
+		{
+			timestamp=0.25,
+			type="TYPE_BUTTON_PRESS",
+			buttons="BUTTON_PRIMARY_BIT",
+			x=0,
+			y=0,
+		},
+		{
+			timestamp=0.5,
+			type="TYPE_BUTTON_RELEASE",
+			buttons="BUTTON_PRIMARY_BIT",
+			x=1,
+			y=2,
+		},
 	},
 	outputEvents=
 	{
@@ -36,6 +50,27 @@ root=
 		{
 			timestamp=0.1,
 			type="TYPE_BUTTON_CLICK",
+			buttons="BUTTON_PRIMARY_BIT",
+			x=1,
+			y=2,
+		},
+		{
+			timestamp=0.25,
+			type="TYPE_BUTTON_PRESS",
+			buttons="BUTTON_PRIMARY_BIT",
+			x=0,
+			y=0,
+		},
+		{
+			timestamp=0.5,
+			type="TYPE_BUTTON_RELEASE",
+			buttons="BUTTON_PRIMARY_BIT",
+			x=1,
+			y=2,
+		},
+		{
+			timestamp=0.5,
+			type="TYPE_BUTTON_DOUBLE_CLICK",
 			buttons="BUTTON_PRIMARY_BIT",
 			x=1,
 			y=2,
@@ -66,6 +101,35 @@ root=
 				output=
 				{
 					type="TYPE_BUTTON_CLICK",
+					x="inputs[1].x",
+					y="inputs[1].y",
+				}
+			},
+			{
+				class="TimedSequenceEventFilter",
+				eventTypes="BUTTON_PRESS_BIT BUTTON_RELEASE_BIT",
+				sequence=
+				{
+					{
+						type="TYPE_BUTTON_PRESS",
+					},
+					{
+						interval=0.1,
+						type="TYPE_BUTTON_RELEASE",
+					},
+					{
+						interval=0.1,
+						type="TYPE_BUTTON_PRESS",
+					},
+					{
+						interval=0.1,
+						type="TYPE_BUTTON_RELEASE",
+					}
+				},
+				positionRadius=4.0,
+				output=
+				{
+					type="TYPE_BUTTON_DOUBLE_CLICK",
 					x="inputs[1].x",
 					y="inputs[1].y",
 				}

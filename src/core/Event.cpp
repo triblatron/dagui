@@ -191,6 +191,7 @@ namespace dagui
     std::ostream &operator<<(std::ostream &str, const Event &obj)
     {
         str << "Event {  type: " << Event::typeToString(obj.type());
+        str << ", timestamp: " << obj.timestamp();
         switch (obj.type())
         {
             case Event::TYPE_BUTTON_PRESS:

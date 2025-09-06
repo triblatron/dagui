@@ -134,6 +134,7 @@ namespace dagui
                     ++_seqIndex;
                     if (_output.data().index() == inputEvent.data().index())
                     {
+                        _output.setTimestamp(inputEvent.timestamp());
                         switch (_output.data().index())
                         {
                             case 0:
@@ -163,10 +164,6 @@ namespace dagui
             switch (_state)
             {
                 case STATE_EVENT:
-                    if (_eventSys)
-                    {
-                        _eventSys->onOutput(_output);
-                    }
                     break;
                 default:
                     break;
@@ -176,6 +173,12 @@ namespace dagui
             {
                 case STATE_EVENT:
                     ++_seqIndex;
+                    break;
+                case STATE_FINAL:
+                    if (_eventSys)
+                    {
+                        _eventSys->onOutput(_output);
+                    }
                     break;
             }
             if (_eventSys)
