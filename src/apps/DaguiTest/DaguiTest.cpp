@@ -787,7 +787,6 @@ TEST_P(EventSystem_testGenerateSecondaryEvents, testExpectedEvents)
         timeProvider.tick();
     }
 
-    sut.step();
     EXPECT_EQ(_outputEvents, sut.outputEvents());
 }
 

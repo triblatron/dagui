@@ -116,9 +116,7 @@ namespace dagui
 		void onOutput(const Event& event);
 
 		void configure(dagbase::ConfigurationElement& config);
-
-		void step();
-	private:
+    private:
 		EventQueue _inputEvents;
         EventQueue _outputEvents;
         using FilterList = std::vector<EventFilter*>;

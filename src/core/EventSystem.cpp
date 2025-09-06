@@ -85,16 +85,6 @@ namespace dagui
 		_outputEvents.emplace_back(event);
 	}
 
-	void EventSystem::step()
-	{
-		while (_inputIndex < _inputEvents.size())
-		{
-			const Event& inputEvent = _inputEvents[_inputIndex];
-
-			++_inputIndex;
-		}
-	}
-
     void TimedSequenceEventFilter::configure(dagbase::ConfigurationElement &config)
     {
         EventFilter::configure(config);
