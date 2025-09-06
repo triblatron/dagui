@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <cstdlib>
+#include <chrono>
 
 namespace dagbase
 {
@@ -21,6 +22,10 @@ namespace dagui
 	class DAGUI_API EventFilter
 	{
 	public:
+        explicit EventFilter(EventSystem* eventSys);
+
+        ~EventFilter() = default;
+
 		Event::TypeMask types() const
 		{
 			return _types;
@@ -28,7 +33,14 @@ namespace dagui
 
 		virtual void configure(dagbase::ConfigurationElement& config);
 
-		virtual void onInput(const Event& inputEvent, EventSystem& eventSys) = 0;
+		virtual void onInput(const Event& inputEvent) = 0;
+
+        virtual void step()
+        {
+            // Do nothing.
+        }
+    protected:
+        EventSystem* _eventSys{nullptr};
 	private:
 		Event::TypeMask _types{ Event::EVENT_NONE };
 	};
@@ -36,8 +48,44 @@ namespace dagui
 	class DAGUI_API PassthroughEventFilter : public EventFilter
 	{
 	public:
-		void onInput(const Event& inputEvent, EventSystem& eventSys) override;
+        explicit PassthroughEventFilter(EventSystem* eventSys);
+
+		void onInput(const Event& inputEvent) override;
 	};
+
+    class DAGUI_API TimedSequenceEventFilter : public EventFilter
+    {
+    public:
+        enum State : std::uint32_t
+        {
+            STATE_INITIAL,
+            STATE_EVENT,
+            STATE_FINAL
+        };
+    public:
+        explicit TimedSequenceEventFilter(EventSystem* eventSys);
+
+        void configure(dagbase::ConfigurationElement& config) override;
+
+        void onInput(const Event& inputEvent) override;
+
+        void step() override;
+    private:
+        struct EventTiming
+        {
+            Event::Type type{Event::TYPE_UNKNOWN};
+            double interval{0.0};
+
+            void configure(dagbase::ConfigurationElement& config);
+        };
+        Event _output;
+        using TimingSequence = std::vector<EventTiming>;
+        TimingSequence _sequence;
+        std::size_t _seqIndex{0};
+        State _state{STATE_INITIAL};
+        std::chrono::steady_clock::time_point _stateEntryTick{};
+        void changeState(State nextState);
+    };
 
 	class DAGUI_API EventSystem
 	{

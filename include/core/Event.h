@@ -123,6 +123,11 @@ namespace dagui
 			return _data;
 		}
 
+        ContentType & data()
+        {
+            return _data;
+        }
+
 		bool operator==(const Event& other) const;
 
 		void configure(dagbase::ConfigurationElement& config);
@@ -136,7 +141,7 @@ namespace dagui
         static TypeMask parseTypeMask(const std::string& str);
 	private:
 		Type _type{ TYPE_UNKNOWN };
-		
+		double _timestamp{0.0};
 		ContentType _data;
 	};
 

@@ -12,15 +12,32 @@ namespace dagui
 		std::string eventTypes;
 
 		dagbase::ConfigurationElement::readConfig(config, "eventTypes", &eventTypes);
-		_types = Event::parseTypeMask(eventTypes.c_str());
+		_types = Event::parseTypeMask(eventTypes);
 	}
 
-	void PassthroughEventFilter::onInput(const Event& event, EventSystem& eventSys)
+    EventFilter::EventFilter(EventSystem *eventSys)
+    :
+    _eventSys(eventSys)
+    {
+        // Do nothing.
+    }
+
+    void PassthroughEventFilter::onInput(const Event& event)
 	{
-		eventSys.onOutput(event);
+        if (_eventSys)
+        {
+            _eventSys->onOutput(event);
+        }
 	}
 
-	void EventSystem::configure(dagbase::ConfigurationElement& config)
+    PassthroughEventFilter::PassthroughEventFilter(EventSystem *eventSys)
+    :
+    EventFilter(eventSys)
+    {
+        // Do nothing.
+    }
+
+    void EventSystem::configure(dagbase::ConfigurationElement& config)
 	{
 		if (auto element = config.findElement("filters"); element)
 		{
@@ -33,15 +50,18 @@ namespace dagui
 
 				if (className == "PassthroughEventFilter")
 				{
-					filter = new PassthroughEventFilter;
+					filter = new PassthroughEventFilter(this);
 				}
+                else if (className == "TimedSequenceEventFilter")
+                {
+                    filter = new TimedSequenceEventFilter(this);
+                }
 
 				if (filter)
 				{
 					filter->configure(child);
+                    _filters.emplace_back(filter);
 				}
-
-				_filters.emplace_back(filter);
 
 				return true;
 				});
@@ -68,10 +88,121 @@ namespace dagui
 			{
 				if ((*itFilter)->types() & (1<<inputEvent.type()))
 				{
-					(*itFilter)->onInput(inputEvent, *this);
+					(*itFilter)->onInput(inputEvent);
 				}
+                (*itFilter)->step();
 			}
 			++_inputIndex;
 		}
 	}
+
+    void TimedSequenceEventFilter::configure(dagbase::ConfigurationElement &config)
+    {
+        EventFilter::configure(config);
+
+        if (auto element = config.findElement("sequence"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                EventTiming timing;
+
+                timing.configure(child);
+
+                _sequence.emplace_back(timing);
+
+                return true;
+            });
+        }
+
+        if (auto element = config.findElement("output"); element)
+        {
+            _output.configure(*element);
+        }
+    }
+
+    void TimedSequenceEventFilter::onInput(const Event &inputEvent)
+    {
+        switch (_state)
+        {
+            case STATE_INITIAL:
+                if (_seqIndex<_sequence.size() && inputEvent.type() == _sequence[_seqIndex].type)
+                {
+                   changeState(STATE_EVENT);
+                }
+                break;
+            case STATE_EVENT:
+                if (_seqIndex < _sequence.size() && inputEvent.type() == _sequence[_seqIndex].type && std::chrono::duration<double>(std::chrono::steady_clock::now() - _stateEntryTick).count() >= _sequence[_seqIndex].interval)
+                {
+                    ++_seqIndex;
+                    if (_output.data().index() == inputEvent.data().index())
+                    {
+                        switch (_output.data().index())
+                        {
+                            case 0:
+                            {
+                                const auto& inputData = std::get<0>(inputEvent.data());
+                                PointerEvent& outputData = std::get<0>(_output.data());
+
+                                outputData = inputData;
+                            }
+                        }
+                    }
+                    if (_seqIndex<_sequence.size())
+                        changeState(STATE_INITIAL);
+                    else
+                        changeState(STATE_FINAL);
+                }
+            default:
+                break;
+        }
+    }
+
+    void TimedSequenceEventFilter::changeState(TimedSequenceEventFilter::State nextState)
+    {
+        if (nextState != _state)
+        {
+            switch (_state)
+            {
+                case STATE_EVENT:
+                    if (_eventSys)
+                    {
+                        _eventSys->onOutput(_output);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            _state = nextState;
+            switch (_state)
+            {
+                case STATE_EVENT:
+                    ++_seqIndex;
+                    break;
+            }
+            _stateEntryTick = std::chrono::steady_clock::now();
+        }
+    }
+
+    void TimedSequenceEventFilter::step()
+    {
+        switch (_state)
+        {
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    TimedSequenceEventFilter::TimedSequenceEventFilter(EventSystem *eventSys)
+    :
+    EventFilter(eventSys)
+    {
+        // Do nothing.
+    }
+
+    void TimedSequenceEventFilter::EventTiming::configure(dagbase::ConfigurationElement &config)
+    {
+        dagbase::ConfigurationElement::readConfig<Event::Type>(config, "type", Event::parseType, &type);
+        dagbase::ConfigurationElement::readConfig(config, "interval", &interval);
+    }
 }

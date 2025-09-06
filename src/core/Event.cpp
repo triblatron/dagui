@@ -18,15 +18,20 @@ namespace dagui
 
 	bool Event::operator==(const Event& other) const
 	{
-		return _type == other._type && _data == other._data;
+		return _timestamp==other._timestamp && _type == other._type && _data == other._data;
 	}
 
 	void Event::configure(dagbase::ConfigurationElement& config)
 	{
 		dagbase::ConfigurationElement::readConfig<Type>(config, "type", Event::parseType, &_type);
+        dagbase::ConfigurationElement::readConfig(config, "timestamp", &_timestamp);
+
 		switch (_type)
 		{
 		case TYPE_POINTER_MOVE:
+        case TYPE_BUTTON_PRESS:
+        case TYPE_BUTTON_RELEASE:
+        case TYPE_BUTTON_CLICK:
 			{
 				PointerEvent pointerEvent;
 				dagbase::ConfigurationElement::readConfig(config, "x", &pointerEvent.x);
@@ -178,6 +183,7 @@ namespace dagui
         {
             case Event::TYPE_BUTTON_PRESS:
             case Event::TYPE_BUTTON_RELEASE:
+            case Event::TYPE_BUTTON_CLICK:
             case Event::TYPE_POINTER_MOVE:
             {
                 const auto& data = std::get<PointerEvent>(obj.data());
