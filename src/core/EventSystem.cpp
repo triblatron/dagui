@@ -64,13 +64,20 @@ namespace dagui
 				}
 
 				return true;
-				});
+            });
 		}
 	}
 
-	void EventSystem::onInput(const Event& event)
+	void EventSystem::onInput(const Event& inputEvent)
 	{
-		_inputEvents.emplace_back(event);
+        for (auto itFilter = _filters.begin(); itFilter != _filters.end(); ++itFilter)
+        {
+            if ((*itFilter)->types() & (1<<inputEvent.type()))
+            {
+                (*itFilter)->onInput(inputEvent);
+            }
+            (*itFilter)->step();
+        }
 	}
 
 	void EventSystem::onOutput(const Event& event)
@@ -84,14 +91,6 @@ namespace dagui
 		{
 			const Event& inputEvent = _inputEvents[_inputIndex];
 
-			for (auto itFilter = _filters.begin(); itFilter != _filters.end(); ++itFilter)
-			{
-				if ((*itFilter)->types() & (1<<inputEvent.type()))
-				{
-					(*itFilter)->onInput(inputEvent);
-				}
-                (*itFilter)->step();
-			}
 			++_inputIndex;
 		}
 	}
@@ -130,7 +129,7 @@ namespace dagui
                 }
                 break;
             case STATE_EVENT:
-                if (_seqIndex < _sequence.size() && inputEvent.type() == _sequence[_seqIndex].type && std::chrono::duration<double>(std::chrono::steady_clock::now() - _stateEntryTick).count() >= _sequence[_seqIndex].interval)
+                if (_seqIndex < _sequence.size() && inputEvent.type() == _sequence[_seqIndex].type && (inputEvent.timestamp() - _stateEntryTick) >= _sequence[_seqIndex].interval)
                 {
                     ++_seqIndex;
                     if (_output.data().index() == inputEvent.data().index())
@@ -178,7 +177,8 @@ namespace dagui
                     ++_seqIndex;
                     break;
             }
-            _stateEntryTick = std::chrono::steady_clock::now();
+            if (_eventSys)
+                _stateEntryTick = _eventSys->eventTime();
         }
     }
 

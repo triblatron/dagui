@@ -3,6 +3,7 @@
 #include "config/Export.h"
 
 #include "core/Event.h"
+#include "util/TimeProvider.h"
 
 #include <vector>
 #include <cstdlib>
@@ -83,7 +84,7 @@ namespace dagui
         TimingSequence _sequence;
         std::size_t _seqIndex{0};
         State _state{STATE_INITIAL};
-        std::chrono::steady_clock::time_point _stateEntryTick{};
+        double _stateEntryTick{};
         void changeState(State nextState);
     };
 
@@ -92,6 +93,19 @@ namespace dagui
 	public:
 		using EventQueue = std::vector<Event>;
 	public:
+        void setTimeProvider(dagbase::TimeProvider* timeProvider)
+        {
+            _timeProvider = timeProvider;
+        }
+
+        double eventTime() const
+        {
+            if (_timeProvider)
+                return _timeProvider->provideTime();
+            else
+                return 0.0;
+        }
+
 		const EventQueue& outputEvents() const
 		{
 			return _outputEvents;
@@ -106,9 +120,10 @@ namespace dagui
 		void step();
 	private:
 		EventQueue _inputEvents;
+        EventQueue _outputEvents;
+        using FilterList = std::vector<EventFilter*>;
+        FilterList _filters;
+        dagbase::TimeProvider* _timeProvider{nullptr};
 		std::size_t _inputIndex{ 0 };
-		EventQueue _outputEvents;
-		using FilterList = std::vector<EventFilter*>;
-		FilterList _filters;
 	};
 }

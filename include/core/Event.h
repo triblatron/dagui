@@ -118,6 +118,11 @@ namespace dagui
 			return _type;
 		}
 
+        double timestamp() const
+        {
+            return _timestamp;
+        }
+
 		const ContentType& data() const
 		{
 			return _data;

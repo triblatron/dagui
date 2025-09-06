@@ -23,6 +23,7 @@
 #include "core/Vec2f.h"
 #include "core/SceneNodeFactory.h"
 #include "core/EventSystem.h"
+#include "util/FakeTimeProvider.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -756,6 +757,7 @@ protected:
     EventList _inputEvents;
     EventList::iterator _itInput;
     EventList _outputEvents;
+    double _duration{0.0};
 };
 
 TEST_P(EventSystem_testGenerateSecondaryEvents, testExpectedEvents)
@@ -766,14 +768,25 @@ TEST_P(EventSystem_testGenerateSecondaryEvents, testExpectedEvents)
     ASSERT_NE(nullptr, config);
     dagui::EventSystem sut;
     configure(*config);
+    dagbase::FakeTimeProvider timeProvider;
+    timeProvider.setPeriod(0.004);
+    sut.setTimeProvider(&timeProvider);
     if (auto element = config->findElement("eventSys"); element)
     {
         sut.configure(*element);
     }
-    for (auto event : _inputEvents)
+    auto itEvent = _inputEvents.begin();
+    while (itEvent!=_inputEvents.end())
     {
-        sut.onInput(event);
+        auto& event = *itEvent;
+        if (timeProvider.provideTime()>=event.timestamp())
+        {
+            sut.onInput(event);
+            ++itEvent;
+        }
+        timeProvider.tick();
     }
+
     sut.step();
     EXPECT_EQ(_outputEvents, sut.outputEvents());
 }
