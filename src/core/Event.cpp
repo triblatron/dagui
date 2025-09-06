@@ -8,6 +8,13 @@
 
 namespace dagui
 {
+    void PointerEvent::configure(dagbase::ConfigurationElement &config)
+    {
+        dagbase::ConfigurationElement::readConfig(config, "x", &pos[0]);
+        dagbase::ConfigurationElement::readConfig(config, "y", &pos[1]);
+        dagbase::ConfigurationElement::readConfig<ButtonMask>(config, "buttons", parseButtonMask, &buttons);
+    }
+
 	dagui::Event::Event(Type type, ContentType data)
 		:
 		_type(type),
@@ -34,8 +41,8 @@ namespace dagui
         case TYPE_BUTTON_CLICK:
 			{
 				PointerEvent pointerEvent;
-				dagbase::ConfigurationElement::readConfig(config, "x", &pointerEvent.x);
-				dagbase::ConfigurationElement::readConfig(config, "y", &pointerEvent.y);
+
+                pointerEvent.configure(config);
 				_data = pointerEvent;
 
 				break;
@@ -134,7 +141,7 @@ namespace dagui
 
     bool PointerEvent::operator==(const PointerEvent& other) const
 	{
-		return x == other.x && y == other.y && buttons == other.buttons;
+		return x() == other.x() && y() == other.y() && buttons == other.buttons;
 	}
 
 	bool KeyEvent::operator==(const KeyEvent& other) const
@@ -187,7 +194,7 @@ namespace dagui
             case Event::TYPE_POINTER_MOVE:
             {
                 const auto& data = std::get<PointerEvent>(obj.data());
-                str << ", x: " << data.x << ", y: " << data.y;
+                str << ", x: " << data.x() << ", y: " << data.y();
                 str << ", buttonMask: " << buttonMaskToString(data.buttons);
                 break;
             }

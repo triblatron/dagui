@@ -5,14 +5,16 @@ root=
 		{
 			timestamp=0.0,
 			type="TYPE_BUTTON_PRESS",
+			buttons="BUTTON_PRIMARY_BIT",
 			x=0,
 			y=0,
 		},
 		{
 			timestamp=0.1,
 			type="TYPE_BUTTON_RELEASE",
-			x=1,
-			y=2,
+			buttons="BUTTON_PRIMARY_BIT",
+			x=5,
+			y=5,
 		},
 	},
 	outputEvents=
@@ -20,20 +22,17 @@ root=
 		{
 			timestamp=0.0,
 			type="TYPE_BUTTON_PRESS",
+			buttons="BUTTON_PRIMARY_BIT",
 			x=0,
 			y=0,
 		},
 		{
 			timestamp=0.1,
 			type="TYPE_BUTTON_RELEASE",
-			x=1,
-			y=2,
+			buttons="BUTTON_PRIMARY_BIT",
+			x=5,
+			y=5,
 		},
-		{
-			type="TYPE_BUTTON_CLICK",
-			x=1,
-			y=2,
-		}
 	},
 	eventSys=
 	{

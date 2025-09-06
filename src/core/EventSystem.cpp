@@ -4,6 +4,7 @@
 #include "core/ConfigurationElement.h"
 
 #include <string>
+#include <cmath>
 
 namespace dagui
 {
@@ -106,6 +107,8 @@ namespace dagui
         {
             _output.configure(*element);
         }
+
+        dagbase::ConfigurationElement::readConfig(config, "positionRadius", &_positionRadius);
     }
 
     void TimedSequenceEventFilter::onInput(const Event &inputEvent)
@@ -115,11 +118,18 @@ namespace dagui
             case STATE_INITIAL:
                 if (_seqIndex<_sequence.size() && inputEvent.type() == _sequence[_seqIndex].type)
                 {
-                   changeState(STATE_EVENT);
+                    _prevEvent = inputEvent;
+                    changeState(STATE_EVENT);
                 }
                 break;
             case STATE_EVENT:
-                if (_seqIndex < _sequence.size() && inputEvent.type() == _sequence[_seqIndex].type && (inputEvent.timestamp() - _stateEntryTick) >= _sequence[_seqIndex].interval)
+            {
+                double d = distanceBetween(_prevEvent.pos(), inputEvent.pos());
+                if (
+                        _seqIndex < _sequence.size() &&
+                        inputEvent.type() == _sequence[_seqIndex].type &&
+                        (inputEvent.timestamp() - _stateEntryTick) >= _sequence[_seqIndex].interval &&
+                        d < _positionRadius)
                 {
                     ++_seqIndex;
                     if (_output.data().index() == inputEvent.data().index())
@@ -140,6 +150,7 @@ namespace dagui
                     else
                         changeState(STATE_FINAL);
                 }
+            }
             default:
                 break;
         }
@@ -188,6 +199,11 @@ namespace dagui
     EventFilter(eventSys)
     {
         // Do nothing.
+    }
+
+    double TimedSequenceEventFilter::distanceBetween(const std::int32_t op1[2], const std::int32_t op2[2])
+    {
+        return std::hypot(op1[0]-op2[0], op1[1]-op2[1]);
     }
 
     void TimedSequenceEventFilter::EventTiming::configure(dagbase::ConfigurationElement &config)

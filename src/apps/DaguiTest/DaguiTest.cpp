@@ -792,5 +792,6 @@ TEST_P(EventSystem_testGenerateSecondaryEvents, testExpectedEvents)
 
 INSTANTIATE_TEST_SUITE_P(EventSystem, EventSystem_testGenerateSecondaryEvents, ::testing::Values(
     std::make_tuple("data/tests/EventSystem/Passthrough.lua"),
-    std::make_tuple("data/tests/EventSystem/Click.lua")
+    std::make_tuple("data/tests/EventSystem/Click.lua"),
+    std::make_tuple("data/tests/EventSystem/ClickTooFarAway.lua")
 ));

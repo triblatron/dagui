@@ -71,6 +71,8 @@ namespace dagui
         void onInput(const Event& inputEvent) override;
 
         void step() override;
+
+        static double distanceBetween(const std::int32_t op1[2], const std::int32_t op2[2]);
     private:
         struct EventTiming
         {
@@ -80,11 +82,13 @@ namespace dagui
             void configure(dagbase::ConfigurationElement& config);
         };
         Event _output;
+        Event _prevEvent;
         using TimingSequence = std::vector<EventTiming>;
         TimingSequence _sequence;
         std::size_t _seqIndex{0};
-        State _state{STATE_INITIAL};
         double _stateEntryTick{};
+        double _positionRadius{0.0};
+        State _state{STATE_INITIAL};
         void changeState(State nextState);
     };
 

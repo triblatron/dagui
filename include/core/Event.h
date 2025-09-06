@@ -30,9 +30,18 @@ namespace dagui
 
 	struct DAGUI_API PointerEvent
 	{
-		std::int32_t x{ 0 };
-		std::int32_t y{ 0 };
+        std::int32_t pos[2];
 		ButtonMask buttons{ BUTTON_NONE };
+
+        std::int32_t x() const
+        {
+            return pos[0];
+        }
+
+        std::int32_t y() const
+        {
+            return pos[1];
+        }
 
 		void configure(dagbase::ConfigurationElement& config);
 
@@ -133,6 +142,16 @@ namespace dagui
             return _data;
         }
 
+        std::int32_t const * const pos() const
+        {
+            if (_data.index() == 0)
+            {
+                return std::get<0>(_data).pos;
+            }
+
+            return ORIGIN;
+        }
+
 		bool operator==(const Event& other) const;
 
 		void configure(dagbase::ConfigurationElement& config);
@@ -144,6 +163,8 @@ namespace dagui
         static std::string typeMaskToString(TypeMask value);
 
         static TypeMask parseTypeMask(const std::string& str);
+
+        static constexpr std::int32_t ORIGIN[2]{};
 	private:
 		Type _type{ TYPE_UNKNOWN };
 		double _timestamp{0.0};
