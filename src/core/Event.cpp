@@ -39,6 +39,7 @@ namespace dagui
         case TYPE_BUTTON_PRESS:
         case TYPE_BUTTON_RELEASE:
         case TYPE_BUTTON_CLICK:
+        case TYPE_BUTTON_DOUBLE_CLICK:
 			{
 				PointerEvent pointerEvent;
 
@@ -62,6 +63,7 @@ namespace dagui
 			ENUM_NAME(TYPE_BUTTON_PRESS)
 			ENUM_NAME(TYPE_BUTTON_RELEASE)
 			ENUM_NAME(TYPE_BUTTON_CLICK)
+			ENUM_NAME(TYPE_BUTTON_DOUBLE_CLICK)
 			ENUM_NAME(TYPE_KEY_PRESS)
 			ENUM_NAME(TYPE_KEY_RELEASE)
 			ENUM_NAME(TYPE_ENTER_WIDGET)
@@ -82,6 +84,7 @@ namespace dagui
 		TEST_ENUM(TYPE_BUTTON_PRESS, str);
 		TEST_ENUM(TYPE_BUTTON_RELEASE, str);
 		TEST_ENUM(TYPE_BUTTON_CLICK, str);
+		TEST_ENUM(TYPE_BUTTON_DOUBLE_CLICK, str);
 		TEST_ENUM(TYPE_KEY_PRESS, str);
 		TEST_ENUM(TYPE_KEY_RELEASE, str);
 		TEST_ENUM(TYPE_ENTER_WIDGET, str);
@@ -105,6 +108,7 @@ namespace dagui
         BIT_NAME(value, BUTTON_PRESS_BIT, retval)
         BIT_NAME(value, BUTTON_RELEASE_BIT, retval)
         BIT_NAME(value, BUTTON_CLICK_BIT, retval)
+        BIT_NAME(value, BUTTON_DOUBLE_CLICK_BIT, retval)
         BIT_NAME(value, KEY_PRESS_BIT, retval)
         BIT_NAME(value, KEY_RELEASE_BIT, retval)
         BIT_NAME(value, ENTER_WIDGET_BIT, retval)
@@ -128,6 +132,7 @@ namespace dagui
         TEST_BIT(BUTTON_PRESS_BIT, str, retval)
         TEST_BIT(BUTTON_RELEASE_BIT, str, retval)
         TEST_BIT(BUTTON_CLICK_BIT, str, retval)
+        TEST_BIT(BUTTON_DOUBLE_CLICK_BIT, str, retval)
         TEST_BIT(KEY_PRESS_BIT, str, retval)
         TEST_BIT(KEY_RELEASE_BIT, str, retval)
         TEST_BIT(ENTER_WIDGET_BIT, str, retval)
@@ -191,6 +196,7 @@ namespace dagui
             case Event::TYPE_BUTTON_PRESS:
             case Event::TYPE_BUTTON_RELEASE:
             case Event::TYPE_BUTTON_CLICK:
+            case Event::TYPE_BUTTON_DOUBLE_CLICK:
             case Event::TYPE_POINTER_MOVE:
             {
                 const auto& data = std::get<PointerEvent>(obj.data());
