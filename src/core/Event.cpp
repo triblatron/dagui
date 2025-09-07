@@ -36,6 +36,7 @@ namespace dagui
 		switch (_type)
 		{
 		case TYPE_POINTER_MOVE:
+		case TYPE_POINTER_HOVER:
         case TYPE_BUTTON_PRESS:
         case TYPE_BUTTON_RELEASE:
         case TYPE_BUTTON_CLICK:
@@ -199,6 +200,7 @@ namespace dagui
             case Event::TYPE_BUTTON_CLICK:
             case Event::TYPE_BUTTON_DOUBLE_CLICK:
             case Event::TYPE_POINTER_MOVE:
+			case Event::TYPE_POINTER_HOVER:
             {
                 const auto& data = std::get<PointerEvent>(obj.data());
                 str << ", x: " << data.x() << ", y: " << data.y();

@@ -794,5 +794,6 @@ INSTANTIATE_TEST_SUITE_P(EventSystem, EventSystem_testGenerateSecondaryEvents, :
     std::make_tuple("data/tests/EventSystem/Passthrough.lua"),
     std::make_tuple("data/tests/EventSystem/Click.lua"),
     std::make_tuple("data/tests/EventSystem/ClickTooFarAway.lua"),
-    std::make_tuple("data/tests/EventSystem/DoubleClick.lua")
+    std::make_tuple("data/tests/EventSystem/DoubleClick.lua"),
+    std::make_tuple("data/tests/EventSystem/Hover.lua")
 ));
