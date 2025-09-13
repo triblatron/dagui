@@ -863,9 +863,34 @@ struct TestInput
 
 struct TestTransition
 {
-    std::uint32_t state{0};
-    TestInput input;
-    std::uint32_t nextState{0};
+    dagbase::Atom nextState;
+
+    struct Domain
+    {
+        dagbase::Atom initialState;
+        dagbase::Atom input;
+
+        bool operator<(const Domain& other) const
+        {
+            return initialState < other.initialState || (initialState == other.initialState && input<other.input);
+        }
+
+        void configure(dagbase::ConfigurationElement& config)
+        {
+            dagbase::ConfigurationElement::readConfig(config, "initialState", &initialState);
+            dagbase::ConfigurationElement::readConfig(config, "input", &input);
+        }
+    };
+
+    struct Codomain
+    {
+        dagbase::Atom nextState;
+
+        void configure(dagbase::ConfigurationElement& config)
+        {
+            dagbase::ConfigurationElement::readConfig(config, "nextState", &nextState);
+        }
+    };
 };
 
 TEST_P(StateMachine_testConfigure, testExpectedValue)
@@ -886,5 +911,6 @@ TEST_P(StateMachine_testConfigure, testExpectedValue)
 
 INSTANTIATE_TEST_SUITE_P(StateMachine, StateMachine_testConfigure, ::testing::Values(
         std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numStates", std::uint32_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numInputs", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numInputs", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numTransitions", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));

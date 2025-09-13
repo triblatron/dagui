@@ -25,27 +25,21 @@ namespace dagui
     public:
         void configure(dagbase::ConfigurationElement& config)
         {
-            if (auto element=config.findElement("states"); element)
+            dagbase::ConfigurationElement::readConfigSet(config, "states", &_states);
+
+            dagbase::ConfigurationElement::readConfigSet(config, "inputs", &_inputs);
+
+            if (auto element=config.findElement("transitionFunction"); element)
             {
                 element->eachChild([this](dagbase::ConfigurationElement& child) {
-                    State state;
+                    typename Transition::Domain domain;
 
-                    state.configure(child);
+                    domain.configure(child);
 
-                    _states.emplace(state);
+                    typename Transition::Codomain codomain;
 
-                    return true;
-                });
-            }
-
-            if (auto element = config.findElement("inputs"); element)
-            {
-                element->eachChild([this](dagbase::ConfigurationElement& child) {
-                    Input input;
-
-                    input.configure(child);
-
-                    _inputs.emplace(input);
+                    codomain.configure(child);
+                    _transitionFunction.emplace(domain, codomain);
 
                     return true;
                 });
@@ -74,6 +68,10 @@ namespace dagui
             if (retval.has_value())
                 return retval;
 
+            retval = dagbase::findEndpoint(path, "numTransitions", std::uint32_t(_transitionFunction.size()));
+            if (retval.has_value())
+                return retval;
+
 
             return {};
         }
@@ -82,7 +80,18 @@ namespace dagui
         StateSet _states;
         using InputSet = std::set<Input>;
         InputSet _inputs;
-        using TransitionFunction = std::map<std::pair<State,Input>,State>;
+        struct TransitionDomain
+        {
+            dagbase::Atom initialState;
+            dagbase::Atom input;
+
+            void configure(dagbase::ConfigurationElement& config)
+            {
+                dagbase::ConfigurationElement::readConfig(config, "initialState", &initialState);
+                dagbase::ConfigurationElement::readConfig(config, "input", &input);
+            }
+        };
+        using TransitionFunction = std::map<typename Transition::Domain,typename Transition::Codomain>;
         TransitionFunction _transitionFunction;
         using EntryExitActions = std::vector<std::function<void(State)>>;
         EntryExitActions _entryActions;

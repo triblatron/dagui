@@ -27,7 +27,7 @@ root=
 		{
 			initialState="STATE_INITIAL",
 			input="INPUT_TEST",
-			finalState="STATE_FINAL",
+			nextState="STATE_FINAL",
 		}
 	},
 }
