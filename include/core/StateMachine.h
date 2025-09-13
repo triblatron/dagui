@@ -11,6 +11,7 @@
 #include "util/Searchable.h"
 
 #include <set>
+#include <map>
 #include <cstdint>
 #include <vector>
 #include <functional>
@@ -36,6 +37,19 @@ namespace dagui
                     return true;
                 });
             }
+
+            if (auto element = config.findElement("inputs"); element)
+            {
+                element->eachChild([this](dagbase::ConfigurationElement& child) {
+                    Input input;
+
+                    input.configure(child);
+
+                    _inputs.emplace(input);
+
+                    return true;
+                });
+            }
         }
 
         void onInput(Input input)
@@ -56,17 +70,24 @@ namespace dagui
             if (retval.has_value())
                 return retval;
 
+            retval = dagbase::findEndpoint(path, "numInputs", std::uint32_t(_inputs.size()));
+            if (retval.has_value())
+                return retval;
+
+
             return {};
         }
     private:
         using StateSet = std::set<State>;
         StateSet _states;
+        using InputSet = std::set<Input>;
+        InputSet _inputs;
         using TransitionFunction = std::map<std::pair<State,Input>,State>;
         TransitionFunction _transitionFunction;
         using EntryExitActions = std::vector<std::function<void(State)>>;
         EntryExitActions _entryActions;
         EntryExitActions _exitActions;
-        using TransitionActions = std::vector<std::function<void(State,State)>>;
+        using TransitionActions = std::vector<std::function<void(State, State)>>;
         TransitionActions _transitionActions;
     };
 }

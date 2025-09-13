@@ -3,13 +3,31 @@ root=
 	states=
 	{
 		{
-			state="STATE_INITIAL"
+			name="STATE_INITIAL",
+			value=1,
 		},
 		{
-			state="STATE_INITIAL",
+			name="STATE_INITIAL",
+			value=1,
 		},
 		{
-			state="STATE_FINAL",
+			name="STATE_FINAL",
+			value=2,
 		},
-	}
+	},
+	inputs=
+	{
+		{
+			name="INPUT_TEST",
+			value=0,
+		},
+	},
+	transitionFunction=
+	{
+		{
+			initialState="STATE_INITIAL",
+			input="INPUT_TEST",
+			finalState="STATE_FINAL",
+		}
+	},
 }

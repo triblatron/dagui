@@ -806,26 +806,22 @@ class StateMachine_testConfigure : public ::testing::TestWithParam<std::tuple<co
 
 };
 
-struct TestState
+struct TestStates
 {
-    enum State
-    {
-        STATE_UNKNOWN,
-        STATE_INITIAL,
-        STATE_FINAL
-    };
-    State state{STATE_INITIAL};
+    std::uint32_t value{0};
+    dagbase::Atom name;
 
     void configure(dagbase::ConfigurationElement& config)
     {
-        dagbase::ConfigurationElement::readConfig<State>(config, "state", &parseState, &state);
+        dagbase::ConfigurationElement::readConfig(config, "name", &name);
+        dagbase::ConfigurationElement::readConfig(config, "value", &value);
     }
 
-    bool operator<(const TestState &other) const
+    bool operator<(const TestStates &other) const
     {
-        return state < other.state;
+        return value < other.value;
     }
-
+/*
     static const char* stateToString(State state)
     {
         switch (state)
@@ -845,12 +841,24 @@ struct TestState
 
         return STATE_UNKNOWN;
     }
+    */
 };
 
-enum TestInput : std::uint32_t
+struct TestInput
 {
-    INPUT_UNKNOWN,
-    INPUT_TEST
+    dagbase::Atom name;
+    std::uint32_t value{0};
+
+    void configure(dagbase::ConfigurationElement& config)
+    {
+        dagbase::ConfigurationElement::readConfig(config, "name", &name);
+        dagbase::ConfigurationElement::readConfig(config, "value", &value);
+    }
+
+    bool operator<(const TestInput& other) const
+    {
+        return value < other.value;
+    }
 };
 
 struct TestTransition
@@ -866,7 +874,7 @@ TEST_P(StateMachine_testConfigure, testExpectedValue)
     dagbase::Lua lua;
     auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
     ASSERT_NE(nullptr, config);
-    dagui::StateMachine<TestState, TestTransition, TestInput> sut;
+    dagui::StateMachine<TestStates, TestTransition, TestInput> sut;
     sut.configure(*config);
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
@@ -877,5 +885,6 @@ TEST_P(StateMachine_testConfigure, testExpectedValue)
 }
 
 INSTANTIATE_TEST_SUITE_P(StateMachine, StateMachine_testConfigure, ::testing::Values(
-        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numStates", std::uint32_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numStates", std::uint32_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numInputs", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
