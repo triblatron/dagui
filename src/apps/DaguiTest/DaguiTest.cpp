@@ -812,38 +812,19 @@ struct TestState
     Name name;
     using Value = std::uint32_t;
     Value value{0};
+    bool final{false};
 
     void configure(dagbase::ConfigurationElement& config)
     {
         dagbase::ConfigurationElement::readConfig(config, "name", &name);
         dagbase::ConfigurationElement::readConfig(config, "value", &value);
+        dagbase::ConfigurationElement::readConfig(config, "final", &final);
     }
 
     bool operator<(const TestState &other) const
     {
         return value < other.value;
     }
-/*
-    static const char* stateToString(State state)
-    {
-        switch (state)
-        {
-            ENUM_NAME(STATE_UNKNOWN)
-            ENUM_NAME(STATE_INITIAL)
-            ENUM_NAME(STATE_FINAL)
-        }
-
-        return "<error>";
-    }
-
-    static State parseState(const char* str)
-    {
-        TEST_ENUM(STATE_INITIAL,str)
-        TEST_ENUM(STATE_FINAL,str)
-
-        return STATE_UNKNOWN;
-    }
-    */
 };
 
 struct TestInput
@@ -942,11 +923,13 @@ protected:
     {
         dagbase::Atom input;
         dagbase::Atom nextState;
+        bool accepted{false};
 
         void configure(dagbase::ConfigurationElement& config)
         {
             dagbase::ConfigurationElement::readConfig(config, "input", &input);
             dagbase::ConfigurationElement::readConfig(config, "nextState", &nextState);
+            dagbase::ConfigurationElement::readConfig(config, "accepted", &accepted);
         }
     };
     using InputArray = std::vector<Input>;
@@ -974,9 +957,11 @@ TEST_P(StateMachine_testOnInput, testExpectedNextState)
     {
         sut.onInput(input.input);
         EXPECT_EQ(input.nextState, sut.state().name);
+        EXPECT_EQ(input.accepted, sut.accepted());
     }
 }
 
 INSTANTIATE_TEST_SUITE_P(StateMachine, StateMachine_testOnInput, ::testing::Values(
-        std::make_tuple("data/tests/StateMachine/onTest.lua", "data/tests/StateMachine/duplicateState.lua")
+        std::make_tuple("data/tests/StateMachine/onTest.lua", "data/tests/StateMachine/duplicateState.lua"),
+        std::make_tuple("data/tests/StateMachine/onOneThenTwo.lua", "data/tests/StateMachine/multipleStates.lua")
         ));

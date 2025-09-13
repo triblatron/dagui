@@ -32,7 +32,7 @@ namespace dagui
             dagbase::ConfigurationElement::readConfigMap(config, "transitionFunction", &_transitionFunction);
 
             dagbase::ConfigurationElement::readConfig(config, "initialState", &_initialState.name);
-            _initialState.value = parseState(_initialState.name);
+            _initialState = parseState(_initialState.name);
             _currentState = _initialState;
         }
 
@@ -43,10 +43,8 @@ namespace dagui
             domain.input = input;
             if (auto it= _transitionFunction.find(domain); it!=_transitionFunction.end())
             {
-                _currentState.name = it->second.nextState;
-                _currentState.value = parseState(_currentState.name);
+                _currentState = parseState(it->second.nextState);
             }
-            //domain.input.value = parseInput(input);
         }
 
         State state() const
@@ -78,6 +76,11 @@ namespace dagui
             return {};
         }
 
+        bool accepted() const
+        {
+            return _currentState.final;
+        }
+
         typename Input::Value parseInput(typename Input::Name name)
         {
             for (auto input : _inputs)
@@ -91,15 +94,15 @@ namespace dagui
             return 0;
         }
 
-        typename State::Value parseState(typename State::Name name)
+        State parseState(typename State::Name name)
         {
             for (auto state : _states)
             {
                 if (state.name == name)
-                    return state.value;
+                    return state;
             }
 
-            return 0;
+            return _initialState;
         }
     private:
         State _initialState;
