@@ -15,6 +15,7 @@ root=
 			value=2,
 		},
 	},
+	initialState="STATE_INITIAL",
 	inputs=
 	{
 		{

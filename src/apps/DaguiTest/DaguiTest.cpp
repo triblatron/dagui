@@ -806,10 +806,12 @@ class StateMachine_testConfigure : public ::testing::TestWithParam<std::tuple<co
 
 };
 
-struct TestStates
+struct TestState
 {
-    std::uint32_t value{0};
-    dagbase::Atom name;
+    using Name = dagbase::Atom;
+    Name name;
+    using Value = std::uint32_t;
+    Value value{0};
 
     void configure(dagbase::ConfigurationElement& config)
     {
@@ -817,7 +819,7 @@ struct TestStates
         dagbase::ConfigurationElement::readConfig(config, "value", &value);
     }
 
-    bool operator<(const TestStates &other) const
+    bool operator<(const TestState &other) const
     {
         return value < other.value;
     }
@@ -846,8 +848,10 @@ struct TestStates
 
 struct TestInput
 {
-    dagbase::Atom name;
-    std::uint32_t value{0};
+    using Name = dagbase::Atom;
+    using Value = std::uint32_t;
+    Name name;
+    Value value{0};
 
     void configure(dagbase::ConfigurationElement& config)
     {
@@ -899,7 +903,7 @@ TEST_P(StateMachine_testConfigure, testExpectedValue)
     dagbase::Lua lua;
     auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
     ASSERT_NE(nullptr, config);
-    dagui::StateMachine<TestStates, TestTransition, TestInput> sut;
+    dagui::StateMachine<TestState, TestTransition, TestInput> sut;
     sut.configure(*config);
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
@@ -913,4 +917,66 @@ INSTANTIATE_TEST_SUITE_P(StateMachine, StateMachine_testConfigure, ::testing::Va
         std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numStates", std::uint32_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numInputs", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numTransitions", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));
+
+class StateMachine_testOnInput : public ::testing::TestWithParam<std::tuple<const char*, const char*>>
+{
+public:
+    void configure(dagbase::ConfigurationElement& config)
+    {
+        if (auto element = config.findElement("inputs"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                Input input;
+
+                input.configure(child);
+
+                _inputs.emplace_back(input);
+
+                return true;
+            });
+        }
+    }
+protected:
+    struct Input
+    {
+        dagbase::Atom input;
+        dagbase::Atom nextState;
+
+        void configure(dagbase::ConfigurationElement& config)
+        {
+            dagbase::ConfigurationElement::readConfig(config, "input", &input);
+            dagbase::ConfigurationElement::readConfig(config, "nextState", &nextState);
+        }
+    };
+    using InputArray = std::vector<Input>;
+    InputArray _inputs;
+};
+
+TEST_P(StateMachine_testOnInput, testExpectedNextState)
+{
+    auto testConfigStr = std::get<0>(GetParam());
+    dagbase::ConfigurationElement* testConfig = nullptr;
+    {
+        dagbase::Lua testLua;
+
+        testConfig = dagbase::ConfigurationElement::fromFile(testLua, testConfigStr);
+        ASSERT_NE(nullptr, testConfig);
+    }
+    configure(*testConfig);
+    auto configStr = std::get<1>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::StateMachine<TestState, TestTransition, TestInput> sut;
+    sut.configure(*config);
+    for (auto& input : _inputs)
+    {
+        sut.onInput(input.input);
+        EXPECT_EQ(input.nextState, sut.state().name);
+    }
+}
+
+INSTANTIATE_TEST_SUITE_P(StateMachine, StateMachine_testOnInput, ::testing::Values(
+        std::make_tuple("data/tests/StateMachine/onTest.lua", "data/tests/StateMachine/duplicateState.lua")
         ));

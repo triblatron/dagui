@@ -30,11 +30,28 @@ namespace dagui
             dagbase::ConfigurationElement::readConfigSet(config, "inputs", &_inputs);
 
             dagbase::ConfigurationElement::readConfigMap(config, "transitionFunction", &_transitionFunction);
+
+            dagbase::ConfigurationElement::readConfig(config, "initialState", &_initialState.name);
+            _initialState.value = parseState(_initialState.name);
+            _currentState = _initialState;
         }
 
-        void onInput(Input input)
+        void onInput(typename Input::Name input)
         {
+            typename Transition::Domain domain;
+            domain.initialState = _currentState.name;
+            domain.input = input;
+            if (auto it= _transitionFunction.find(domain); it!=_transitionFunction.end())
+            {
+                _currentState.name = it->second.nextState;
+                _currentState.value = parseState(_currentState.name);
+            }
+            //domain.input.value = parseInput(input);
+        }
 
+        State state() const
+        {
+            return _currentState;
         }
 
         void step()
@@ -58,10 +75,35 @@ namespace dagui
             if (retval.has_value())
                 return retval;
 
-
             return {};
         }
+
+        typename Input::Value parseInput(typename Input::Name name)
+        {
+            for (auto input : _inputs)
+            {
+                if (input.name == name)
+                {
+                    return input.value;
+                }
+            }
+
+            return 0;
+        }
+
+        typename State::Value parseState(typename State::Name name)
+        {
+            for (auto state : _states)
+            {
+                if (state.name == name)
+                    return state.value;
+            }
+
+            return 0;
+        }
     private:
+        State _initialState;
+        State _currentState;
         using StateSet = std::set<State>;
         StateSet _states;
         using InputSet = std::set<Input>;
