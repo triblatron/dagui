@@ -797,7 +797,8 @@ INSTANTIATE_TEST_SUITE_P(EventSystem, EventSystem_testGenerateSecondaryEvents, :
     std::make_tuple("data/tests/EventSystem/Passthrough.lua"),
     std::make_tuple("data/tests/EventSystem/Click.lua"),
     std::make_tuple("data/tests/EventSystem/ClickTooFarAway.lua"),
-    std::make_tuple("data/tests/EventSystem/DoubleClick.lua")
+    std::make_tuple("data/tests/EventSystem/DoubleClick.lua"),
+    std::make_tuple("data/tests/EventSystem/Hover.lua")
 ));
 
 class StateMachine_testConfigure : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>

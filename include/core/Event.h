@@ -179,5 +179,5 @@ namespace dagui
 		ContentType _data;
 	};
 
-    std::ostream& DAGUI_API operator<<(std::ostream& str, const Event& obj);
+    std::ostream DAGUI_API & operator<<(std::ostream& str, const Event& obj);
 }
