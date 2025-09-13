@@ -1,0 +1,15 @@
+root=
+{
+	states=
+	{
+		{
+			state="STATE_INITIAL"
+		},
+		{
+			state="STATE_INITIAL",
+		},
+		{
+			state="STATE_FINAL",
+		},
+	}
+}

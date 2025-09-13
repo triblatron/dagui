@@ -24,6 +24,12 @@
 #include "core/SceneNodeFactory.h"
 #include "core/EventSystem.h"
 #include "util/FakeTimeProvider.h"
+#include "core/Border.h"
+#include "gfx/GlyphImageDef.h"
+#include "util/APIVersion.h"
+#include "core/StateMachine.h"
+#include "util/enums.h"
+#include "test/TestUtils.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -32,9 +38,6 @@
 #include <cstdint>
 #include <cstring>
 
-#include "core/Border.h"
-#include "gfx/GlyphImageDef.h"
-#include "util/APIVersion.h"
 
 using testing::_;
 
@@ -796,3 +799,82 @@ INSTANTIATE_TEST_SUITE_P(EventSystem, EventSystem_testGenerateSecondaryEvents, :
     std::make_tuple("data/tests/EventSystem/ClickTooFarAway.lua"),
     std::make_tuple("data/tests/EventSystem/DoubleClick.lua")
 ));
+
+class StateMachine_testConfigure : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+struct TestState
+{
+    enum State
+    {
+        STATE_UNKNOWN,
+        STATE_INITIAL,
+        STATE_FINAL
+    };
+    State state{STATE_INITIAL};
+
+    void configure(dagbase::ConfigurationElement& config)
+    {
+        dagbase::ConfigurationElement::readConfig<State>(config, "state", &parseState, &state);
+    }
+
+    bool operator<(const TestState &other) const
+    {
+        return state < other.state;
+    }
+
+    static const char* stateToString(State state)
+    {
+        switch (state)
+        {
+            ENUM_NAME(STATE_UNKNOWN)
+            ENUM_NAME(STATE_INITIAL)
+            ENUM_NAME(STATE_FINAL)
+        }
+
+        return "<error>";
+    }
+
+    static State parseState(const char* str)
+    {
+        TEST_ENUM(STATE_INITIAL,str)
+        TEST_ENUM(STATE_FINAL,str)
+
+        return STATE_UNKNOWN;
+    }
+};
+
+enum TestInput : std::uint32_t
+{
+    INPUT_UNKNOWN,
+    INPUT_TEST
+};
+
+struct TestTransition
+{
+    std::uint32_t state{0};
+    TestInput input;
+    std::uint32_t nextState{0};
+};
+
+TEST_P(StateMachine_testConfigure, testExpectedValue)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::StateMachine<TestState, TestTransition, TestInput> sut;
+    sut.configure(*config);
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+    auto tolerance = std::get<3>(GetParam());
+    auto op = std::get<4>(GetParam());
+    auto actualValue=sut.find(path);
+    assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(StateMachine, StateMachine_testConfigure, ::testing::Values(
+        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numStates", std::uint32_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));
