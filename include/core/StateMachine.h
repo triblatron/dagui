@@ -66,17 +66,7 @@ namespace dagui
         StateSet _states;
         using InputSet = std::set<Input>;
         InputSet _inputs;
-        struct TransitionDomain
-        {
-            dagbase::Atom initialState;
-            dagbase::Atom input;
 
-            void configure(dagbase::ConfigurationElement& config)
-            {
-                dagbase::ConfigurationElement::readConfig(config, "initialState", &initialState);
-                dagbase::ConfigurationElement::readConfig(config, "input", &input);
-            }
-        };
         using TransitionFunction = std::map<typename Transition::Domain,typename Transition::Codomain>;
         TransitionFunction _transitionFunction;
         using EntryExitActions = std::vector<std::function<void(State)>>;
