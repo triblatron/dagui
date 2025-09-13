@@ -29,21 +29,7 @@ namespace dagui
 
             dagbase::ConfigurationElement::readConfigSet(config, "inputs", &_inputs);
 
-            if (auto element=config.findElement("transitionFunction"); element)
-            {
-                element->eachChild([this](dagbase::ConfigurationElement& child) {
-                    typename Transition::Domain domain;
-
-                    domain.configure(child);
-
-                    typename Transition::Codomain codomain;
-
-                    codomain.configure(child);
-                    _transitionFunction.emplace(domain, codomain);
-
-                    return true;
-                });
-            }
+            dagbase::ConfigurationElement::readConfigMap(config, "transitionFunction", &_transitionFunction);
         }
 
         void onInput(Input input)
