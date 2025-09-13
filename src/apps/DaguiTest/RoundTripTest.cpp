@@ -6,6 +6,7 @@
 #include "gfx/TextureAtlas.h"
 #include "gfx/Mesh2D.h"
 #include "core/Shape.h"
+#include "core/Event.h"
 
 #include <gtest/gtest.h>
 
@@ -397,4 +398,87 @@ TEST_P(ShapeFlags_testRoundTrip, testRoundTrip)
 INSTANTIATE_TEST_SUITE_P(ShapeFlags, ShapeFlags_testRoundTrip, ::testing::Values(
         std::make_tuple("FLAGS_NONE", dagui::Shape::FLAGS_NONE),
         std::make_tuple("FLAGS_DIRTY_TESSELLATION_BIT", dagui::Shape::FLAGS_DIRTY_TESSELLATION_BIT)
+        ));
+
+class Event_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Event::Type>>
+{
+
+};
+
+TEST_P(Event_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::Event::typeToString(value));
+    EXPECT_EQ(value, dagui::Event::parseType(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(Event, Event_testRoundTrip, ::testing::Values(
+    std::make_tuple("TYPE_POINTER_MOVE", dagui::Event::TYPE_POINTER_MOVE),
+    std::make_tuple("TYPE_POINTER_HOVER", dagui::Event::TYPE_POINTER_HOVER),
+    std::make_tuple("TYPE_BUTTON_PRESS", dagui::Event::TYPE_BUTTON_PRESS),
+    std::make_tuple("TYPE_BUTTON_RELEASE", dagui::Event::TYPE_BUTTON_RELEASE),
+    std::make_tuple("TYPE_BUTTON_CLICK", dagui::Event::TYPE_BUTTON_CLICK),
+    std::make_tuple("TYPE_BUTTON_DOUBLE_CLICK", dagui::Event::TYPE_BUTTON_DOUBLE_CLICK),
+    std::make_tuple("TYPE_KEY_PRESS", dagui::Event::TYPE_KEY_PRESS),
+    std::make_tuple("TYPE_KEY_RELEASE", dagui::Event::TYPE_KEY_RELEASE),
+    std::make_tuple("TYPE_ENTER_WIDGET", dagui::Event::TYPE_ENTER_WIDGET),
+    std::make_tuple("TYPE_LEAVE_WIDGET", dagui::Event::TYPE_LEAVE_WIDGET),
+    std::make_tuple("TYPE_DRAG_START", dagui::Event::TYPE_DRAG_START),
+    std::make_tuple("TYPE_DRAGGING", dagui::Event::TYPE_DRAGGING),
+    std::make_tuple("TYPE_DRAG_STOP", dagui::Event::TYPE_DRAG_STOP)
+));
+
+class ButtonMask_testRoundTrip : public ::testing::TestWithParam<std::tuple<std::string, dagui::ButtonMask>>
+{
+
+};
+
+TEST_P(ButtonMask_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_EQ(str, dagui::buttonMaskToString(value));
+    EXPECT_EQ(value, dagui::parseButtonMask(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(ButtonMask, ButtonMask_testRoundTrip, ::testing::Values(
+    std::make_tuple("BUTTON_PRIMARY_BIT", dagui::BUTTON_PRIMARY_BIT),
+    std::make_tuple("BUTTON_SECONDARY_BIT", dagui::BUTTON_SECONDARY_BIT),
+    std::make_tuple("BUTTON_MIDDLE_BIT", dagui::BUTTON_MIDDLE_BIT),
+    std::make_tuple("BUTTON_PRIMARY_BIT BUTTON_SECONDARY_BIT", static_cast<dagui::ButtonMask>(dagui::BUTTON_PRIMARY_BIT|dagui::BUTTON_SECONDARY_BIT))
+));
+
+class EventTypeMask_testRoundTrip : public ::testing::TestWithParam<std::tuple<std::string, dagui::Event::TypeMask>>
+{
+
+};
+
+TEST_P(EventTypeMask_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_EQ(str, dagui::Event::typeMaskToString(value));
+    EXPECT_EQ(value, dagui::Event::parseTypeMask(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(EventTypeMask, EventTypeMask_testRoundTrip, ::testing::Values(
+            std::make_tuple("EVENT_NONE", dagui::Event::EVENT_NONE),
+            std::make_tuple("POINTER_MOVE_BIT", dagui::Event::POINTER_MOVE_BIT),
+            std::make_tuple("POINTER_HOVER_BIT", dagui::Event::POINTER_HOVER_BIT),
+            std::make_tuple("BUTTON_PRESS_BIT", dagui::Event::BUTTON_PRESS_BIT),
+            std::make_tuple("BUTTON_RELEASE_BIT", dagui::Event::BUTTON_RELEASE_BIT),
+            std::make_tuple("BUTTON_CLICK_BIT", dagui::Event::BUTTON_CLICK_BIT),
+            std::make_tuple("BUTTON_DOUBLE_CLICK_BIT", dagui::Event::BUTTON_DOUBLE_CLICK_BIT),
+            std::make_tuple("KEY_PRESS_BIT", dagui::Event::KEY_PRESS_BIT),
+            std::make_tuple("KEY_RELEASE_BIT", dagui::Event::KEY_RELEASE_BIT),
+            std::make_tuple("ENTER_WIDGET_BIT", dagui::Event::ENTER_WIDGET_BIT),
+            std::make_tuple("LEAVE_WIDGET_BIT", dagui::Event::LEAVE_WIDGET_BIT),
+            std::make_tuple("DRAG_START_BIT", dagui::Event::DRAG_START_BIT),
+            std::make_tuple("DRAGGING_BIT", dagui::Event::DRAGGING_BIT),
+            std::make_tuple("DRAG_STOP_BIT", dagui::Event::DRAG_STOP_BIT),
+            std::make_tuple("BUTTON_PRESS_BIT BUTTON_RELEASE_BIT", static_cast<dagui::Event::TypeMask>(dagui::Event::BUTTON_PRESS_BIT|dagui::Event::BUTTON_RELEASE_BIT))
         ));

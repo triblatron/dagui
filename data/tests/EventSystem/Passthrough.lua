@@ -1,0 +1,39 @@
+root=
+{
+	inputEvents=
+	{
+		{
+			type="TYPE_BUTTON_PRESS",
+			x=0,
+			y=0,
+		},
+		{
+			type="TYPE_BUTTON_RELEASE",
+			x=0,
+			y=0,
+		},
+	},
+	outputEvents=
+	{
+		{
+			type="TYPE_BUTTON_PRESS",
+			x=0,
+			y=0,
+		},
+		{
+			type="TYPE_BUTTON_RELEASE",
+			x=0,
+			y=0,
+		},
+	},
+	eventSys=
+	{
+		filters=
+		{
+			{
+				class="PassthroughEventFilter",
+				eventTypes="BUTTON_PRESS_BIT BUTTON_RELEASE_BIT",
+			}
+		}
+	},
+}

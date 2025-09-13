@@ -58,7 +58,7 @@ Pull requests will be allowed at some point. There will be a coding style and pr
   * required to create an Orthographic projection
 * Packages for Linux Debian based
 ```bash
-sudo apt-get install g++ cmake make libfreetype-dev libpango1.0-dev liblua5.4-dev git libglew-dev
+sudo apt-get install g++ cmake make libfreetype-dev libpango1.0-dev liblua5.4-dev git libglew-dev libglfw3-dev libglm-dev
 ```
 * Packages from Linux Red Hat based
 ```bash

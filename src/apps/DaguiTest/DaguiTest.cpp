@@ -22,6 +22,14 @@
 #include "util/VectorMap.h"
 #include "core/Vec2f.h"
 #include "core/SceneNodeFactory.h"
+#include "core/EventSystem.h"
+#include "util/FakeTimeProvider.h"
+#include "core/Border.h"
+#include "gfx/GlyphImageDef.h"
+#include "util/APIVersion.h"
+#include "core/StateMachine.h"
+#include "util/enums.h"
+#include "test/TestUtils.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -30,9 +38,6 @@
 #include <cstdint>
 #include <cstring>
 
-#include "core/Border.h"
-#include "gfx/GlyphImageDef.h"
-#include "util/APIVersion.h"
 
 using testing::_;
 
@@ -719,4 +724,244 @@ INSTANTIATE_TEST_SUITE_P(SceneNodeFactory, SceneNodeFactory_testCreateNode, ::te
         std::make_tuple("Group", true),
         std::make_tuple("Border", true),
         std::make_tuple("Spoo", false)
+        ));
+
+class EventSystem_testGenerateSecondaryEvents : public ::testing::TestWithParam<std::tuple<const char*>>
+{
+public:
+    void configure(dagbase::ConfigurationElement& config)
+    {
+        if (auto element = config.findElement("inputEvents"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                dagui::Event event;
+
+                event.configure(child);
+                _inputEvents.emplace_back(event);
+                _itInput = _inputEvents.begin();
+                return true;
+                });
+        }
+
+        if (auto element = config.findElement("outputEvents"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                dagui::Event event;
+
+                event.configure(child);
+                _outputEvents.emplace_back(event);
+
+                return true;
+                });
+        }
+    }
+protected:
+    using EventList = std::vector<dagui::Event>;
+    EventList _inputEvents;
+    EventList::iterator _itInput;
+    EventList _outputEvents;
+    double _duration{0.0};
+};
+
+TEST_P(EventSystem_testGenerateSecondaryEvents, testExpectedEvents)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::EventSystem sut;
+    configure(*config);
+    dagbase::FakeTimeProvider timeProvider;
+    timeProvider.setPeriod(0.004);
+    sut.setTimeProvider(&timeProvider);
+    if (auto element = config->findElement("eventSys"); element)
+    {
+        sut.configure(*element);
+    }
+    auto itEvent = _inputEvents.begin();
+    while (itEvent!=_inputEvents.end())
+    {
+        auto& event = *itEvent;
+        if (timeProvider.provideTime()>=event.timestamp())
+        {
+            sut.onInput(event);
+            ++itEvent;
+        }
+        timeProvider.tick();
+    }
+
+    EXPECT_EQ(_outputEvents, sut.outputEvents());
+}
+
+INSTANTIATE_TEST_SUITE_P(EventSystem, EventSystem_testGenerateSecondaryEvents, ::testing::Values(
+    std::make_tuple("data/tests/EventSystem/Passthrough.lua"),
+    std::make_tuple("data/tests/EventSystem/Click.lua"),
+    std::make_tuple("data/tests/EventSystem/ClickTooFarAway.lua"),
+    std::make_tuple("data/tests/EventSystem/DoubleClick.lua"),
+    std::make_tuple("data/tests/EventSystem/Hover.lua")
+));
+
+class StateMachine_testConfigure : public ::testing::TestWithParam<std::tuple<const char*, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
+{
+
+};
+
+struct TestState
+{
+    using Name = dagbase::Atom;
+    Name name;
+    using Value = std::uint32_t;
+    Value value{0};
+    bool final{false};
+
+    void configure(dagbase::ConfigurationElement& config)
+    {
+        dagbase::ConfigurationElement::readConfig(config, "name", &name);
+        dagbase::ConfigurationElement::readConfig(config, "value", &value);
+        dagbase::ConfigurationElement::readConfig(config, "final", &final);
+    }
+
+    bool operator<(const TestState &other) const
+    {
+        return value < other.value;
+    }
+};
+
+struct TestInput
+{
+    using Name = dagbase::Atom;
+    using Value = std::uint32_t;
+    Name name;
+    Value value{0};
+
+    void configure(dagbase::ConfigurationElement& config)
+    {
+        dagbase::ConfigurationElement::readConfig(config, "name", &name);
+        dagbase::ConfigurationElement::readConfig(config, "value", &value);
+    }
+
+    bool operator<(const TestInput& other) const
+    {
+        return value < other.value;
+    }
+};
+
+struct TestTransition
+{
+    dagbase::Atom nextState;
+
+    struct Domain
+    {
+        dagbase::Atom initialState;
+        dagbase::Atom input;
+
+        bool operator<(const Domain& other) const
+        {
+            return initialState < other.initialState || (initialState == other.initialState && input<other.input);
+        }
+
+        void configure(dagbase::ConfigurationElement& config)
+        {
+            dagbase::ConfigurationElement::readConfig(config, "initialState", &initialState);
+            dagbase::ConfigurationElement::readConfig(config, "input", &input);
+        }
+    };
+
+    struct Codomain
+    {
+        dagbase::Atom nextState;
+
+        void configure(dagbase::ConfigurationElement& config)
+        {
+            dagbase::ConfigurationElement::readConfig(config, "nextState", &nextState);
+        }
+    };
+};
+
+TEST_P(StateMachine_testConfigure, testExpectedValue)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::StateMachine<TestState, TestTransition, TestInput> sut;
+    sut.configure(*config);
+    auto path = std::get<1>(GetParam());
+    auto value = std::get<2>(GetParam());
+    auto tolerance = std::get<3>(GetParam());
+    auto op = std::get<4>(GetParam());
+    auto actualValue=sut.find(path);
+    assertComparison(value, actualValue, tolerance, op);
+}
+
+INSTANTIATE_TEST_SUITE_P(StateMachine, StateMachine_testConfigure, ::testing::Values(
+        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numStates", std::uint32_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numInputs", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numTransitions", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));
+
+class StateMachine_testOnInput : public ::testing::TestWithParam<std::tuple<const char*, const char*>>
+{
+public:
+    void configure(dagbase::ConfigurationElement& config)
+    {
+        if (auto element = config.findElement("inputs"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                Input input;
+
+                input.configure(child);
+
+                _inputs.emplace_back(input);
+
+                return true;
+            });
+        }
+    }
+protected:
+    struct Input
+    {
+        dagbase::Atom input;
+        dagbase::Atom nextState;
+        bool accepted{false};
+
+        void configure(dagbase::ConfigurationElement& config)
+        {
+            dagbase::ConfigurationElement::readConfig(config, "input", &input);
+            dagbase::ConfigurationElement::readConfig(config, "nextState", &nextState);
+            dagbase::ConfigurationElement::readConfig(config, "accepted", &accepted);
+        }
+    };
+    using InputArray = std::vector<Input>;
+    InputArray _inputs;
+};
+
+TEST_P(StateMachine_testOnInput, testExpectedNextState)
+{
+    auto testConfigStr = std::get<0>(GetParam());
+    dagbase::ConfigurationElement* testConfig = nullptr;
+    {
+        dagbase::Lua testLua;
+
+        testConfig = dagbase::ConfigurationElement::fromFile(testLua, testConfigStr);
+        ASSERT_NE(nullptr, testConfig);
+    }
+    configure(*testConfig);
+    auto configStr = std::get<1>(GetParam());
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+    ASSERT_NE(nullptr, config);
+    dagui::StateMachine<TestState, TestTransition, TestInput> sut;
+    sut.configure(*config);
+    for (auto& input : _inputs)
+    {
+        sut.onInput(input.input);
+        EXPECT_EQ(input.nextState, sut.state().name);
+        EXPECT_EQ(input.accepted, sut.accepted());
+    }
+}
+
+INSTANTIATE_TEST_SUITE_P(StateMachine, StateMachine_testOnInput, ::testing::Values(
+        std::make_tuple("data/tests/StateMachine/onTest.lua", "data/tests/StateMachine/duplicateState.lua"),
+        std::make_tuple("data/tests/StateMachine/onOneThenTwo.lua", "data/tests/StateMachine/multipleStates.lua")
         ));

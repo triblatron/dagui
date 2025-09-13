@@ -1,0 +1,34 @@
+root=
+{
+	states=
+	{
+		{
+			name="STATE_INITIAL",
+			value=1,
+		},
+		{
+			name="STATE_INITIAL",
+			value=1,
+		},
+		{
+			name="STATE_FINAL",
+			value=2,
+		},
+	},
+	initialState="STATE_INITIAL",
+	inputs=
+	{
+		{
+			name="INPUT_TEST",
+			value=0,
+		},
+	},
+	transitionFunction=
+	{
+		{
+			initialState="STATE_INITIAL",
+			input="INPUT_TEST",
+			nextState="STATE_FINAL",
+		}
+	},
+}

@@ -1,0 +1,10 @@
+root=
+{
+	inputs=
+	{
+		{
+			input="INPUT_TEST",
+			nextState="STATE_FINAL",
+		},
+	},
+}
