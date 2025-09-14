@@ -870,6 +870,11 @@ struct TestTransition
             return initialState < other.initialState || (initialState == other.initialState && input<other.input);
         }
 
+        bool operator==(const Domain& other) const
+        {
+            return initialState == other.initialState && input == other.input;
+        }
+
         void configure(dagbase::ConfigurationElement& config)
         {
             dagbase::ConfigurationElement::readConfig(config, "initialState", &initialState);

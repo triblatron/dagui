@@ -10,6 +10,7 @@
 #include "core/Variant.h"
 #include "util/Searchable.h"
 #include "util/VectorSet.h"
+#include "util/VectorMap.h"
 
 #include <set>
 #include <map>
@@ -113,7 +114,7 @@ namespace dagui
         using InputSet = dagbase::VectorSet<Input>;
         InputSet _inputs;
 
-        using TransitionFunction = std::map<typename Transition::Domain,typename Transition::Codomain>;
+        using TransitionFunction = dagbase::VectorMap<typename Transition::Domain,typename Transition::Codomain>;
         TransitionFunction _transitionFunction;
         using EntryExitActions = std::vector<std::function<void(State)>>;
         EntryExitActions _entryActions;
