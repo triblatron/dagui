@@ -9,6 +9,7 @@
 #include "core/ConfigurationElement.h"
 #include "core/Variant.h"
 #include "util/Searchable.h"
+#include "util/VectorSet.h"
 
 #include <set>
 #include <map>
@@ -107,9 +108,9 @@ namespace dagui
     private:
         State _initialState;
         State _currentState;
-        using StateSet = std::set<State>;
+        using StateSet = dagbase::VectorSet<State>;
         StateSet _states;
-        using InputSet = std::set<Input>;
+        using InputSet = dagbase::VectorSet<Input>;
         InputSet _inputs;
 
         using TransitionFunction = std::map<typename Transition::Domain,typename Transition::Codomain>;

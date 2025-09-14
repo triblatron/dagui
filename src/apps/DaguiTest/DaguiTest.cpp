@@ -825,6 +825,11 @@ struct TestState
     {
         return value < other.value;
     }
+
+    bool operator==(const TestState& other) const
+    {
+        return name == other.name && value == other.value && final == other.final;
+    }
 };
 
 struct TestInput
@@ -843,6 +848,11 @@ struct TestInput
     bool operator<(const TestInput& other) const
     {
         return value < other.value;
+    }
+
+    bool operator==(const TestInput& other) const
+    {
+        return name == other.name && value == other.value;
     }
 };
 
