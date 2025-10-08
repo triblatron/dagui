@@ -893,13 +893,38 @@ struct TestTransition
     };
 };
 
+struct TestEntryExitAction
+{
+    void configure(dagbase::ConfigurationElement& config)
+    {
+
+    }
+
+    dagbase::Variant find(std::string_view path) const
+    {
+        dagbase::Variant retval;
+
+        retval = dagbase::findEndpoint(path, "numCalls", numCalls);
+        if (retval.has_value())
+            return retval;
+
+        return {};
+    }
+    void operator()(TestState& state)
+    {
+        ++numCalls;
+    }
+
+    std::int64_t numCalls{0};
+};
+
 TEST_P(StateMachine_testConfigure, testExpectedValue)
 {
     auto configStr = std::get<0>(GetParam());
     dagbase::Lua lua;
     auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
     ASSERT_NE(nullptr, config);
-    dagui::StateMachine<TestState, TestTransition, TestInput> sut;
+    dagui::StateMachine<TestState, TestTransition, TestInput, TestEntryExitAction> sut;
     sut.configure(*config);
     auto path = std::get<1>(GetParam());
     auto value = std::get<2>(GetParam());
@@ -912,11 +937,15 @@ TEST_P(StateMachine_testConfigure, testExpectedValue)
 INSTANTIATE_TEST_SUITE_P(StateMachine, StateMachine_testConfigure, ::testing::Values(
         std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numStates", std::uint32_t(2), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numInputs", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numTransitions", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numTransitions", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numEntryActions", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
+        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numExitActions", std::uint32_t(0), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
 
 class StateMachine_testOnInput : public ::testing::TestWithParam<std::tuple<const char*, const char*>>
 {
+public:
+    using TestStateMachine = dagui::StateMachine<TestState, TestTransition, TestInput, TestEntryExitAction>;
 public:
     void configure(dagbase::ConfigurationElement& config)
     {
@@ -931,6 +960,28 @@ public:
 
                 return true;
             });
+        }
+
+        if (auto element=config.findElement("asserts"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                Assert entry;
+
+                entry.configure(child);
+                _asserts.emplace_back(entry);
+
+                return true;
+            });
+
+
+        }
+    }
+
+    void makeItSo(TestStateMachine& sut)
+    {
+        for (auto a : _asserts)
+        {
+            a.makeItSo(sut);
         }
     }
 protected:
@@ -949,6 +1000,25 @@ protected:
     };
     using InputArray = std::vector<Input>;
     InputArray _inputs;
+    struct Assert
+    {
+        dagbase::Atom path;
+        dagbase::Variant value;
+
+        void configure(dagbase::ConfigurationElement& config)
+        {
+            dagbase::ConfigurationElement::readConfig(config, "path", &path);
+            dagbase::ConfigurationElement::readConfig(config, "value", &value);
+        }
+
+        void makeItSo(TestStateMachine & sut)
+        {
+            ASSERT_FALSE(path.empty());
+            EXPECT_EQ(value, sut.find(path.value()));
+        }
+    };
+    using AssertArray = std::vector<Assert>;
+    AssertArray _asserts;
 };
 
 TEST_P(StateMachine_testOnInput, testExpectedNextState)
@@ -966,7 +1036,7 @@ TEST_P(StateMachine_testOnInput, testExpectedNextState)
     dagbase::Lua lua;
     auto config = dagbase::ConfigurationElement::fromFile(lua, configStr);
     ASSERT_NE(nullptr, config);
-    dagui::StateMachine<TestState, TestTransition, TestInput> sut;
+    TestStateMachine sut;
     sut.configure(*config);
     for (auto& input : _inputs)
     {
@@ -974,6 +1044,7 @@ TEST_P(StateMachine_testOnInput, testExpectedNextState)
         EXPECT_EQ(input.nextState, sut.state().name);
         EXPECT_EQ(input.accepted, sut.accepted());
     }
+    makeItSo(sut);
 }
 
 INSTANTIATE_TEST_SUITE_P(StateMachine, StateMachine_testOnInput, ::testing::Values(

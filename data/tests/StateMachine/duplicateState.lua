@@ -31,4 +31,14 @@ root=
 			nextState="STATE_FINAL",
 		}
 	},
+	entryActions=
+	{
+		{
+			state="STATE_FINAL",
+			action=
+			{
+				message="accepted",
+			},
+		},
+	}
 }

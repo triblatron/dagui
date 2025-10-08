@@ -20,7 +20,7 @@
 
 namespace dagui
 {
-    template<typename State, typename Transition, typename Input>
+    template<typename State, typename Transition, typename Input, typename EntryExitAction>
     class StateMachine
     {
     public:
@@ -31,9 +31,14 @@ namespace dagui
 
             dagbase::ConfigurationElement::readConfigSet(config, "inputs", &_inputs);
 
-            dagbase::ConfigurationElement::readConfigMap(config, "transitionFunction", &_transitionFunction);
+            dagbase::ConfigurationElement::readConfigVectorMap(config, "transitionFunction", &_transitionFunction);
+
+            readEntryExitActions(config, "entryActions", &_entryActions);
+
+            readEntryExitActions(config, "exitActions", &_exitActions);
 
             dagbase::ConfigurationElement::readConfig(config, "initialState", &_initialState.name);
+
             _initialState = parseState(_initialState.name);
             _currentState = _initialState;
         }
@@ -46,6 +51,10 @@ namespace dagui
             if (auto it= _transitionFunction.find(domain); it!=_transitionFunction.end())
             {
                 _currentState = parseState(it->second.nextState);
+                if (auto it2=_entryActions.m.find(_currentState.name); it2!=_entryActions.m.end())
+                {
+                    it2->second(_currentState);
+                }
             }
         }
 
@@ -72,6 +81,18 @@ namespace dagui
                 return retval;
 
             retval = dagbase::findEndpoint(path, "numTransitions", std::uint32_t(_transitionFunction.size()));
+            if (retval.has_value())
+                return retval;
+
+            retval = dagbase::findEndpoint(path, "numEntryActions", std::uint32_t(_entryActions.size()));
+            if (retval.has_value())
+                return retval;
+
+            retval = dagbase::findEndpoint(path, "numExitActions", std::uint32_t(_exitActions.size()));
+            if (retval.has_value())
+                return retval;
+
+            retval = dagbase::findInternal(path, "entryActions", _entryActions);
             if (retval.has_value())
                 return retval;
 
@@ -116,10 +137,38 @@ namespace dagui
 
         using TransitionFunction = dagbase::VectorMap<typename Transition::Domain,typename Transition::Codomain>;
         TransitionFunction _transitionFunction;
-        using EntryExitActions = std::vector<std::function<void(State)>>;
+        using EntryExitActions = dagbase::SearchableMapFromAtom<std::map<dagbase::Atom,EntryExitAction>>;
         EntryExitActions _entryActions;
         EntryExitActions _exitActions;
-        using TransitionActions = std::vector<std::function<void(State, State)>>;
+        void readEntryExitActions(dagbase::ConfigurationElement& config, const char* name, EntryExitActions* value);
+
+        using TransitionActions = dagbase::VectorMap<std::pair<dagbase::Atom,dagbase::Atom>,EntryExitAction>;
         TransitionActions _transitionActions;
     };
+
+    template<typename State, typename Transition, typename Input, typename EntryExitAction>
+    void
+    StateMachine<State, Transition, Input, EntryExitAction>::readEntryExitActions(dagbase::ConfigurationElement &config,
+                                                                                  const char *name,
+                                                                                  StateMachine::EntryExitActions *value)
+    {
+        if (value)
+            if (auto element=config.findElement(name); element)
+            {
+                element->eachChild([&value](dagbase::ConfigurationElement& child) {
+                    dagbase::Atom state;
+                    EntryExitAction action;
+                    dagbase::ConfigurationElement::readConfig(child, "state", &state);
+
+                    if (auto actionElement=child.findElement("action"); actionElement)
+                    {
+                        action.configure(*actionElement);
+                    }
+
+                    value->emplace(state, action);
+
+                    return true;
+                });
+            }
+    }
 }

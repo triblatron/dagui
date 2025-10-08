@@ -7,4 +7,11 @@ root=
 			nextState="STATE_FINAL",
 		},
 	},
+	asserts=
+	{
+		{
+			path="entryActions.STATE_FINAL.numCalls",
+			value=1,
+		},
+	}
 }
