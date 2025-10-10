@@ -137,7 +137,7 @@ namespace dagui
 
         using TransitionFunction = dagbase::VectorMap<typename Transition::Domain,typename Transition::Codomain>;
         TransitionFunction _transitionFunction;
-        using EntryExitActions = dagbase::SearchableMapFromAtom<std::map<dagbase::Atom,EntryExitAction>>;
+        using EntryExitActions = dagbase::SearchableMapFromAtom<dagbase::VectorMap<dagbase::Atom,EntryExitAction>>;
         EntryExitActions _entryActions;
         EntryExitActions _exitActions;
         void readEntryExitActions(dagbase::ConfigurationElement& config, const char* name, EntryExitActions* value);
@@ -155,6 +155,7 @@ namespace dagui
         if (value)
             if (auto element=config.findElement(name); element)
             {
+                value->reserve(element->numChildren());
                 element->eachChild([&value](dagbase::ConfigurationElement& child) {
                     dagbase::Atom state;
                     EntryExitAction action;
