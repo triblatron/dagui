@@ -51,4 +51,15 @@ root=
 			}
 		},
 	},
+	transitionActions=
+	{
+		{
+			fromState="STATE_INITIAL",
+			toState="STATE_FINAL",
+			action=
+			{
+				message="from initial to final",
+			}
+		},
+	},
 }

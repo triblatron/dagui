@@ -1014,7 +1014,8 @@ protected:
         void makeItSo(TestStateMachine & sut)
         {
             ASSERT_FALSE(path.empty());
-            EXPECT_EQ(value, sut.find(path.value()));
+            auto actualValue = sut.find(path.value());
+            assertComparison(value, actualValue, 0.0, dagbase::ConfigurationElement::RELOP_EQ);// << "Expected " << value << ", got " << actualValue;
         }
     };
     using AssertArray = std::vector<Assert>;

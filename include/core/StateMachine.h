@@ -37,6 +37,8 @@ namespace dagui
 
             readEntryExitActions(config, "exitActions", &_exitActions);
 
+            readTransitionActions(config, "transitionActions", &_transitionActions);
+
             dagbase::ConfigurationElement::readConfig(config, "initialState", &_initialState.name);
 
             _initialState = parseState(_initialState.name);
@@ -54,7 +56,12 @@ namespace dagui
                 {
                     itAction->second(_currentState);
                 }
-                _currentState = parseState(it->second.nextState);
+                auto nextState = parseState(it->second.nextState);
+                if (auto itAction=_transitionActions.m.find(std::make_pair(_currentState.name, it->second.nextState)); itAction!=_transitionActions.m.end())
+                {
+                    itAction->second(_currentState);
+                }
+                _currentState = nextState;
                 if (auto itAction=_entryActions.m.find(_currentState.name); itAction != _entryActions.m.end())
                 {
                     itAction->second(_currentState);
@@ -104,6 +111,10 @@ namespace dagui
             if (retval.has_value())
                 return retval;
 
+            retval = dagbase::findInternal(path, "transitionActions", _transitionActions);
+            if (retval.has_value())
+                return retval;
+
             return {};
         }
 
@@ -149,10 +160,36 @@ namespace dagui
         EntryExitActions _entryActions;
         EntryExitActions _exitActions;
         void readEntryExitActions(dagbase::ConfigurationElement& config, const char* name, EntryExitActions* value);
-
-        using TransitionActions = dagbase::VectorMap<std::pair<dagbase::Atom,dagbase::Atom>,EntryExitAction>;
+        using TransitionActions = dagbase::SearchableMapFromAtomPair<dagbase::VectorMap<std::pair<dagbase::Atom,dagbase::Atom>,EntryExitAction>>;
         TransitionActions _transitionActions;
+        void readTransitionActions(dagbase::ConfigurationElement& config, const char* name, TransitionActions* value);
     };
+
+    template<typename State, typename Transition, typename Input, typename EntryExitAction>
+    void StateMachine<State, Transition, Input, EntryExitAction>::readTransitionActions(
+            dagbase::ConfigurationElement &config, const char *name, StateMachine::TransitionActions *value)
+    {
+        if (value)
+            if (auto element=config.findElement(name); element)
+            {
+                value->reserve(element->numChildren());
+                element->eachChild([this](dagbase::ConfigurationElement& child) {
+                    dagbase::Atom fromState;
+                    dagbase::Atom toState;
+                    dagbase::ConfigurationElement::readConfig(child, "fromState", &fromState);
+                    dagbase::ConfigurationElement::readConfig(child, "toState", &toState);
+                    EntryExitAction action;
+                    if (auto actionElement=child.findElement("action"); actionElement)
+                    {
+                        action.configure(*actionElement);
+                    }
+
+                    _transitionActions.emplace(std::make_pair(fromState, toState), action);
+
+                    return true;
+                });
+            }
+    }
 
     template<typename State, typename Transition, typename Input, typename EntryExitAction>
     void
