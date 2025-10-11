@@ -50,10 +50,14 @@ namespace dagui
             domain.input = input;
             if (auto it= _transitionFunction.find(domain); it!=_transitionFunction.end())
             {
-                _currentState = parseState(it->second.nextState);
-                if (auto it2=_entryActions.m.find(_currentState.name); it2!=_entryActions.m.end())
+                if (auto itAction=_exitActions.m.find(_currentState.name); itAction != _exitActions.m.end())
                 {
-                    it2->second(_currentState);
+                    itAction->second(_currentState);
+                }
+                _currentState = parseState(it->second.nextState);
+                if (auto itAction=_entryActions.m.find(_currentState.name); itAction != _entryActions.m.end())
+                {
+                    itAction->second(_currentState);
                 }
             }
         }
@@ -93,6 +97,10 @@ namespace dagui
                 return retval;
 
             retval = dagbase::findInternal(path, "entryActions", _entryActions);
+            if (retval.has_value())
+                return retval;
+
+            retval = dagbase::findInternal(path, "exitActions", _exitActions);
             if (retval.has_value())
                 return retval;
 

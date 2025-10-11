@@ -40,5 +40,15 @@ root=
 				message="accepted",
 			},
 		},
-	}
+	},
+	exitActions=
+	{
+		{
+			state="STATE_INITIAL",
+			action=
+			{
+				message="initial",
+			}
+		},
+	},
 }

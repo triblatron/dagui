@@ -915,7 +915,7 @@ struct TestEntryExitAction
         ++numCalls;
     }
 
-    std::int64_t numCalls{0};
+    std::int64_t     numCalls{0};
 };
 
 TEST_P(StateMachine_testConfigure, testExpectedValue)
@@ -939,7 +939,7 @@ INSTANTIATE_TEST_SUITE_P(StateMachine, StateMachine_testConfigure, ::testing::Va
         std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numInputs", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numTransitions", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numEntryActions", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ),
-        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numExitActions", std::uint32_t(0), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        std::make_tuple("data/tests/StateMachine/duplicateState.lua", "numExitActions", std::uint32_t(1), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
 
 class StateMachine_testOnInput : public ::testing::TestWithParam<std::tuple<const char*, const char*>>

@@ -13,5 +13,9 @@ root=
 			path="entryActions.STATE_FINAL.numCalls",
 			value=1,
 		},
+		{
+			path="exitActions.STATE_INITIAL.numCalls",
+			value=1,
+		},
 	}
 }
