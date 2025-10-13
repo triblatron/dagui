@@ -103,9 +103,9 @@ namespace dagui
 
         AttributeArray* attributeArrayForUsage(AttributeDescriptor::Usage usage, std::size_t* outputArrayIndex, std::size_t* outputAttrIndex) override
         {
-            for (auto arrayIndex=0; arrayIndex<_data.size(); ++arrayIndex)
+            for (std::size_t arrayIndex=0; arrayIndex<_data.size(); ++arrayIndex)
             {
-                for (auto attrIndex=0; attrIndex<_data.a[arrayIndex]->desciptor().attributes.size(); ++attrIndex)
+                for (std::size_t attrIndex=0; attrIndex<_data.a[arrayIndex]->desciptor().attributes.size(); ++attrIndex)
                 {
                     if (_data.a[arrayIndex]->desciptor().attributes[attrIndex].attr.usage == usage)
                     {
