@@ -1,0 +1,1240 @@
+====================[ Install | Release ]=======================================
+/home/tony/clion-2024.2.2/bin/cmake/linux/x64/bin/cmake --build /home/tony/tartings/cuhc++/dagui/cmake-build-release --target install -j 14
+[9/313] Building CXX object ThirdParty/dag/thirdparty/dagbase/CMakeFiles/dagbase.dir/src/core/LuaInterface.cpp.o
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/src/core/LuaInterface.cpp: In static member function ‘static dagbase::Coroutine* dagbase::Coroutine::fromFunction(lua_State*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/src/core/LuaInterface.cpp:101:24: warning: unused variable ‘retval’ [-Wunused-variable]
+  101 |             Coroutine* retval = nullptr;
+      |                        ^~~~~~
+[29/313] Building CXX object ThirdParty/dag/thirdparty/dagbase/CMakeFiles/dagbase.dir/src/core/Variant.cpp.o
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/src/core/Variant.cpp: In function ‘std::ostream& operator<<(std::ostream&, const dagbase::Variant&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/src/core/Variant.cpp:227:12: warning: enumeration value ‘TYPE_UNKNOWN’ not handled in switch [-Wswitch]
+  227 |     switch (value.index())
+      |            ^
+[36/313] Building CXX object ThirdParty/dag/thirdparty/dagbase/CMakeFiles/dagbase.dir/src/util/DynamicMultiArray.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/util/DynamicMultiArray.h:12,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/src/util/DynamicMultiArray.cpp:7:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h: In member function ‘dagbase::Variant dagbase::VariantArray::operator[](std::size_t) const’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:103:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  103 |                 }
+      |                 ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:104:17: note: here
+  104 |                 case Variant::TYPE_DOUBLE:
+      |                 ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:109:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  109 |                 }
+      |                 ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:110:17: note: here
+  110 |                 case Variant::TYPE_STRING:
+      |                 ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:115:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  115 |                 }
+      |                 ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:116:17: note: here
+  116 |                 case Variant::TYPE_BOOL:
+      |                 ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:121:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  121 |                 }
+      |                 ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:122:17: note: here
+  122 |                 case Variant::TYPE_UINT:
+      |                 ^~~~
+[40/313] Building CXX object ThirdParty/dag/thirdparty/dagbase/CMakeFiles/dagbase.dir/src/core/VariantArray.cpp.o
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/src/core/VariantArray.cpp: In member function ‘void dagbase::VariantArray::configure(dagbase::ConfigurationElement&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/src/core/VariantArray.cpp:17:13: warning: ‘index’ may be used uninitialized [-Wmaybe-uninitialized]
+   17 |             switch (index)
+      |             ^~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/src/core/VariantArray.cpp:13:24: note: ‘index’ was declared here
+   13 |         Variant::Index index;
+      |                        ^~~~~
+[51/313] Building CXX object CMakeFiles/dagui.dir/src/core/Rectangle.cpp.o
+/home/tony/tartings/cuhc++/dagui/src/core/Rectangle.cpp: In member function ‘void dagui::Rectangle::addCorner(float, float, float, float, dagui::Tessellation&)’:
+/home/tony/tartings/cuhc++/dagui/src/core/Rectangle.cpp:222:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<dagui::ShapeVertex>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  222 |         for (auto i=1; i<v.size(); ++i)
+      |                        ~^~~~~~~~~
+[53/313] Building CXX object CMakeFiles/dagui.dir/src/gfx/Image.cpp.o
+/home/tony/tartings/cuhc++/dagui/src/gfx/Image.cpp: In member function ‘bool dagui::Image::find(uint8_t, uint8_t, uint8_t) const’:
+/home/tony/tartings/cuhc++/dagui/src/gfx/Image.cpp:26:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const uint32_t’ {aka ‘const unsigned int’} [-Wsign-compare]
+   26 |                 for (auto row=0; row<_height; ++row)
+      |                                  ~~~^~~~~~~~
+/home/tony/tartings/cuhc++/dagui/src/gfx/Image.cpp:28:45: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const uint32_t’ {aka ‘const unsigned int’} [-Wsign-compare]
+   28 |                         for (auto col=0; col<_width; ++col)
+      |                                          ~~~^~~~~~~
+/home/tony/tartings/cuhc++/dagui/src/gfx/Image.cpp: In member function ‘std::size_t dagui::Image::count(uint8_t, uint8_t, uint8_t) const’:
+/home/tony/tartings/cuhc++/dagui/src/gfx/Image.cpp:48:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const uint32_t’ {aka ‘const unsigned int’} [-Wsign-compare]
+   48 |                 for (auto row=0; row<_height; ++row)
+      |                                  ~~~^~~~~~~~
+/home/tony/tartings/cuhc++/dagui/src/gfx/Image.cpp:50:45: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const uint32_t’ {aka ‘const unsigned int’} [-Wsign-compare]
+   50 |                         for (auto col=0; col<_width; ++col)
+      |                                          ~~~^~~~~~~
+[64/313] Building CXX object CMakeFiles/dagui.dir/src/gfx/TextureAtlas.cpp.o
+/home/tony/tartings/cuhc++/dagui/src/gfx/TextureAtlas.cpp: In member function ‘void dagui::TextureAtlas::pack(dagui::BinPackingStrategy&)’:
+/home/tony/tartings/cuhc++/dagui/src/gfx/TextureAtlas.cpp:58:32: warning: unused variable ‘nextX’ [-Wunused-variable]
+   58 |                         size_t nextX{0};
+      |                                ^~~~~
+/home/tony/tartings/cuhc++/dagui/src/gfx/TextureAtlas.cpp:59:32: warning: unused variable ‘nextY’ [-Wunused-variable]
+   59 |                         size_t nextY{0};
+      |                                ^~~~~
+/home/tony/tartings/cuhc++/dagui/src/gfx/TextureAtlas.cpp:60:32: warning: unused variable ‘maxHeightInThisShelf’ [-Wunused-variable]
+   60 |                         size_t maxHeightInThisShelf{0};
+      |                                ^~~~~~~~~~~~~~~~~~~~
+[66/313] Building CXX object CMakeFiles/dagui.dir/src/core/Window.cpp.o
+/home/tony/tartings/cuhc++/dagui/src/core/Window.cpp: In static member function ‘static std::string dagui::Window::featuresName(Features)’:
+/home/tony/tartings/cuhc++/dagui/src/core/Window.cpp:62:25: warning: moving a local object in a return statement prevents copy elision [-Wpessimizing-move]
+   62 |         return std::move(str);
+      |                ~~~~~~~~~^~~~~
+/home/tony/tartings/cuhc++/dagui/src/core/Window.cpp:62:25: note: remove ‘std::move’ call
+/home/tony/tartings/cuhc++/dagui/src/core/Window.cpp: In static member function ‘static std::string dagui::Window::statusName(Status)’:
+/home/tony/tartings/cuhc++/dagui/src/core/Window.cpp:93:25: warning: moving a local object in a return statement prevents copy elision [-Wpessimizing-move]
+   93 |         return std::move(str);
+      |                ~~~~~~~~~^~~~~
+/home/tony/tartings/cuhc++/dagui/src/core/Window.cpp:93:25: note: remove ‘std::move’ call
+[69/313] Building CXX object CMakeFiles/dagui.dir/src/gfx/OpenGL.cpp.o
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGL.cpp: In member function ‘void dagui::gl::VertexBuffer::setPointers()’:
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGL.cpp:53:36: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<dagui::AttributeLayout>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+   53 |                 for (auto i = 0; i < _a->desciptor().attributes.size(); ++i)
+      |                                  ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGL.cpp:56:28: warning: enumeration value ‘USAGE_NORMAL’ not handled in switch [-Wswitch]
+   56 |                     switch (layout.attr.usage)
+      |                            ^
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGL.cpp:56:28: warning: enumeration value ‘USAGE_TANGENT’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGL.cpp:56:28: warning: enumeration value ‘USAGE_BINORMAL’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGL.cpp:56:28: warning: enumeration value ‘USAGE_UNKNOWN’ not handled in switch [-Wswitch]
+[70/313] Building CXX object CMakeFiles/dagui.dir/src/gfx/FontImageSource.cpp.o
+/home/tony/tartings/cuhc++/dagui/src/gfx/FontImageSource.cpp: In member function ‘void dagui::FontImageSource::configure(dagbase::ConfigurationElement&)’:
+/home/tony/tartings/cuhc++/dagui/src/gfx/FontImageSource.cpp:47:41: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+   47 |                         for (auto i=0; i<element->numChildren(); ++i)
+      |                                        ~^~~~~~~~~~~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/src/gfx/FontImageSource.cpp: In function ‘void dagui::copyGlyphToImage(FT_GlyphSlot, Image*)’:
+/home/tony/tartings/cuhc++/dagui/src/gfx/FontImageSource.cpp:77:39: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+   77 |                 for (auto row = 0; row<glyph->bitmap.rows; ++row)
+      |                                    ~~~^~~~~~~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/src/gfx/FontImageSource.cpp:79:45: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+   79 |                         for (auto col=0; col<glyph->bitmap.width; ++col)
+      |                                          ~~~^~~~~~~~~~~~~~~~~~~~
+[73/313] Building CXX object CMakeFiles/dagui.dir/src/gfx/AttributeDescriptor.cpp.o
+/home/tony/tartings/cuhc++/dagui/src/gfx/AttributeDescriptor.cpp: In member function ‘std::size_t dagui::AttributeDescriptor::size() const’:
+/home/tony/tartings/cuhc++/dagui/src/gfx/AttributeDescriptor.cpp:17:16: warning: enumeration value ‘TYPE_UINT16’ not handled in switch [-Wswitch]
+   17 |         switch (dataType)
+      |                ^
+[78/313] Building CXX object CMakeFiles/dagui.dir/src/gfx/OpenGLRenderer.cpp.o
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGLRenderer.cpp: In member function ‘virtual void dagui::OpenGLRenderer::drawMesh2D(const dagui::Mesh2D&)’:
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGLRenderer.cpp:93:16: warning: enumeration value ‘PRIMITIVE_UNKNOWN’ not handled in switch [-Wswitch]
+   93 |         switch (mesh.primitiveType())
+      |                ^
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGLRenderer.cpp:93:16: warning: enumeration value ‘PRIMITIVE_POINT’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGLRenderer.cpp:93:16: warning: enumeration value ‘PRIMITIVE_LINE’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGLRenderer.cpp:93:16: warning: enumeration value ‘PRIMITIVE_LINE_STRIP’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGLRenderer.cpp:93:16: warning: enumeration value ‘PRIMITIVE_LINE_LOOP’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGLRenderer.cpp:93:16: warning: enumeration value ‘PRIMITIVE_TRIANGLE_LIST’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGLRenderer.cpp:93:16: warning: enumeration value ‘PRIMITIVE_TRIANGLE_STRIP’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/gfx/OpenGLRenderer.cpp:93:16: warning: enumeration value ‘PRIMITIVE_TRIANGLE_FAN’ not handled in switch [-Wswitch]
+[86/313] Building CXX object CMakeFiles/dagui.dir/src/core/Widget.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/include/core/Shape.h:11,
+                 from /home/tony/tartings/cuhc++/dagui/src/core/Widget.cpp:12:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::allocateBuffers() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/src/core/Widget.cpp:249:60:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:244:54: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  244 |                 for (auto arrayIndex = 0; arrayIndex < _data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::sendToBackend() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/src/core/Widget.cpp:250:58:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:256:53: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  256 |                 for (auto arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~^~~~~~~~~~~~~
+[100/313] Building CXX object CMakeFiles/dagui.dir/src/core/Label.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/include/core/Shape.h:11,
+                 from /home/tony/tartings/cuhc++/dagui/include/core/Text.h:9,
+                 from /home/tony/tartings/cuhc++/dagui/include/core/Label.h:9,
+                 from /home/tony/tartings/cuhc++/dagui/src/core/Label.cpp:7:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::allocateBuffers() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:240:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:244:54: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  244 |                 for (auto arrayIndex = 0; arrayIndex < _data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::sendToBackend() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:251:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:256:53: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  256 |                 for (auto arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~^~~~~~~~~~~~~
+[101/313] Building CXX object CMakeFiles/dagui.dir/src/core/Text.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/include/core/Shape.h:11,
+                 from /home/tony/tartings/cuhc++/dagui/include/core/Text.h:9,
+                 from /home/tony/tartings/cuhc++/dagui/src/core/Text.cpp:7:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::allocateBuffers() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:240:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:244:54: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  244 |                 for (auto arrayIndex = 0; arrayIndex < _data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::sendToBackend() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:251:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:256:53: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  256 |                 for (auto arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~^~~~~~~~~~~~~
+[123/313] Building CXX object CMakeFiles/dagui.dir/src/core/RenderBin.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/include/core/Shape.h:11,
+                 from /home/tony/tartings/cuhc++/dagui/include/core/RenderBin.h:9,
+                 from /home/tony/tartings/cuhc++/dagui/src/core/RenderBin.cpp:7:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::allocateBuffers() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:240:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:244:54: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  244 |                 for (auto arrayIndex = 0; arrayIndex < _data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::sendToBackend() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:251:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:256:53: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  256 |                 for (auto arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~^~~~~~~~~~~~~
+[127/313] Building CXX object CMakeFiles/dagui.dir/src/core/EventSystem.cpp.o
+/home/tony/tartings/cuhc++/dagui/src/core/EventSystem.cpp: In member function ‘void dagui::TimedSequenceEventFilter::changeState(State)’:
+/home/tony/tartings/cuhc++/dagui/src/core/EventSystem.cpp:172:20: warning: enumeration value ‘STATE_INITIAL’ not handled in switch [-Wswitch]
+  172 |             switch (_state)
+      |                    ^
+[132/313] Building CXX object CMakeFiles/dagui.dir/src/core/Tessellation.cpp.o
+/home/tony/tartings/cuhc++/dagui/src/core/Tessellation.cpp: In member function ‘void dagui::Tessellation::configure(dagbase::ConfigurationElement&)’:
+/home/tony/tartings/cuhc++/dagui/src/core/Tessellation.cpp:30:16: warning: enumeration value ‘PRIMITIVE_UNKNOWN’ not handled in switch [-Wswitch]
+   30 |         switch (primitiveType)
+      |                ^
+/home/tony/tartings/cuhc++/dagui/src/core/Tessellation.cpp:30:16: warning: enumeration value ‘PRIMITIVE_POINT’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/core/Tessellation.cpp:30:16: warning: enumeration value ‘PRIMITIVE_LINE’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/core/Tessellation.cpp:30:16: warning: enumeration value ‘PRIMITIVE_LINE_STRIP’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/core/Tessellation.cpp:30:16: warning: enumeration value ‘PRIMITIVE_LINE_LOOP’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/core/Tessellation.cpp:30:16: warning: enumeration value ‘PRIMITIVE_TRIANGLE’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/core/Tessellation.cpp:30:16: warning: enumeration value ‘PRIMITIVE_TRIANGLE_LIST’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/core/Tessellation.cpp:30:16: warning: enumeration value ‘PRIMITIVE_TRIANGLE_STRIP’ not handled in switch [-Wswitch]
+/home/tony/tartings/cuhc++/dagui/src/core/Tessellation.cpp: In member function ‘void dagui::Tessellation::addTriangleFan(const std::vector<dagui::ShapeVertex>&)’:
+/home/tony/tartings/cuhc++/dagui/src/core/Tessellation.cpp:64:41: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<dagui::ShapeVertex>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+   64 |         for (auto vertIndex=1; vertIndex<vertices.size()-1; ++vertIndex)
+      |                                ~~~~~~~~~^~~~~~~~~~~~~~~~~~
+[134/313] Building CXX object CMakeFiles/dagui.dir/src/core/Batcher.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/include/core/Shape.h:11,
+                 from /home/tony/tartings/cuhc++/dagui/include/core/RenderBin.h:9,
+                 from /home/tony/tartings/cuhc++/dagui/include/core/Batcher.h:9,
+                 from /home/tony/tartings/cuhc++/dagui/src/core/Batcher.cpp:7:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::allocateBuffers() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:240:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:244:54: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  244 |                 for (auto arrayIndex = 0; arrayIndex < _data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::sendToBackend() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:251:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:256:53: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  256 |                 for (auto arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~^~~~~~~~~~~~~
+[139/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/CreateNode.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:6,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/CreateNode.cpp:8:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+[142/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/Boundary.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:6,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Boundary.h:9,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Boundary.cpp:5:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Boundary.cpp: In constructor ‘dag::Boundary::Boundary(dagbase::InputStream&, dag::NodeLibrary&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Boundary.cpp:64:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   64 |         for (auto i=0; i<numDynamicMetaPorts; ++i)
+      |                        ~^~~~~~~~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Boundary.cpp:73:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   73 |         for (auto i=0; i<numDynamicPorts; ++i)
+      |                        ~^~~~~~~~~~~~~~~~
+[151/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/NodeEditorLive.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:6,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/SelectionInterface.h:11,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/SelectionLive.h:8,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodeEditorLive.cpp:10:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodeEditorLive.cpp: In member function ‘virtual dag::Status dag::NodeEditorLive::createNode(const std::string&, const std::string&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodeEditorLive.cpp:97:33: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+   97 |                 for (auto i=0; i<node->totalPorts(); ++i)
+      |                                ~^~~~~~~~~~~~~~~~~~~
+[152/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/Node.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:6,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Node.cpp:3:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In constructor ‘dag::Node::Node(dag::KeyGenerator&, std::string, dag::NodeCategory::Category)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:240:16: warning: ‘dag::Node::_id’ will be initialized after [-Wreorder]
+  240 |         NodeID _id{NodeID::INVALID_ID};
+      |                ^~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:231:21: warning:   ‘std::string dag::Node::_name’ [-Wreorder]
+  231 |         std::string _name;
+      |                     ^~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Node.cpp:16:5: warning:   when initialized here [-Wreorder]
+   16 |     Node::Node(KeyGenerator& keyGen, std::string name, NodeCategory::Category category)
+      |     ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In constructor ‘dag::Node::Node(const dag::Node&, dag::CloningFacility&, dag::CopyOp, dag::KeyGenerator*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:240:16: warning: ‘dag::Node::_id’ will be initialized after [-Wreorder]
+  240 |         NodeID _id{NodeID::INVALID_ID};
+      |                ^~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:231:21: warning:   ‘std::string dag::Node::_name’ [-Wreorder]
+  231 |         std::string _name;
+      |                     ^~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Node.cpp:25:5: warning:   when initialized here [-Wreorder]
+   25 |     Node::Node(const Node& other, CloningFacility& facility, CopyOp copyOp, KeyGenerator* keyGen)
+      |     ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Node.cpp:32:14: warning: unused variable ‘shouldClone’ [-Wunused-variable]
+   32 |         bool shouldClone = facility.putOrig(const_cast<Node*>(&other), &otherId);
+      |              ^~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Node.cpp: In member function ‘void dag::Node::reconnectInputs(const dag::NodeSet&, dag::Node*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Node.cpp:52:44: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+   52 |         for (auto portIndex = 0; portIndex < totalPorts(); ++portIndex)
+      |                                  ~~~~~~~~~~^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Node.cpp: In member function ‘void dag::Node::reconnectOutputs(const dag::NodeSet&, dag::Node*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Node.cpp:67:41: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+   67 |         for (auto portIndex=0; portIndex<totalPorts(); ++portIndex)
+      |                                ~~~~~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Node.cpp: In member function ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Node.cpp:130:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  130 |         for (auto i=0; i<numDescriptors; ++i)
+      |                        ~^~~~~~~~~~~~~~~
+[156/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/NodePlugin.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:6,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodePlugin.cpp:8:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodePlugin.cpp: In constructor ‘DynamicNode::DynamicNode(dagbase::InputStream&, dag::NodeLibrary&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodePlugin.cpp:40:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   40 |         for (auto i=0; i<numDynamicMetaPorts; ++i)
+      |                        ~^~~~~~~~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodePlugin.cpp:49:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   49 |         for (auto i=0; i<numDynamicPorts; ++i)
+      |                        ~^~~~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodePlugin.cpp: In member function ‘virtual bool DynamicNode::equals(const dag::Node&) const’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodePlugin.cpp:74:35: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+   74 |         for (auto index = 0; index<totalPorts(); ++index)
+      |                              ~~~~~^~~~~~~~~~~~~
+[159/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/Transfer.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Transfer.h:7,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Transfer.cpp:3:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+[160/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/SelectionLive.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:6,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/SelectionInterface.h:11,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/SelectionLive.h:8,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/SelectionLive.cpp:7:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/SelectionLive.cpp: In member function ‘virtual void dag::SelectionLive::computeBoundaryNodes(dag::SelectionInterface::NodeArray*, dag::SelectionInterface::NodeArray*, dag::SelectionInterface::NodeArray*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/SelectionLive.cpp:87:45: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+   87 |                     for (auto index=0; index<node->totalPorts(); ++index)
+      |                                        ~~~~~^~~~~~~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/SelectionLive.cpp:108:45: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  108 |                     for (auto index=0; index<node->totalPorts(); ++index)
+      |                                        ~~~~~^~~~~~~~~~~~~~~~~~~
+[162/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/SignalPath.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/SignalPath.h:10,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/SignalPath.cpp:6:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/SignalPath.cpp:11:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+[166/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/MemoryNodeLibrary.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:6,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/MemoryNodeLibrary.cpp:4:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+[168/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/Nodes.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:6,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Nodes.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Nodes.cpp:6:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+[172/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/MathsNode.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:6,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/MathNode.h:9,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/MathsNode.cpp:6:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+[175/313] Building CXX object ThirdParty/dag/CMakeFiles/NodePlugin.dir/src/NodePlugin.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:6,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodePlugin.cpp:8:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodePlugin.cpp: In constructor ‘DynamicNode::DynamicNode(dagbase::InputStream&, dag::NodeLibrary&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodePlugin.cpp:40:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   40 |         for (auto i=0; i<numDynamicMetaPorts; ++i)
+      |                        ~^~~~~~~~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodePlugin.cpp:49:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   49 |         for (auto i=0; i<numDynamicPorts; ++i)
+      |                        ~^~~~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodePlugin.cpp: In member function ‘virtual bool DynamicNode::equals(const dag::Node&) const’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/NodePlugin.cpp:74:35: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+   74 |         for (auto index = 0; index<totalPorts(); ++index)
+      |                              ~~~~~^~~~~~~~~~~~~
+[176/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/Graph.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:6,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Graph.cpp:6:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Graph.cpp: In constructor ‘dag::Graph::Graph(dagbase::InputStream&, dag::NodeLibrary&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Graph.cpp:308:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  308 |             for (auto i=0; i<numNodes; ++i)
+      |                            ~^~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Graph.cpp:322:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  322 |         for (auto i=0; i<numSignalPaths; ++i)
+      |                        ~^~~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Graph.cpp:346:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  346 |         for (auto i=0; i<numChildren; ++i)
+      |                        ~^~~~~~~~~~~~
+[183/313] Building CXX object ThirdParty/dag/CMakeFiles/dag.dir/src/Port.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:3:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:5:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp: In constructor ‘dag::Port::Port(const dag::Port&, dag::CloningFacility&, dag::CopyOp, dag::KeyGenerator*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:64:14: warning: unused variable ‘shouldClone’ [-Wunused-variable]
+   64 |         bool shouldClone = facility.putOrig(const_cast<Port*>(&other), &otherId);
+      |              ^~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp: In member function ‘void dag::Port::reconnectTo(const dag::NodeSet&, dag::Node*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:133:31: warning: unused variable ‘newInputId’ [-Wunused-variable]
+  133 |                 std::uint64_t newInputId = 0;
+      |                               ^~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:141:31: warning: unused variable ‘newOutputId’ [-Wunused-variable]
+  141 |                 std::uint64_t newOutputId = 0;
+      |                               ^~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp: In member function ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:298:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  298 |         for (auto i=0; i<numOutgoingConnections; ++i)
+      |                        ~^~~~~~~~~~~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:310:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+  310 |         for (auto i=0; i<numIncomingConnections; ++i)
+      |                        ~^~~~~~~~~~~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp: In constructor ‘dag::VariantPort::VariantPort(dagbase::InputStream&, dag::NodeLibrary&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:420:13: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  420 |             }
+      |             ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:421:13: note: here
+  421 |             case PortType::TYPE_DOUBLE:
+      |             ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:426:13: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  426 |             }
+      |             ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:427:13: note: here
+  427 |             case PortType::TYPE_STRING:
+      |             ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:432:13: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  432 |             }
+      |             ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:433:13: note: here
+  433 |             case PortType::TYPE_BOOL:
+      |             ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp: In constructor ‘dag::ValuePort::ValuePort(dagbase::InputStream&, dag::NodeLibrary&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:481:13: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  481 |             }
+      |             ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:482:13: note: here
+  482 |             case PortType::TYPE_DOUBLE:
+      |             ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:487:13: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  487 |             }
+      |             ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:488:13: note: here
+  488 |             case PortType::TYPE_STRING:
+      |             ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:493:13: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  493 |             }
+      |             ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/Port.cpp:494:13: note: here
+  494 |             case PortType::TYPE_BOOL:
+      |             ^~~~
+[197/313] Building CXX object ThirdParty/dag/src/apps/DagBenchmark/CMakeFiles/DagBenchmark.dir/DagBenchmark.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/apps/DagBenchmark/DagBenchmark.cpp:7:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Nodes.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/apps/DagBenchmark/DagBenchmark.cpp:9:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+[232/313] Building CXX object ThirdParty/dag/thirdparty/dagbase/src/apps/DagBaseTest/CMakeFiles/DagBaseTest.dir/IdentifierGeneratorTest.cpp.o
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/src/apps/DagBaseTest/IdentifierGeneratorTest.cpp: In lambda function:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/src/apps/DagBaseTest/IdentifierGeneratorTest.cpp:46:28: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+   46 |             for (int i=0; i<count; ++i)
+      |                           ~^~~~~~
+[276/313] Building CXX object src/demos/demoRenderer/CMakeFiles/demoRenderer.dir/demoRenderer.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/src/demos/demoRenderer/demoRenderer.cpp:17:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::allocateBuffers() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:240:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:244:54: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  244 |                 for (auto arrayIndex = 0; arrayIndex < _data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::sendToBackend() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:251:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:256:53: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  256 |                 for (auto arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~^~~~~~~~~~~~~
+[303/313] Building CXX object ThirdParty/dag/thirdparty/dagbase/src/apps/DagBaseTest/CMakeFiles/DagBaseTest.dir/VariantTest.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/src/apps/DagBaseTest/VariantTest.cpp:8:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h: In member function ‘dagbase::Variant dagbase::VariantArray::operator[](std::size_t) const’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:103:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  103 |                 }
+      |                 ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:104:17: note: here
+  104 |                 case Variant::TYPE_DOUBLE:
+      |                 ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:109:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  109 |                 }
+      |                 ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:110:17: note: here
+  110 |                 case Variant::TYPE_STRING:
+      |                 ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:115:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  115 |                 }
+      |                 ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:116:17: note: here
+  116 |                 case Variant::TYPE_BOOL:
+      |                 ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:121:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  121 |                 }
+      |                 ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/VariantArray.h:122:17: note: here
+  122 |                 case Variant::TYPE_UINT:
+      |                 ^~~~
+[305/313] Building CXX object src/apps/DaguiTest/CMakeFiles/DaguiTest.dir/ValidationTest.cpp.o
+/home/tony/tartings/cuhc++/dagui/src/apps/DaguiTest/ValidationTest.cpp: In member function ‘virtual void ValidatorNumber_testFilter_testExpectedOutput_Test::TestBody()’:
+/home/tony/tartings/cuhc++/dagui/src/apps/DaguiTest/ValidationTest.cpp:21:10: warning: unused variable ‘expected’ [-Wunused-variable]
+   21 |     auto expected = std::get<1>(GetParam());
+      |          ^~~~~~~~
+[306/313] Building CXX object ThirdParty/dag/src/tests/DagTest/CMakeFiles/DagTest.dir/DagTest.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:5,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:6,
+                 from /home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp:5:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Port.h:117:35: note:   by ‘dagbase::InputStream& dag::Port::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+  117 |             dagbase::InputStream& readFromStream(dagbase::InputStream& str, NodeLibrary& nodeLib);
+      |                                   ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/thirdparty/dagbase/include/core/Class.h:53:22: warning: ‘virtual void dagbase::Class::readFromStream(dagbase::StreamFormat&)’ was hidden [-Woverloaded-virtual=]
+   53 |         virtual void readFromStream(StreamFormat& str);
+      |                      ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:54:39: note:   by ‘dagbase::InputStream& dag::Node::readFromStream(dagbase::InputStream&, dag::NodeLibrary&)’
+   54 |                 dagbase::InputStream& readFromStream(dagbase::InputStream& str, dag::NodeLibrary& nodeLib);
+      |                                       ^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘size_t dag::Node::indexOfPort(dag::Port*)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:157:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  157 |             for (auto i=0; i<totalPorts(); ++i)
+      |                            ~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasInputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:197:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  197 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h: In member function ‘bool dag::Node::hasOutputs()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/include/Node.h:212:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  212 |             for (auto index=0; index<totalPorts(); ++index)
+      |                                ~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp: In member function ‘virtual void PortTypeTest_checkSetValue_Test::TestBody()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp:107:25: warning: unused variable ‘type’ [-Wunused-variable]
+  107 |     dag::PortType::Type type = std::get<0>(GetParam());
+      |                         ^~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp: In member function ‘virtual void NodeEditorLiveTest_testCreateChildWithSingleChildSucceeds_Test::TestBody()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp:1147:10: warning: variable ‘s4’ set but not used [-Wunused-but-set-variable]
+ 1147 |     auto s4 = sut->select(dag::NodeEditorInterface::SELECTION_SET, c);
+      |          ^~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp: In member function ‘virtual void NodeEditorLiveTest_testSelectNone_Test::TestBody()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp:1402:10: warning: variable ‘s’ set but not used [-Wunused-but-set-variable]
+ 1402 |     auto s = sut->createNode("Final", "test1");
+      |          ^
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp: In constructor ‘TestNode::TestNode(dagbase::InputStream&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp:1638:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1638 |         for (auto i=0; i<numChildren; ++i)
+      |                        ~^~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp:1631:14: warning: unused variable ‘parentRef’ [-Wunused-variable]
+ 1631 |         auto parentRef = str.readRef<TestNode>(&parentId);
+      |              ^~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp: In member function ‘virtual void GraphTest_fromLua_testFromString_Test::TestBody()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp:1802:17: warning: variable ‘nodeId’ set but not used [-Wunused-but-set-variable]
+ 1802 |     dag::NodeID nodeId = std::get<3>(GetParam());
+      |                 ^~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp: In constructor ‘TestLink::TestLink(const TestLink&, dag::CloningFacility&)’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp:2286:10: warning: unused variable ‘shouldClone’ [-Wunused-variable]
+ 2286 |     bool shouldClone = facility.putOrig(const_cast<TestLink*>(&other), &otherId);
+      |          ^~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp: In member function ‘virtual void CloningFacility_testLinkedList_Test::TestBody()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp:2315:19: warning: unused variable ‘id’ [-Wunused-variable]
+ 2315 |     std::uint64_t id = std::uint64_t {~0U};
+      |                   ^~
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp: In member function ‘virtual void Class_testRaiseError_Test::TestBody()’:
+/home/tony/tartings/cuhc++/dagui/ThirdParty/dag/src/tests/DagTest/DagTest.cpp:2345:11: warning: unused variable ‘str’ [-Wunused-variable]
+ 2345 |     auto& str = sut->raiseError(dagbase::Class::TypeNotFound) << "Test";
+      |           ^~~
+[307/313] Building CXX object src/apps/DaguiTest/CMakeFiles/DaguiTest.dir/WidgetTest.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/include/core/Shape.h:11,
+                 from /home/tony/tartings/cuhc++/dagui/include/core/RenderBin.h:9,
+                 from /home/tony/tartings/cuhc++/dagui/include/core/Batcher.h:9,
+                 from /home/tony/tartings/cuhc++/dagui/src/apps/DaguiTest/WidgetTest.cpp:16:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::allocateBuffers() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:240:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:244:54: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  244 |                 for (auto arrayIndex = 0; arrayIndex < _data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::sendToBackend() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:251:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:256:53: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  256 |                 for (auto arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~^~~~~~~~~~~~~
+[310/313] Building CXX object src/apps/DaguiTest/CMakeFiles/DaguiTest.dir/DaguiTest.cpp.o
+/home/tony/tartings/cuhc++/dagui/src/apps/DaguiTest/DaguiTest.cpp: In member function ‘virtual void SpaceTree_testInsertMultiple_testInsert_Test::TestBody()’:
+/home/tony/tartings/cuhc++/dagui/src/apps/DaguiTest/DaguiTest.cpp:463:10: warning: unused variable ‘heuristic’ [-Wunused-variable]
+  463 |     auto heuristic = std::get<1>(GetParam());
+      |          ^~~~~~~~~
+[311/313] Building CXX object src/apps/DaguiTest/CMakeFiles/DaguiTest.dir/GraphicsTest.cpp.o
+In file included from /home/tony/tartings/cuhc++/dagui/src/apps/DaguiTest/GraphicsTest.cpp:17:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::allocateBuffers() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/src/apps/DaguiTest/GraphicsTest.cpp:1064:26:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:244:54: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  244 |                 for (auto arrayIndex = 0; arrayIndex < _data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~~^~~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::allocateBuffers() [with Vertex = TestVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:240:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:244:54: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::sendToBackend() [with Vertex = TestVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:251:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:256:53: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  256 |                 for (auto arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
+      |                                           ~~~~~~~~~~^~~~~~~~~~~~~
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h: In instantiation of ‘void dagui::GenericMesh<Vertex>::sendToBackend() [with Vertex = dagui::ShapeVertex]’:
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:251:14:   required from here
+/home/tony/tartings/cuhc++/dagui/include/gfx/GenericMesh.h:256:53: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+[312/313] Install the project...
+-- Install configuration: "Release"
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/bin/DagTest
+-- Set non-toolchain portion of runtime path of "/home/tony/tartings/cuhc++/dagui_install/bin/DagTest" to "/home/tony/tartings/cuhc++/dagui_install/lib"
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/bin/DagBenchmark
+-- Set non-toolchain portion of runtime path of "/home/tony/tartings/cuhc++/dagui_install/bin/DagBenchmark" to ""
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/gmock-actions.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/gmock-matchers.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/gmock-cardinalities.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/gmock-function-mocker.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/gmock-spec-builders.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/gmock.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/internal
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/internal/gmock-pp.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/internal/custom
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/internal/custom/gmock-matchers.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/internal/custom/gmock-port.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/internal/custom/README.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/internal/custom/gmock-generated-actions.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/internal/gmock-port.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/internal/gmock-internal-utils.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/gmock-nice-strict.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/gmock-more-actions.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gmock/gmock-more-matchers.h
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/lib/libgmock.a
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/lib/libgmock_main.a
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/pkgconfig/gmock.pc
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/pkgconfig/gmock_main.pc
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/cmake/GTest/GTestTargets.cmake
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/cmake/GTest/GTestTargets-release.cmake
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/cmake/GTest/GTestConfigVersion.cmake
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/cmake/GTest/GTestConfig.cmake
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/gtest_prod.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/gtest-assertion-result.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/gtest-message.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/gtest_pred_impl.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/gtest-death-test.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/gtest.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/gtest-spi.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/gtest-matchers.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/gtest-test-part.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/custom
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/custom/README.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/custom/gtest.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/custom/gtest-port.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/custom/gtest-printers.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/gtest-type-util.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/gtest-string.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/gtest-internal.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/gtest-death-test-internal.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/gtest-port-arch.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/gtest-filepath.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/gtest-param-util.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/internal/gtest-port.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/gtest-typed-test.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/gtest-param-test.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/gtest/gtest-printers.h
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/lib/libgtest.a
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/lib/libgtest_main.a
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/pkgconfig/gtest.pc
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/pkgconfig/gtest_main.pc
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/lib/libbenchmark.a
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/lib/libbenchmark_main.a
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/benchmark
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/benchmark/export.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/include/benchmark/benchmark.h
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/cmake/benchmark/benchmarkConfig.cmake
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/cmake/benchmark/benchmarkConfigVersion.cmake
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/pkgconfig/benchmark.pc
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/pkgconfig/benchmark_main.pc
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/cmake/benchmark/benchmarkTargets.cmake
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/lib/cmake/benchmark/benchmarkTargets-release.cmake
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/tools.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/_config.yml
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/perf_counters.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/user_guide.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/reducing_variance.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/assets
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/assets/images
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/assets/images/icon.xcf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/assets/images/icon.png
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/assets/images/icon_black.xcf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/assets/images/icon_black.png
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/releasing.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/platform_specific_build_instructions.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/dependencies.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/python_bindings.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/index.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/random_interleaving.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/doc/benchmark/AssemblyTests.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/requirements.txt
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/libpfm.BUILD.bazel
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/BUILD.bazel
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/strip_asm.py
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/compare.py
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/report.py
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/util.py
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/__init__.py
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/Inputs
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/Inputs/test4_run.json
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/Inputs/test2_run.json
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/Inputs/test1_run1.json
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/Inputs/test5_run0.json
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/Inputs/test3_run1.json
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/Inputs/test1_run2.json
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/Inputs/test4_run1.json
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/Inputs/test5_run1.json
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/Inputs/test4_run0.json
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/share/googlebenchmark/tools/gbench/Inputs/test3_run0.json
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/bin/DagBaseTest
+-- Set non-toolchain portion of runtime path of "/home/tony/tartings/cuhc++/dagui_install/bin/DagBaseTest" to "/home/tony/tartings/cuhc++/dagui_install/lib"
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/lib/libdagbase.so
+-- Set non-toolchain portion of runtime path of "/home/tony/tartings/cuhc++/dagui_install/lib/libdagbase.so" to "/home/tony/tartings/cuhc++/dagui_install/lib"
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./setup.sh
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/DynamicMultiArray
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/DynamicMultiArray/MultipleArrays.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/MetaProperty
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/MetaProperty/NoSemantic.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/MetaProperty/Colour.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VariantArray
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VariantArray/Bool.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VariantArray/String.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VariantArray/Int64.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VariantArray/Colour.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VariantArray/Double.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VariantArray/UInt32.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/IdentifierGenerator
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/IdentifierGenerator/Mixture.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/IdentifierGenerator/Two.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/IdentifierGenerator/RecycleOne.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/IdentifierGenerator/One.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/IdentifierGenerator/ReuseOne.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Searchable
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Searchable/SearchableMap_oneElement.lua
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/lib/libdag.so
+-- Set non-toolchain portion of runtime path of "/home/tony/tartings/cuhc++/dagui_install/lib/libdag.so" to ""
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/FileSystemTraverser
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/FileSystemTraverser/nodes.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/FileSystemTraverser/nodes2.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/Graph
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/Graph/withmultiplechildren.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/Graph/connectednodes.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/Graph/duplicateID.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/Graph/nodesFromPlugin.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/Graph/empty.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/Graph/typedport.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/Graph/constraints.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/Graph/withchildgraph.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/Graph/withnestedchildgraph.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/Graph/onenode.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/tests/Graph/connectednestedchildgraph.lua
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/./etc/setup_macos.sh.in
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/./etc/setup.sh.in
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/./etc/setup.bat.in
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/./setup.sh
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/lib/NodePlugins/libNodePlugin.so
+-- Set non-toolchain portion of runtime path of "/home/tony/tartings/cuhc++/dagui_install/lib/NodePlugins/libNodePlugin.so" to ""
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/bin/DaguiTest
+-- Set non-toolchain portion of runtime path of "/home/tony/tartings/cuhc++/dagui_install/bin/DaguiTest" to "/home/tony/tartings/cuhc++/dagui_install/lib"
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/bin/BenchmarkDagui
+-- Set non-toolchain portion of runtime path of "/home/tony/tartings/cuhc++/dagui_install/bin/BenchmarkDagui" to "/home/tony/tartings/cuhc++/dagui_install/lib"
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/bin/demoText
+-- Set non-toolchain portion of runtime path of "/home/tony/tartings/cuhc++/dagui_install/bin/demoText" to "/home/tony/tartings/cuhc++/dagui_install/lib"
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/bin/demoRenderer
+-- Set non-toolchain portion of runtime path of "/home/tony/tartings/cuhc++/dagui_install/bin/demoRenderer" to "/home/tony/tartings/cuhc++/dagui_install/lib"
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/./setup.sh
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/lib/libdagui.so
+-- Set non-toolchain portion of runtime path of "/home/tony/tartings/cuhc++/dagui_install/lib/libdagui.so" to ""
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LiberationMono-Italic.ttf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LiberationMono-Bold.ttf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/ChangeLog
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/README.md
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LiberationSerif-Bold.ttf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/TODO
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LiberationMono-Regular.ttf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LiberationSans-BoldItalic.ttf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/AUTHORS
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LiberationMono-BoldItalic.ttf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LiberationSerif-Regular.ttf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LiberationSerif-BoldItalic.ttf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LiberationSans-Italic.ttf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LiberationSans-Regular.ttf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LICENSE
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LiberationSerif-Italic.ttf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/liberation-fonts-ttf-2.1.5/LiberationSans-Bold.ttf
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/GenericAttributeArray
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/GenericAttributeArray/testAddVertex.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Mesh
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Mesh/ShapeMeshSeparate.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Mesh/ShapeMesh.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Mesh/OneTriangle.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/LayerAttributes
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/LayerAttributes/testSort.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/SceneNodeFactory
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/SceneNodeFactory/None.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/SceneNodeFactory/Recycle.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/SceneNodeFactory/Two.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/SceneNodeFactory/One.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VectorSet
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VectorSet/NoDuplicates.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VectorSet/OneDuplicate.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/AttributeLayout
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/AttributeLayout/testStride.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Snippet
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Snippet/OneVariable.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Snippet/MultipleVariables.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Snippet/NoVariables.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/SpaceTree
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/SpaceTree/AllFree.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/SpaceTree/OneFree.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/SpaceTree/SmallInput.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/SpaceTree/MultiFree.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/LayoutConstraintsCollectionVisitor
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/LayoutConstraintsCollectionVisitor/Vertical.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/LayoutConstraintsCollectionVisitor/NoConstraints.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/LayoutConstraintsCollectionVisitor/OneConstraint.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/WidgetRef
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/WidgetRef/WithConstraints.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/WidgetRef/Lookup.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/EventSystem
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/EventSystem/Click.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/EventSystem/Hover.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/EventSystem/ClickTooFarAway.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/EventSystem/Passthrough.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/EventSystem/DoubleClick.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/CodeTemplate
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/CodeTemplate/Light_vert.glsl
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/CodeTemplate/VertexShader.glsl
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VectorMap
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VectorMap/NoDuplicates.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VectorMap/OneDuplicate.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/WidgetFactory
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/WidgetFactory/oneWindowWithChild.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/WidgetFactory/rootWithNestedChildren.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/WidgetFactory/empty.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/WidgetFactory/rootWithLabel.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/WidgetFactory/windowWithLayout.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/WidgetFactory/oneWindow.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Tessellation
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Tessellation/TriangleFan.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/PropertyBag
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/PropertyBag/TestProperties.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/ConstraintSolverVisitor
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/ConstraintSolverVisitor/NoConstraints.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/ConstraintSolverVisitor/Position.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/StateMachine
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/StateMachine/onTest.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/StateMachine/duplicateState.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/StateMachine/multipleStates.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/StateMachine/onOneThenTwo.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Shape
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Shape/RoundedRectangle.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Shape/Rectangle.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Shape/Mesh.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/GenericMesh
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/GenericMesh/addIndex.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/GenericMesh/testTakesOwnershipOfArrays.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/GenericMesh/addVertex.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/DrawCommandBuffer
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/DrawCommandBuffer/rectangle.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/demoRenderer
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/demoRenderer/RoundedRectangle.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/demoRenderer/Vertex.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/demoRenderer/Rectangle.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/demoRenderer/Mesh.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VisualElement
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VisualElement/withChildren.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VisualElement/withMultipleChildren.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VisualElement/withNestedChildren.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/VisualElement/root.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Batcher
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Batcher/TwoBins.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Batcher/ShapeMeshSeparate.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Batcher/ShapeMesh.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/FontImageSource
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/FontImageSource/testEstimateCount.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/TextureAtlas
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/TextureAtlas/testPack.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Widget
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Widget/TwoBins.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Widget/RootWithLabel.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Widget/WindowWithVerticalLayout.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Widget/Label.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Constraint
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/Constraint/Growth.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/PatternMatching
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/PatternMatching/WindowWithLabel.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/PatternMatching/Label.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/PatternMatching/Patterns.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./data/tests/PatternMatching/WindowWithNestedChildren.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/ShapeFactory.lua
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/./etc/setup_macos.sh.in
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/fontImageSources.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/defineShapeMesh.lua
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/ShapeMeshSeparate.lua
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/./etc/setup.sh.in
+-- Installing: /home/tony/tartings/cuhc++/dagui_install/./etc/setup.bat.in
+-- Up-to-date: /home/tony/tartings/cuhc++/dagui_install/./etc/ShapeMesh.lua
+
+Install finished
