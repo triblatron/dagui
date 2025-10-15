@@ -44,7 +44,7 @@ namespace dagui
 
 		if (auto element = config.findElement("ranges"); element != nullptr)
 		{
-			for (auto i=0; i<element->numChildren(); ++i)
+			for (std::size_t i=0; i<element->numChildren(); ++i)
 			{
 				auto child = element->child(i);
 
@@ -74,9 +74,9 @@ namespace dagui
 	
 	void copyGlyphToImage(FT_GlyphSlot glyph, dagui::Image* image)
 	{
-		for (auto row = 0; row<glyph->bitmap.rows; ++row)
+		for (std::uint32_t row = 0; row<glyph->bitmap.rows; ++row)
 		{
-			for (auto col=0; col<glyph->bitmap.width; ++col)
+			for (std::uint32_t col=0; col<glyph->bitmap.width; ++col)
 			{
 				auto intensity = glyph->bitmap.buffer[row*glyph->bitmap.width+col];
 

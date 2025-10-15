@@ -191,6 +191,7 @@ namespace dagui
             }
     }
 
+    
     template<typename State, typename Transition, typename Input, typename EntryExitAction>
     void
     StateMachine<State, Transition, Input, EntryExitAction>::readEntryExitActions(dagbase::ConfigurationElement &config,

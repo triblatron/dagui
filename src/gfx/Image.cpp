@@ -23,9 +23,9 @@ namespace dagui
 	
 	bool Image::find(std::uint8_t red, std::uint8_t green, std::uint8_t blue) const
 	{
-		for (auto row=0; row<_height; ++row)
+		for (std::uint32_t row=0; row<_height; ++row)
 		{
-			for (auto col=0; col<_width; ++col)
+			for (std::uint32_t col=0; col<_width; ++col)
 			{
 				std::uint8_t actualRed{0},actualGreen{0},actualBlue{0};
 				
@@ -45,9 +45,9 @@ namespace dagui
 	{
 		std::size_t retval{0};
 
-		for (auto row=0; row<_height; ++row)
+		for (std::uint32_t row=0; row<_height; ++row)
 		{
-			for (auto col=0; col<_width; ++col)
+			for (std::uint32_t col=0; col<_width; ++col)
 			{
 				std::uint8_t actualRed{0},actualGreen{0},actualBlue{0};
 				get(row, col, &actualRed, &actualGreen, &actualBlue);
@@ -96,7 +96,11 @@ namespace dagui
 					}
 					
 					break;
+				default:
+					break;
 				}
+				break;
+			default:
 				break;
 			}
 		}

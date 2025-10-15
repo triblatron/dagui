@@ -32,6 +32,8 @@ namespace dagui
             case Mesh2D::PRIMITIVE_TRIANGLE_FAN:
                 addTriangleFan(vertices);
                 break;
+            default:
+                break;
         }
 
     }
@@ -61,13 +63,16 @@ namespace dagui
     void Tessellation::addTriangleFan(const std::vector<ShapeVertex> &vertices)
     {
         // Convert to triangle list.
-        for (auto vertIndex=1; vertIndex<vertices.size()-1; ++vertIndex)
+        if (vertices.size()>2)
         {
-            addVertex(vertices[0]);
-            addVertex(vertices[vertIndex]);
-            addVertex(vertices[vertIndex+1]);
+            for (std::size_t vertIndex=1; vertIndex<vertices.size()-1; ++vertIndex)
+            {
+                addVertex(vertices[0]);
+                addVertex(vertices[vertIndex]);
+                addVertex(vertices[vertIndex+1]);
+            }
+            _numTriangles += vertices.size() - 2;
         }
-        _numTriangles += vertices.size() - 2;
     }
 
     //! Emit vertices and indices to the given Mesh

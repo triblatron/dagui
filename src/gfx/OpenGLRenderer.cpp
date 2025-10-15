@@ -105,6 +105,8 @@ namespace dagui
                 _gl->drawArray(vertices);
             }
             break;
+        default:
+            break;
         }
     }
 

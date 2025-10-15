@@ -241,7 +241,7 @@ namespace dagui
         {
             if (backend())
             {
-                for (auto arrayIndex = 0; arrayIndex < _data.size(); ++arrayIndex)
+                for (std::size_t arrayIndex = 0; arrayIndex < _data.size(); ++arrayIndex)
                 {
                     backend()->addVertexBuffer();
                 }
@@ -253,7 +253,7 @@ namespace dagui
             if (backend())
             {
                 backend()->allocate();
-                for (auto arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
+                for (std::size_t arrayIndex = 0; arrayIndex<_data.size(); ++arrayIndex)
                 {
                     auto attrArray = _data.a[arrayIndex];
                     backend()->uploadVertices(arrayIndex, *attrArray);

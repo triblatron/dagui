@@ -59,7 +59,7 @@ namespace dagui
             str = str.substr(0,str.length()-1);
         }
 
-        return std::move(str);
+        return str;
     }
 
     Window::Features Window::parseFeatures(const std::string& str)
@@ -90,7 +90,7 @@ namespace dagui
             str = str.substr(0,str.length()-1);
         }
 
-        return std::move(str);
+        return str;
     }
 
     Window::Status Window::parseStatus(const std::string &str)

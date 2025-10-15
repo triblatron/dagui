@@ -50,22 +50,24 @@ namespace dagui
             if (_a)
             {
                 std::size_t elementSize = _a->elementSize();
-                for (auto i = 0; i < _a->desciptor().attributes.size(); ++i)
+                for (std::size_t i = 0; i < _a->desciptor().attributes.size(); ++i)
                 {
                     const AttributeLayout &layout = _a->desciptor().attributes[i];
                     switch (layout.attr.usage)
                     {
                         case AttributeDescriptor::USAGE_POSITION:
                             glVertexPointer(layout.attr.numComponents, dataTypeToGL(layout.attr.dataType), elementSize,
-                                            (void *) layout.offset);
+                                            (void *)(std::uintptr_t)layout.offset);
                             break;
                         case AttributeDescriptor::USAGE_COLOUR:
                             glColorPointer(layout.attr.numComponents, dataTypeToGL(layout.attr.dataType), elementSize,
-                                           (void *) layout.offset);
+                                           (void *)(std::uintptr_t)layout.offset);
                             break;
                         case AttributeDescriptor::USAGE_TEXCOORD:
-                            glTexCoordPointer(layout.attr.numComponents, dataTypeToGL(layout.attr.dataType), elementSize, (void *)layout.offset);
+                            glTexCoordPointer(layout.attr.numComponents, dataTypeToGL(layout.attr.dataType), elementSize, (void *)(std::uintptr_t)layout.offset);
 
+                            break;
+                        default:
                             break;
                     }
                 }

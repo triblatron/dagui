@@ -55,10 +55,6 @@ namespace dagui {
 	{
 		if (_source != nullptr)
 		{
-			size_t nextX{0};
-			size_t nextY{0};
-			size_t maxHeightInThisShelf{0};
-
 			_images.reserve(_source->estimateCount());
 			strategy.pack(*_source, *this);
 

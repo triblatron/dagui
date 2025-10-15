@@ -219,7 +219,7 @@ namespace dagui
         v[0].g = _colour.g;
         v[0].b = _colour.b;
         v[0].a = _colour.a;
-        for (auto i=1; i<v.size(); ++i)
+        for (std::size_t i=1; i<v.size(); ++i)
         {
             float theta = float(i-1) * M_PI_2 / (_numCornerVertices-1);
             v[i] = { x + xRadius * cos(theta), y + yRadius * sin(theta), _colour.r, _colour.g, _colour.b, _colour.a };
