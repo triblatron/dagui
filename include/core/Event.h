@@ -150,7 +150,7 @@ namespace dagui
             return _data;
         }
 
-        std::int32_t const * const pos() const
+        std::int32_t const * pos() const
         {
             if (_data.index() == 0)
             {
