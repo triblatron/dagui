@@ -33,7 +33,7 @@ namespace dagui
         };
 
         float spacing{0.0f};
-        dagbase::SearchablePrimitiveArray<std::array<float,4>> padding;
+        dagbase::SearchableVariantArray<std::array<float,4>> padding;
 
         HorizontalAlignment horizontalAlignment{HORIZ_ALIGN_LEFT};
 
