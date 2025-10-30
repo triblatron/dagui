@@ -253,4 +253,9 @@ namespace dagui
             }
         }
     }
+
+    void Widget::interpolate(dagbase::ParameterLookup &lookup)
+    {
+
+    }
 }

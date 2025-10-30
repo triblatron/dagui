@@ -98,6 +98,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
 		include/core/Event.h
 		include/core/EventSystem.h
 		include/core/StateMachine.h
+		include/core/DataTemplate.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -171,6 +172,7 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
 		src/gfx/OpenGLBlending.cpp
 		src/core/Event.cpp
 		src/core/EventSystem.cpp
+		src/core/DataTemplate.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")

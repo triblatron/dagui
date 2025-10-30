@@ -21,6 +21,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include "MockGraphicsBackendFactory.h"
+#include "core/DataTemplate.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
@@ -309,4 +310,124 @@ INSTANTIATE_TEST_SUITE_P(Widget, Widget_testDraw, ::testing::Values(
         std::make_tuple("data/tests/Widget/RootWithLabel.lua", "data/tests/Widget/TwoBins.lua", "renderBins[1].mesh.numVertices", std::uint32_t(1280/32), 0.0, dagbase::ConfigurationElement::RELOP_LT),
         std::make_tuple("data/tests/Widget/RootWithLabel.lua", "data/tests/Widget/TwoBins.lua", "x", 256.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ),
         std::make_tuple("data/tests/Widget/RootWithLabel.lua", "data/tests/Widget/TwoBins.lua", "y", 128.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
+        ));
+
+class DISABLED_DataTemplate_testInstantiate : public ::testing::TestWithParam<std::tuple<const char*>>
+{
+public:
+    struct Test
+    {
+        std::string name;
+        std::string description;
+
+        void configure(dagbase::ConfigurationElement& config)
+        {
+            dagbase::ConfigurationElement::readConfig(config, "name", &name);
+            dagbase::ConfigurationElement::readConfig(config, "description", &description);
+        }
+
+        void setParameters(dagui::DataTemplate& templ)
+        {
+            templ.setParameter(dagbase::Atom::intern("name"), name);
+            templ.setParameter(dagbase::Atom::intern("description"), description);
+        }
+
+        dagbase::Variant find(std::string_view path) const
+        {
+            dagbase::Variant retval;
+
+            retval = dagbase::findEndpoint(path, "name", name);
+            if (retval.has_value())
+                return retval;
+
+            retval = dagbase::findEndpoint(path, "description", description);
+            if (retval.has_value())
+                return retval;
+
+            return {};
+        }
+    };
+
+    struct Assertion
+    {
+        std::string path;
+        dagbase::Variant value;
+        double tolerance{0.0};
+        dagbase::ConfigurationElement::RelOp op{dagbase::ConfigurationElement::RELOP_EQ};
+
+        void configure(dagbase::ConfigurationElement& config)
+        {
+            dagbase::ConfigurationElement::readConfig(config, "path", &path);
+            dagbase::ConfigurationElement::readConfig(config, "value", &value);
+            dagbase::ConfigurationElement::readConfig(config, "tolerance", &tolerance);
+            dagbase::ConfigurationElement::readConfig<dagbase::ConfigurationElement::RelOp>(config, "op", &dagbase::ConfigurationElement::parseRelOp, &op);
+        }
+
+        void makeItSo(Test& sut)
+        {
+            assertComparison(value, sut.find(path), tolerance, op);
+        }
+    };
+public:
+    void configure(dagbase::ConfigurationElement& config)
+    {
+        if (auto element=config.findElement("assertions"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                Assertion entry;
+
+                entry.configure(child);
+                _assertions.emplace_back(entry);
+
+                return true;
+            });
+        }
+    }
+
+    void makeItSo()
+    {
+        for (auto a : _assertions)
+        {
+            a.makeItSo(_test);
+        }
+    }
+
+protected:
+    dagui::DataTemplate* _sut{nullptr};
+    using AssertionArray = std::vector<Assertion>;
+    AssertionArray _assertions;
+    Test _test;
+};
+
+TEST_P(DISABLED_DataTemplate_testInstantiate, testAssertions)
+{
+    auto configStr = std::get<0>(GetParam());
+    dagbase::ConfigurationElement* config = nullptr;
+    {
+        dagbase::Lua lua;
+
+        config = dagbase::ConfigurationElement::fromFile(lua, configStr);
+        ASSERT_NE(nullptr, config);
+    }
+
+    configure(*config);
+    _sut = new dagui::DataTemplate();
+    dagui::ShapeFactory shapeFactory;
+    dagui::WidgetFactory widgetFactory;
+    if (auto templateConfig = config->findElement("template"); templateConfig)
+    {
+        _sut->configure(*templateConfig, widgetFactory, shapeFactory);
+
+    }
+    else
+    {
+        FAIL() << "Expected template config to exist";
+    }
+    Test test;
+    test.setParameters(*_sut);
+    makeItSo();
+}
+
+INSTANTIATE_TEST_SUITE_P(DataTemplate, DISABLED_DataTemplate_testInstantiate, ::testing::Values(
+        std::make_tuple("data/tests/Widget/Template.lua")
         ));

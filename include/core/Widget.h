@@ -20,6 +20,11 @@
 #include <string>
 #include <string_view>
 
+namespace dagbase
+{
+    class ParameterLookup;
+}
+
 namespace dagui
 {
     class Batcher;
@@ -104,6 +109,8 @@ namespace dagui
         }
 
         virtual void draw(Batcher& batcher, GraphicsBackendFactory& factory);
+
+        virtual void interpolate(dagbase::ParameterLookup& lookup);
     private:
         glm::ivec2 _pos{0,0};
         using Properties=dagbase::SearchableMap<std::unordered_map<dagbase::Atom, dagbase::Variant>>;

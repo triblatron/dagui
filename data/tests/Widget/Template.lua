@@ -1,0 +1,33 @@
+root=
+{
+	template=
+	{
+		name="test",
+		dataType="Test",
+		tree=
+		{
+			class="Label",
+			name="{name}",
+			text="{description}",
+		},
+	},
+	instance=
+	{
+		{
+			name="test1",
+			class="Test",
+			description="A test object with a template",
+		},
+	},
+	assertions=
+	{
+		{
+			path="name",
+			value="test1",
+		},
+		{
+			path="text",
+			value="A test object with a template", 
+		},
+	},
+}
