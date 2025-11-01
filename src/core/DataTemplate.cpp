@@ -49,6 +49,21 @@ namespace dagui
             InstantiateParametersVisitor visitor;
 
             visitor.setLookup(&_paramLookup);
+            _tree->accept(visitor);
         }
+    }
+
+    dagbase::Variant DataTemplate::find(std::string_view path) const
+    {
+        dagbase::Variant retval;
+
+        if (_tree)
+        {
+            retval = dagbase::findInternal(path, "tree", *_tree);
+            if (retval.has_value())
+                return retval;
+        }
+
+        return {};
     }
 }

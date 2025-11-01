@@ -35,6 +35,8 @@ namespace dagui
         dagbase::ConfigurationElement::ValueType find(std::string_view path) const override;
 
         void draw(Batcher& batcher, GraphicsBackendFactory& factory) override;
+
+        void interpolate(dagbase::ParameterLookup& lookup) override;
     private:
         Shape* _face{nullptr};
         Text* _text{nullptr};

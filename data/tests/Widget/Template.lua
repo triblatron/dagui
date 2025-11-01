@@ -7,26 +7,29 @@ root=
 		tree=
 		{
 			class="Label",
-			name="{name}",
-			text="{description}",
+			id="{name}",
+			text=
+			{
+				class="Text",
+				text="{description}",
+				fontFace="regular",
+			},
 		},
 	},
 	instance=
 	{
-		{
-			name="test1",
-			class="Test",
-			description="A test object with a template",
-		},
+		name="test1",
+		class="Test",
+		description="A test object with a template",
 	},
 	assertions=
 	{
 		{
-			path="name",
+			path="tree.id",
 			value="test1",
 		},
 		{
-			path="text",
+			path="tree.text.text",
 			value="A test object with a template", 
 		},
 	},

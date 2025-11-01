@@ -7,6 +7,7 @@
 #include "core/Label.h"
 #include "util/Searchable.h"
 #include "core/Batcher.h"
+#include "util/ParameterLookup.h"
 
 namespace dagui
 {
@@ -64,5 +65,12 @@ namespace dagui
     void Label::draw(Batcher &batcher, GraphicsBackendFactory& factory)
     {
         Widget::draw(batcher, factory);
+    }
+
+    void Label::interpolate(dagbase::ParameterLookup &lookup)
+    {
+        Widget::interpolate(lookup);
+        if (_text)
+            _text->setText(lookup.interpolate(dagbase::Atom::intern(_text->text())).toString());
     }
 }

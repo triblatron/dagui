@@ -312,7 +312,7 @@ INSTANTIATE_TEST_SUITE_P(Widget, Widget_testDraw, ::testing::Values(
         std::make_tuple("data/tests/Widget/RootWithLabel.lua", "data/tests/Widget/TwoBins.lua", "y", 128.0, 0.0, dagbase::ConfigurationElement::RELOP_EQ)
         ));
 
-class DISABLED_DataTemplate_testInstantiate : public ::testing::TestWithParam<std::tuple<const char*>>
+class DataTemplate_testInstantiate : public ::testing::TestWithParam<std::tuple<const char*>>
 {
 public:
     struct Test
@@ -363,7 +363,7 @@ public:
             dagbase::ConfigurationElement::readConfig<dagbase::ConfigurationElement::RelOp>(config, "op", &dagbase::ConfigurationElement::parseRelOp, &op);
         }
 
-        void makeItSo(Test& sut)
+        void makeItSo(dagui::DataTemplate& sut)
         {
             assertComparison(value, sut.find(path), tolerance, op);
         }
@@ -386,10 +386,11 @@ public:
 
     void makeItSo()
     {
-        for (auto a : _assertions)
-        {
-            a.makeItSo(_test);
-        }
+        if (_sut)
+            for (auto a : _assertions)
+            {
+                a.makeItSo(*_sut);
+            }
     }
 
 protected:
@@ -399,7 +400,7 @@ protected:
     Test _test;
 };
 
-TEST_P(DISABLED_DataTemplate_testInstantiate, testAssertions)
+TEST_P(DataTemplate_testInstantiate, testAssertions)
 {
     auto configStr = std::get<0>(GetParam());
     dagbase::ConfigurationElement* config = nullptr;
@@ -424,10 +425,15 @@ TEST_P(DISABLED_DataTemplate_testInstantiate, testAssertions)
         FAIL() << "Expected template config to exist";
     }
     Test test;
+    if (auto element=config->findElement("instance"); element)
+    {
+        test.configure(*element);
+    }
     test.setParameters(*_sut);
+    _sut->resolve();
     makeItSo();
 }
 
-INSTANTIATE_TEST_SUITE_P(DataTemplate, DISABLED_DataTemplate_testInstantiate, ::testing::Values(
+INSTANTIATE_TEST_SUITE_P(DataTemplate, DataTemplate_testInstantiate, ::testing::Values(
         std::make_tuple("data/tests/Widget/Template.lua")
         ));

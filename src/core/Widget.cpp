@@ -15,6 +15,7 @@
 #include "core/GraphicsBackendFactory.h"
 #include "gfx/TextureAtlas.h"
 #include "gfx/TextureAtlasBackend.h"
+#include "util/ParameterLookup.h"
 
 #include <utility>
 
@@ -256,6 +257,6 @@ namespace dagui
 
     void Widget::interpolate(dagbase::ParameterLookup &lookup)
     {
-
+        _id = lookup.interpolate(_id);
     }
 }

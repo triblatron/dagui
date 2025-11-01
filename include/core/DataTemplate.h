@@ -40,6 +40,8 @@ namespace dagui
         void configure(dagbase::ConfigurationElement& config, WidgetFactory& factory, ShapeFactory& shapeFactory);
 
         void resolve();
+
+        dagbase::Variant find(std::string_view path) const;
     private:
         dagbase::Atom _name;
         dagbase::Atom _dataType;
