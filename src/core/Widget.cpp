@@ -257,6 +257,6 @@ namespace dagui
 
     void Widget::interpolate(dagbase::ParameterLookup &lookup)
     {
-        _id = lookup.interpolate(_id);
+        _id = dagbase::Atom::intern(lookup.interpolate(_id).asString());
     }
 }
