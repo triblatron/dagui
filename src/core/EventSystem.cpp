@@ -188,13 +188,7 @@ namespace dagui
 
     void TimedSequenceEventFilter::step()
     {
-        switch (_state)
-        {
-                break;
-            default:
-                break;
-        }
-
+        // Do nothing.
     }
 
     TimedSequenceEventFilter::TimedSequenceEventFilter(EventSystem *eventSys)
