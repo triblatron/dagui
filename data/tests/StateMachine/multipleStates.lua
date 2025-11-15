@@ -28,6 +28,15 @@ root=
 			value=1,
 		},
 	},
+	entryActions=
+	{
+		{
+			state="STATE_TEST2",
+			action=function()
+				return 0
+			end,
+		}
+	},
 	transitionFunction=
 	{
 		{
