@@ -897,7 +897,7 @@ struct TestEntryExitAction
 {
     void configure(dagbase::ConfigurationElement& config)
     {
-
+        _func = config.asFunction();
     }
 
     dagbase::Variant find(std::string_view path) const
@@ -912,10 +912,15 @@ struct TestEntryExitAction
     }
     void operator()(TestState& state)
     {
-        ++numCalls;
+        if (_func)
+        {
+            (*_func)(0,1);
+            ++numCalls;
+        }
     }
 
     std::int64_t     numCalls{0};
+    dagbase::Function* _func{nullptr};
 };
 
 TEST_P(StateMachine_testConfigure, testExpectedValue)
@@ -1025,9 +1030,9 @@ protected:
 TEST_P(StateMachine_testOnInput, testExpectedNextState)
 {
     auto testConfigStr = std::get<0>(GetParam());
+    dagbase::Lua testLua;
     dagbase::ConfigurationElement* testConfig = nullptr;
     {
-        dagbase::Lua testLua;
 
         testConfig = dagbase::ConfigurationElement::fromFile(testLua, testConfigStr);
         ASSERT_NE(nullptr, testConfig);

@@ -35,20 +35,18 @@ root=
 	{
 		{
 			state="STATE_FINAL",
-			action=
-			{
-				message="accepted",
-			},
+			action=function()
+				return 0
+			end,
 		},
 	},
 	exitActions=
 	{
 		{
 			state="STATE_INITIAL",
-			action=
-			{
-				message="initial",
-			}
+			action=function()
+				return 0
+			end,
 		},
 	},
 	transitionActions=
@@ -56,10 +54,8 @@ root=
 		{
 			fromState="STATE_INITIAL",
 			toState="STATE_FINAL",
-			action=
-			{
-				message="from initial to final",
-			}
+			action=function()
+			end,
 		},
 	},
 }
