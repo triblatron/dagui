@@ -2,6 +2,7 @@
 
 #include "core/EventSystem.h"
 #include "core/ConfigurationElement.h"
+#include "util/enums.h"
 
 #include <string>
 #include <cmath>
@@ -207,5 +208,25 @@ namespace dagui
     {
         dagbase::ConfigurationElement::readConfig<Event::Type>(config, "type", Event::parseType, &type);
         dagbase::ConfigurationElement::readConfig(config, "interval", &interval);
+    }
+
+    const char *eventSourceToString(EventSource value)
+    {
+        switch (value)
+        {
+            ENUM_NAME(EVENT_SOURCE_UNKNOWN)
+            ENUM_NAME(EVENT_SOURCE_POINTING)
+            ENUM_NAME(EVENT_SOURCE_KEYBOARD)
+        }
+        return "<error>";
+    }
+
+    EventSource parseEventSource(const char *str)
+    {
+        TEST_ENUM(EVENT_SOURCE_UNKNOWN, str)
+        TEST_ENUM(EVENT_SOURCE_POINTING, str)
+        TEST_ENUM(EVENT_SOURCE_KEYBOARD, str)
+
+        return EVENT_SOURCE_UNKNOWN;
     }
 }

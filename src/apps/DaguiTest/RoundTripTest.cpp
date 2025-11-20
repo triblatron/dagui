@@ -7,6 +7,7 @@
 #include "gfx/Mesh2D.h"
 #include "core/Shape.h"
 #include "core/Event.h"
+#include "core/EventSystem.h"
 
 #include <gtest/gtest.h>
 
@@ -481,4 +482,24 @@ INSTANTIATE_TEST_SUITE_P(EventTypeMask, EventTypeMask_testRoundTrip, ::testing::
             std::make_tuple("DRAGGING_BIT", dagui::Event::DRAGGING_BIT),
             std::make_tuple("DRAG_STOP_BIT", dagui::Event::DRAG_STOP_BIT),
             std::make_tuple("BUTTON_PRESS_BIT BUTTON_RELEASE_BIT", static_cast<dagui::Event::TypeMask>(dagui::Event::BUTTON_PRESS_BIT|dagui::Event::BUTTON_RELEASE_BIT))
+        ));
+
+class EventSource_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::EventSource>>
+{
+
+};
+
+TEST_P(EventSource_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::eventSourceToString(value));
+    EXPECT_EQ(value, dagui::parseEventSource(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(EventSource, EventSource_testRoundTrip, ::testing::Values(
+        std::make_tuple("EVENT_SOURCE_UNKNOWN", dagui::EVENT_SOURCE_UNKNOWN),
+        std::make_tuple("EVENT_SOURCE_POINTING", dagui::EVENT_SOURCE_POINTING),
+        std::make_tuple("EVENT_SOURCE_KEYBOARD", dagui::EVENT_SOURCE_KEYBOARD)
         ));

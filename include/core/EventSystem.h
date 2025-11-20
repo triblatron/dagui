@@ -92,6 +92,16 @@ namespace dagui
         void changeState(State nextState);
     };
 
+    enum EventSource : std::uint32_t
+    {
+        EVENT_SOURCE_UNKNOWN,
+        EVENT_SOURCE_POINTING,
+        EVENT_SOURCE_KEYBOARD
+    };
+
+    const char DAGUI_API * eventSourceToString(EventSource value);
+    EventSource DAGUI_API parseEventSource(const char* str);
+
 	class DAGUI_API EventSystem
 	{
 	public:
