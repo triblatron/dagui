@@ -1,0 +1,100 @@
+root=
+{
+	inputEvents=
+	{
+		{
+			timestamp=0.0,
+			type="TYPE_KEY_PRESS",
+			keys="KEY_LEFT_CTRL_BIT",
+		},
+		{
+			timestamp=0.1,
+			type="TYPE_KEY_PRESS",
+			keys="KEY_LEFT_SHIFT_BIT",
+		},
+		{
+			timestamp=0.2,
+			type="TYPE_KEY_PRESS",
+			keys="KEY_A_BIT",
+		},
+	},
+	outputEvents=
+	{
+		{
+			timestamp=0.0,
+			type="TYPE_KEY_PRESS",
+			keys="KEY_LEFT_CTRL_BIT",
+			buttons="BUTTON_NONE",
+			x=0,
+			y=0,
+		},
+		{
+			timestamp=0.1,
+			type="TYPE_KEY_PRESS",
+			keys="KEY_LEFT_SHIFT_BIT",
+			buttons="BUTTON_NONE",
+			x=1,
+			y=2,
+		},
+		{
+			timestamp=0.2,
+			type="TYPE_KEY_PRESS",
+			keys="KEY_A_BIT",
+			buttons="BUTTON_NONE",
+			x=1,
+			y=2,
+		},
+		{
+			timestamp=0.2,
+			type="TYPE_KEY_CHORD",
+			keys="KEY_LEFT_CTRL_BIT KEY_LEFT_SHIFT_BIT KEY_A_BIT",
+			x=1,
+			y=2,
+		},
+	},
+	eventSys=
+	{
+		filters=
+		{
+			{
+				class="PassthroughEventFilter",
+				eventTypes="KEY_PRESS_BIT KEY_RELEASE_BIT",
+			},
+			{
+				class="ChordEventFilter",
+				eventTypes="KEY_PRESS_BIT KEY_RELEASE_BIT",
+				sequence=
+				{
+					{
+						event=
+						{
+							type="TYPE_KEY_PRESS",
+							keys = "KEY_LEFT_CTRL_BIT",
+						},
+					},
+					{
+						interval=0.1,
+						event=
+						{
+							type="TYPE_KEY_PRESS",
+							keys = "KEY_LEFT_SHIFT_BIT",
+						},
+					},
+					{
+						interval=0.1,
+						event=
+						{
+							type="TYPE_KEY_PRESS",
+							keys = "KEY_A_BIT",
+						},
+					},
+				},
+				output=
+				{
+					type="TYPE_KEY_CHORD",
+					keys="KEY_LEFT_CTRL_BIT KEY_LEFT_SHIFT_BIT KEY_A_BIT",
+				}
+			},
+		}
+	},
+}

@@ -8,6 +8,7 @@
 #include <vector>
 #include <cstdlib>
 #include <chrono>
+#include <variant>
 
 namespace dagbase
 {
@@ -16,12 +17,19 @@ namespace dagbase
 
 namespace dagui
 {
+    class EventFilterFactory;
 	class EventSystem;
 
 	//! A filter taking in an Event and producing another Event
 	//! which may be a copy of the original.
 	class DAGUI_API EventFilter
 	{
+    public:
+        enum ChildType : std::uint32_t
+        {
+            CHILD_TIMED_EVENT,
+            CHILD_TIMED_EVENT_FILTER
+        };
 	public:
         explicit EventFilter(EventSystem* eventSys);
 
@@ -32,7 +40,7 @@ namespace dagui
 			return _types;
 		}
 
-		virtual void configure(dagbase::ConfigurationElement& config);
+		virtual void configure(dagbase::ConfigurationElement& config, EventFilterFactory& factory);
 
 		virtual void onInput(const Event& inputEvent) = 0;
 
@@ -40,8 +48,29 @@ namespace dagui
         {
             // Do nothing.
         }
+
+        static const char* childTypeToString(ChildType value);
+
+        static ChildType parseChildType(const char* str);
     protected:
         EventSystem* _eventSys{nullptr};
+        struct EventTiming
+        {
+            double interval{0.0};
+            Event event;
+
+            void configure(dagbase::ConfigurationElement& config);
+        };
+
+        struct EventFilterTiming
+        {
+            EventFilter* filter{nullptr};
+
+            void configure(dagbase::ConfigurationElement& config, EventFilterFactory& factory, EventSystem* eventSys);
+        };
+        ChildType _childType{CHILD_TIMED_EVENT};
+        using ChildArray = std::variant<std::vector<EventTiming>, std::vector<EventFilterTiming>>;
+        ChildArray _children;
 	private:
 		Event::TypeMask _types{ Event::EVENT_NONE };
 	};
@@ -66,7 +95,7 @@ namespace dagui
     public:
         explicit TimedSequenceEventFilter(EventSystem* eventSys);
 
-        void configure(dagbase::ConfigurationElement& config) override;
+        void configure(dagbase::ConfigurationElement& config, EventFilterFactory& factory) override;
 
         void onInput(const Event& inputEvent) override;
 
@@ -74,22 +103,29 @@ namespace dagui
 
         static double distanceBetween(const std::int32_t op1[2], const std::int32_t op2[2]);
     private:
-        struct EventTiming
-        {
-            Event::Type type{Event::TYPE_UNKNOWN};
-            double interval{0.0};
-
-            void configure(dagbase::ConfigurationElement& config);
-        };
         Event _output;
         Event _prevEvent;
-        using TimingSequence = std::vector<EventTiming>;
-        TimingSequence _sequence;
         std::size_t _seqIndex{0};
         double _stateEntryTick{};
         double _positionRadius{0.0};
         State _state{STATE_INITIAL};
         void changeState(State nextState);
+    };
+
+    class ChordEventFilter : public EventFilter
+    {
+    public:
+        explicit ChordEventFilter(EventSystem* eventSys);
+
+        void configure(dagbase::ConfigurationElement& config, EventFilterFactory& factory) override;
+
+        void onInput(const Event& inputEvent) override;
+
+        void step() override;
+    private:
+        Event _output;
+        std::size_t _count{0};
+        std::uint32_t _firedEvents{0};
     };
 
     enum EventSource : std::uint32_t

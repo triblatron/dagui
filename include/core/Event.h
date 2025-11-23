@@ -24,9 +24,21 @@ namespace dagui
 		BUTTON_MIDDLE_BIT = 1<<2
 	};
 
+    enum KeyMask : std::uint32_t
+    {
+        KEY_NONE,
+        KEY_LEFT_CTRL_BIT = 1<<0,
+        KEY_LEFT_SHIFT_BIT = 1<<1,
+        KEY_A_BIT = 1<<2
+    };
+
 	extern std::string DAGUI_API buttonMaskToString(ButtonMask value);
 
 	extern ButtonMask DAGUI_API parseButtonMask(const std::string& str);
+
+    extern std::string DAGUI_API keyMaskToString(KeyMask value);
+
+    extern KeyMask DAGUI_API parseKeyMask(const std::string& str);
 
 	struct DAGUI_API PointerEvent
 	{
@@ -51,7 +63,9 @@ namespace dagui
 	//! A key press/release event
 	struct DAGUI_API KeyEvent
 	{
-		std::uint32_t code{ 0 };
+		KeyMask keys;
+
+        void configure(dagbase::ConfigurationElement& config);
 
 		bool operator==(const KeyEvent& other) const;
 	};
@@ -68,6 +82,12 @@ namespace dagui
 	class DAGUI_API Event
 	{
 	public:
+        enum DataType : std::uint32_t
+        {
+            DATA_POINTER,
+            DATA_KEY,
+            DATA_WIDGET
+        };
 		using ContentType = std::variant<PointerEvent, KeyEvent, WidgetEvent>;
 		enum Type : std::uint32_t
 		{
@@ -143,6 +163,11 @@ namespace dagui
             return _timestamp;
         }
 
+        DataType dataType() const
+        {
+            return _dataType;
+        }
+
 		const ContentType& data() const
 		{
 			return _data;
@@ -163,6 +188,8 @@ namespace dagui
             return ORIGIN;
         }
 
+        bool matches(const Event& other) const;
+
 		bool operator==(const Event& other) const;
 
 		void configure(dagbase::ConfigurationElement& config);
@@ -179,6 +206,7 @@ namespace dagui
 	private:
 		Type _type{ TYPE_UNKNOWN };
 		double _timestamp{0.0};
+        DataType _dataType{DATA_POINTER};
 		ContentType _data;
 	};
 

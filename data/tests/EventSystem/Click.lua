@@ -55,17 +55,26 @@ root=
 				sequence=
 				{
 					{
-						type="TYPE_BUTTON_PRESS",
+						event=
+						{
+							type="TYPE_BUTTON_PRESS",
+							buttons="BUTTON_PRIMARY_BIT",
+						},
 					},
 					{
 						interval=0.1,
-						type="TYPE_BUTTON_RELEASE",
+						event=
+						{
+							type="TYPE_BUTTON_RELEASE",
+							buttons="BUTTON_PRIMARY_BIT",
+						},
 					}
 				},
 				positionRadius=4.0,
 				output=
 				{
 					type="TYPE_BUTTON_CLICK",
+					buttons="BUTTON_PRIMARY_BIT",
 					x="inputs[1].x",
 					y="inputs[1].y",
 				}

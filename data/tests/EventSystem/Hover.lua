@@ -55,11 +55,17 @@ root=
 				sequence=
 				{
 					{
-						type="TYPE_POINTER_MOVE",
+						event=
+						{
+							type="TYPE_POINTER_MOVE",
+						},
 					},
 					{
 						interval=0.1,
-						type="TYPE_POINTER_MOVE",
+						event=
+						{
+							type="TYPE_POINTER_MOVE",
+						}
 					},
 				},
 				positionRadius=4.0,

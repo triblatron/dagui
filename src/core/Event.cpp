@@ -45,10 +45,23 @@ namespace dagui
 				PointerEvent pointerEvent;
 
                 pointerEvent.configure(config);
+                _dataType = DATA_POINTER;
 				_data = pointerEvent;
 
 				break;
 			}
+        case TYPE_KEY_PRESS:
+        case TYPE_KEY_RELEASE:
+        case TYPE_KEY_CHORD:
+            {
+                KeyEvent keyEvent;
+
+                keyEvent.configure(config);
+                _dataType = DATA_KEY;
+                _data = keyEvent;
+
+                break;
+            }
         default:
             break;
 		}
@@ -149,6 +162,32 @@ namespace dagui
         return retval;
     }
 
+    bool Event::matches(const Event &other) const
+    {
+        if (_type != other._type)
+            return false;
+
+        if (_dataType != other._dataType)
+            return false;
+
+        switch (_dataType)
+        {
+            case DATA_POINTER:
+                break;
+            case DATA_KEY:
+            {
+                auto& thisKeyEvent = std::get<KeyEvent>(_data);
+                auto& otherKeyEvent = std::get<KeyEvent>(other._data);
+
+                if ((thisKeyEvent.keys & otherKeyEvent.keys) == 0)
+                    return false;
+
+                break;
+            }
+        }
+        return true;
+    }
+
     bool PointerEvent::operator==(const PointerEvent& other) const
 	{
 		return x() == other.x() && y() == other.y() && buttons == other.buttons;
@@ -156,10 +195,15 @@ namespace dagui
 
 	bool KeyEvent::operator==(const KeyEvent& other) const
 	{
-		return code == other.code;
+		return keys == other.keys;
 	}
 
-	bool WidgetEvent::operator==(const WidgetEvent& other) const
+    void KeyEvent::configure(dagbase::ConfigurationElement &config)
+    {
+        dagbase::ConfigurationElement::readConfig<KeyMask>(config, "keys", &parseKeyMask, &keys);
+    }
+
+    bool WidgetEvent::operator==(const WidgetEvent& other) const
 	{
 		return widget == other.widget;
 	}
@@ -195,20 +239,21 @@ namespace dagui
 
     std::ostream &operator<<(std::ostream &str, const Event &obj)
     {
-        str << "Event {  type: " << Event::typeToString(obj.type());
+        str << "Event { type: " << Event::typeToString(obj.type());
         str << ", timestamp: " << obj.timestamp();
-        switch (obj.type())
+        switch (obj.dataType())
         {
-            case Event::TYPE_BUTTON_PRESS:
-            case Event::TYPE_BUTTON_RELEASE:
-            case Event::TYPE_BUTTON_CLICK:
-            case Event::TYPE_BUTTON_DOUBLE_CLICK:
-            case Event::TYPE_POINTER_MOVE:
-			case Event::TYPE_POINTER_HOVER:
+            case Event::DATA_POINTER:
             {
                 const auto& data = std::get<PointerEvent>(obj.data());
                 str << ", x: " << data.x() << ", y: " << data.y();
                 str << ", buttonMask: " << buttonMaskToString(data.buttons);
+                break;
+            }
+            case Event::DATA_KEY:
+            {
+                const auto& data = std::get<KeyEvent>(obj.data());
+                str << ", keys: " << keyMaskToString(data.keys);
                 break;
             }
             default:
@@ -217,5 +262,32 @@ namespace dagui
         str << " }";
 
         return str;
+    }
+
+    std::string keyMaskToString(KeyMask value)
+    {
+        std::string retval;
+
+        BIT_NAME(value, KEY_LEFT_CTRL_BIT, retval)
+        BIT_NAME(value, KEY_LEFT_SHIFT_BIT, retval)
+        BIT_NAME(value, KEY_A_BIT, retval)
+
+        if (!retval.empty() && retval.back() == ' ')
+        {
+            retval = retval.substr(0, retval.length()-1);
+        }
+
+        return retval;
+    }
+
+    KeyMask parseKeyMask(const std::string &str)
+    {
+        KeyMask value{0};
+
+        TEST_BIT(KEY_LEFT_CTRL_BIT, str, value)
+        TEST_BIT(KEY_LEFT_SHIFT_BIT, str, value)
+        TEST_BIT(KEY_A_BIT, str, value)
+
+        return value;
     }
 }

@@ -505,3 +505,42 @@ INSTANTIATE_TEST_SUITE_P(EventSource, EventSource_testRoundTrip, ::testing::Valu
         std::make_tuple("EVENT_SOURCE_POINTING", dagui::EVENT_SOURCE_POINTING),
         std::make_tuple("EVENT_SOURCE_KEYBOARD", dagui::EVENT_SOURCE_KEYBOARD)
         ));
+
+class EventFilterChildType_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::EventFilter::ChildType>>
+{
+
+};
+
+TEST_P(EventFilterChildType_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::EventFilter::childTypeToString(value));
+    EXPECT_EQ(value, dagui::EventFilter::parseChildType(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(EventFilter, EventFilterChildType_testRoundTrip, ::testing::Values(
+        std::make_tuple("CHILD_TIMED_EVENT", dagui::EventFilter::CHILD_TIMED_EVENT),
+        std::make_tuple("CHILD_TIMED_EVENT_FILTER", dagui::EventFilter::CHILD_TIMED_EVENT_FILTER)
+        ));
+
+class EventKeyMask_testRoundTrip : public ::testing::TestWithParam<std::tuple<std::string, dagui::KeyMask>>
+{
+
+};
+
+TEST_P(EventKeyMask_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_EQ(str, dagui::keyMaskToString(value));
+    EXPECT_EQ(value, dagui::parseKeyMask(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(Event, EventKeyMask_testRoundTrip, ::testing::Values(
+        std::make_tuple("KEY_LEFT_CTRL_BIT", dagui::KEY_LEFT_CTRL_BIT),
+        std::make_tuple("KEY_LEFT_SHIFT_BIT", dagui::KEY_LEFT_SHIFT_BIT),
+        std::make_tuple("KEY_A_BIT", dagui::KEY_A_BIT)
+        ));
