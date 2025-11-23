@@ -401,12 +401,12 @@ INSTANTIATE_TEST_SUITE_P(ShapeFlags, ShapeFlags_testRoundTrip, ::testing::Values
         std::make_tuple("FLAGS_DIRTY_TESSELLATION_BIT", dagui::Shape::FLAGS_DIRTY_TESSELLATION_BIT)
         ));
 
-class Event_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Event::Type>>
+class EventType_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Event::Type>>
 {
 
 };
 
-TEST_P(Event_testRoundTrip, testRoundTrip)
+TEST_P(EventType_testRoundTrip, testRoundTrip)
 {
     auto str = std::get<0>(GetParam());
     auto value = std::get<1>(GetParam());
@@ -415,7 +415,7 @@ TEST_P(Event_testRoundTrip, testRoundTrip)
     EXPECT_EQ(value, dagui::Event::parseType(str));
 }
 
-INSTANTIATE_TEST_SUITE_P(Event, Event_testRoundTrip, ::testing::Values(
+INSTANTIATE_TEST_SUITE_P(Event, EventType_testRoundTrip, ::testing::Values(
     std::make_tuple("TYPE_POINTER_MOVE", dagui::Event::TYPE_POINTER_MOVE),
     std::make_tuple("TYPE_POINTER_HOVER", dagui::Event::TYPE_POINTER_HOVER),
     std::make_tuple("TYPE_BUTTON_PRESS", dagui::Event::TYPE_BUTTON_PRESS),
@@ -424,6 +424,7 @@ INSTANTIATE_TEST_SUITE_P(Event, Event_testRoundTrip, ::testing::Values(
     std::make_tuple("TYPE_BUTTON_DOUBLE_CLICK", dagui::Event::TYPE_BUTTON_DOUBLE_CLICK),
     std::make_tuple("TYPE_KEY_PRESS", dagui::Event::TYPE_KEY_PRESS),
     std::make_tuple("TYPE_KEY_RELEASE", dagui::Event::TYPE_KEY_RELEASE),
+    std::make_tuple("TYPE_KEY_CHORD", dagui::Event::TYPE_KEY_CHORD),
     std::make_tuple("TYPE_ENTER_WIDGET", dagui::Event::TYPE_ENTER_WIDGET),
     std::make_tuple("TYPE_LEAVE_WIDGET", dagui::Event::TYPE_LEAVE_WIDGET),
     std::make_tuple("TYPE_DRAG_START", dagui::Event::TYPE_DRAG_START),
@@ -466,7 +467,7 @@ TEST_P(EventTypeMask_testRoundTrip, testRoundTrip)
     EXPECT_EQ(value, dagui::Event::parseTypeMask(str));
 }
 
-INSTANTIATE_TEST_SUITE_P(EventTypeMask, EventTypeMask_testRoundTrip, ::testing::Values(
+INSTANTIATE_TEST_SUITE_P(Event, EventTypeMask_testRoundTrip, ::testing::Values(
             std::make_tuple("EVENT_NONE", dagui::Event::EVENT_NONE),
             std::make_tuple("POINTER_MOVE_BIT", dagui::Event::POINTER_MOVE_BIT),
             std::make_tuple("POINTER_HOVER_BIT", dagui::Event::POINTER_HOVER_BIT),
@@ -476,6 +477,7 @@ INSTANTIATE_TEST_SUITE_P(EventTypeMask, EventTypeMask_testRoundTrip, ::testing::
             std::make_tuple("BUTTON_DOUBLE_CLICK_BIT", dagui::Event::BUTTON_DOUBLE_CLICK_BIT),
             std::make_tuple("KEY_PRESS_BIT", dagui::Event::KEY_PRESS_BIT),
             std::make_tuple("KEY_RELEASE_BIT", dagui::Event::KEY_RELEASE_BIT),
+            std::make_tuple("KEY_CHORD_BIT", dagui::Event::KEY_CHORD_BIT),
             std::make_tuple("ENTER_WIDGET_BIT", dagui::Event::ENTER_WIDGET_BIT),
             std::make_tuple("LEAVE_WIDGET_BIT", dagui::Event::LEAVE_WIDGET_BIT),
             std::make_tuple("DRAG_START_BIT", dagui::Event::DRAG_START_BIT),
