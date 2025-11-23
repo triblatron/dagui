@@ -4,8 +4,10 @@
 #include "core/ConfigurationElement.h"
 #include "util/enums.h"
 #include "core/EventFilterFactory.h"
+
 #include <string>
 #include <cmath>
+#include <algorithm>
 
 namespace dagui
 {
