@@ -42,7 +42,7 @@ namespace dagui
 
                         timing.configure(child, factory, _eventSys);
 
-                        _children.emplace<CHILD_TIMED_EVENT_FILTER>().emplace_back(timing);
+                        std::get<CHILD_TIMED_EVENT_FILTER>(_children).emplace_back(timing);
                         break;
                     }
                 }
