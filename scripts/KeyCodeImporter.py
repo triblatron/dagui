@@ -15,7 +15,7 @@ class KeyCodeImporter(object):
 
     def makeItSo(self):
         with open(self._filename, "r") as f:
-            pattern = re.compile(r'#define (\w+) (\d+)')
+            pattern = re.compile(r'#define\s+(?:GLFW_)?([\w_]+)\s+(\d+)')
             code = f.read()
             lines = code.split('\n')
             for line in lines:
