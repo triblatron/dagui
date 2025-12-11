@@ -175,7 +175,7 @@ namespace dagui
     void Widget::accept(WidgetVisitor &visitor)
     {
         visitor.visit(*this);
-        eachChild([this, &visitor](Widget& child) {
+        eachChild([&visitor](Widget& child) {
             child.accept(visitor);
             return true;
         });
