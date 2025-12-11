@@ -22,6 +22,9 @@ namespace dagui
         case TYPE_BYTE:
             size = 1;
             break;
+        case TYPE_UINT16:
+            size = sizeof(std::uint16_t);
+            break;
         case TYPE_INT32:
             size = sizeof(std::int32_t);
             break;
@@ -72,13 +75,13 @@ namespace dagui
 
     AttributeDescriptor::DataType AttributeDescriptor::parseDataType(const char* str)
     {
-        TEST_ENUM(TYPE_UNKNOWN, str);
-        TEST_ENUM(TYPE_BYTE, str);
-        TEST_ENUM(TYPE_UINT16, str);
-        TEST_ENUM(TYPE_INT32, str);
-        TEST_ENUM(TYPE_UINT32, str);
-        TEST_ENUM(TYPE_FLOAT, str);
-        TEST_ENUM(TYPE_DOUBLE, str);
+        TEST_ENUM(TYPE_UNKNOWN, str)
+        TEST_ENUM(TYPE_BYTE, str)
+        TEST_ENUM(TYPE_UINT16, str)
+        TEST_ENUM(TYPE_INT32, str)
+        TEST_ENUM(TYPE_UINT32, str)
+        TEST_ENUM(TYPE_FLOAT, str)
+        TEST_ENUM(TYPE_DOUBLE, str)
 
         return TYPE_UNKNOWN;
     }
@@ -101,13 +104,13 @@ namespace dagui
 
     AttributeDescriptor::Usage AttributeDescriptor::parseUsage(const char* str)
     {
-        TEST_ENUM(USAGE_UNKNOWN, str);
-        TEST_ENUM(USAGE_POSITION, str);
-        TEST_ENUM(USAGE_NORMAL, str);
-        TEST_ENUM(USAGE_TEXCOORD, str);
-        TEST_ENUM(USAGE_TANGENT, str);
-        TEST_ENUM(USAGE_BINORMAL, str);
-        TEST_ENUM(USAGE_COLOUR, str);
+        TEST_ENUM(USAGE_UNKNOWN, str)
+        TEST_ENUM(USAGE_POSITION, str)
+        TEST_ENUM(USAGE_NORMAL, str)
+        TEST_ENUM(USAGE_TEXCOORD, str)
+        TEST_ENUM(USAGE_TANGENT, str)
+        TEST_ENUM(USAGE_BINORMAL, str)
+        TEST_ENUM(USAGE_COLOUR, str)
 
         return USAGE_UNKNOWN;
     }
