@@ -97,7 +97,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
 		include/gfx/OpenGLBlending.h
 		include/core/Event.h
 		include/core/EventSystem.h
-		include/core/StateMachine.h
+        ThirdParty/dag/thirdparty/dagbase/include/core/StateMachine.h
 		include/core/DataTemplate.h
 		include/core/EventFilterFactory.h
 )
