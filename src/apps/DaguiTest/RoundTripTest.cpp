@@ -525,7 +525,122 @@ INSTANTIATE_TEST_SUITE_P(EventFilter, EventFilterChildType_testRoundTrip, ::test
         std::make_tuple("CHILD_TIMED_EVENT_FILTER", dagui::EventFilter::CHILD_TIMED_EVENT_FILTER)
         ));
 
-class EventKeyMask_testRoundTrip : public ::testing::TestWithParam<std::tuple<std::string, dagui::KeyMask>>
+class EventKey_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Key>>
+{
+
+};
+
+TEST_P(EventKey_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::keyToString(value));
+    EXPECT_EQ(value, dagui::parseKey(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(Event, EventKey_testRoundTrip, ::testing::Values(
+    std::make_tuple("KEY_A", dagui::KEY_A),
+    std::make_tuple("KEY_B", dagui::KEY_B),
+    std::make_tuple("KEY_C", dagui::KEY_C),
+    std::make_tuple("KEY_D", dagui::KEY_D),
+    std::make_tuple("KEY_E", dagui::KEY_E),
+    std::make_tuple("KEY_F", dagui::KEY_F),
+    std::make_tuple("KEY_G", dagui::KEY_G),
+    std::make_tuple("KEY_H", dagui::KEY_H),
+    std::make_tuple("KEY_I", dagui::KEY_I),
+    std::make_tuple("KEY_J", dagui::KEY_J),
+    std::make_tuple("KEY_K", dagui::KEY_K),
+    std::make_tuple("KEY_L", dagui::KEY_L),
+    std::make_tuple("KEY_M", dagui::KEY_M),
+    std::make_tuple("KEY_N", dagui::KEY_N),
+    std::make_tuple("KEY_O", dagui::KEY_O),
+    std::make_tuple("KEY_P", dagui::KEY_P),
+    std::make_tuple("KEY_Q", dagui::KEY_Q),
+    std::make_tuple("KEY_R", dagui::KEY_R),
+    std::make_tuple("KEY_S", dagui::KEY_S),
+    std::make_tuple("KEY_T", dagui::KEY_T),
+    std::make_tuple("KEY_U", dagui::KEY_U),
+    std::make_tuple("KEY_V", dagui::KEY_V),
+    std::make_tuple("KEY_W", dagui::KEY_W),
+    std::make_tuple("KEY_X", dagui::KEY_X),
+    std::make_tuple("KEY_Y", dagui::KEY_Y),
+    std::make_tuple("KEY_Z", dagui::KEY_Z),
+    std::make_tuple("KEY_SPACE", dagui::KEY_SPACE),
+    std::make_tuple("KEY_BACKSPACE", dagui::KEY_BACKSPACE),
+    std::make_tuple("KEY_TAB", dagui::KEY_TAB),
+    std::make_tuple("KEY_RETURN", dagui::KEY_RETURN),
+    std::make_tuple("KEY_ESCAPE", dagui::KEY_ESCAPE),
+    std::make_tuple("KEY_F1", dagui::KEY_F1),
+    std::make_tuple("KEY_F2", dagui::KEY_F2),
+    std::make_tuple("KEY_F3", dagui::KEY_F3),
+    std::make_tuple("KEY_F4", dagui::KEY_F4),
+    std::make_tuple("KEY_F5", dagui::KEY_F5),
+    std::make_tuple("KEY_F6", dagui::KEY_F6),
+    std::make_tuple("KEY_F7", dagui::KEY_F7),
+    std::make_tuple("KEY_F8", dagui::KEY_F8),
+    std::make_tuple("KEY_F9", dagui::KEY_F9),
+    std::make_tuple("KEY_F10", dagui::KEY_F10),
+    std::make_tuple("KEY_F11", dagui::KEY_F11),
+    std::make_tuple("KEY_F12", dagui::KEY_F12),
+    std::make_tuple("KEY_FN", dagui::KEY_FN),
+    std::make_tuple("KEY_LEFT_OPTION", dagui::KEY_LEFT_OPTION),
+    std::make_tuple("KEY_RIGHT_OPTION", dagui::KEY_RIGHT_OPTION),
+    std::make_tuple("KEY_SEMICOLON", dagui::KEY_SEMICOLON),
+    std::make_tuple("KEY_COMMA", dagui::KEY_COMMA),
+    std::make_tuple("KEY_PERIOD", dagui::KEY_PERIOD),
+    std::make_tuple("KEY_SLASH", dagui::KEY_SLASH),
+    std::make_tuple("KEY_BACKSLASH", dagui::KEY_BACKSLASH),
+    std::make_tuple("KEY_COLON", dagui::KEY_COLON),
+    std::make_tuple("KEY_SINGLE_QUOTE", dagui::KEY_SINGLE_QUOTE),
+    std::make_tuple("KEY_DOUBLE_QUOTE", dagui::KEY_DOUBLE_QUOTE),
+    std::make_tuple("KEY_PIPE", dagui::KEY_PIPE),
+    std::make_tuple("KEY_BACKTICK", dagui::KEY_BACKTICK),
+    std::make_tuple("KEY_TIDLE", dagui::KEY_TIDLE),
+    std::make_tuple("KEY_1", dagui::KEY_1),
+    std::make_tuple("KEY_2", dagui::KEY_2),
+    std::make_tuple("KEY_3", dagui::KEY_3),
+    std::make_tuple("KEY_4", dagui::KEY_4),
+    std::make_tuple("KEY_5", dagui::KEY_5),
+    std::make_tuple("KEY_6", dagui::KEY_6),
+    std::make_tuple("KEY_7", dagui::KEY_7),
+    std::make_tuple("KEY_8", dagui::KEY_8),
+    std::make_tuple("KEY_9", dagui::KEY_9),
+    std::make_tuple("KEY_0", dagui::KEY_0),
+    std::make_tuple("KEY_MINUS", dagui::KEY_MINUS),
+    std::make_tuple("KEY_EQUAL", dagui::KEY_EQUAL),
+    std::make_tuple("KEY_UNDERSCORE", dagui::KEY_UNDERSCORE),
+    std::make_tuple("KEY_PLUS", dagui::KEY_PLUS),
+    std::make_tuple("KEY_BANG", dagui::KEY_BANG),
+    std::make_tuple("KEY_AT", dagui::KEY_AT),
+    std::make_tuple("KEY_HASH", dagui::KEY_HASH),
+    std::make_tuple("KEY_POUND", dagui::KEY_POUND),
+    std::make_tuple("KEY_DOLLAR", dagui::KEY_DOLLAR),
+    std::make_tuple("KEY_PERCENT", dagui::KEY_PERCENT),
+    std::make_tuple("KEY_HAT", dagui::KEY_HAT),
+    std::make_tuple("KEY_AMPERSAND", dagui::KEY_AMPERSAND),
+    std::make_tuple("KEY_ASTERISK", dagui::KEY_ASTERISK),
+    std::make_tuple("KEY_LEFT_PAREN", dagui::KEY_LEFT_PAREN),
+    std::make_tuple("KEY_RIGHT_PAREN", dagui::KEY_RIGHT_PAREN),
+    std::make_tuple("KEY_LEFT_BRACKET", dagui::KEY_LEFT_BRACKET),
+    std::make_tuple("KEY_RIGHT_BRACKET", dagui::KEY_RIGHT_BRACKET),
+    std::make_tuple("KEY_LEFT_BRACE", dagui::KEY_LEFT_BRACE),
+    std::make_tuple("KEY_RIGHT_BRACE", dagui::KEY_RIGHT_BRACE),
+    std::make_tuple("KEY_LEFT_SHIT", dagui::KEY_LEFT_SHIT),
+    std::make_tuple("KEY_RIGHT_SHIFT", dagui::KEY_RIGHT_SHIFT),
+    std::make_tuple("KEY_LEFT_CTRL", dagui::KEY_LEFT_CTRL),
+    std::make_tuple("KEY_RIGHT_CTRL", dagui::KEY_RIGHT_CTRL),
+    std::make_tuple("KEY_LEFT_ALT", dagui::KEY_LEFT_ALT),
+    std::make_tuple("KEY_RIGHT_ALT", dagui::KEY_RIGHT_ALT),
+    std::make_tuple("KEY_LEFT_CMD", dagui::KEY_LEFT_CMD),
+    std::make_tuple("KEY_RIGHT_CMD", dagui::KEY_RIGHT_CMD),
+    std::make_tuple("KEY_LEFT_ARROW", dagui::KEY_LEFT_ARROW),
+    std::make_tuple("KEY_RIGHT_ARROW", dagui::KEY_RIGHT_ARROW),
+    std::make_tuple("KEY_UP_ARROW", dagui::KEY_UP_ARROW),
+    std::make_tuple("KEY_DOWN_ARROW", dagui::KEY_DOWN_ARROW)
+));
+
+class EventKeyMask_testRoundTrip : public ::testing::TestWithParam<std::tuple<std::string, dagui::Key>>
 {
 
 };
@@ -533,14 +648,111 @@ class EventKeyMask_testRoundTrip : public ::testing::TestWithParam<std::tuple<st
 TEST_P(EventKeyMask_testRoundTrip, testRoundTrip)
 {
     auto str = std::get<0>(GetParam());
-    auto value = std::get<1>(GetParam());
-
-    EXPECT_EQ(str, dagui::keyMaskToString(value));
-    EXPECT_EQ(value, dagui::parseKeyMask(str));
+    auto key = std::get<1>(GetParam());
+    dagui::KeyMask value;
+    value.set(key);
+    std::string name = str + "_BIT";
+    EXPECT_EQ(name, dagui::keyMaskToString(value));
+    EXPECT_EQ(value, dagui::parseKeyMask(name));
 }
 
 INSTANTIATE_TEST_SUITE_P(Event, EventKeyMask_testRoundTrip, ::testing::Values(
-        std::make_tuple("KEY_LEFT_CTRL_BIT", dagui::KEY_LEFT_CTRL_BIT),
-        std::make_tuple("KEY_LEFT_SHIFT_BIT", dagui::KEY_LEFT_SHIFT_BIT),
-        std::make_tuple("KEY_A_BIT", dagui::KEY_A_BIT)
-        ));
+    std::make_tuple("KEY_A", dagui::KEY_A),
+    std::make_tuple("KEY_B", dagui::KEY_B),
+    std::make_tuple("KEY_C", dagui::KEY_C),
+    std::make_tuple("KEY_D", dagui::KEY_D),
+    std::make_tuple("KEY_E", dagui::KEY_E),
+    std::make_tuple("KEY_F", dagui::KEY_F),
+    std::make_tuple("KEY_G", dagui::KEY_G),
+    std::make_tuple("KEY_H", dagui::KEY_H),
+    std::make_tuple("KEY_I", dagui::KEY_I),
+    std::make_tuple("KEY_J", dagui::KEY_J),
+    std::make_tuple("KEY_K", dagui::KEY_K),
+    std::make_tuple("KEY_L", dagui::KEY_L),
+    std::make_tuple("KEY_M", dagui::KEY_M),
+    std::make_tuple("KEY_N", dagui::KEY_N),
+    std::make_tuple("KEY_O", dagui::KEY_O),
+    std::make_tuple("KEY_P", dagui::KEY_P),
+    std::make_tuple("KEY_Q", dagui::KEY_Q),
+    std::make_tuple("KEY_R", dagui::KEY_R),
+    std::make_tuple("KEY_S", dagui::KEY_S),
+    std::make_tuple("KEY_T", dagui::KEY_T),
+    std::make_tuple("KEY_U", dagui::KEY_U),
+    std::make_tuple("KEY_V", dagui::KEY_V),
+    std::make_tuple("KEY_W", dagui::KEY_W),
+    std::make_tuple("KEY_X", dagui::KEY_X),
+    std::make_tuple("KEY_Y", dagui::KEY_Y),
+    std::make_tuple("KEY_Z", dagui::KEY_Z),
+    std::make_tuple("KEY_SPACE", dagui::KEY_SPACE),
+    std::make_tuple("KEY_BACKSPACE", dagui::KEY_BACKSPACE),
+    std::make_tuple("KEY_TAB", dagui::KEY_TAB),
+    std::make_tuple("KEY_RETURN", dagui::KEY_RETURN),
+    std::make_tuple("KEY_ESCAPE", dagui::KEY_ESCAPE),
+    std::make_tuple("KEY_F1", dagui::KEY_F1),
+    std::make_tuple("KEY_F2", dagui::KEY_F2),
+    std::make_tuple("KEY_F3", dagui::KEY_F3),
+    std::make_tuple("KEY_F4", dagui::KEY_F4),
+    std::make_tuple("KEY_F5", dagui::KEY_F5),
+    std::make_tuple("KEY_F6", dagui::KEY_F6),
+    std::make_tuple("KEY_F7", dagui::KEY_F7),
+    std::make_tuple("KEY_F8", dagui::KEY_F8),
+    std::make_tuple("KEY_F9", dagui::KEY_F9),
+    std::make_tuple("KEY_F10", dagui::KEY_F10),
+    std::make_tuple("KEY_F11", dagui::KEY_F11),
+    std::make_tuple("KEY_F12", dagui::KEY_F12),
+    std::make_tuple("KEY_FN", dagui::KEY_FN),
+    std::make_tuple("KEY_LEFT_OPTION", dagui::KEY_LEFT_OPTION),
+    std::make_tuple("KEY_RIGHT_OPTION", dagui::KEY_RIGHT_OPTION),
+    std::make_tuple("KEY_SEMICOLON", dagui::KEY_SEMICOLON),
+    std::make_tuple("KEY_COMMA", dagui::KEY_COMMA),
+    std::make_tuple("KEY_PERIOD", dagui::KEY_PERIOD),
+    std::make_tuple("KEY_SLASH", dagui::KEY_SLASH),
+    std::make_tuple("KEY_BACKSLASH", dagui::KEY_BACKSLASH),
+    std::make_tuple("KEY_COLON", dagui::KEY_COLON),
+    std::make_tuple("KEY_SINGLE_QUOTE", dagui::KEY_SINGLE_QUOTE),
+    std::make_tuple("KEY_DOUBLE_QUOTE", dagui::KEY_DOUBLE_QUOTE),
+    std::make_tuple("KEY_PIPE", dagui::KEY_PIPE),
+    std::make_tuple("KEY_BACKTICK", dagui::KEY_BACKTICK),
+    std::make_tuple("KEY_TIDLE", dagui::KEY_TIDLE),
+    std::make_tuple("KEY_1", dagui::KEY_1),
+    std::make_tuple("KEY_2", dagui::KEY_2),
+    std::make_tuple("KEY_3", dagui::KEY_3),
+    std::make_tuple("KEY_4", dagui::KEY_4),
+    std::make_tuple("KEY_5", dagui::KEY_5),
+    std::make_tuple("KEY_6", dagui::KEY_6),
+    std::make_tuple("KEY_7", dagui::KEY_7),
+    std::make_tuple("KEY_8", dagui::KEY_8),
+    std::make_tuple("KEY_9", dagui::KEY_9),
+    std::make_tuple("KEY_0", dagui::KEY_0),
+    std::make_tuple("KEY_MINUS", dagui::KEY_MINUS),
+    std::make_tuple("KEY_EQUAL", dagui::KEY_EQUAL),
+    std::make_tuple("KEY_UNDERSCORE", dagui::KEY_UNDERSCORE),
+    std::make_tuple("KEY_PLUS", dagui::KEY_PLUS),
+    std::make_tuple("KEY_BANG", dagui::KEY_BANG),
+    std::make_tuple("KEY_AT", dagui::KEY_AT),
+    std::make_tuple("KEY_HASH", dagui::KEY_HASH),
+    std::make_tuple("KEY_POUND", dagui::KEY_POUND),
+    std::make_tuple("KEY_DOLLAR", dagui::KEY_DOLLAR),
+    std::make_tuple("KEY_PERCENT", dagui::KEY_PERCENT),
+    std::make_tuple("KEY_HAT", dagui::KEY_HAT),
+    std::make_tuple("KEY_AMPERSAND", dagui::KEY_AMPERSAND),
+    std::make_tuple("KEY_ASTERISK", dagui::KEY_ASTERISK),
+    std::make_tuple("KEY_LEFT_PAREN", dagui::KEY_LEFT_PAREN),
+    std::make_tuple("KEY_RIGHT_PAREN", dagui::KEY_RIGHT_PAREN),
+    std::make_tuple("KEY_LEFT_BRACKET", dagui::KEY_LEFT_BRACKET),
+    std::make_tuple("KEY_RIGHT_BRACKET", dagui::KEY_RIGHT_BRACKET),
+    std::make_tuple("KEY_LEFT_BRACE", dagui::KEY_LEFT_BRACE),
+    std::make_tuple("KEY_RIGHT_BRACE", dagui::KEY_RIGHT_BRACE),
+    std::make_tuple("KEY_LEFT_SHIT", dagui::KEY_LEFT_SHIT),
+    std::make_tuple("KEY_RIGHT_SHIFT", dagui::KEY_RIGHT_SHIFT),
+    std::make_tuple("KEY_LEFT_CTRL", dagui::KEY_LEFT_CTRL),
+    std::make_tuple("KEY_RIGHT_CTRL", dagui::KEY_RIGHT_CTRL),
+    std::make_tuple("KEY_LEFT_ALT", dagui::KEY_LEFT_ALT),
+    std::make_tuple("KEY_RIGHT_ALT", dagui::KEY_RIGHT_ALT),
+    std::make_tuple("KEY_LEFT_CMD", dagui::KEY_LEFT_CMD),
+    std::make_tuple("KEY_RIGHT_CMD", dagui::KEY_RIGHT_CMD),
+    std::make_tuple("KEY_LEFT_ARROW", dagui::KEY_LEFT_ARROW),
+    std::make_tuple("KEY_RIGHT_ARROW", dagui::KEY_RIGHT_ARROW),
+    std::make_tuple("KEY_UP_ARROW", dagui::KEY_UP_ARROW),
+    std::make_tuple("KEY_DOWN_ARROW", dagui::KEY_DOWN_ARROW)
+));

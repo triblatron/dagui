@@ -6,6 +6,7 @@
 #include <variant>
 #include <string>
 #include <iosfwd>
+#include <bitset>
 
 namespace dagbase
 {
@@ -24,17 +25,118 @@ namespace dagui
 		BUTTON_MIDDLE_BIT = 1<<2
 	};
 
-    enum KeyMask : std::uint32_t
+    enum Key : std::uint32_t
     {
-        KEY_NONE,
-        KEY_LEFT_CTRL_BIT = 1<<0,
-        KEY_LEFT_SHIFT_BIT = 1<<1,
-        KEY_A_BIT = 1<<2
+        KEY_A,
+        KEY_B,
+        KEY_C,
+        KEY_D,
+        KEY_E,
+        KEY_F,
+        KEY_G,
+        KEY_H,
+        KEY_I,
+        KEY_J,
+        KEY_K,
+        KEY_L,
+        KEY_M,
+        KEY_N,
+        KEY_O,
+        KEY_P,
+        KEY_Q,
+        KEY_R,
+        KEY_S,
+        KEY_T,
+        KEY_U,
+        KEY_V,
+        KEY_W,
+        KEY_X,
+        KEY_Y,
+        KEY_Z,
+        KEY_SPACE,
+        KEY_BACKSPACE,
+        KEY_TAB,
+        KEY_RETURN,
+        KEY_ESCAPE,
+        KEY_F1,
+        KEY_F2,
+        KEY_F3,
+        KEY_F4,
+        KEY_F5,
+        KEY_F6,
+        KEY_F7,
+        KEY_F8,
+        KEY_F9,
+        KEY_F10,
+        KEY_F11,
+        KEY_F12,
+        KEY_FN,
+        KEY_LEFT_OPTION,
+        KEY_RIGHT_OPTION,
+        KEY_SEMICOLON,
+        KEY_COMMA,
+        KEY_PERIOD,
+        KEY_SLASH,
+        KEY_BACKSLASH,
+        KEY_COLON,
+        KEY_SINGLE_QUOTE,
+        KEY_DOUBLE_QUOTE,
+        KEY_PIPE,
+        KEY_BACKTICK,
+        KEY_TIDLE,
+        KEY_1,
+        KEY_2,
+        KEY_3,
+        KEY_4,
+        KEY_5,
+        KEY_6,
+        KEY_7,
+        KEY_8,
+        KEY_9,
+        KEY_0,
+        KEY_MINUS,
+        KEY_EQUAL,
+        KEY_UNDERSCORE,
+        KEY_PLUS,
+        KEY_BANG,
+        KEY_AT,
+        KEY_HASH,
+        KEY_POUND,
+        KEY_DOLLAR,
+        KEY_PERCENT,
+        KEY_HAT,
+        KEY_AMPERSAND,
+        KEY_ASTERISK,
+        KEY_LEFT_PAREN,
+        KEY_RIGHT_PAREN,
+        KEY_LEFT_BRACKET,
+        KEY_RIGHT_BRACKET,
+        KEY_LEFT_BRACE,
+        KEY_RIGHT_BRACE,
+        KEY_LEFT_SHIT,
+        KEY_RIGHT_SHIFT,
+        KEY_LEFT_CTRL,
+        KEY_RIGHT_CTRL,
+        KEY_LEFT_ALT,
+        KEY_RIGHT_ALT,
+        KEY_LEFT_CMD,
+        KEY_RIGHT_CMD,
+        KEY_LEFT_ARROW,
+        KEY_RIGHT_ARROW,
+        KEY_UP_ARROW,
+        KEY_DOWN_ARROW,
+        KEY_UNKNOWN
     };
+
+    using KeyMask = std::bitset<128>;
 
 	extern std::string DAGUI_API buttonMaskToString(ButtonMask value);
 
 	extern ButtonMask DAGUI_API parseButtonMask(const std::string& str);
+
+    extern const char DAGUI_API *keyToString(Key value);
+
+    extern Key DAGUI_API parseKey(const char *str);
 
     extern std::string DAGUI_API keyMaskToString(KeyMask value);
 
