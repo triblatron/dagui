@@ -113,7 +113,7 @@ namespace dagui
         KEY_RIGHT_BRACKET,
         KEY_LEFT_BRACE,
         KEY_RIGHT_BRACE,
-        KEY_LEFT_SHIT,
+        KEY_LEFT_SHIFT,
         KEY_RIGHT_SHIFT,
         KEY_LEFT_CTRL,
         KEY_RIGHT_CTRL,

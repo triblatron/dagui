@@ -200,7 +200,7 @@ namespace dagui
 
     void KeyEvent::configure(dagbase::ConfigurationElement &config)
     {
-        dagbase::ConfigurationElement::readConfig<std::bitset<128>>(config, "keys", &parseKey, &keys);
+        dagbase::ConfigurationElement::readConfig<std::bitset<128>>(config, "keys", &parseKeyMask, &keys);
     }
 
     bool WidgetEvent::operator==(const WidgetEvent& other) const
@@ -327,7 +327,7 @@ namespace dagui
             ENUM_NAME(KEY_RIGHT_BRACKET)
             ENUM_NAME(KEY_LEFT_BRACE)
             ENUM_NAME(KEY_RIGHT_BRACE)
-            ENUM_NAME(KEY_LEFT_SHIT)
+            ENUM_NAME(KEY_LEFT_SHIFT)
             ENUM_NAME(KEY_RIGHT_SHIFT)
             ENUM_NAME(KEY_LEFT_CTRL)
             ENUM_NAME(KEY_RIGHT_CTRL)
@@ -433,7 +433,7 @@ namespace dagui
         TEST_ENUM(KEY_RIGHT_BRACKET, str);
         TEST_ENUM(KEY_LEFT_BRACE, str);
         TEST_ENUM(KEY_RIGHT_BRACE, str);
-        TEST_ENUM(KEY_LEFT_SHIT, str);
+        TEST_ENUM(KEY_LEFT_SHIFT, str);
         TEST_ENUM(KEY_RIGHT_SHIFT, str);
         TEST_ENUM(KEY_LEFT_CTRL, str);
         TEST_ENUM(KEY_RIGHT_CTRL, str);
@@ -566,7 +566,7 @@ namespace dagui
         BITSET_NAME(value, KEY_RIGHT_BRACKET, retval);
         BITSET_NAME(value, KEY_LEFT_BRACE, retval);
         BITSET_NAME(value, KEY_RIGHT_BRACE, retval);
-        BITSET_NAME(value, KEY_LEFT_SHIT, retval);
+        BITSET_NAME(value, KEY_LEFT_SHIFT, retval);
         BITSET_NAME(value, KEY_RIGHT_SHIFT, retval);
         BITSET_NAME(value, KEY_LEFT_CTRL, retval);
         BITSET_NAME(value, KEY_RIGHT_CTRL, retval);
@@ -677,7 +677,7 @@ namespace dagui
         TEST_BITSET(KEY_RIGHT_BRACKET, str, value);
         TEST_BITSET(KEY_LEFT_BRACE, str, value);
         TEST_BITSET(KEY_RIGHT_BRACE, str, value);
-        TEST_BITSET(KEY_LEFT_SHIT, str, value);
+        TEST_BITSET(KEY_LEFT_SHIFT, str, value);
         TEST_BITSET(KEY_RIGHT_SHIFT, str, value);
         TEST_BITSET(KEY_LEFT_CTRL, str, value);
         TEST_BITSET(KEY_RIGHT_CTRL, str, value);
