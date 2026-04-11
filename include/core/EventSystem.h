@@ -138,6 +138,33 @@ namespace dagui
     const char DAGUI_API * eventSourceToString(EventSource value);
     EventSource DAGUI_API parseEventSource(const char* str);
 
+    class DAGUI_API Article
+    {
+    public:
+        void setTopic(const std::string& topic)
+        {
+            _topic = topic;
+        }
+
+        const std::string& topic() const
+        {
+            return _topic;
+        }
+
+        void setMessageType(const std::string& messageType)
+        {
+            _messageType = messageType;
+        }
+        
+        const std::string& messageType() const
+        {
+            return _messageType;
+        }
+    private:
+        std::string _topic;
+        std::string _messageType;
+    };
+
 	class DAGUI_API EventSystem
 	{
 	public:
@@ -166,6 +193,10 @@ namespace dagui
 		void onOutput(const Event& event);
 
 		void configure(dagbase::ConfigurationElement& config);
+
+	    void subscribe(const Article& article);
+
+	    void publish(const Article& article);
     private:
         EventQueue _outputEvents;
         using FilterList = std::vector<EventFilter*>;
