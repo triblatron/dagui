@@ -101,7 +101,7 @@ namespace dagui
         {
             root=root->_parent;
         }
-        if (root && !root->_parent)
+        if (root && !root->_parent && !name.empty())
         {
             return root->lookup(std::move(name));
         }
