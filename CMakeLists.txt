@@ -10,6 +10,7 @@ FIND_PACKAGE(Freetype REQUIRED)
 FIND_PACKAGE(GLEW REQUIRED)
 FIND_PACKAGE(Lua 5.4 REQUIRED)
 FIND_PACKAGE(glm REQUIRED)
+#FIND_PACKAGE(tvision CONFIG REQUIRED)
 
 SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/core/Rectangle.h include/core/Shape.h include/core/Widget.h
         include/util/Completion.h
@@ -100,6 +101,10 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         ThirdParty/dag/thirdparty/dagbase/include/core/StateMachine.h
 		include/core/DataTemplate.h
 		include/core/EventFilterFactory.h
+        include/core/EditorRegistry.h
+        include/core/Editor.h
+        include/core/BoolEditor.h
+        include/core/CompoundEditor.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -175,6 +180,10 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
 		src/core/EventSystem.cpp
 		src/core/DataTemplate.cpp
 		src/core/EventFilterFactory.cpp
+        src/core/EditorRegistry.cpp
+        src/core/Editor.cpp
+        src/core/BoolEditor.cpp
+        src/core/CompoundEditor.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")
@@ -197,15 +206,15 @@ ADD_LIBRARY( dagui SHARED ${DAGUI_SRC} )
 TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
 
 set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
+add_subdirectory(ThirdParty/tvision)
 LINK_DIRECTORIES( ${DEP_ROOT}/lib )
-TARGET_LINK_LIBRARIES( dagui PRIVATE dagbase ${LUA_LIBRARY} GLEW::glew OpenGL::GL OpenGL::GLU Freetype::Freetype glm::glm )
+TARGET_LINK_LIBRARIES( dagui PRIVATE dagbase ${LUA_LIBRARY} GLEW::glew OpenGL::GL OpenGL::GLU Freetype::Freetype glm::glm tvision )
 #~ add_subdirectory(ThirdParty/dagbase)
 add_subdirectory(ThirdParty/dag)
 add_subdirectory(src/apps/DaguiTest)
 add_subdirectory(src/apps/BenchmarkDagui)
 add_subdirectory(src/demos/demoText)
 add_subdirectory(src/demos/demoRenderer)
-
 INCLUDE( CheckIncludeFile )
 INCLUDE( CheckIncludeFileCXX )
 
