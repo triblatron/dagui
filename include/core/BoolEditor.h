@@ -11,6 +11,8 @@
 
 namespace dagui
 {
+    struct EditorParameters;
+
     class DAGUI_API BoolEditor : public Editor
     {
     public:
@@ -18,7 +20,7 @@ namespace dagui
 
         BoolEditor& operator= (const BoolEditor& other);
 
-        BoolEditor(dagbase::Atom typeName);
+        BoolEditor(const EditorParameters& params);
 
         BoolEditor* clone() override;
 

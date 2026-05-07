@@ -5,7 +5,7 @@
 #include "config/config.h"
 
 #include "core/BoolEditor.h"
-
+#include "core/EditorParameters.h"
 #include "util/Searchable.h"
 
 namespace dagui
@@ -27,9 +27,9 @@ namespace dagui
         return *this;
     }
 
-    BoolEditor::BoolEditor(dagbase::Atom typeName)
+    BoolEditor::BoolEditor(const EditorParameters &params)
         :
-    _typeName(typeName)
+    _typeName(params.typeName)
     {
         // Do nothing.
     }

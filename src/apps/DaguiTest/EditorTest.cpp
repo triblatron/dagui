@@ -4,9 +4,11 @@
 
 #include "config/config.h"]
 
-#include "core/EditorRegistry.h"
+#include "tui/EditorRegistryTUI.h"
 #include "core/MetaClassRegistration.h"
 #include "core/Editor.h"
+#include "core/LuaInterface.h"
+#include "core/ConfigurationElement.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
@@ -61,7 +63,11 @@ TEST_P(EditorRegistry_testCreateEditor, testExpectedResult)
     auto tolerance = std::get<4>(GetParam());
     auto op = std::get<5>(GetParam());
 
-    dagui::EditorRegistry sut;
+    dagui::EditorRegistryTUI sut;
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/EditorRegistry/std_editors.lua");
+    ASSERT_NE(nullptr, config);
+    sut.configure(*config);
     auto type = dagbase::TypeRegistry::getTypeRegistry().findType(dagbase::Atom::intern(typeName));
     ASSERT_NE(nullptr, type);
     auto actual = sut.findOrCreateEditor(*type);

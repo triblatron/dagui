@@ -105,6 +105,8 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/core/Editor.h
         include/core/BoolEditor.h
         include/core/CompoundEditor.h
+        include/tui/EditorRegistryTUI.h
+        include/core/EditorParameters.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -184,6 +186,8 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         src/core/Editor.cpp
         src/core/BoolEditor.cpp
         src/core/CompoundEditor.cpp
+        src/tui/EditorRegistryTUI.cpp
+        src/core/EditorParameters.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")

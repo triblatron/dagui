@@ -11,6 +11,23 @@
 
 namespace dagui
 {
+    void EditorRegistry::configure(dagbase::ConfigurationElement &config)
+    {
+        if (auto element=config.findElement("classes"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                EditorParameters params;
+
+                params.configure(child);
+
+                registerEditor(params);
+
+
+                return true;
+            });
+        }
+    }
+
     Editor * EditorRegistry::findOrCreateEditor(const dagbase::Type &type)
     {
         auto existingEditor = findEditor(type.name);
@@ -19,16 +36,11 @@ namespace dagui
 
         if (type.members.empty())
         {
+            existingEditor = findEditor(type.name);
             // Primitive type, no properties
-            if (type.name == "Boolean")
-            {
-                existingEditor = new BoolEditor(type.name);
-            }
 
             if (existingEditor)
             {
-                registerEditor(type.name, existingEditor);
-
                 return existingEditor->clone();
             }
         }
@@ -45,16 +57,8 @@ namespace dagui
             }
         }
 
-        registerEditor(type.name, root);
+        registerCompoundEditor(type.name, root);
 
         return root->clone();
-    }
-
-    Editor * EditorRegistry::findEditor(dagbase::Atom typeName)
-    {
-        if (auto it=_editors.find(typeName); it!=_editors.end())
-            return it->second;
-
-        return nullptr;
     }
 }
