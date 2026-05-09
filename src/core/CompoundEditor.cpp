@@ -33,9 +33,21 @@ namespace dagui
         return *this;
     }
 
+    CompoundEditor::~CompoundEditor()
+    {
+        for (auto child : _children)
+            delete child;
+    }
+
     Editor * CompoundEditor::clone()
     {
         return new CompoundEditor(*this);
+    }
+
+    void CompoundEditor::makeItSo()
+    {
+        for (auto child : _children)
+            child->makeItSo();
     }
 
     dagbase::Variant CompoundEditor::find(std::string_view path) const

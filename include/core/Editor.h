@@ -10,6 +10,11 @@
 
 #include <string_view>
 
+namespace dagbase
+{
+    struct Property;
+}
+
 namespace dagui
 {
     class DAGUI_API Editor
@@ -17,6 +22,15 @@ namespace dagui
     public:
         //! We have virtual functions, so a virtual dtor helps avoid problems
         virtual ~Editor() = default;
+
+        virtual void setObject(void* obj) = 0;
+
+        virtual void setProperty(const dagbase::Property& prop) = 0;
+
+        //! Initialise the property from the object
+        //! Edit the value with validation
+        //! Set the final value on the object
+        virtual void makeItSo() = 0;
 
         //! Clone this object using its copy ctor
         //! \note Supports the Prototype pattern in EditorRegistry

@@ -12,7 +12,8 @@ namespace dagui
 {
     BoolEditor::BoolEditor(const BoolEditor &other)
         :
-    _typeName(other._typeName)
+    _typeName(other._typeName),
+    _prop(other._prop)
     {
         // Do nothing.
     }
@@ -32,6 +33,11 @@ namespace dagui
     _typeName(params.typeName)
     {
         // Do nothing.
+    }
+
+    void BoolEditor::makeItSo()
+    {
+        // TODO.
     }
 
     BoolEditor * BoolEditor::clone()

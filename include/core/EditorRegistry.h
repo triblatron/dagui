@@ -38,6 +38,8 @@ namespace dagui
         //! \note Lazily creates an Editor for properties whose types have not been seen yet.
         Editor* findOrCreateEditor(const dagbase::Type& type);
 
+        Editor* findOrCreateEditor(const dagbase::Property& prop);
+
         virtual Editor* findEditor(dagbase::Atom typeName) = 0;
 
         // ReSharper disable once CppPassValueParameterByConstReference

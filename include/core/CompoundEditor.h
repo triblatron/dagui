@@ -7,6 +7,7 @@
 #include "config/Export.h"
 
 #include "core/Editor.h"
+#include "core/TypeRegistry.h"
 
 #include "util/SearchableArray.h"
 #include <vector>
@@ -22,7 +23,25 @@ namespace dagui
 
         CompoundEditor& operator=(const CompoundEditor& other);
 
+        ~CompoundEditor();
+
         Editor* clone() override;
+
+        void setObject(void* obj) override
+        {
+            _object = obj;
+            for (auto child : _children)
+            {
+                child->setObject(obj);
+            }
+        }
+
+        void setProperty(const dagbase::Property &prop) override
+        {
+            _prop = prop;
+        }
+
+        void makeItSo() override;
 
         dagbase::Variant find(std::string_view path) const override;
 
@@ -34,6 +53,8 @@ namespace dagui
             }
         }
     private:
+        void* _object{nullptr};
+        dagbase::Property _prop;
         using ChildArray = dagbase::SearchableArray<std::vector<Editor*>>;
         ChildArray _children;
     };

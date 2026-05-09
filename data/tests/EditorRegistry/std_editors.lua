@@ -1,0 +1,24 @@
+root=
+{
+	classes=
+	{
+		{
+			typeName="Boolean", 
+			className="BoolEditor",
+		},
+		{
+			typeName="Int8",
+			className="IntegerEditor",
+			isSigned=true,
+			minValue=-128,
+			maxValue=127,
+		},
+		{
+			typeName="UInt8",
+			className="IntegerEditor",
+			isSigned=false,
+			minValue=0,
+			maxValue=255,
+		},
+	}
+}

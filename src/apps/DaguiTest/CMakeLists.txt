@@ -9,7 +9,10 @@ SET( DaguiTest_SRC DaguiTest.cpp RoundTripTest.cpp
         LayoutTest.cpp
         MockGraphicsBackendFactory.h
         TuiTest.cpp
-        EditorTest.cpp)
+        EditorTest.cpp
+        FakeEditorRegistry.h
+        FakeBoolEditor.h
+        FakeEditorRegistry.cpp)
 ADD_EXECUTABLE( DaguiTest ${DaguiTest_SRC} )
 IF (UNIX)
 LIST(APPEND LUA_LIBRARIES dl)

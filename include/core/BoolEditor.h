@@ -8,6 +8,7 @@
 
 #include "core/Atom.h"
 #include "core/Editor.h"
+#include "core/TypeRegistry.h"
 
 namespace dagui
 {
@@ -22,10 +23,24 @@ namespace dagui
 
         BoolEditor(const EditorParameters& params);
 
+        void setObject(void* obj) override
+        {
+            _object = obj;
+        }
+
+        void setProperty(const dagbase::Property &prop) override
+        {
+            _prop = prop;
+        }
+
+        void makeItSo() override;
+
         BoolEditor* clone() override;
 
         dagbase::Variant find(std::string_view path) const override;
     private:
         dagbase::Atom _typeName;
+        void* _object{nullptr};
+        dagbase::Property _prop;
     };
 }

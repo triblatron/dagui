@@ -50,7 +50,7 @@ namespace dagui
         auto props = type.enumerate(dagbase::TypeData::MEMBER_PROPERTY);
         for (auto itProp=props.first; itProp!=props.second; ++itProp)
         {
-            auto propEditor = findOrCreateEditor(*std::get<dagbase::Property>(itProp->data.value).type);
+            auto propEditor = findOrCreateEditor(std::get<dagbase::Property>(itProp->data.value));
             if (propEditor)
             {
                 root->addChild(propEditor);
@@ -58,6 +58,34 @@ namespace dagui
         }
 
         registerCompoundEditor(type.name, root);
+
+        return root->clone();
+    }
+
+    Editor * EditorRegistry::findOrCreateEditor(const dagbase::Property &prop)
+    {
+        auto editor = findEditor(prop.type->name);
+        if (editor)
+        {
+            auto copy = editor->clone();
+            copy->setProperty(prop);
+            return copy;
+        }
+\
+        // Traverse all properties of type
+        auto* root = new CompoundEditor;
+        root->setProperty(prop);
+        auto props = prop.type->enumerate(dagbase::TypeData::MEMBER_PROPERTY);
+        for (auto itProp=props.first; itProp!=props.second; ++itProp)
+        {
+            auto propEditor = findOrCreateEditor(std::get<dagbase::Property>(itProp->data.value));
+            if (propEditor)
+            {
+                root->addChild(propEditor);
+            }
+        }
+
+        registerCompoundEditor(prop.type->name, root);
 
         return root->clone();
     }
