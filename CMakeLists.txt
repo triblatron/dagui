@@ -219,6 +219,7 @@ add_subdirectory(src/apps/DaguiTest)
 add_subdirectory(src/apps/BenchmarkDagui)
 add_subdirectory(src/demos/demoText)
 add_subdirectory(src/demos/demoRenderer)
+add_subdirectory(src/demos/demoTurboVision)
 INCLUDE( CheckIncludeFile )
 INCLUDE( CheckIncludeFileCXX )
 
