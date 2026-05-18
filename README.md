@@ -40,11 +40,11 @@ Pull requests will be allowed at some point. There will be a coding style and pr
 * [dagbase](https://github.com/triblatron/dagbase) for
   * A Lua interface
   * A ConfigurationElement
-  * Format Agnostic Read8ng and Transcription Service (atreams)
+  * Format Agnostic Reading and Transcription Service (streams)
   * A DebugPrinter that produces nice idented output for trees
   * A VectorMap that is more efficient than std::map for certain cases, especially when we know the number of elements in advance
     * This has been benchmarked
-  * A root class 
+  * A root class, although this may be removed so users do not have to inherit it to use dagui
 * [dag](https://github.com/triblatron/dag) for
   * the node graph support
     * node base class
