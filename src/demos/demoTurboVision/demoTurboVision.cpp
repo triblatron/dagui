@@ -11,10 +11,13 @@
 #define Uses_TStatusDef
 #define Uses_TWindow
 #define Uses_TDeskTop
+#define Uses_TText
+#define Uses_TInputLine
 
 #include <tvision/tv.h>
 
 #include "tvision/menus.h"
+#include "tvision/ttext.h"
 #include "tvision/internal/ansiwrit.h"
 #include "tvision/internal/ansiwrit.h"
 
@@ -55,7 +58,9 @@ TWindow(bounds, title, number)
 {
     TRect r = getClipRect();
     r.grow(-1,-1);
-    insert( new TInterior( r ) );
+    //insert( new TInterior( r ) );
+    TRect inputBounds(r.a.x, r.a.y, r.b.x, r.a.y+1);
+    insert( new TInputLine(inputBounds, 10, nullptr));
 }
 
 class TDemoTurboVision : public TApplication
