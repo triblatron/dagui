@@ -53,6 +53,7 @@ namespace dagui
             auto propEditor = findOrCreateEditor(std::get<dagbase::Property>(itProp->data.value));
             if (propEditor)
             {
+                propEditor->setName(itProp->name);
                 root->addChild(propEditor);
             }
         }

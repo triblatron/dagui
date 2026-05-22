@@ -12,7 +12,9 @@ namespace dagui
 {
     BoolEditor::BoolEditor(const BoolEditor &other)
         :
+    _name(other._name),
     _typeName(other._typeName),
+    _object(other._object),
     _prop(other._prop)
     {
         // Do nothing.
@@ -22,7 +24,10 @@ namespace dagui
     {
         if (this != &other)
         {
+            _name = other._name;
             _typeName = other._typeName;
+            _object = other._object;
+            _prop = other._prop;
         }
 
         return *this;

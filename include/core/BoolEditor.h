@@ -23,6 +23,16 @@ namespace dagui
 
         BoolEditor(const EditorParameters& params);
 
+        void setName(dagbase::Atom name)
+        {
+            _name = name;
+        }
+
+        dagbase::Atom name() const
+        {
+            return _name;
+        }
+
         void setObject(void* obj) override
         {
             _object = obj;
@@ -39,6 +49,7 @@ namespace dagui
 
         dagbase::Variant find(std::string_view path) const override;
     private:
+        dagbase::Atom _name;
         dagbase::Atom _typeName;
         void* _object{nullptr};
         dagbase::Property _prop;

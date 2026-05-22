@@ -27,6 +27,11 @@ namespace dagui
 
         Editor* clone() override;
 
+        void setName(dagbase::Atom name)
+        {
+            _name = name;
+        }
+
         void setObject(void* obj) override
         {
             _object = obj;
@@ -53,6 +58,7 @@ namespace dagui
             }
         }
     private:
+        dagbase::Atom _name;
         void* _object{nullptr};
         dagbase::Property _prop;
         using ChildArray = dagbase::SearchableArray<std::vector<Editor*>>;

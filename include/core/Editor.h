@@ -7,6 +7,7 @@
 #include "config/Export.h"
 
 #include "core/Variant.h"
+#include "core/Atom.h"
 
 #include <string_view>
 
@@ -24,6 +25,8 @@ namespace dagui
         virtual ~Editor() = default;
 
         virtual void setObject(void* obj) = 0;
+
+        virtual void setName(dagbase::Atom name) = 0;
 
         virtual void setProperty(const dagbase::Property& prop) = 0;
 

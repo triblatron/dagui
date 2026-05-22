@@ -10,6 +10,8 @@
 
 #include <map>
 
+class TGroup;
+
 namespace dagui
 {
     class Editor;
@@ -17,6 +19,11 @@ namespace dagui
     class DAGUI_API EditorRegistryTUI : public EditorRegistry
     {
     public:
+        void setRootWidget(TGroup* root)
+        {
+            _root = root;
+        }
+
         void registerEditor(const EditorParameters& params) override;
 
         void registerCompoundEditor(dagbase::Atom typeName, CompoundEditor *editor) override;
@@ -27,6 +34,7 @@ namespace dagui
         void unregisterEditor(dagbase::Atom typeName) override;// NOLINT(*-unnecessary-value-param)
 
     private:
+        TGroup* _root{nullptr};
         using TypeToEditorMap = std::map<dagbase::Atom, dagui::Editor*>;
         TypeToEditorMap _registry;
     };

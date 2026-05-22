@@ -34,6 +34,9 @@ public:
                 }
             }
         });
+        ON_CALL(*this, setName(::testing::_)).WillByDefault([this](dagbase::Atom name) {
+            _name = name;
+        });
         ON_CALL(*this, setObject(::testing::_)).WillByDefault([this](void* obj) {
             _object = obj;
         });
@@ -54,11 +57,13 @@ public:
     }
 
     MOCK_METHOD(Editor*, clone, (), (override));
+    MOCK_METHOD(void, setName, (dagbase::Atom), (override));
     MOCK_METHOD(void, setObject, (void*), (override));
     MOCK_METHOD(void, setProperty, (const dagbase::Property&), (override));
     MOCK_METHOD(void, makeItSo, (), (override));
     MOCK_METHOD(dagbase::Variant, find, (std::string_view), (const,override));
 private:
+    dagbase::Atom _name;
     void* _object{nullptr};
     dagbase::Property _prop;
 };

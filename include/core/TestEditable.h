@@ -1,0 +1,46 @@
+//
+// Created by Tony Horrobin on 17/05/2026.
+//
+
+#pragma once
+
+#include "core/TypeRegistry.h"
+#include "core/MetaClassRegistration.h"
+
+#include "core/EditorRegistry.h"
+
+namespace dagui
+{
+    class TestEditable
+    {
+    public:
+        DAGBASE_DEFINE_PROPERTY(TestEditable, asBool, foo, setFoo);
+
+        void setFoo(bool on)
+        {
+            _foo = on;
+        }
+
+        bool foo() const
+        {
+            return _foo;
+        }
+
+        static dagbase::Type& getType();
+
+        static dagbase::MetaClassRegistration<TestEditable> registration;
+    private:
+        bool _foo{false};
+    };
+
+    inline dagbase::Type& TestEditable::getType()
+    {
+        DAGBASE_BEGIN_COMPOUND(TestEditable)
+        DAGBASE_ADD_PROPERTY(TestEditable, foo, dagbase::Boolean)
+        DAGBASE_END_COMPOUND()
+
+        return type;
+    }
+
+    inline dagbase::MetaClassRegistration<TestEditable> registration(dagbase::Atom::intern("TestEditable"));
+}

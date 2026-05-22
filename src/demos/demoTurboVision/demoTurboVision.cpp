@@ -2,6 +2,11 @@
 // Created by Tony Horrobin on 18/05/2026.
 //
 
+#include "tui/EditorRegistryTUI.h"
+#include "core/ConfigurationElement.h"
+#include "core/LuaInterface.h"
+#include "core/TypeRegistry.h"
+
 #define Uses_TApplication
 #define Uses_TKeys
 #define Uses_TSubMenu
@@ -16,10 +21,9 @@
 
 #include <tvision/tv.h>
 
-#include "tvision/menus.h"
-#include "tvision/ttext.h"
-#include "tvision/internal/ansiwrit.h"
-#include "tvision/internal/ansiwrit.h"
+#include "core/Editor.h"
+#include "core/TestEditable.h"
+
 
 class TInterior : public TView
 {
@@ -69,11 +73,15 @@ public:
     TDemoTurboVision();
 
     void createWindow();
-    void handleEvent( TEvent& e );
+
+    void handleEvent( TEvent& e ) override;
 
     static TMenuBar* initMenuBar(TRect r);
     static TStatusLine* initStatusLine(TRect r);
     static short winNumber;
+private:
+    dagui::EditorRegistryTUI _editorRegistry;
+    dagui::TestEditable* _obj{nullptr};
 };
 
 short TDemoTurboVision::winNumber = 0;
@@ -83,7 +91,25 @@ TDemoTurboVision::TDemoTurboVision()
     :
 TProgInit(&TDemoTurboVision::initStatusLine, &TDemoTurboVision::initMenuBar, &TDemoTurboVision::initDeskTop)
 {
-    // Do nothing.
+    dagbase::Lua lua;
+    auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/EditorRegistry/std_editors.lua");
+    _editorRegistry.setRootWidget(deskTop);
+    if (config)
+    {
+        _editorRegistry.configure(*config);
+    }
+    dagbase::TypeRegistry& typeRegistry = dagbase::TypeRegistry::getTypeRegistry();
+    auto type = typeRegistry.findType(dagbase::Atom::intern("TestEditable"));
+    if (type)
+    {
+        auto editor = _editorRegistry.findOrCreateEditor(*type);
+        if (editor)
+        {
+            _obj = new dagui::TestEditable();
+            editor->setObject(_obj);
+            editor->makeItSo();
+        }
+    }
 }
 
 void TDemoTurboVision::createWindow()

@@ -6,7 +6,7 @@
 
 #include "tui/EditorRegistryTUI.h"
 
-#include "core/BoolEditor.h"
+#include "tui/BoolEditorTUI.h"
 #include "core/CompoundEditor.h"
 #include "core/ConfigurationElement.h"
 
@@ -18,7 +18,7 @@ namespace dagui
 
         if (params.className == "BoolEditor")
         {
-            editor = new BoolEditor(params);
+            editor = new BoolEditorTUI(_root, params);
         }
 
         if (editor)

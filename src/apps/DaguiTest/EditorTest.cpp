@@ -11,43 +11,10 @@
 #include "core/ConfigurationElement.h"
 #include "FakeEditorRegistry.h"
 #include "test/TestUtils.h"
+#include "core/TestEditable.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-
-class TestEditable
-{
-public:
-    DAGBASE_DEFINE_PROPERTY(TestEditable, asBool, foo, setFoo);
-
-    void setFoo(bool on)
-    {
-        _foo = on;
-    }
-
-    bool foo() const
-    {
-        return _foo;
-    }
-
-    static dagbase::Type& getType();
-
-    static dagbase::MetaClassRegistration<TestEditable> registration;
-private:
-    bool _foo{false};
-};
-
-dagbase::Type& TestEditable::getType()
-{
-    DAGBASE_BEGIN_COMPOUND(TestEditable)
-    DAGBASE_ADD_PROPERTY(TestEditable, foo, dagbase::Boolean)
-    DAGBASE_END_COMPOUND()
-
-    return type;
-}
-
-dagbase::MetaClassRegistration<TestEditable> registration(dagbase::Atom::intern("TestEditable"));
-
 
 class EditorRegistry_testCreateEditor : public ::testing::TestWithParam<std::tuple<const char*, bool, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
 {
@@ -110,7 +77,7 @@ TEST_P(Editor_testEdit, testExpectedResult)
     ASSERT_NE(nullptr, type);
     auto editor = sut.findOrCreateEditor(*type);
     ASSERT_NE(nullptr, editor);
-    auto* obj = new TestEditable;
+    auto* obj = new dagui::TestEditable;
     editor->setObject(obj);
     obj->setFoo(initialValue);
     editor->makeItSo();
