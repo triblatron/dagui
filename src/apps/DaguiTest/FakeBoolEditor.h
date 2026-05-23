@@ -43,6 +43,7 @@ public:
         ON_CALL(*this, setProperty(::testing::_)).WillByDefault([this](const dagbase::Property& prop) {
             _prop = prop;
         });
+        EXPECT_CALL(*this, setName(::testing::_)).Times(::testing::AnyNumber());
         EXPECT_CALL(*this, setObject(::testing::_)).Times(::testing::AnyNumber());
         EXPECT_CALL(*this, setProperty(::testing::_)).Times(::testing::AnyNumber());
         EXPECT_CALL(*this, clone()).Times(::testing::AnyNumber());
