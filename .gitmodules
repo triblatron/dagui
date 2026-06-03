@@ -10,3 +10,6 @@
 [submodule "ThirdParty/tvision"]
 	path = ThirdParty/tvision
 	url = https://github.com/magiblot/tvision.git
+[submodule "ThirdParty/imgui"]
+	path = ThirdParty/imgui
+	url = https://github.com/ocornut/imgui.git

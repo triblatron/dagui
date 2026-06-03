@@ -108,6 +108,12 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/tui/EditorRegistryTUI.h
         include/core/EditorParameters.h
         include/tui/BoolEditorTUI.h
+		# ThirdParty/imgui/imconfig.h
+		# ThirdParty/imgui/imgui.h
+		# ThirdParty/imgui/imgui_internal.h
+		# ThirdParty/imgui/imstb_rectpack.h
+		# ThirdParty/imgui/imstb_textedit.h
+		# ThirdParty/imgui/imstb_truetype.h
 )
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
@@ -190,6 +196,10 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         src/tui/EditorRegistryTUI.cpp
         src/core/EditorParameters.cpp
         src/tui/BoolEditorTUI.cpp
+		# ThirdParty/imgui/imgui.cpp
+		# ThirdParty/imgui/imgui_draw.cpp
+		# ThirdParty/imgui/imgui_tables.cpp
+		# ThirdParty/imgui/imgui_widgets.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")
@@ -222,6 +232,8 @@ add_subdirectory(src/apps/BenchmarkDagui)
 add_subdirectory(src/demos/demoText)
 add_subdirectory(src/demos/demoRenderer)
 add_subdirectory(src/demos/demoTurboVision)
+add_subdirectory(src/demos/demoImGUI)
+
 INCLUDE( CheckIncludeFile )
 INCLUDE( CheckIncludeFileCXX )
 
