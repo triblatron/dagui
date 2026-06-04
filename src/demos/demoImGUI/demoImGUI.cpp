@@ -1,3 +1,5 @@
+#include "node_editor.h"
+#include "imnodes.h"
 #include "imgui.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
@@ -16,6 +18,50 @@ static void error_callback(int error, const char* description)
     fprintf(stderr, "Error:%d(%s)\n", error, description);
 }
 
+namespace example
+{
+    namespace
+    {
+        class HelloWorldNodeEditor
+        {
+        public:
+            void show()
+            {
+                ImGui::Begin("simple node editor");
+
+                ImNodes::BeginNodeEditor();
+                ImNodes::BeginNode(1);
+
+                ImNodes::BeginNodeTitleBar();
+                ImGui::TextUnformatted("simple node :)");
+                ImNodes::EndNodeTitleBar();
+
+                ImNodes::BeginInputAttribute(2);
+                ImGui::Text("input");
+                ImNodes::EndInputAttribute();
+
+                ImNodes::BeginOutputAttribute(3);
+                ImGui::Indent(40);
+                ImGui::Text("output");
+                ImNodes::EndOutputAttribute();
+
+                ImNodes::EndNode();
+                ImNodes::EndNodeEditor();
+
+                ImGui::End();
+            }
+        };
+
+        static HelloWorldNodeEditor editor;
+    } // namespace
+
+    void NodeEditorInitialize() { ImNodes::SetNodeGridSpacePos(1, ImVec2(200.0f, 200.0f)); }
+
+    void NodeEditorShow() { editor.show(); }
+
+    void NodeEditorShutdown() {}
+
+} // namespace example
 int main()
 {
     IMGUI_CHECKVERSION();
@@ -26,6 +72,8 @@ int main()
         return -1;
     }
     auto context = ImGui::CreateContext();
+    ImNodes::CreateContext();
+    example::NodeEditorInitialize();
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
@@ -50,13 +98,16 @@ int main()
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-        ImGui::ShowDemoWindow();
+        example::NodeEditorShow();
+        //ImGui::ShowDemoWindow();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(window);
     }
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
+    example::NodeEditorShutdown();
+    ImNodes::DestroyContext();
     ImGui::DestroyContext();
     return 0;
 }
