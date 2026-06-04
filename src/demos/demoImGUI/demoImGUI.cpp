@@ -12,6 +12,7 @@
 #endif // __APPLE__
 #include <cstdio>
 #include <iostream>
+#include <vector>
 
 static void error_callback(int error, const char* description)
 {
@@ -33,7 +34,7 @@ namespace example
                 ImNodes::BeginNode(1);
 
                 ImNodes::BeginNodeTitleBar();
-                ImGui::TextUnformatted("simple node :)");
+                ImGui::TextUnformatted("simple node 1");
                 ImNodes::EndNodeTitleBar();
 
                 ImNodes::BeginInputAttribute(2);
@@ -46,10 +47,39 @@ namespace example
                 ImNodes::EndOutputAttribute();
 
                 ImNodes::EndNode();
-                ImNodes::EndNodeEditor();
 
+                ImNodes::BeginNode(4);
+
+                ImNodes::BeginNodeTitleBar();
+                ImGui::TextUnformatted("simple node 2");
+                ImNodes::EndNodeTitleBar();
+
+                ImNodes::BeginInputAttribute(5);
+                ImGui::Text("input");
+                ImNodes::EndInputAttribute();
+
+                ImNodes::BeginOutputAttribute(6);
+                ImGui::Indent(40);
+                ImGui::Text("output");
+                ImNodes::EndOutputAttribute();
+
+                ImNodes::EndNode();
+                for (int i = 0; i < links.size(); ++i)
+                {
+                    const std::pair<int, int> p = links[i];
+                    // in this case, we just use the array index of the link
+                    // as the unique identifier
+                    ImNodes::Link(i, p.first, p.second);
+                }
+                ImNodes::EndNodeEditor();
+                int start_attr, end_attr;
+                if (ImNodes::IsLinkCreated(&start_attr, &end_attr))
+                {
+                    links.emplace_back(start_attr, end_attr);
+                }
                 ImGui::End();
             }
+            std::vector<std::pair<int, int>> links;
         };
 
         static HelloWorldNodeEditor editor;
