@@ -12,7 +12,7 @@ ADD_EXECUTABLE(demoImGUI ../../../ThirdParty/imgui/imgui_demo.cpp ../../../Third
 		../../../ThirdParty/imnodes/imnodes.h
 		../../../ThirdParty/imnodes/imnodes.cpp
 		../../../ThirdParty/imnodes/imnodes_internal.h
-		../../../ThirdParty/imnodes/example/color_node_editor.cpp
+		dagEditor.cpp
 		demoImGUI.cpp
 )
 MESSAGE("Freetype includes:" ${FREETYPE_INCLUDE_DIRS})
