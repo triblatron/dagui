@@ -77,6 +77,9 @@ Note that dag, dagbase, md4c and svgpp are git submodules and will eventually al
 ### Linux
 ```bash
   git clone https://github.com/triblatron/dagui
+  cd dagui
+  git submodule update --init
+  cd ..
   mkdir dagui_build && cd dagui_build
   cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install
   make
@@ -90,6 +93,9 @@ Note that dag, dagbase, md4c and svgpp are git submodules and will eventually al
 ```bat
 git clone https://github.com/triblatron/dependencies-x64-windows-vc17
 git clone https://github.com/triblatron/dagui
+cd dagui
+git submodule update --init
+cd ..
 mkdir dagui_build
 cd dagui_build
 cmake -C ..\dagui\Automation\Build\InitialCacheVisualStudio.txt -S ..\dagui -B . -DCMAKE_INSTALL_PREFIX="..\dagui_install"  -A x64 -DCMAKE_PREFIX_PATH="\path\to\dependencies-x64-windows-vc17\"
