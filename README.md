@@ -11,6 +11,9 @@ The understanding is that linking to these components is allowed as long as user
 
 This library is developed in my spare time for fun.  As such, there is no release schedule except to say when I deem it ready.  Its primary purpose is to serve as the GUI for another side project, so I am not overly concerned by timing of a release.
 
+### 20260606
+The decision has been made to use Dear ImGUI for the node and editor and property inspector.  This will significantly speed up development towards the goal of a node-based interface for games and simulation.
+
 ### 20250827
 We have hit Prototype1, rendering of a Widget tree, namely a Label with a face and some text.
 Next up, Prototype2 with layout and more complex Widgets.
@@ -25,18 +28,19 @@ Pull requests will be allowed at some point. There will be a coding style and pr
 ## Dependencies 
 
 * C++17 compiler (gcc 9.4+, clang16+, Apple clang 12+, Visual Studio 2017+)
-* Lua-5.4.x for the declarative format
+* Lua-5.4.x (5.5 on macOS) for the declarative format
 * gtest for automated testing
 * gmock to allow mocking in tests
 * benchmark for microbenchmarking
 * CMake 3.16+ for the build system
-* VulkanSceneGraph for integration demos
 * freetype for text rasterisation
 * pango for text layout including underlining
 * glfw for the OpenGL text, renderer demos
 * glew for OpenGL support beyond version 1.1 on Windows
 * md4c for markdown parsing
 * svgpp for SVG parsing
+* Dear ImGUI for the widgets including property inspector and rendering support
+* imnodes for the node rendering support
 * [dagbase](https://github.com/triblatron/dagbase) for
   * A Lua interface
   * A ConfigurationElement
@@ -45,13 +49,14 @@ Pull requests will be allowed at some point. There will be a coding style and pr
   * A VectorMap that is more efficient than std::map for certain cases, especially when we know the number of elements in advance
     * This has been benchmarked
   * A root class, although this may be removed so users do not have to inherit it to use dagui
-* [dag](https://github.com/triblatron/dag) for
   * the node graph support
     * node base class
     * ports
     * nested graphs
-    * solving dependencies
+    * solving dependencies (using Kaaaaaahn's algorithm)
     * evaluation
+* [dag](https://github.com/triblatron/dag) for
+  * a selection of predefined nodes
 * math library with 2D, 3D vectors and 4x4 matrices
   * required to do translation and rotation in one matrix multiplication
   * required to create an Orthographic projection
