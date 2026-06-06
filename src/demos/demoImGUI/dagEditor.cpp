@@ -2,6 +2,8 @@
 #include "core/Node.h"
 #include "core/Graph.h"
 #include "MemoryNodeLibrary.h"
+#include "core/SignalPath.h"
+
 #include "node_editor.h"
 
 #include <imnodes.h>
@@ -160,11 +162,34 @@ public:
             ImNodes::EndNodeTitleBar();
             ImGui::Dummy(ImVec2(100.0f, 0.0f));
             ImGui::Spacing();
+            
+            for (std::size_t portIndex = 0; portIndex < node->totalPorts(); ++portIndex)
+            {
+                auto port = node->dynamicPort(portIndex);
+                switch (port->dir())
+                {
+                case dagbase::PortDirection::DIR_OUT:
+                    ImNodes::BeginOutputAttribute(port->id());
+                    ImGui::Indent(100.0 - ImGui::CalcTextSize(port->name().c_str())[0]);
+                    ImGui::TextUnformatted(port->name().c_str());
+                    ImNodes::EndOutputAttribute();
+                    break;
+                case dagbase::PortDirection::DIR_IN:
+                    ImNodes::BeginInputAttribute(port->id());
+                    ImGui::TextUnformatted(port->name().c_str());
+                    ImNodes::EndInputAttribute();
+                    break;
+                }
+            }
             ImNodes::EndNode();
             return true;
             });
 
-
+            
+        graph_.eachSignalPath([this](dagbase::SignalPath* signalPath) {
+            ImNodes::Link(signalPath->id(), signalPath->source()->id(), signalPath->dest()->id());
+            return true;
+            });
         //for (const auto& edge : graph_.edges())
         //{
         //    // If edge doesn't start at value, then it's an internal edge, i.e.
@@ -198,7 +223,7 @@ public:
                     {
                         std::swap(start_attr, end_attr);
                     }
-                    (start_attr, end_attr);
+                    graph_.addSignalPath(new dagbase::SignalPath(graph_.port(start_attr), graph_.port(end_attr)));
                 }
             }
         }
