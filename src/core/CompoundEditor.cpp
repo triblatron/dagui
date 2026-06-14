@@ -47,7 +47,10 @@ namespace dagui
     void CompoundEditor::makeItSo()
     {
         for (auto child : _children)
+        {
+            child->setContext(context());
             child->makeItSo();
+        }
     }
 
     dagbase::Variant CompoundEditor::find(std::string_view path) const

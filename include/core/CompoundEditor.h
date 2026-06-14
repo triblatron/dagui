@@ -23,11 +23,21 @@ namespace dagui
 
         CompoundEditor& operator=(const CompoundEditor& other);
 
-        ~CompoundEditor();
+        ~CompoundEditor() override;
 
         Editor* clone() override;
 
-        void setName(dagbase::Atom name)
+        void setContext(void* context) override
+        {
+            _context = context;
+        }
+
+        void* context()
+        {
+            return _context;
+        }
+
+        void setName(dagbase::Atom name) override
         {
             _name = name;
         }
@@ -58,6 +68,7 @@ namespace dagui
             }
         }
     private:
+        void* _context{nullptr};
         dagbase::Atom _name;
         void* _object{nullptr};
         dagbase::Property _prop;

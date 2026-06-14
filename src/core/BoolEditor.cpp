@@ -40,6 +40,22 @@ namespace dagui
         // Do nothing.
     }
 
+    void BoolEditor::get(bool *value)
+    {
+        if (_object && value)
+        {
+            *value = (*_prop.getter)(_object).asBool();
+        }
+    }
+
+    void BoolEditor::set(bool value)
+    {
+        if (_object)
+        {
+            (*_prop.setter)(_object, dagbase::Variant(value));
+        }
+    }
+
     void BoolEditor::makeItSo()
     {
         // TODO.

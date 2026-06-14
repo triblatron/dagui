@@ -33,15 +33,34 @@ namespace dagui
             return _name;
         }
 
+        void setContext(void* context) override
+        {
+            _context = context;
+        }
+
+        void* context()
+        {
+            return _context;
+        }
+
         void setObject(void* obj) override
         {
             _object = obj;
         }
 
-        void setProperty(const dagbase::Property &prop) override
+        void setProperty(const dagbase::Property& prop) override
         {
             _prop = prop;
         }
+
+        const dagbase::Property& property() const
+        {
+            return _prop;
+        }
+
+        void get(bool* value);
+
+        void set(bool value);
 
         void makeItSo() override;
 
@@ -51,6 +70,7 @@ namespace dagui
     private:
         dagbase::Atom _name;
         dagbase::Atom _typeName;
+        void * _context{nullptr};
         void* _object{nullptr};
         dagbase::Property _prop;
     };

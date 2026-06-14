@@ -24,6 +24,8 @@ namespace dagui
         //! We have virtual functions, so a virtual dtor helps avoid problems
         virtual ~Editor() = default;
 
+        virtual void setContext(void* context) {}
+
         virtual void setObject(void* obj) = 0;
 
         virtual void setName(dagbase::Atom name) = 0;

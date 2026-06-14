@@ -3,6 +3,7 @@
 #include "imgui.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
+#include "core/TestEditable.h"
 #if defined(__APPLE__)
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -10,6 +11,12 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #endif // __APPLE__
+
+#include "core/TypeRegistry.h"
+#include "core/LuaInterface.h"
+#include "imgui/EditorRegistryImGui.h"
+#include "core/Editor.h"
+
 #include <cstdio>
 #include <iostream>
 #include <vector>
@@ -17,6 +24,63 @@
 static void error_callback(int error, const char* description)
 {
     fprintf(stderr, "Error:%d(%s)\n", error, description);
+}
+
+namespace propertyeditor
+{
+    class PropertyEditorDemo
+    {
+    public:
+        PropertyEditorDemo()
+        {
+            dagbase::Lua lua;
+            auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/EditorRegistry/std_editors.lua");
+            if (!config)
+            {
+                std::cerr << "Failed to load config for EditorRegistry, bailing\n";
+
+                ImGui::End();
+            }
+            registry.configure(*config);
+            dagbase::Type* type = dagbase::TypeRegistry::getTypeRegistry().findType(dagbase::Atom::intern("TestEditable"));
+
+            _obj = new dagui::TestEditable();
+        }
+
+        ~PropertyEditorDemo()
+        {
+            delete _obj;
+        }
+
+        void show()
+        {
+            bool open = true;
+            // Main body of the Demo window starts here.
+            if (!ImGui::Begin("Bool Editor Demo", &open, 0))
+            {
+                // Early out if the window is collapsed, as an optimization.
+                ImGui::End();
+                return;
+            }
+
+            dagbase::Type* type = dagbase::TypeRegistry::getTypeRegistry().findType(dagbase::Atom::intern("TestEditable"));
+
+            if (type)
+            {
+                auto editor = registry.findOrCreateEditor(*type);
+                if (editor)
+                {
+                    editor->setContext(ImGui::GetCurrentContext());
+                    editor->setObject(_obj);
+                    editor->makeItSo();
+                }
+            }
+            ImGui::End();
+        }
+    private:
+        dagui::EditorRegistryImGui registry;
+        dagui::TestEditable* _obj{nullptr};
+    };
 }
 
 int main()
@@ -48,6 +112,7 @@ int main()
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
     ImGui_ImplOpenGL3_Init();
+    propertyeditor::PropertyEditorDemo propertyEditor;
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -56,6 +121,7 @@ int main()
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
         example::NodeEditorShow();
+        propertyEditor.show();
         ImGui::ShowDemoWindow();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

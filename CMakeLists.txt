@@ -108,7 +108,9 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/tui/EditorRegistryTUI.h
         include/core/EditorParameters.h
         include/tui/BoolEditorTUI.h
-		# ThirdParty/imgui/imconfig.h
+        include/imgui/BoolEditorImGui.h
+        include/imgui/EditorRegistryImGui.h
+        # ThirdParty/imgui/imconfig.h
 		# ThirdParty/imgui/imgui.h
 		# ThirdParty/imgui/imgui_internal.h
 		# ThirdParty/imgui/imstb_rectpack.h
@@ -196,10 +198,12 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         src/tui/EditorRegistryTUI.cpp
         src/core/EditorParameters.cpp
         src/tui/BoolEditorTUI.cpp
-		# ThirdParty/imgui/imgui.cpp
-		# ThirdParty/imgui/imgui_draw.cpp
-		# ThirdParty/imgui/imgui_tables.cpp
-		# ThirdParty/imgui/imgui_widgets.cpp
+        src/ImGui/BoolEditorImGui.cpp
+        ThirdParty/imgui/imgui.cpp
+        ThirdParty/imgui/imgui_draw.cpp
+        ThirdParty/imgui/imgui_tables.cpp
+        ThirdParty/imgui/imgui_widgets.cpp
+        src/ImGui/EditorRegistryImGui.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")
@@ -219,7 +223,7 @@ SET( DEP_ROOT CACHE PATH "Dependency root" )
 
 ADD_LIBRARY( dagui SHARED ${DAGUI_SRC} )
 #INCLUDE_DIRECTORIES(PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
-TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
+TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/ThirdParty/imgui ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
 
 set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
 add_subdirectory(ThirdParty/tvision)
