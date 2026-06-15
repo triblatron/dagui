@@ -40,10 +40,9 @@ namespace propertyeditor
                 std::cerr << "Failed to load config for EditorRegistry, bailing\n";
 
                 ImGui::End();
+                return;
             }
             registry.configure(*config);
-            dagbase::Type* type = dagbase::TypeRegistry::getTypeRegistry().findType(dagbase::Atom::intern("TestEditable"));
-
             _obj = new dagui::TestEditable();
         }
 
@@ -93,7 +92,7 @@ int main()
 
         return -1;
     }
-    auto context = ImGui::CreateContext();
+    ImGui::CreateContext();
     ImNodes::CreateContext();
     example::NodeEditorInitialize();
     ImGuiIO& io = ImGui::GetIO();
