@@ -6,6 +6,8 @@
 
 #include "config/Export.h"
 
+struct ImGuiContext;
+
 namespace dagui
 {
     class DAGUI_API Editable
@@ -13,6 +15,6 @@ namespace dagui
     public:
         virtual ~Editable() = default;
 
-        virtual void edit(void* context) = 0;
+        virtual void edit(ImGuiContext* context) = 0;
     };
 }

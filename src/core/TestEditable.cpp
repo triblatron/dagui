@@ -9,9 +9,11 @@
 
 namespace dagui
 {
-    void TestEditable::edit(void* context)
+    void TestEditable::edit(ImGuiContext *context)
     {
-        ImGui::SetCurrentContext(static_cast<ImGuiContext*>(context));
+        ImGui::SetCurrentContext(context);
         ImGui::Checkbox("foo", &_foo);
+        ImGui::InputDouble("value", &_bar);
+        ImGui::InputInt("qux", &_qux);
     }
 }

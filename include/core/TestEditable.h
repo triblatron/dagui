@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "imgui_internal.h"
 #include "core/TypeRegistry.h"
 #include "core/MetaClassRegistration.h"
 #include "core/EditorRegistry.h"
@@ -26,13 +27,16 @@ namespace dagui
             return _foo;
         }
 
-        void edit(void* context) override;
+        void edit(ImGuiContext *context) override;
 
         static dagbase::Type& getType();
 
         static dagbase::MetaClassRegistration<TestEditable> registration;
     private:
         bool _foo{false};
+        double _bar{0.0};
+        std::string _baz;
+        std::int32_t _qux{0};
     };
 
     inline dagbase::Type& TestEditable::getType()
