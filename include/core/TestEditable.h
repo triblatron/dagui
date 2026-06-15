@@ -12,7 +12,7 @@
 
 namespace dagui
 {
-    class TestEditable : public dagbase::Editable
+    class DAGUI_API TestEditable : public dagbase::Editable
     {
     public:
         DAGBASE_DEFINE_PROPERTY(TestEditable, asBool, foo, setFoo);
