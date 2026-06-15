@@ -110,7 +110,6 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/tui/BoolEditorTUI.h
         include/imgui/BoolEditorImGui.h
         include/imgui/EditorRegistryImGui.h
-        include/core/Editable.h
         # ThirdParty/imgui/imconfig.h
 		# ThirdParty/imgui/imgui.h
 		# ThirdParty/imgui/imgui_internal.h
