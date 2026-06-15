@@ -6,12 +6,12 @@
 
 #include "core/TypeRegistry.h"
 #include "core/MetaClassRegistration.h"
-
 #include "core/EditorRegistry.h"
+#include "core/Editable.h"
 
 namespace dagui
 {
-    class TestEditable
+    class TestEditable : public Editable
     {
     public:
         DAGBASE_DEFINE_PROPERTY(TestEditable, asBool, foo, setFoo);
@@ -25,6 +25,8 @@ namespace dagui
         {
             return _foo;
         }
+
+        void edit(void* context) override;
 
         static dagbase::Type& getType();
 

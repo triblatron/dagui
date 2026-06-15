@@ -63,18 +63,19 @@ namespace propertyeditor
                 return;
             }
 
-            dagbase::Type* type = dagbase::TypeRegistry::getTypeRegistry().findType(dagbase::Atom::intern("TestEditable"));
-
-            if (type)
-            {
-                auto editor = registry.findOrCreateEditor(*type);
-                if (editor)
-                {
-                    editor->setContext(ImGui::GetCurrentContext());
-                    editor->setObject(_obj);
-                    editor->makeItSo();
-                }
-            }
+            // dagbase::Type* type = dagbase::TypeRegistry::getTypeRegistry().findType(dagbase::Atom::intern("TestEditable"));
+            //
+            // if (type)
+            // {
+            //     auto editor = registry.findOrCreateEditor(*type);
+            //     if (editor)
+            //     {
+            //         editor->setContext(ImGui::GetCurrentContext());
+            //         editor->setObject(_obj);
+            //         editor->makeItSo();
+            //     }
+            // }
+            _obj->edit(ImGui::GetCurrentContext());
             ImGui::End();
         }
     private:
