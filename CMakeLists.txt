@@ -198,12 +198,12 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         src/tui/EditorRegistryTUI.cpp
         src/core/EditorParameters.cpp
         src/tui/BoolEditorTUI.cpp
-        src/ImGui/BoolEditorImGui.cpp
+        src/imgui/BoolEditorImGui.cpp
         ThirdParty/imgui/imgui.cpp
         ThirdParty/imgui/imgui_draw.cpp
         ThirdParty/imgui/imgui_tables.cpp
         ThirdParty/imgui/imgui_widgets.cpp
-        src/ImGui/EditorRegistryImGui.cpp
+        src/imgui/EditorRegistryImGui.cpp
         src/core/TestEditable.cpp
 )
 

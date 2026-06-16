@@ -2,7 +2,7 @@
 // Created by Tony Horrobin on 10/06/2026.
 //
 
-#include "ImGui/BoolEditorImGui.h"
+#include "imgui/BoolEditorImGui.h"
 #include "imgui.h"
 #include "imgui_internal.h"
 
