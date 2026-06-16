@@ -34,20 +34,21 @@ namespace propertyeditor
         PropertyEditorDemo()
         {
             dagbase::Lua lua;
-            auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/EditorRegistry/std_editors.lua");
-            if (!config)
+            _config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/EditorRegistry/std_editors.lua");
+            if (!_config)
             {
                 std::cerr << "Failed to load config for EditorRegistry, bailing\n";
 
                 ImGui::End();
                 return;
             }
-            registry.configure(*config);
+            registry.configure(*_config);
             _obj = new dagui::TestEditable();
         }
 
         ~PropertyEditorDemo()
         {
+            delete _config;
             delete _obj;
         }
 
@@ -78,6 +79,7 @@ namespace propertyeditor
             ImGui::End();
         }
     private:
+        dagbase::ConfigurationElement* _config{nullptr};
         dagui::EditorRegistryImGui registry;
         dagui::TestEditable* _obj{nullptr};
     };
@@ -112,11 +114,10 @@ int main()
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
     ImGui_ImplOpenGL3_Init();
-    propertyeditor::PropertyEditorDemo propertyEditor;
+    propertyeditor::PropertyEditorDemo propertyEditor;   
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glfwPollEvents();
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -126,11 +127,17 @@ int main()
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(window);
+        glfwPollEvents();
     }
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
+    std::cerr << "Destroying GLFW window\n";
+    glfwMakeContextCurrent(nullptr);
+    glfwDestroyWindow(window);
     example::NodeEditorShutdown();
     ImNodes::DestroyContext();
     ImGui::DestroyContext();
+    glfwTerminate();
+
     return 0;
 }
