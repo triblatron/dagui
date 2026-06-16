@@ -4,9 +4,9 @@
 
 #include "config/config.h"
 
-#include "ImGui/EditorRegistryImGui.h"
+#include "imgui/EditorRegistryImGui.h"
 
-#include "ImGui/BoolEditorImGui.h"
+#include "imgui/BoolEditorImGui.h"
 #include "core/CompoundEditor.h"
 #include "core/ConfigurationElement.h"
 
