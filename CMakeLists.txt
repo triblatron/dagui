@@ -199,10 +199,10 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         src/core/EditorParameters.cpp
         src/tui/BoolEditorTUI.cpp
         src/imgui/BoolEditorImGui.cpp
-        ThirdParty/imgui/imgui.cpp
-        ThirdParty/imgui/imgui_draw.cpp
-        ThirdParty/imgui/imgui_tables.cpp
-        ThirdParty/imgui/imgui_widgets.cpp
+        # ThirdParty/imgui/imgui.cpp
+        # ThirdParty/imgui/imgui_draw.cpp
+        # ThirdParty/imgui/imgui_tables.cpp
+        # ThirdParty/imgui/imgui_widgets.cpp
         src/imgui/EditorRegistryImGui.cpp
         src/core/TestEditable.cpp
 )
@@ -229,7 +229,7 @@ TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/ThirdParty/imgui ${
 set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
 add_subdirectory(ThirdParty/tvision)
 LINK_DIRECTORIES( ${DEP_ROOT}/lib )
-TARGET_LINK_LIBRARIES( dagui PRIVATE dagbase ${LUA_LIBRARY} GLEW::glew OpenGL::GL OpenGL::GLU Freetype::Freetype glm::glm tvision )
+TARGET_LINK_LIBRARIES( dagui PRIVATE dag dagbase ${LUA_LIBRARY} GLEW::glew OpenGL::GL OpenGL::GLU Freetype::Freetype glm::glm tvision )
 #~ add_subdirectory(ThirdParty/dagbase)
 add_subdirectory(ThirdParty/dag)
 add_subdirectory(src/apps/DaguiTest)
