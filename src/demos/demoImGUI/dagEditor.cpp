@@ -34,6 +34,47 @@ ImU32 evaluate(const dagbase::Graph& graph, const int root_node)
     return 0;
 }
 
+namespace propertyeditor
+{
+    class NodePropertyInspector
+    {
+    public:
+        NodePropertyInspector()
+        {
+        }
+
+        ~NodePropertyInspector()
+        {
+            // Do nothing.
+        }
+
+        void editNode(dagbase::Node* node)
+        {
+            _node = node;
+        }
+
+        void show()
+        {
+            bool open = true;
+            // Main body of the Demo window starts here.
+            if (!ImGui::Begin("Node Property Editor Demo", &open, 0))
+            {
+                // Early out if the window is collapsed, as an optimization.
+                ImGui::End();
+                return;
+            }
+
+            if (_node)
+            {
+                _node->edit(ImGui::GetCurrentContext());
+            }
+            ImGui::End();
+        }
+    private:
+        dagbase::Node* _node{ nullptr };
+    };
+}
+
 class DagNodeEditor
 {
 public:
@@ -47,7 +88,7 @@ public:
     void show()
     {
         // Update timer context
-        current_time_seconds = 0.001f * timeSinceInit();
+        current_time_seconds = timeSinceInit();
 
         auto flags = ImGuiWindowFlags_MenuBar;
 
@@ -113,7 +154,7 @@ public:
             ImNodes::GetIO().EmulateThreeButtonMouse.Modifier =
                 emulate_three_button_mouse ? &ImGui::GetIO().KeyAlt : NULL;
         }
-        ImGui::Columns(1);
+        ImGui::Columns(2);
 
         ImNodes::BeginNodeEditor();
 
@@ -182,10 +223,10 @@ public:
                 }
             }
             ImNodes::EndNode();
+
             return true;
             });
-
-            
+        
         graph_.eachSignalPath([this](dagbase::SignalPath* signalPath) {
             ImNodes::Link(signalPath->id(), signalPath->source()->id(), signalPath->dest()->id());
             return true;
@@ -297,9 +338,16 @@ public:
         }
 
         ImGui::End();
-
+        ImGui::NextColumn();
+        // Allow a single selection to be edited
+        if (ImNodes::NumSelectedNodes() == 1)
+        {
+            int selectedNodeId{ -1 };
+            ImNodes::GetSelectedNodes(&selectedNodeId);
+            propertyEditor_.editNode(graph_.node(selectedNodeId));
+        }
+        this->propertyEditor_.show();
         // The color output window
-
         const ImU32 color =
             root_node_id_ != -1 ? evaluate(graph_, root_node_id_) : IM_COL32(255, 20, 147, 255);
         ImGui::PushStyleColor(ImGuiCol_WindowBg, color);
@@ -313,9 +361,9 @@ public:
         initTick_ = tick;
     }
 
-    std::uint64_t timeSinceInit() 
+    double timeSinceInit() 
     {
-        const auto interval = std::chrono::duration_cast<std::chrono::milliseconds>
+        const auto interval = std::chrono::duration_cast<std::chrono::seconds>
                               (std::chrono::high_resolution_clock::now() - initTick_);
 
         return interval.count();
@@ -326,6 +374,7 @@ private:
     ImNodesMiniMapLocation minimap_location_;
     std::chrono::high_resolution_clock::time_point initTick_;
     dag::MemoryNodeLibrary nodeLib_;
+    propertyeditor::NodePropertyInspector propertyEditor_;
 };
 
 static DagNodeEditor color_editor;
