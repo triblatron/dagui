@@ -57,18 +57,18 @@ namespace propertyeditor
         {
             bool open = true;
             // Main body of the Demo window starts here.
-            if (!ImGui::Begin("Node Property Editor Demo", &open, 0))
-            {
-                // Early out if the window is collapsed, as an optimization.
-                ImGui::End();
-                return;
-            }
+            //if (!ImGui::Begin("Node Property Editor Demo", &open, 0))
+            //{
+            //    // Early out if the window is collapsed, as an optimization.
+            //    ImGui::End();
+            //    return;
+            //}
 
             if (_node)
             {
                 _node->edit(ImGui::GetCurrentContext());
             }
-            ImGui::End();
+            //ImGui::End();
         }
     private:
         dagbase::Node* _node{ nullptr };
