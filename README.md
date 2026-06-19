@@ -36,7 +36,7 @@ Pull requests will be allowed at some point. There will be a coding style and pr
   * Note that WSL somehow manages to try to link with opengl32, known to be fixed in cmake 4.3.4
 * freetype for text rasterisation
 * pango for text layout including underlining
-* glfw for the OpenGL text, renderer demos
+* glfw for the OpenGL text, renderer and node gui demos
 * glew for OpenGL support beyond version 1.1 on Windows
 * md4c for markdown parsing
 * svgpp for SVG parsing
@@ -73,7 +73,7 @@ dnf install freetype-devel lua-devel
 exit
 ```
 ## Build instructions 
-Note that dag, dagbase, md4c and svgpp are git submodules and will eventually all be built at the same time as dagui.
+Note that dag, dagbase, dear imgui, imnodes, md4c and svgpp are git submodules and will eventually all be built at the same time as dagui.
 
 ### Linux
 ```bash
