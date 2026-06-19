@@ -4,7 +4,6 @@
 
 #include "config/config.h"
 
-#include "tui/EditorRegistryTUI.h"
 #include "core/MetaClassRegistration.h"
 #include "core/Editor.h"
 #include "core/LuaInterface.h"
@@ -15,40 +14,6 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-
-class EditorRegistry_testCreateEditor : public ::testing::TestWithParam<std::tuple<const char*, bool, const char*, dagbase::Variant, double, dagbase::ConfigurationElement::RelOp>>
-{
-
-};
-
-TEST_P(EditorRegistry_testCreateEditor, testExpectedResult)
-{
-    auto typeName = std::get<0>(GetParam());
-    auto editorExists = std::get<1>(GetParam());
-    auto path = std::get<2>(GetParam());
-    auto value = std::get<3>(GetParam());
-    auto tolerance = std::get<4>(GetParam());
-    auto op = std::get<5>(GetParam());
-
-    dagui::EditorRegistryTUI sut;
-    dagbase::Lua lua;
-    auto config = dagbase::ConfigurationElement::fromFile(lua, "data/tests/EditorRegistry/std_editors.lua");
-    ASSERT_NE(nullptr, config);
-    sut.configure(*config);
-    auto type = dagbase::TypeRegistry::getTypeRegistry().findType(dagbase::Atom::intern(typeName));
-    ASSERT_NE(nullptr, type);
-    auto actual = sut.findOrCreateEditor(*type);
-    ASSERT_EQ(editorExists, actual!=nullptr);
-    if (editorExists)
-    {
-        auto actualValue = actual->find(path);
-        assertComparison(value, actualValue, tolerance, op);
-    }
-}
-
-INSTANTIATE_TEST_SUITE_P(EditorRegistry, EditorRegistry_testCreateEditor, ::testing::Values(
-    std::make_tuple("TestEditable", true, "children[0].type", std::string("Boolean"), 0.0, dagbase::ConfigurationElement::RELOP_EQ)
-    ));
 
 class Editor_testEdit : public ::testing::TestWithParam<std::tuple<const char*, bool, bool>>
 {

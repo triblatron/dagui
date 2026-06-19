@@ -1,8 +1,0 @@
-SET( demoTurboVision_SRC demoTurboVision.cpp)
-ADD_EXECUTABLE( demoTurboVision ${demoTurboVision_SRC} )
-IF (UNIX)
-LIST(APPEND LUA_LIBRARIES dl)
-ENDIF(UNIX)
-TARGET_LINK_LIBRARIES( demoTurboVision PRIVATE dagbase ${LUA_LIBRARIES} Freetype::Freetype;dagui;glm::glm tvision)
-INSTALL(TARGETS demoTurboVision RUNTIME DESTINATION bin)
-SET_TARGET_PROPERTIES( demoTurboVision PROPERTIES INSTALL_RPATH "${CMAKE_INSTALL_RPATH};${CMAKE_INSTALL_PREFIX}/lib" )
