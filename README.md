@@ -33,6 +33,7 @@ Pull requests will be allowed at some point. There will be a coding style and pr
 * gmock to allow mocking in tests
 * benchmark for microbenchmarking
 * CMake 3.16+ for the build system
+  * Note that WSL somehow manages to try to link with opengl32, known to be fixed in cmake 4.3.4
 * freetype for text rasterisation
 * pango for text layout including underlining
 * glfw for the OpenGL text, renderer demos
