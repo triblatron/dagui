@@ -145,10 +145,15 @@ public:
         }
 
         ImGui::TextUnformatted("Edit the color of the output color window using nodes.");
-        ImGui::Columns(3);
+        ImGui::BeginTable("top",3);
+        ImGui::TableSetupColumn("help");
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(0);
         ImGui::TextUnformatted("A -- add node");
         ImGui::TextUnformatted("X -- delete selected node or link");
-        ImGui::NextColumn();
+        ImGui::TableSetColumnIndex(1);
+//        ImGui::TableSetupColumn("nodes");
+        ImGui::TableNextRow();
         if (ImGui::Checkbox("emulate_three_button_mouse", &emulate_three_button_mouse))
         {
             ImNodes::GetIO().EmulateThreeButtonMouse.Modifier =
@@ -336,7 +341,9 @@ public:
             }
         }
 
-        ImGui::NextColumn();
+        
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(2);
         // Allow a single selection to be edited
         if (ImNodes::NumSelectedNodes() == 1)
         {
@@ -345,6 +352,7 @@ public:
             propertyEditor_.editNode(graph_.node(selectedNodeId));
         }
         this->propertyEditor_.show();
+        ImGui::EndTable();
         ImGui::End();
         // The color output window
         const ImU32 color =
