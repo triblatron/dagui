@@ -294,7 +294,7 @@ public:
                 ImNodes::GetSelectedLinks(selected_links.data());
                 for (const int edge_id : selected_links)
                 {
-                    nodeEditor_.graph()->removeSignalPath(nodeEditor_.graph()->signalPath(edge_id));
+                    nodeEditor_.disconnect(edge_id);
                 }
             }
         }
