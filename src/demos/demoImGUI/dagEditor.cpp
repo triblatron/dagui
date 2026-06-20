@@ -270,7 +270,7 @@ public:
                     {
                         std::swap(start_attr, end_attr);
                     }
-                    nodeEditor_.graph()->addSignalPath(new dagbase::SignalPath(nodeEditor_.graph()->port(start_attr), nodeEditor_.graph()->port(end_attr)));
+                    nodeEditor_.connect(start_attr, end_attr);
                 }
             }
         }
