@@ -281,7 +281,7 @@ public:
             int link_id;
             if (ImNodes::IsLinkDestroyed(&link_id))
             {
-                nodeEditor_.graph()->removeSignalPath(nodeEditor_.graph()->signalPath(link_id));
+                nodeEditor_.disconnect(link_id);
             }
         }
 
