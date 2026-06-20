@@ -13,3 +13,7 @@
 [submodule "ThirdParty/imnodes"]
 	path = ThirdParty/imnodes
 	url = https://github.com/Nelarius/imnodes.git
+[submodule "dag"]
+	branch = main
+[submodule "dagbase"]
+	branch = main
