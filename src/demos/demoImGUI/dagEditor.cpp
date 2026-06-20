@@ -258,20 +258,7 @@ public:
             int start_attr, end_attr;
             if (ImNodes::IsLinkCreated(&start_attr, &end_attr))
             {
-                const auto start_type = nodeEditor_.graph()->port(start_attr)->dir();
-                const auto end_type = nodeEditor_.graph()->port(end_attr)->dir();
-
-                const bool valid_link = start_type != end_type;
-                if (valid_link)
-                {
-                    // Ensure the edge is always directed from the value to
-                    // whatever produces the value
-                    if (start_type != dagbase::PortDirection::DIR_OUT)
-                    {
-                        std::swap(start_attr, end_attr);
-                    }
-                    nodeEditor_.connect(start_attr, end_attr);
-                }
+                nodeEditor_.connect(start_attr, end_attr);
             }
         }
 
