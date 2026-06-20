@@ -3,6 +3,7 @@
 #include "core/Graph.h"
 #include "MemoryNodeLibrary.h"
 #include "core/SignalPath.h"
+#include "NodeEditorLive.h"
 
 #include "node_editor.h"
 
@@ -79,10 +80,10 @@ class DagNodeEditor
 {
 public:
     DagNodeEditor()
-        : graph_(), root_node_id_(-1),
+        : root_node_id_(-1),
           minimap_location_(ImNodesMiniMapLocation_BottomRight)
     {
-        graph_.setNodeLibrary(&nodeLib_);
+        // Do nothing.
     }
 
     void show()
@@ -151,6 +152,7 @@ public:
         ImGui::TableSetColumnIndex(0);
         ImGui::TextUnformatted("A -- add node");
         ImGui::TextUnformatted("X -- delete selected node or link");
+        ImGui::TextUnformatted("G -- group selected nodes");
         ImGui::TableSetColumnIndex(1);
 //        ImGui::TableSetupColumn("nodes");
         ImGui::TableNextRow();
@@ -179,15 +181,15 @@ public:
                 const ImVec2 click_pos = ImGui::GetMousePosOnOpeningCurrentPopup();
 
                 int i = 0;
-                nodeLib_.eachNode([this,&i](dagbase::Node& node) {
+                nodeEditor_.eachClass([this,&i](dagbase::Node& node) {
                     std::string label = node.className();
                     ImGui::PushID(i++);
                     if (ImGui::MenuItem(label.c_str()))
                     {
-                        auto created = graph_.createNode(node.className(), node.name());
-                        if (created)
+                        auto status = nodeEditor_.createNode(node.className(), node.name());
+                        if (status.status == dagbase::Status::StatusCode::STATUS_OK)
                         {
-                            graph_.addNode(created);
+//                            graph_.addNode(created);
                         }
                     }
                     ImGui::PopID();
@@ -200,7 +202,7 @@ public:
         }
 
         // Draw all the nodes
-        graph_.eachNode([this](dagbase::Node* node) {
+        nodeEditor_.eachNode([this](dagbase::Node* node) {
             ImNodes::BeginNode(node->id());
             ImNodes::BeginNodeTitleBar();
             ImGui::TextUnformatted(node->name().c_str());
@@ -231,7 +233,7 @@ public:
             return true;
             });
         
-        graph_.eachSignalPath([this](dagbase::SignalPath* signalPath) {
+        nodeEditor_.eachSignalPath([this](dagbase::SignalPath* signalPath) {
             ImNodes::Link(signalPath->id(), signalPath->source()->id(), signalPath->dest()->id());
             return true;
             });
@@ -256,8 +258,8 @@ public:
             int start_attr, end_attr;
             if (ImNodes::IsLinkCreated(&start_attr, &end_attr))
             {
-                const auto start_type = graph_.port(start_attr)->dir();
-                const auto end_type = graph_.port(end_attr)->dir();
+                const auto start_type = nodeEditor_.graph()->port(start_attr)->dir();
+                const auto end_type = nodeEditor_.graph()->port(end_attr)->dir();
 
                 const bool valid_link = start_type != end_type;
                 if (valid_link)
@@ -268,7 +270,7 @@ public:
                     {
                         std::swap(start_attr, end_attr);
                     }
-                    graph_.addSignalPath(new dagbase::SignalPath(graph_.port(start_attr), graph_.port(end_attr)));
+                    nodeEditor_.graph()->addSignalPath(new dagbase::SignalPath(nodeEditor_.graph()->port(start_attr), nodeEditor_.graph()->port(end_attr)));
                 }
             }
         }
@@ -279,7 +281,7 @@ public:
             int link_id;
             if (ImNodes::IsLinkDestroyed(&link_id))
             {
-                graph_.removeSignalPath(graph_.signalPath(link_id));
+                nodeEditor_.graph()->removeSignalPath(nodeEditor_.graph()->signalPath(link_id));
             }
         }
 
@@ -292,7 +294,7 @@ public:
                 ImNodes::GetSelectedLinks(selected_links.data());
                 for (const int edge_id : selected_links)
                 {
-                    graph_.removeSignalPath(graph_.signalPath(edge_id));
+                    nodeEditor_.graph()->removeSignalPath(nodeEditor_.graph()->signalPath(edge_id));
                 }
             }
         }
@@ -305,10 +307,10 @@ public:
                 selected_nodes.resize(static_cast<size_t>(num_selected));
                 ImNodes::GetSelectedNodes(selected_nodes.data());
                 dagbase::NodeArray nodes;
-                graph_.findAllNodes(&nodes);
+                nodeEditor_.graph()->findAllNodes(&nodes);
                 for (const int node_id : selected_nodes)
                 {
-                    graph_.removeNode(graph_.node(node_id));
+                    nodeEditor_.graph()->removeNode(nodeEditor_.graph()->node(node_id));
                     //auto iter = std::find_if(
                     //    nodes.begin(), nodes.end(), [node_id](const dagbase::Node& node) -> bool {
                     //        return node.id() == node_id;
@@ -341,7 +343,14 @@ public:
             }
         }
 
-        
+        if (ImGui::Shortcut(ImGuiKey_G))
+        {
+            if (ImNodes::NumSelectedNodes() > 1)
+            {
+
+            }
+        }
+
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(2);
         // Allow a single selection to be edited
@@ -349,14 +358,14 @@ public:
         {
             int selectedNodeId{ -1 };
             ImNodes::GetSelectedNodes(&selectedNodeId);
-            propertyEditor_.editNode(graph_.node(selectedNodeId));
+            propertyEditor_.editNode(nodeEditor_.graph()->node(selectedNodeId));
         }
         this->propertyEditor_.show();
         ImGui::EndTable();
         ImGui::End();
         // The color output window
         const ImU32 color =
-            root_node_id_ != -1 ? evaluate(graph_, root_node_id_) : IM_COL32(255, 20, 147, 255);
+            root_node_id_ != -1 ? evaluate(*nodeEditor_.graph(), root_node_id_) : IM_COL32(255, 20, 147, 255);
         ImGui::PushStyleColor(ImGuiCol_WindowBg, color);
         ImGui::Begin("output color");
         ImGui::End();
@@ -376,11 +385,10 @@ public:
         return interval.count();
     }
 private:
-    dagbase::Graph         graph_;
     dagbase::NodeID        root_node_id_;
     ImNodesMiniMapLocation minimap_location_;
     std::chrono::high_resolution_clock::time_point initTick_;
-    dag::MemoryNodeLibrary nodeLib_;
+    dag::NodeEditorLive nodeEditor_;
     propertyeditor::NodePropertyInspector propertyEditor_;
 };
 
