@@ -293,39 +293,9 @@ public:
                 static std::vector<int> selected_nodes;
                 selected_nodes.resize(static_cast<size_t>(num_selected));
                 ImNodes::GetSelectedNodes(selected_nodes.data());
-                dagbase::NodeArray nodes;
-                nodeEditor_.graph()->findAllNodes(&nodes);
                 for (const int node_id : selected_nodes)
                 {
-                    nodeEditor_.graph()->removeNode(nodeEditor_.graph()->node(node_id));
-                    //auto iter = std::find_if(
-                    //    nodes.begin(), nodes.end(), [node_id](const dagbase::Node& node) -> bool {
-                    //        return node.id() == node_id;
-                    //    });
-                    // Erase any additional internal nodes
-                    //switch (iter->type)
-                    //{
-                    //case UiNodeType::add:
-                    //    graph_.erase_node(iter->ui.add.lhs);
-                    //    graph_.erase_node(iter->ui.add.rhs);
-                    //    break;
-                    //case UiNodeType::multiply:
-                    //    graph_.erase_node(iter->ui.multiply.lhs);
-                    //    graph_.erase_node(iter->ui.multiply.rhs);
-                    //    break;
-                    //case UiNodeType::output:
-                    //    graph_.erase_node(iter->ui.output.r);
-                    //    graph_.erase_node(iter->ui.output.g);
-                    //    graph_.erase_node(iter->ui.output.b);
-                    //    root_node_id_ = -1;
-                    //    break;
-                    //case UiNodeType::sine:
-                    //    graph_.erase_node(iter->ui.sine.input);
-                    //    break;
-                    //default:
-                    //    break;
-                    //}
-                    //graph_.removeNode(*iter);
+                    nodeEditor_.deleteNode(node_id);
                 }
             }
         }
