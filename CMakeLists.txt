@@ -224,7 +224,7 @@ TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/ThirdParty/imgui ${
 set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
 LINK_DIRECTORIES( ${DEP_ROOT}/lib )
 IF (LINUX)
-TARGET_COMPILE_OPTIONS( dagui PUBLIC -fPIC )
+#TARGET_COMPILE_OPTIONS( dagui PUBLIC -fPIC )
 ENDIF(LINUX)
 TARGET_LINK_LIBRARIES( dagui PRIVATE dag dagbase imgui ${LUA_LIBRARY} GLEW::glew OpenGL::GL OpenGL::GLU Freetype::Freetype glm::glm )
 #~ add_subdirectory(ThirdParty/dagbase)
