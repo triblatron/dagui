@@ -315,14 +315,14 @@ public:
         {
             int selectedNodeId{ -1 };
             ImNodes::GetSelectedNodes(&selectedNodeId);
-            propertyEditor_.editNode(nodeEditor_.graph()->node(selectedNodeId));
+            propertyEditor_.editNode(nodeEditor_.activeGraph()->node(selectedNodeId));
         }
         this->propertyEditor_.show();
         ImGui::EndTable();
         ImGui::End();
         // The color output window
         const ImU32 color =
-            root_node_id_ != -1 ? evaluate(*nodeEditor_.graph(), root_node_id_) : IM_COL32(255, 20, 147, 255);
+            root_node_id_ != -1 ? evaluate(*nodeEditor_.activeGraph(), root_node_id_) : IM_COL32(255, 20, 147, 255);
         ImGui::PushStyleColor(ImGuiCol_WindowBg, color);
         ImGui::Begin("output color");
         ImGui::End();
