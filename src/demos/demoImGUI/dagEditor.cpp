@@ -226,6 +226,11 @@ public:
                     ImGui::TextUnformatted(port->name().c_str());
                     ImNodes::EndInputAttribute();
                     break;
+                    case dagbase::PortDirection::DIR_INTERNAL:
+                    ImNodes::BeginOutputAttribute(port->id());
+                    ImGui::TextUnformatted(port->name().c_str());
+                    ImNodes::EndStaticAttribute();
+                    break;
                 }
             }
             ImNodes::EndNode();
