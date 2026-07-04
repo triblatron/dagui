@@ -300,11 +300,31 @@ public:
             }
         }
 
-        if (ImGui::Shortcut(ImGuiKey_G))
         {
-            if (ImNodes::NumSelectedNodes() > 1)
+            const int num_selected = ImNodes::NumSelectedNodes();
+            if (num_selected > 0)
             {
-
+                std::vector<int> selected_nodes;
+                selected_nodes.resize(static_cast<size_t>(num_selected));
+                ImNodes::GetSelectedNodes(selected_nodes.data());
+                dag::SelectionInterface::Cont a;
+                for (auto node_id : selected_nodes)
+                {
+                    if (auto node = nodeEditor_.activeGraph()->node(node_id); node)
+                        a.m.emplace(node);
+                }
+                nodeEditor_.select(dag::NodeEditorInterface::SELECTION_SET, a);
+            }
+            else
+            {
+                nodeEditor_.selectNone();
+            }
+        }
+        if (ImGui::IsKeyReleased(ImGuiKey_G))
+        {
+            if (ImNodes::NumSelectedNodes() > 0)
+            {
+                nodeEditor_.createChild();
             }
         }
 
