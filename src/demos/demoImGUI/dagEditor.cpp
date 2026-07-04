@@ -290,7 +290,6 @@ public:
                 }
             }
         }
-
         {
             const int num_selected = ImNodes::NumSelectedNodes();
             if (num_selected > 0 && ImGui::IsKeyReleased(ImGuiKey_X))
@@ -324,6 +323,10 @@ public:
             {
                 nodeEditor_.selectNone();
             }
+        }
+        if (ImGui::IsKeyReleased(ImGuiKey_C))
+        {
+            nodeEditor_.copyNodes();
         }
         if (ImGui::IsKeyReleased(ImGuiKey_G))
         {
