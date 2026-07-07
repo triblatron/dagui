@@ -217,7 +217,7 @@ public:
                 {
                 case dagbase::PortDirection::DIR_OUT:
                     ImNodes::BeginOutputAttribute(port->id());
-                    ImGui::Indent(100.0 - ImGui::CalcTextSize(port->name().c_str())[0]);
+                    ImGui::Indent(100.0f - ImGui::CalcTextSize(port->name().c_str())[0]);
                     ImGui::TextUnformatted(port->name().c_str());
                     ImNodes::EndOutputAttribute();
                     break;
@@ -238,7 +238,7 @@ public:
             return true;
             });
         
-        nodeEditor_.eachSignalPath([this](dagbase::SignalPath* signalPath) {
+        nodeEditor_.eachSignalPath([](dagbase::SignalPath* signalPath) {
             ImNodes::Link(signalPath->id(), signalPath->source()->id(), signalPath->dest()->id());
             return true;
             });
@@ -324,10 +324,18 @@ public:
                 nodeEditor_.selectNone();
             }
         }
+
+        if (ImGui::IsKeyReleased(ImGuiKey_D))
+        {
+
+            nodeEditor_.activeGraph()->debug();
+        }
+
         if (ImGui::IsKeyReleased(ImGuiKey_C))
         {
             nodeEditor_.copyNodes();
         }
+
         if (ImGui::IsKeyReleased(ImGuiKey_G))
         {
             if (ImNodes::NumSelectedNodes() > 0)
