@@ -207,29 +207,33 @@ public:
             ImNodes::BeginNodeTitleBar();
             ImGui::TextUnformatted(node->name().c_str());
             ImNodes::EndNodeTitleBar();
+            ImGui::TextUnformatted(std::to_string(node->id()).c_str());
             ImGui::Dummy(ImVec2(100.0f, 0.0f));
             ImGui::Spacing();
             
             for (std::size_t portIndex = 0; portIndex < node->totalPorts(); ++portIndex)
             {
                 auto port = node->dynamicPort(portIndex);
+                std::string label = port->name() + "(" + std::to_string(port->id()) + ")";
                 switch (port->dir())
                 {
                 case dagbase::PortDirection::DIR_OUT:
                     ImNodes::BeginOutputAttribute(port->id());
-                    ImGui::Indent(100.0f - ImGui::CalcTextSize(port->name().c_str())[0]);
-                    ImGui::TextUnformatted(port->name().c_str());
+                    ImGui::Indent(100.0f - ImGui::CalcTextSize(label.c_str())[0]);
+                    ImGui::TextUnformatted(label.c_str());
                     ImNodes::EndOutputAttribute();
                     break;
                 case dagbase::PortDirection::DIR_IN:
                     ImNodes::BeginInputAttribute(port->id());
-                    ImGui::TextUnformatted(port->name().c_str());
+                    ImGui::TextUnformatted(label.c_str());
                     ImNodes::EndInputAttribute();
                     break;
                     case dagbase::PortDirection::DIR_INTERNAL:
                     ImNodes::BeginOutputAttribute(port->id());
-                    ImGui::TextUnformatted(port->name().c_str());
+                    ImGui::TextUnformatted(label.c_str());
                     ImNodes::EndStaticAttribute();
+                    break;
+                default:
                     break;
                 }
             }
