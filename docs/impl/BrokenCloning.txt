@@ -1,11 +1,11 @@
 {
-  0x8a2e29420  
+  0xa4adf1570  
   id: 1
   class: FooTyped
   name: footyped1
   category: Sink
   flags: NODE_NONE
-    0x8a317df40    
+    0xa4aaa4460    
     id: 2
     class: TypedPort<double>
     name: in1
@@ -23,13 +23,13 @@
       7
     }
     flags: FLAGS_OWN_BIT
-  0x8a319aa00  
+  0xa4adbd650  
   id: 2
   class: BarTyped
   name: bartyped1
   category: Source
   flags: NODE_NONE
-    0x8a317d900    
+    0xa4aaa4140    
     id: 3
     class: TypedPort<double>
     name: out1
@@ -47,20 +47,20 @@
     {
     }
     flags: FLAGS_OWN_BIT
-  0x8a2cb24e0  
+  0xa4b9f4140  
   id: 5
   class: GraphNode
   name: child1
   category: Group
   flags: NODE_NONE
-    0x8a317d220    
+    0xa4aaa4280    
     id: 5
     class: TypedPort<double>
     name: in1
     type: TYPE_DOUBLE
     direction: DIR_IN
     parent:boundaryInput(3)
-    sharedParent:boundaryInput(5)
+    sharedParent:child1(5)
     remove: 0
     value:
     outgoingConnections:
@@ -70,14 +70,14 @@
     {
       3
     }
-    0x8a317c820    
+    0xa4aaa48c0    
     id: 7
     class: TypedPort<double>
     name: out1
     type: TYPE_DOUBLE
     direction: DIR_OUT
     parent:boundaryOutput(4)
-    sharedParent:boundaryOutput(5)
+    sharedParent:child1(5)
     remove: 0
     value:
     outgoingConnections:
@@ -90,13 +90,13 @@
     flags: FLAGS_NONE
     flags: FLAGS_NONE
     {
-      0x8a2e2f020      
+      0xa4a8de840      
       id: 0
       class: GroupTyped
       name: grouptyped1
       category: Group
       flags: NODE_NONE
-        0x8a347b160        
+        0xa4aaa41e0        
         id: 0
         class: TypedPort<double>
         name: out1
@@ -113,7 +113,7 @@
         incomingConnections
         {
         }
-        0x8a35c3c00        
+        0xa4b18e440        
         id: 1
         class: TypedPort<double>
         name: in1
@@ -132,13 +132,13 @@
         }
         flags: FLAGS_OWN_BIT
         flags: FLAGS_OWN_BIT
-      0x8a317c500      
+      0xa4aaa4780      
       id: 3
       class: Boundary
       name: boundaryInput
       category: Group
       flags: NODE_NONE
-        0x8a317dfe0        
+        0xa4aaa46e0        
         id: 4
         class: TypedPort<double>
         name: out1
@@ -155,14 +155,14 @@
         incomingConnections
         {
         }
-        0x8a317d220        
+        0xa4aaa4280        
         id: 5
         class: TypedPort<double>
         name: in1
         type: TYPE_DOUBLE
         direction: DIR_IN
         parent:boundaryInput(3)
-        sharedParent:boundaryInput(5)
+        sharedParent:child1(5)
         remove: 0
         value:
         outgoingConnections:
@@ -174,13 +174,13 @@
         }
         flags: FLAGS_OWN_BIT
         flags: FLAGS_OWN_BIT
-      0x8a317cbe0      
+      0xa4aaa45a0      
       id: 4
       class: Boundary
       name: boundaryOutput
       category: Group
       flags: NODE_NONE
-        0x8a317c8c0        
+        0xa4aaa4820        
         id: 6
         class: TypedPort<double>
         name: in1
@@ -197,14 +197,14 @@
         {
           0
         }
-        0x8a317c820        
+        0xa4aaa48c0        
         id: 7
         class: TypedPort<double>
         name: out1
         type: TYPE_DOUBLE
         direction: DIR_OUT
         parent:boundaryOutput(4)
-        sharedParent:boundaryOutput(5)
+        sharedParent:child1(5)
         remove: 0
         value:
         outgoingConnections:
@@ -220,20 +220,20 @@
     children:
     {
     }
-  0x8a2cb2e40  
+  0xa4b9f4280  
   id: 6
   class: GraphNode
   name: child1
   category: Group
   flags: NODE_NONE
-    0x8a317d680    
+    0xa4aaa4960    
     id: 3
     class: TypedPort<double>
     name: in1
     type: TYPE_DOUBLE
     direction: DIR_IN
     parent:boundaryInput(1)
-    sharedParent:boundaryInput(6)
+    sharedParent:child1(6)
     remove: 0
     value:
     outgoingConnections:
@@ -243,14 +243,14 @@
     {
       8
     }
-    0x8a317dcc0    
+    0xa4aaa4d20    
     id: 5
     class: TypedPort<double>
     name: out1
     type: TYPE_DOUBLE
     direction: DIR_OUT
     parent:boundaryOutput(2)
-    sharedParent:boundaryOutput(6)
+    sharedParent:child1(6)
     remove: 0
     value:
     outgoingConnections:
@@ -263,13 +263,13 @@
     flags: FLAGS_NONE
     flags: FLAGS_NONE
     {
-      0x8a2e293b0      
+      0xa4adbd880      
       id: 0
       class: GroupTyped
       name: grouptyped1
       category: Group
       flags: NODE_NONE
-        0x8a347b200        
+        0xa4aaa4b40        
         id: 0
         class: TypedPort<double>
         name: out1
@@ -286,7 +286,7 @@
         incomingConnections
         {
         }
-        0x8a381c0a0        
+        0xa4b18e4e0        
         id: 1
         class: TypedPort<double>
         name: in1
@@ -305,13 +305,13 @@
         }
         flags: FLAGS_OWN_BIT
         flags: FLAGS_OWN_BIT
-      0x8a317c960      
+      0xa4aaa4640      
       id: 1
       class: Boundary
       name: boundaryInput
       category: Group
       flags: NODE_NONE
-        0x8a317d400        
+        0xa4aaa4aa0        
         id: 2
         class: TypedPort<double>
         name: out1
@@ -328,14 +328,14 @@
         incomingConnections
         {
         }
-        0x8a317d680        
+        0xa4aaa4960        
         id: 3
         class: TypedPort<double>
         name: in1
         type: TYPE_DOUBLE
         direction: DIR_IN
         parent:boundaryInput(1)
-        sharedParent:boundaryInput(6)
+        sharedParent:child1(6)
         remove: 0
         value:
         outgoingConnections:
@@ -347,13 +347,13 @@
         }
         flags: FLAGS_OWN_BIT
         flags: FLAGS_OWN_BIT
-      0x8a317d040      
+      0xa4aaa4be0      
       id: 2
       class: Boundary
       name: boundaryOutput
       category: Group
       flags: NODE_NONE
-        0x8a317da40        
+        0xa4aaa4c80        
         id: 4
         class: TypedPort<double>
         name: in1
@@ -370,14 +370,14 @@
         {
           0
         }
-        0x8a317dcc0        
+        0xa4aaa4d20        
         id: 5
         class: TypedPort<double>
         name: out1
         type: TYPE_DOUBLE
         direction: DIR_OUT
         parent:boundaryOutput(2)
-        sharedParent:boundaryOutput(6)
+        sharedParent:child1(6)
         remove: 0
         value:
         outgoingConnections:
@@ -393,13 +393,13 @@
     children:
     {
     }
-  0x8a319a610  
+  0xa4adbd1f0  
   id: 7
   class: BarTyped
   name: bartyped1
   category: Source
   flags: NODE_NONE
-    0x8a317db80    
+    0xa4aaa4dc0    
     id: 8
     class: TypedPort<double>
     name: out1
@@ -417,13 +417,13 @@
     {
     }
     flags: FLAGS_OWN_BIT
-  0x8a2e29490  
+  0xa4adf15e0  
   id: 8
   class: FooTyped
   name: footyped1
   category: Sink
   flags: NODE_NONE
-    0x8a317dea0    
+    0xa4aaa4e60    
     id: 9
     class: TypedPort<double>
     name: in1
@@ -445,13 +445,13 @@
 children:
 {
   {
-    0x8a2e2f020    
+    0xa4a8de840    
     id: 0
     class: GroupTyped
     name: grouptyped1
     category: Group
     flags: NODE_NONE
-      0x8a347b160      
+      0xa4aaa41e0      
       id: 0
       class: TypedPort<double>
       name: out1
@@ -468,7 +468,7 @@ children:
       incomingConnections
       {
       }
-      0x8a35c3c00      
+      0xa4b18e440      
       id: 1
       class: TypedPort<double>
       name: in1
@@ -487,13 +487,13 @@ children:
       }
       flags: FLAGS_OWN_BIT
       flags: FLAGS_OWN_BIT
-    0x8a317c500    
+    0xa4aaa4780    
     id: 3
     class: Boundary
     name: boundaryInput
     category: Group
     flags: NODE_NONE
-      0x8a317dfe0      
+      0xa4aaa46e0      
       id: 4
       class: TypedPort<double>
       name: out1
@@ -510,14 +510,14 @@ children:
       incomingConnections
       {
       }
-      0x8a317d220      
+      0xa4aaa4280      
       id: 5
       class: TypedPort<double>
       name: in1
       type: TYPE_DOUBLE
       direction: DIR_IN
       parent:boundaryInput(3)
-      sharedParent:boundaryInput(5)
+      sharedParent:child1(5)
       remove: 0
       value:
       outgoingConnections:
@@ -529,13 +529,13 @@ children:
       }
       flags: FLAGS_OWN_BIT
       flags: FLAGS_OWN_BIT
-    0x8a317cbe0    
+    0xa4aaa45a0    
     id: 4
     class: Boundary
     name: boundaryOutput
     category: Group
     flags: NODE_NONE
-      0x8a317c8c0      
+      0xa4aaa4820      
       id: 6
       class: TypedPort<double>
       name: in1
@@ -552,14 +552,14 @@ children:
       {
         0
       }
-      0x8a317c820      
+      0xa4aaa48c0      
       id: 7
       class: TypedPort<double>
       name: out1
       type: TYPE_DOUBLE
       direction: DIR_OUT
       parent:boundaryOutput(4)
-      sharedParent:boundaryOutput(5)
+      sharedParent:child1(5)
       remove: 0
       value:
       outgoingConnections:
@@ -576,4 +576,3 @@ children:
   {
   }
 }
-
