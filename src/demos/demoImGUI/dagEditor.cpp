@@ -83,9 +83,14 @@ public:
         : root_node_id_(-1),
           minimap_location_(ImNodesMiniMapLocation_BottomRight)
     {
-        // Do nothing.
     }
 
+    void loadFonts()
+    {
+        auto io = ImGui::GetIO();
+        _regularFont = io.Fonts->AddFontFromFileTTF("data/liberation-fonts-ttf-2.1.5/LiberationSans-Regular.ttf");
+        _boldFont = io.Fonts->AddFontFromFileTTF("data/liberation-fonts-ttf-2.1.5/LiberationMono-Bold.ttf");
+    }
     void show()
     {
         // Update timer context
@@ -237,7 +242,11 @@ public:
         nodeEditor_.eachNode([this](dagbase::Node* node) {
             ImNodes::BeginNode(node->id());
             ImNodes::BeginNodeTitleBar();
+            if (node->category() == dagbase::NodeCategory::CAT_GROUP)
+                ImGui::PushFont(_boldFont);
             ImGui::TextUnformatted(node->name().c_str());
+            if (node->category() == dagbase::NodeCategory::CAT_GROUP)
+                ImGui::PopFont();
             ImNodes::EndNodeTitleBar();
             ImGui::TextUnformatted(std::to_string(node->id()).c_str());
             ImGui::Dummy(ImVec2(100.0f, 0.0f));
@@ -438,6 +447,8 @@ private:
     std::chrono::high_resolution_clock::time_point initTick_;
     dag::NodeEditorLive nodeEditor_;
     propertyeditor::NodePropertyInspector propertyEditor_;
+    ImFont* _regularFont{nullptr};
+    ImFont* _boldFont{nullptr};
 };
 
 static DagNodeEditor color_editor;
@@ -448,6 +459,7 @@ void NodeEditorInitialize()
     ImNodesIO& io = ImNodes::GetIO();
     io.LinkDetachWithModifierClick.Modifier = &ImGui::GetIO().KeyCtrl;
     color_editor.setInitTick(std::chrono::high_resolution_clock::now());
+    color_editor.loadFonts();
 }
 
 void NodeEditorShow() { color_editor.show(); }
