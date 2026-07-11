@@ -242,10 +242,11 @@ public:
         nodeEditor_.eachNode([this](dagbase::Node* node) {
             ImNodes::BeginNode(node->id());
             ImNodes::BeginNodeTitleBar();
-            if (node->category() == dagbase::NodeCategory::CAT_GROUP)
+            bool isGraph = strcmp(node->className(), "GraphNode" )==0;
+            if (isGraph)
                 ImGui::PushFont(_boldFont);
             ImGui::TextUnformatted(node->name().c_str());
-            if (node->category() == dagbase::NodeCategory::CAT_GROUP)
+            if (isGraph)
                 ImGui::PopFont();
             ImNodes::EndNodeTitleBar();
             ImGui::TextUnformatted(std::to_string(node->id()).c_str());
