@@ -153,6 +153,39 @@ public:
         ImGui::TextUnformatted("A -- add node");
         ImGui::TextUnformatted("X -- delete selected node or link");
         ImGui::TextUnformatted("G -- group selected nodes");
+        ImGui::TextUnformatted("T -- create template from selected node");
+        {
+            const int num_selected = ImNodes::NumSelectedNodes();
+            if (!ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId) && num_selected == 1 && ImGui::IsKeyReleased(ImGuiKey_T))
+            {
+                bool open = true;
+                std::cerr << "Creating a template\n";
+                ImGui::OpenPopup("Create template");
+                ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+                ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+                // ImGui::OpenPopup("Delete?");
+                // if (ImGui::BeginPopupModal("Delete?", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+                // {
+                //     ImGui::Text("All those beautiful files will be deleted.\nThis operation cannot be undone!");
+                //     ImGui::Separator();
+                //
+                //     //static int unused_i = 0;
+                //     //ImGui::Combo("Combo", &unused_i, "Delete\0Delete harder\0");
+                //
+                //     static bool dont_ask_me_next_time = false;
+                //     ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+                //     ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
+                //     ImGui::PopStyleVar();
+                //
+                //     if (ImGui::Button("OK", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+                //     ImGui::SetItemDefaultFocus();
+                //     ImGui::SameLine();
+                //     if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+                //     ImGui::EndPopup();
+                // }
+            }
+
+        }
         ImGui::TableSetColumnIndex(1);
 //        ImGui::TableSetupColumn("nodes");
         ImGui::TableNextRow();
@@ -181,12 +214,11 @@ public:
                 const ImVec2 click_pos = ImGui::GetMousePosOnOpeningCurrentPopup();
 
                 int i = 0;
-                nodeEditor_.eachClass([this,&i](dagbase::Node& node) {
-                    std::string label = node.className();
+                nodeEditor_.eachClass([this,&i](const std::string& className, dagbase::Node& node) {
                     ImGui::PushID(i++);
-                    if (ImGui::MenuItem(label.c_str()))
+                    if (ImGui::MenuItem(className.c_str()))
                     {
-                        auto status = nodeEditor_.createNode(node.className(), node.name());
+                        auto status = nodeEditor_.createNode(className, node.name());
                         if (status.status == dagbase::Status::StatusCode::STATUS_OK)
                         {
 //                            graph_.addNode(created);
@@ -228,7 +260,7 @@ public:
                     ImGui::TextUnformatted(label.c_str());
                     ImNodes::EndInputAttribute();
                     break;
-                    case dagbase::PortDirection::DIR_INTERNAL:
+                case dagbase::PortDirection::DIR_INTERNAL:
                     ImNodes::BeginOutputAttribute(port->id());
                     ImGui::TextUnformatted(label.c_str());
                     ImNodes::EndStaticAttribute();
@@ -283,7 +315,7 @@ public:
 
         {
             const int num_selected = ImNodes::NumSelectedLinks();
-            if (num_selected > 0 && ImGui::IsKeyReleased(ImGuiKey_X))
+            if (!ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId) && num_selected > 0 && ImGui::IsKeyReleased(ImGuiKey_X))
             {
                 static std::vector<int> selected_links;
                 selected_links.resize(static_cast<size_t>(num_selected));
@@ -296,7 +328,7 @@ public:
         }
         {
             const int num_selected = ImNodes::NumSelectedNodes();
-            if (num_selected > 0 && ImGui::IsKeyReleased(ImGuiKey_X))
+            if (!ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId) && num_selected > 0 && ImGui::IsKeyReleased(ImGuiKey_X))
             {
                 static std::vector<int> selected_nodes;
                 selected_nodes.resize(static_cast<size_t>(num_selected));
@@ -306,6 +338,25 @@ public:
                     nodeEditor_.deleteNode(node_id);
                 }
             }
+        }
+        if (ImGui::BeginPopupModal("Create template", nullptr,ImGuiWindowFlags_AlwaysAutoResize))
+        {
+            static char buf[256];
+            //abuf[0] = '\0';
+            ImGui::InputText("Template name", buf, 256);
+            if (ImGui::Button("OK", ImVec2(100.0f, 0.0f)))
+            {
+                std::string className = buf;
+                nodeEditor_.createTemplate(className);
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::SetItemDefaultFocus();
+            ImGui::SameLine();
+            if (ImGui::Button("Cancel", ImVec2(120, 0)))
+            {
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::EndPopup();
         }
 
         {
@@ -329,18 +380,18 @@ public:
             }
         }
 
-        if (ImGui::IsKeyReleased(ImGuiKey_D))
+        if (!ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId) && ImGui::IsKeyReleased(ImGuiKey_D))
         {
 
             nodeEditor_.activeGraph()->debug();
         }
 
-        if (ImGui::IsKeyReleased(ImGuiKey_C))
+        if (!ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId) && ImGui::IsKeyReleased(ImGuiKey_C))
         {
             nodeEditor_.copyNodes();
         }
 
-        if (ImGui::IsKeyReleased(ImGuiKey_G))
+        if (!ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId) && ImGui::IsKeyReleased(ImGuiKey_G))
         {
             if (ImNodes::NumSelectedNodes() > 0)
             {
