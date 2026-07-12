@@ -415,13 +415,39 @@ public:
 
             if (num_selected == 1)
             {
+                // Save the positions of all Nodes
+                nodeEditor_.eachNode([](dagbase::Node* node) {
+                    auto pos = ImNodes::GetNodeEditorSpacePos(node->id());
+                    node->setPosition(pos.x, pos.y);
+                    return true;
+                });
                 nodeEditor_.browseDown();
+                nodeEditor_.eachNode([](dagbase::Node * node) {
+                    ImVec2 pos;
+                    pos.x = node->position()[0];
+                    pos.y = node->position()[1];
+                    ImNodes::SetNodeEditorSpacePos(node->id(), pos);
+                    return true;
+                });
             }
         }
 
         if (ImGui::IsMouseClicked(ImGuiMouseButton_Right))
         {
+            nodeEditor_.eachNode([](dagbase::Node* node) {
+                auto pos = ImNodes::GetNodeEditorSpacePos(node->id());
+                node->setPosition(pos.x, pos.y);
+                return true;
+            });
             nodeEditor_.browseUp();
+            // Restore the positions of all nodes
+            nodeEditor_.eachNode([](dagbase::Node * node) {
+                ImVec2 pos;
+                pos.x = node->position()[0];
+                pos.y = node->position()[1];
+                ImNodes::SetNodeEditorSpacePos(node->id(), pos);
+                return true;
+            });
         }
 
         ImGui::TableNextRow();
