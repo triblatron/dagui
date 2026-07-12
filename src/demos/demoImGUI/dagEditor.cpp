@@ -409,6 +409,21 @@ public:
             }
         }
 
+        if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+        {
+            const int num_selected = ImNodes::NumSelectedNodes();
+
+            if (num_selected == 1)
+            {
+                nodeEditor_.browseDown();
+            }
+        }
+
+        if (ImGui::IsMouseClicked(ImGuiMouseButton_Right))
+        {
+            nodeEditor_.browseUp();
+        }
+
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(2);
         // Allow a single selection to be edited
