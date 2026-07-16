@@ -91,6 +91,19 @@ public:
         _regularFont = io.Fonts->AddFontFromFileTTF("data/liberation-fonts-ttf-2.1.5/LiberationSans-Regular.ttf");
         _boldFont = io.Fonts->AddFontFromFileTTF("data/liberation-fonts-ttf-2.1.5/LiberationMono-Bold.ttf");
     }
+
+    void restoreNodePositions()
+    {
+        nodeEditor_.eachNode([](dagbase::Node * node) {
+            ImVec2 pos;
+            pos.x = node->position()[0];
+            pos.y = node->position()[1];
+            ImNodes::SetNodeScreenSpacePos(node->id(), pos);
+            return true;
+        });
+
+    }
+
     void show()
     {
         // Update timer context
@@ -226,6 +239,8 @@ public:
                         auto status = nodeEditor_.createNode(className, node.name());
                         if (status.status == dagbase::Status::StatusCode::STATUS_OK)
                         {
+                            nodeEditor_.activeGraph()->node(std::get<dagbase::NodeID>(status.result.value()))->setPosition(ImGui::GetMousePos()[0], ImGui::GetMousePos()[1]);
+                            ImNodes::SetNodeScreenSpacePos(std::get<dagbase::NodeID>(status.result.value()),ImGui::GetCursorScreenPos());
 //                            graph_.addNode(created);
                         }
                     }
@@ -416,38 +431,18 @@ public:
             if (num_selected == 1)
             {
                 // Save the positions of all Nodes
-                nodeEditor_.eachNode([](dagbase::Node* node) {
-                    auto pos = ImNodes::GetNodeEditorSpacePos(node->id());
-                    node->setPosition(pos.x, pos.y);
-                    return true;
-                });
+                saveNodePositions();
                 nodeEditor_.browseDown();
-                nodeEditor_.eachNode([](dagbase::Node * node) {
-                    ImVec2 pos;
-                    pos.x = node->position()[0];
-                    pos.y = node->position()[1];
-                    ImNodes::SetNodeEditorSpacePos(node->id(), pos);
-                    return true;
-                });
+                restoreNodePositions();
             }
         }
 
         if (ImGui::IsMouseClicked(ImGuiMouseButton_Right))
         {
-            nodeEditor_.eachNode([](dagbase::Node* node) {
-                auto pos = ImNodes::GetNodeEditorSpacePos(node->id());
-                node->setPosition(pos.x, pos.y);
-                return true;
-            });
+            saveNodePositions();
             nodeEditor_.browseUp();
             // Restore the positions of all nodes
-            nodeEditor_.eachNode([](dagbase::Node * node) {
-                ImVec2 pos;
-                pos.x = node->position()[0];
-                pos.y = node->position()[1];
-                ImNodes::SetNodeEditorSpacePos(node->id(), pos);
-                return true;
-            });
+            restoreNodePositions();
         }
 
         ImGui::TableNextRow();
@@ -469,6 +464,15 @@ public:
         ImGui::Begin("output color");
         ImGui::End();
         ImGui::PopStyleColor();
+    }
+
+    void saveNodePositions()
+    {
+        nodeEditor_.eachNode([](dagbase::Node* node) {
+            auto pos = ImNodes::GetNodeScreenSpacePos(node->id());
+            node->setPosition(pos.x, pos.y);
+            return true;
+        });
     }
 
     void setInitTick(std::chrono::high_resolution_clock::time_point tick)
