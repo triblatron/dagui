@@ -385,6 +385,13 @@ public:
         }
 
         {
+            nodeEditor_.eachNode([](dagbase::Node* node) {
+                auto pos = ImNodes::GetNodeScreenSpacePos(node->id());
+                node->setPosition(pos.x, pos.y);
+                return true;
+            });
+        }
+        {
             const int num_selected = ImNodes::NumSelectedNodes();
             if (num_selected > 0)
             {
@@ -420,7 +427,13 @@ public:
         {
             if (ImNodes::NumSelectedNodes() > 0)
             {
-                nodeEditor_.createChild();
+                auto status = nodeEditor_.createChild();
+                auto nodeId = std::get<dagbase::NodeID>(status.result.value());
+                auto node = nodeEditor_.activeGraph()->node(nodeId);
+                ImVec2 pos;
+                pos.x = node->position()[0];
+                pos.y = node->position()[1];
+                ImNodes::SetNodeScreenSpacePos(nodeId, pos);
             }
         }
 
