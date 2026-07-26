@@ -209,6 +209,7 @@ public:
                 if (status.status == dagbase::Status::STATUS_OK)
                 {
                     ImNodes::ClearNodeSelection();
+                    propertyEditor_.editNode(nullptr);
                     _restoreNodePositions = true;
                 }
             }
