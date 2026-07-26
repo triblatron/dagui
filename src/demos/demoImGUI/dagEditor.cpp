@@ -9,6 +9,7 @@
 
 #include <imnodes.h>
 #include <imgui.h>
+#include <imguifd/ImGuiFileDialog.h>
 
 #include <chrono>
 #include <algorithm>
@@ -116,6 +117,41 @@ public:
 
         if (ImGui::BeginMenuBar())
         {
+            if (ImGui::BeginMenu("File"))
+            {
+                if (ImGui::MenuItem("Open...", "Ctrl+O"))
+                {
+                    IGFD::FileDialogConfig config;
+
+                    config.path = ".";
+                    ImGuiFileDialog::Instance()->OpenDialog("Open Graph", "Choose File", ".lua", config);
+                }
+
+                if (ImGui::MenuItem("Save", "Ctrl+S"))
+                {
+                    if (_filename.empty())
+                    {
+                        IGFD::FileDialogConfig config;
+
+                        config.path = ".";
+                        config.flags = ImGuiFileDialogFlags_ConfirmOverwrite;
+                        ImGuiFileDialog::Instance()->OpenDialog("Save Graph", "Choose File", ".lua", config);
+                    }
+                    else
+                    {
+                        auto status = save(_filename);
+                    }
+                }
+                if (ImGui::MenuItem("Save As...", "Ctrl+A"))
+                {
+                    IGFD::FileDialogConfig config;
+
+                    config.path = ".";
+                    config.flags = ImGuiFileDialogFlags_ConfirmOverwrite;
+                    ImGuiFileDialog::Instance()->OpenDialog("Save Graph", "Choose File", ".lua", config);
+                }
+                ImGui::EndMenu();
+            }
             if (ImGui::BeginMenu("Mini-map"))
             {
                 const char* names[] = {
@@ -161,6 +197,35 @@ public:
             }
 
             ImGui::EndMenuBar();
+        }
+
+        // This must be unconditional to prevent flickering or delayed opening of dialogue
+        if (ImGuiFileDialog::Instance()->Display("Open Graph")) { // => will show a dialog
+            if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
+                std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                // action
+                auto status = nodeEditor_.load(filePathName.c_str());
+                if (status.status == dagbase::Status::STATUS_OK)
+                {
+                    ImNodes::ClearNodeSelection();
+                    _restoreNodePositions = true;
+                }
+            }
+
+            // close
+            ImGuiFileDialog::Instance()->Close();
+        }
+
+        if (ImGuiFileDialog::Instance()->Display("Save Graph")) { // => will show a dialog
+            if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
+                std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                save(filePathName);
+            }
+
+            // close
+            ImGuiFileDialog::Instance()->Close();
         }
 
         ImGui::TextUnformatted("Edit the color of the output color window using nodes.");
@@ -384,6 +449,12 @@ public:
             ImGui::EndPopup();
         }
 
+        if (_restoreNodePositions)
+        {
+            restoreNodePositions();
+            _restoreNodePositions = false;
+        }
+
         {
             nodeEditor_.eachNode([](dagbase::Node* node) {
                 auto pos = ImNodes::GetNodeScreenSpacePos(node->id());
@@ -391,6 +462,7 @@ public:
                 return true;
             });
         }
+
         {
             const int num_selected = ImNodes::NumSelectedNodes();
             if (num_selected > 0)
@@ -508,6 +580,29 @@ private:
     propertyeditor::NodePropertyInspector propertyEditor_;
     ImFont* _regularFont{nullptr};
     ImFont* _boldFont{nullptr};
+    std::string _filename;
+    bool _restoreNodePositions{false};
+    dagbase::Status save(const std::string& filename)
+    {
+        dagbase::DebugPrinter printer;
+        std::ofstream stream(filename.c_str());
+        printer.setStr(&stream);
+        auto status = nodeEditor_.save( printer);
+
+        if (status.status != dagbase::Status::STATUS_OK)
+        {
+            if (ImGui::BeginPopup("SaveFailure"))
+            {
+                ImGui::TextUnformatted(dagbase::Status::statusCodeToString(status.status));
+                ImGui::EndPopup();
+            }
+        }
+        else
+        {
+            _filename = filename;
+        }
+        return status;
+    }
 };
 
 static DagNodeEditor color_editor;

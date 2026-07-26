@@ -17,3 +17,6 @@
 	branch = main
 [submodule "dagbase"]
 	branch = main
+[submodule "ThirdParty/imguiFileDialogue"]
+	path = ThirdParty/imguiFileDialogue
+	url = https://github.com/aiekick/ImGuiFileDialog.git
