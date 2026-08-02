@@ -4,6 +4,8 @@
 #include "MemoryNodeLibrary.h"
 #include "core/SignalPath.h"
 #include "NodeEditorLive.h"
+#include "io/StreamFactory.h"
+#include "io/OutputStream.h"
 
 #include "node_editor.h"
 
@@ -14,9 +16,9 @@
 #include <chrono>
 #include <algorithm>
 #include <cassert>
-#include <chrono>
-#include <cmath>
 #include <vector>
+
+#include "io/BackingStore.h"
 
 namespace example
 {
@@ -585,11 +587,12 @@ private:
     bool _restoreNodePositions{false};
     dagbase::Status save(const std::string& filename)
     {
-        dagbase::DebugPrinter printer;
-        std::ofstream stream(filename.c_str());
-        printer.setStr(&stream);
-        auto status = nodeEditor_.save( printer);
-
+        auto store = dagbase::createBackingStore("FileBackingStore");
+        if (!store)
+            return dagbase::Status{dagbase::Status::STATUS_INTERNAL_ERROR};
+        auto str = dagbase::createOutputStream("TextFormat", *store, filename.c_str());
+        dagbase::Lua lua;
+        auto status = nodeEditor_.serialise(*str, lua);
         if (status.status != dagbase::Status::STATUS_OK)
         {
             if (ImGui::BeginPopup("SaveFailure"))
@@ -602,6 +605,8 @@ private:
         {
             _filename = filename;
         }
+        delete str;
+        delete store;
         return status;
     }
 };
