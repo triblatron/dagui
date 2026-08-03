@@ -623,7 +623,7 @@ private:
             propertyEditor_.editNode(nullptr);
             _restoreNodePositions = true;
         }
-
+        return status;
     }
 };
 
