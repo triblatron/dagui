@@ -126,7 +126,7 @@ public:
                     IGFD::FileDialogConfig config;
 
                     config.path = ".";
-                    ImGuiFileDialog::Instance()->OpenDialog("Open Graph", "Choose File", ".lua", config);
+                    ImGuiFileDialog::Instance()->OpenDialog("Open Graph", "Choose File", ".txt", config);
                 }
 
                 if (ImGui::MenuItem("Save", "Ctrl+S"))
@@ -137,7 +137,7 @@ public:
 
                         config.path = ".";
                         config.flags = ImGuiFileDialogFlags_ConfirmOverwrite;
-                        ImGuiFileDialog::Instance()->OpenDialog("Save Graph", "Choose File", ".lua", config);
+                        ImGuiFileDialog::Instance()->OpenDialog("Save Graph", "Choose File", ".txt", config);
                     }
                     else
                     {
@@ -150,7 +150,7 @@ public:
 
                     config.path = ".";
                     config.flags = ImGuiFileDialogFlags_ConfirmOverwrite;
-                    ImGuiFileDialog::Instance()->OpenDialog("Save Graph", "Choose File", ".lua", config);
+                    ImGuiFileDialog::Instance()->OpenDialog("Save Graph", "Choose File", ".txt", config);
                 }
                 ImGui::EndMenu();
             }
@@ -206,14 +206,8 @@ public:
             if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
                 std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
                 std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                auto status = load(filePathName);
                 // action
-                auto status = nodeEditor_.load(filePathName.c_str());
-                if (status.status == dagbase::Status::STATUS_OK)
-                {
-                    ImNodes::ClearNodeSelection();
-                    propertyEditor_.editNode(nullptr);
-                    _restoreNodePositions = true;
-                }
             }
 
             // close
@@ -608,6 +602,28 @@ private:
         delete str;
         delete store;
         return status;
+    }
+
+    dagbase::Status load(const std::string& filename)
+    {
+        auto store = dagbase::createBackingStore("FileBackingStore");
+
+        if (!store)
+            return dagbase::Status{dagbase::Status::STATUS_INTERNAL_ERROR};
+
+        auto str = dagbase::createInputStream("TextFormat", *store, filename.c_str());
+
+        if (!str)
+            return dagbase::Status{dagbase::Status::STATUS_INTERNAL_ERROR};
+        dagbase::Lua lua;
+        auto status = nodeEditor_.deserialise(*str, lua);
+        if (status.status == dagbase::Status::STATUS_OK)
+        {
+            ImNodes::ClearNodeSelection();
+            propertyEditor_.editNode(nullptr);
+            _restoreNodePositions = true;
+        }
+
     }
 };
 
