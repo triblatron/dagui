@@ -11,7 +11,7 @@
 
 #include <imnodes.h>
 #include <imgui.h>
-#include <imguifd/ImGuiFileDialog.h>
+#include <ImGuiFileDialog.h>
 
 #include <chrono>
 #include <algorithm>
@@ -107,6 +107,39 @@ public:
 
     }
 
+    void saveFile()
+    {
+        if (_filename.empty())
+        {
+            IGFD::FileDialogConfig config;
+
+            config.path = ".";
+            config.flags = ImGuiFileDialogFlags_ConfirmOverwrite;
+            ImGuiFileDialog::Instance()->OpenDialog("Save Graph", "Choose File", ".txt", config);
+        }
+        else
+        {
+            auto status = save(_filename);
+        }
+    }
+
+    void openFile()
+    {
+        IGFD::FileDialogConfig config;
+
+        config.path = ".";
+        ImGuiFileDialog::Instance()->OpenDialog("Open Graph", "Choose File", ".txt", config);
+    }
+
+    void saveFileAs()
+    {
+        IGFD::FileDialogConfig config;
+
+        config.path = ".";
+        config.flags = ImGuiFileDialogFlags_ConfirmOverwrite;
+        ImGuiFileDialog::Instance()->OpenDialog("Save Graph", "Choose File", ".txt", config);
+    }
+
     void show()
     {
         // Update timer context
@@ -121,36 +154,20 @@ public:
         {
             if (ImGui::BeginMenu("File"))
             {
+                ImGui::SetNextItemShortcut(ImGuiMod_Ctrl | ImGuiKey_O);
                 if (ImGui::MenuItem("Open...", "Ctrl+O"))
                 {
-                    IGFD::FileDialogConfig config;
-
-                    config.path = ".";
-                    ImGuiFileDialog::Instance()->OpenDialog("Open Graph", "Choose File", ".txt", config);
+                    openFile();
                 }
-
+                ImGui::SetNextItemShortcut(ImGuiMod_Ctrl | ImGuiKey_S);
                 if (ImGui::MenuItem("Save", "Ctrl+S"))
                 {
-                    if (_filename.empty())
-                    {
-                        IGFD::FileDialogConfig config;
-
-                        config.path = ".";
-                        config.flags = ImGuiFileDialogFlags_ConfirmOverwrite;
-                        ImGuiFileDialog::Instance()->OpenDialog("Save Graph", "Choose File", ".txt", config);
-                    }
-                    else
-                    {
-                        auto status = save(_filename);
-                    }
+                    saveFile();
                 }
+                ImGui::SetNextItemShortcut(ImGuiMod_Ctrl | ImGuiKey_A);
                 if (ImGui::MenuItem("Save As...", "Ctrl+A"))
                 {
-                    IGFD::FileDialogConfig config;
-
-                    config.path = ".";
-                    config.flags = ImGuiFileDialogFlags_ConfirmOverwrite;
-                    ImGuiFileDialog::Instance()->OpenDialog("Save Graph", "Choose File", ".txt", config);
+                    saveFileAs();
                 }
                 ImGui::EndMenu();
             }
@@ -201,6 +218,20 @@ public:
             ImGui::EndMenuBar();
         }
 
+        if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_O))
+        {
+            openFile();
+        }
+
+        if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_S))
+        {
+            saveFile();
+        }
+
+        if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_A))
+        {
+            saveFileAs();
+        }
         // This must be unconditional to prevent flickering or delayed opening of dialogue
         if (ImGuiFileDialog::Instance()->Display("Open Graph")) { // => will show a dialog
             if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
@@ -236,7 +267,8 @@ public:
         ImGui::TextUnformatted("T -- create template from selected node");
         {
             const int num_selected = ImNodes::NumSelectedNodes();
-            if (!ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId) && num_selected == 1 && ImGui::IsKeyReleased(ImGuiKey_T))
+//            if (!ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId) && num_selected == 1 && ImGui::IsKeyReleased(ImGuiKey_T))
+            if (ImGui::Shortcut(ImGuiMod_Ctrl|ImGuiKey_T))
             {
                 bool open = true;
                 std::cerr << "Creating a template\n";
