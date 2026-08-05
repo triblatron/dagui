@@ -1,4 +1,5 @@
-ADD_EXECUTABLE(demoImGUI ../../../ThirdParty/imgui/imgui_demo.cpp ../../../ThirdParty/imgui/backends/imgui_impl_glfw.h ../../../ThirdParty/imgui/backends/imgui_impl_glfw.cpp ../../../ThirdParty/imgui/backends/imgui_impl_glfw.cpp ../../../ThirdParty/imgui/backends/imgui_impl_opengl3.cpp
+SET(THIRDPARTY ../../../ThirdParty/dag/thirdparty/dagbase/ThirdParty)
+ADD_EXECUTABLE(demoImGUI ${THIRDPARTY}/imgui/imgui_demo.cpp ${THIRDPARTY}/imgui/backends/imgui_impl_glfw.h ${THIRDPARTY}/imgui/backends/imgui_impl_glfw.cpp ${THIRDPARTY}/imgui/backends/imgui_impl_glfw.cpp ${THIRDPARTY}/imgui/backends/imgui_impl_opengl3.cpp
 		dagEditor.cpp
 		demoImGUI.cpp
 )
@@ -6,7 +7,7 @@ MESSAGE("Freetype includes:" ${FREETYPE_INCLUDE_DIRS})
 MESSAGE(${CMAKE_SOURCE_DIR}/include;${PROJECT_BINARY_DIR}/include;${LUA_INCLUDE_DIR})
 MESSAGE("OpenGL includes:" ${OPENGL_INCLUDE_DIR})
 MESSAGE("GLUT includes:" ${GLUT_INCLUDE_DIR})
-TARGET_INCLUDE_DIRECTORIES(demoImGUI PUBLIC ${CMAKE_SOURCE_DIR}/ThirdParty/imnodes/example;${CMAKE_SOURCE_DIR}/include;${PROJECT_BINARY_DIR}/include;${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR})
+TARGET_INCLUDE_DIRECTORIES(demoImGUI PUBLIC ${CMAKE_SOURCE_DIR}/ThirdParty/dag/thirdparty/dagbase/ThirdParty/imnodes/example;${CMAKE_SOURCE_DIR}/include;${PROJECT_BINARY_DIR}/include;${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR})
 SET_TARGET_PROPERTIES( demoImGUI PROPERTIES INSTALL_RPATH "${CMAKE_INSTALL_RPATH};${CMAKE_INSTALL_PREFIX}/lib" )
 set_target_properties( demoImGUI PROPERTIES DEFINE_SYMBOL DAG_LIBRARY_STATIC )
 TARGET_LINK_LIBRARIES(demoImGUI PRIVATE dagui dag dagbase imgui ${LUA_LIBRARIES} GLEW::glew glfw OpenGL::GL OpenGL::GLU Freetype::Freetype)
