@@ -11,6 +11,14 @@ The understanding is that linking to these components is allowed as long as user
 
 This library is developed in my spare time for fun.  As such, there is no release schedule except to say when I deem it ready.  Its primary purpose is to serve as the GUI for another side project, so I am not overly concerned by timing of a release.
 
+### 20260810
+
+Prototype 3 is underway, with a possible refactoring to a more relational style of data organisation to improve debugability, especially for the streaming and cloning functionality.
+Ultimately, measured performance will guide how much of this we do.  In theory, doing less pointer chasing and dynamic allocation should lead to better performance, but it is unknown whether the alternative of lookups in vector-based maps will outperform it in practice.
+
+### 20260806
+Prototype 2 is ready, featuring a interface created by Dear ImGUI, creation and deletion of nodes and links, grouping of nodes and templates for resusability, loading and saving of graphs, navigation between parent and child graphs.
+
 ### 20260606
 The decision has been made to use Dear ImGUI for the node and editor and property inspector.  This will significantly speed up development towards the goal of a node-based interface for games and simulation.
 
