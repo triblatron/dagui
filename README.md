@@ -11,6 +11,14 @@ The understanding is that linking to these components is allowed as long as user
 
 This library is developed in my spare time for fun.  As such, there is no release schedule except to say when I deem it ready.  Its primary purpose is to serve as the GUI for another side project, so I am not overly concerned by timing of a release.
 
+### 20260810
+
+Prototype 3 is underway, with a possible refactoring to a more relational style of data organisation to improve debugability, especially for the streaming and cloning functionality.
+Ultimately, measured performance will guide how much of this we do.  In theory, doing less pointer chasing and dynamic allocation should lead to better performance, but it is unknown whether the alternative of lookups in vector-based maps will outperform it in practice.
+
+### 20260806
+Prototype 2 is ready, featuring a interface created by Dear ImGUI, creation and deletion of nodes and links, grouping of nodes and templates for resusability, loading and saving of graphs, navigation between parent and child graphs.
+
 ### 20260606
 The decision has been made to use Dear ImGUI for the node and editor and property inspector.  This will significantly speed up development towards the goal of a node-based interface for games and simulation.
 
@@ -79,7 +87,7 @@ Note that dag, dagbase, dear imgui, imnodes, md4c and svgpp are git submodules a
 ```bash
   git clone https://github.com/triblatron/dagui
   cd dagui
-  git submodule update --init
+  git submodule update --init --recursive
   cd ..
   mkdir dagui_build && cd dagui_build
   cmake -S ../dagui -B . -DCMAKE_INSTALL_PREFIX=../dagui_install
@@ -88,6 +96,22 @@ Note that dag, dagbase, dear imgui, imnodes, md4c and svgpp are git submodules a
   cd ../dagui_install
   source setup.sh
   DaguiTest
+```
+
+### Raspberry Pi OS
+It may be necessary to enable Wayland in raspi-config for demoImGUI to run without error.
+Also, comment the line in demoImGUI.cpp that specifies to use a core profile, which is not supported on Raspberry Pi due to OpenGL version.
+Pi 4:
+```cpp
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+```
+Pi 5:
+```cpp
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 ```
 
 ### Windows 
@@ -153,6 +177,7 @@ DaguiTest
   * Requires buliding Lua from source [triblatron/lua](https://github.com/triblatron/lua)
 * Ubuntu 22.04 LTS x64 gcc 11.4.0
 * Ubuntu 24.04 LTS x64 gcc 13
+* Ubuntu 26.04 LTS x64 gcc 15.2
 * Windows 10 Home Version	10.0.19045 Build 19045 Visual Studio Community 2022 17.13.2
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2017 16.9.65
 * Windows 11 Home 22631.3880 23H2 Visual Studio Community 2019 16.11.39
@@ -162,7 +187,8 @@ DaguiTest
 git clone https://github.com/triblatron/dependencies-x64-windows-vc17
 ```
 * Ubuntu 22.04.4 LTS x64 on WSL 2 gcc 11.4.0
-* Raspberry Pi 5 Raspian 12 aarch64 gcc 12.2
+* Raspberry Pi 5 Raspberry Pi OS Trixie aarch64 gcc 14.2.0
+* Raspberry Pi 4 Raspberry Pi OS Trixie aarch64 gcc 14.2.0
 
 To qualify as working, a platform must:
 * provide at least the mininum version of each dependency in its package manager or build from source
