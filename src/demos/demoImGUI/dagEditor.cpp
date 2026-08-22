@@ -418,7 +418,7 @@ public:
             int start_attr, end_attr;
             if (ImNodes::IsLinkCreated(&start_attr, &end_attr))
             {
-                nodeEditor_.connect(start_attr, end_attr);
+                nodeEditor_.connect(dagbase::PortID(start_attr), dagbase::PortID(end_attr));
             }
         }
 
@@ -428,7 +428,7 @@ public:
             int link_id;
             if (ImNodes::IsLinkDestroyed(&link_id))
             {
-                nodeEditor_.disconnect(link_id);
+                nodeEditor_.disconnect(dagbase::SignalPathID(link_id));
             }
         }
 
@@ -441,7 +441,7 @@ public:
                 ImNodes::GetSelectedLinks(selected_links.data());
                 for (const int edge_id : selected_links)
                 {
-                    nodeEditor_.disconnect(edge_id);
+                    nodeEditor_.disconnect(dagbase::SignalPathID(edge_id));
                 }
             }
         }
@@ -454,7 +454,7 @@ public:
                 ImNodes::GetSelectedNodes(selected_nodes.data());
                 for (const int node_id : selected_nodes)
                 {
-                    nodeEditor_.deleteNode(node_id);
+                    nodeEditor_.deleteNode(dagbase::NodeID(node_id));
                 }
             }
         }
@@ -502,7 +502,7 @@ public:
                 dag::SelectionInterface::Cont a;
                 for (auto node_id : selected_nodes)
                 {
-                    if (auto node = nodeEditor_.activeGraph()->node(node_id); node)
+                    if (auto node = nodeEditor_.activeGraph()->node(dagbase::NodeID(node_id)); node)
                         a.m.emplace(node);
                 }
                 nodeEditor_.select(dag::NodeEditorInterface::SELECTION_SET, a);
@@ -566,7 +566,7 @@ public:
         {
             int selectedNodeId{ -1 };
             ImNodes::GetSelectedNodes(&selectedNodeId);
-            propertyEditor_.editNode(nodeEditor_.activeGraph()->node(selectedNodeId));
+            propertyEditor_.editNode(nodeEditor_.activeGraph()->node(dagbase::NodeID(selectedNodeId)));
         }
         this->propertyEditor_.show();
         ImGui::EndTable();
