@@ -618,7 +618,7 @@ private:
             return dagbase::Status{dagbase::Status::STATUS_INTERNAL_ERROR};
         auto str = dagbase::createOutputStream("TextFormat", *store, filename.c_str());
         dagbase::Lua lua;
-        auto status = nodeEditor_.serialise(*str, lua);
+        auto status = nodeEditor_.serialise(dag::NodeEditorLive::SERIALISE_OBJECT_GRAPH, *str, lua);
         if (status.status != dagbase::Status::STATUS_OK)
         {
             if (ImGui::BeginPopup("SaveFailure"))
@@ -648,7 +648,7 @@ private:
         if (!str)
             return dagbase::Status{dagbase::Status::STATUS_INTERNAL_ERROR};
         dagbase::Lua lua;
-        auto status = nodeEditor_.deserialise(*str, lua);
+        auto status = nodeEditor_.deserialise(dag::NodeEditorLive::SERIALISE_OBJECT_GRAPH, *str, lua);
         if (status.status == dagbase::Status::STATUS_OK)
         {
             ImNodes::ClearNodeSelection();
