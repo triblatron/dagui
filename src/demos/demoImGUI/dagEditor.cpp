@@ -380,7 +380,7 @@ public:
                     ImNodes::EndInputAttribute();
                     break;
                 case dagbase::PortDirection::DIR_INTERNAL:
-                    ImNodes::BeginOutputAttribute(port->id());
+                    ImNodes::BeginStaticAttribute(port->id());
                     ImGui::TextUnformatted(label.c_str());
                     ImNodes::EndStaticAttribute();
                     break;
