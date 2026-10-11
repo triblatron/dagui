@@ -3,6 +3,7 @@
 %{
 #include "core/Node.h"
 #include "core/Port.h"
+#include "core/PortDirection.h"
 #include "core/Status.h"
 #include "util/Name.h"
 #include "core/Scripting.h"
@@ -77,6 +78,7 @@
 
 %include "core/Node.h"
 %include "core/Port.h"
+%include "core/PortDirection.h"
 %include "core/Status.h"
 %include "util/Name.h"
 %include "core/Scripting.h"
