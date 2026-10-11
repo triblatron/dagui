@@ -3,6 +3,7 @@
 %{
 #include "core/Node.h"
 #include "core/Port.h"
+#include "core/Status.h"
 #include "util/Name.h"
 %}
 
@@ -59,12 +60,20 @@
 
 %ignore dagbase::Name::find;
 
+%ignore dagbase::Status::find;
+
 %rename(toUInt32) dagbase::Name::operator std::uint32_t;
+%include "typemaps.i"
+%typemap(out) uint32_t {
+ lua_pushinteger(L, (lua_Integer)$1);
+ SWIG_arg++;
+}
 
 %include "stdint.i"
 
 %include "core/Node.h"
 %include "core/Port.h"
+%include "core/Status.h"
 %include "util/Name.h"
 
 %template(NodeID) dagbase::Name<dagbase::Node>;
