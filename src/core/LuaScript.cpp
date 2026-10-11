@@ -99,6 +99,8 @@ namespace dagui
             ENUM_NAME(STATE_THREAD_INITED)
             ENUM_NAME(STATE_THREAD_FINISHED)
         }
+
+        return "<error>";
     }
 
     void LuaScript::setState(State newState)
