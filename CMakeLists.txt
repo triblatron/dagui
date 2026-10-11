@@ -109,6 +109,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/imgui/BoolEditorImGui.h
         include/imgui/EditorRegistryImGui.h
         include/core/Scripting.h
+        include/core/LuaScript.h
         # ThirdParty/imgui/imconfig.h
 		# ThirdParty/imgui/imgui.h
 		# ThirdParty/imgui/imgui_internal.h
@@ -116,6 +117,8 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
 		# ThirdParty/imgui/imstb_textedit.h
 		# ThirdParty/imgui/imstb_truetype.h
 )
+set(SWIG_RUNTIME_HEADER ${CMAKE_CURRENT_BINARY_DIR}/include/lua_runtime.h)
+
 SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp src/core/Shape.cpp src/core/Widget.cpp ${ALL_PUBLIC_HEADERS}        
         src/util/CompletionTrie.cpp
         src/util/CompletionSubstring.cpp
@@ -203,6 +206,8 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         src/imgui/EditorRegistryImGui.cpp
         src/core/TestEditable.cpp
         src/core/Scripting.cpp
+        src/core/LuaScript.cpp
+        ${SWIG_RUNTIME_HEADER}
 )
 
 SET(HEADERS_GROUP "Header Files")
@@ -212,17 +217,24 @@ SOURCE_GROUP(
         FILES ${ALL_PUBLIC_HEADERS}
 )
 
+SET(GENERATED_HEADERS ${SWIG_RUNTIME_HEADER})
 SET(GENERATED_HEADERS_GROUP "Generated header files")
 SOURCE_GROUP(
         ${GENERATED_HEADERS_GROUP}
         FILES ${GENERATED_HEADERS}
 )
-
 SET( DEP_ROOT CACHE PATH "Dependency root" )
 
 ADD_LIBRARY( dagui SHARED ${DAGUI_SRC} )
 #INCLUDE_DIRECTORIES(PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
-TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
+TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
+# The command must be in the directory that needs the generated file.
+ADD_CUSTOM_COMMAND( OUTPUT ${SWIG_RUNTIME_HEADER} COMMAND ${SWIG_EXECUTABLE} -lua -external-runtime lua_runtime.h
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include COMMENT "Building Lua interface header..." )
+
+add_custom_target(luaRuntime DEPENDS ${SWIG_RUNTIME_HEADER})
+set_property(SOURCE ${SWIG_RUNTIME_HEADER} PROPERTY GENERATED TRUE)
+ADD_DEPENDENCIES(dagui luaRuntime)
 
 set_target_properties( dagui PROPERTIES DEFINE_SYMBOL DAGUI_LIBRARY )
 LINK_DIRECTORIES( ${DEP_ROOT}/lib )

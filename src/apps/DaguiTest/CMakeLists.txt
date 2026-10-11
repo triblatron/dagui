@@ -13,11 +13,12 @@ SET( DaguiTest_SRC DaguiTest.cpp RoundTripTest.cpp
         FakeEditorRegistry.h
         FakeBoolEditor.h
         FakeEditorRegistry.cpp
-        ../../../include/core/TestEditable.h)
+        ../../../include/core/TestEditable.h
+        ScriptTest.cpp)
 ADD_EXECUTABLE( DaguiTest ${DaguiTest_SRC} )
 IF (UNIX)
 LIST(APPEND LUA_LIBRARIES dl)
 ENDIF(UNIX)
-TARGET_LINK_LIBRARIES( DaguiTest PRIVATE dagbase ${LUA_LIBRARIES} Freetype::Freetype;dagui;GTest::gtest_main;GTest::gmock;glm::glm )
+TARGET_LINK_LIBRARIES( DaguiTest PRIVATE dagbase ${LUA_LIBRARIES} Freetype::Freetype;dagui;dag;GTest::gtest_main;GTest::gmock;glm::glm )
 INSTALL(TARGETS DaguiTest RUNTIME DESTINATION bin)
 SET_TARGET_PROPERTIES( DaguiTest PROPERTIES INSTALL_RPATH "${CMAKE_INSTALL_RPATH};${CMAKE_INSTALL_PREFIX}/lib" )
