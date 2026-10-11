@@ -66,7 +66,7 @@
 %ignore dagbase::Name::find;
 
 %ignore dagbase::Status::find;
-
+%ignore operator<<(std::ostream&, const Status&);
 %rename(toUInt32) dagbase::Name::operator std::uint32_t;
 %include "typemaps.i"
 %include "stdint.i"
