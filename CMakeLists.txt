@@ -10,6 +10,7 @@ FIND_PACKAGE(Freetype REQUIRED)
 FIND_PACKAGE(GLEW REQUIRED)
 FIND_PACKAGE(Lua 5.4 REQUIRED)
 FIND_PACKAGE(glm REQUIRED)
+FIND_PACKAGE(SWIG REQUIRED)
 
 SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/core/Rectangle.h include/core/Shape.h include/core/Widget.h
         include/util/Completion.h
@@ -234,6 +235,7 @@ add_subdirectory(src/apps/BenchmarkDagui)
 add_subdirectory(src/demos/demoText)
 add_subdirectory(src/demos/demoRenderer)
 add_subdirectory(src/demos/demoImGUI)
+add_subdirectory(src/luadag)
 
 INCLUDE( CheckIncludeFile )
 INCLUDE( CheckIncludeFileCXX )
@@ -292,3 +294,4 @@ INSTALL( TARGETS dagui
         ARCHIVE DESTINATION lib)
 INSTALL(DIRECTORY data DESTINATION .)
 INSTALL(DIRECTORY etc DESTINATION .)
+INSTALL(TARGETS luadag DESTINATION ${CMAKE_INSTALL_PREFIX})
