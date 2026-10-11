@@ -11,6 +11,7 @@
 
 #include <gtest/gtest.h>
 
+#include "core/Scripting.h"
 #include "core/ValidatorNumber.h"
 #include "gfx/AttributeDescriptor.h"
 
@@ -756,3 +757,43 @@ INSTANTIATE_TEST_SUITE_P(Event, EventKeyMask_testRoundTrip, ::testing::Values(
     std::make_tuple("KEY_UP_ARROW", dagui::KEY_UP_ARROW),
     std::make_tuple("KEY_DOWN_ARROW", dagui::KEY_DOWN_ARROW)
 ));
+
+class Action_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Action>>
+{
+
+};
+
+TEST_P(Action_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::actionToString(value));
+    EXPECT_EQ(value, dagui::parseAction(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(Action, Action_testRoundTrip, ::testing::Values(
+    std::make_tuple("ACTION_UNKNOWN", dagui::ACTION_UNKNOWN),
+    std::make_tuple("ACTION_ADD_PORT", dagui::ACTION_ADD_PORT),
+    std::make_tuple("ACTION_DELETE_PORT", dagui::ACTION_DELETE_PORT)
+    ));
+
+class Namespace_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::Namespace>>
+{
+
+};
+
+TEST_P(Namespace_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::namespaceToString(value));
+    EXPECT_EQ(value, dagui::parseNamespace(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(Namespace, Namespace_testRoundTrip, ::testing::Values(
+    std::make_tuple("NAMESPACE_UNKNOWN", dagui::NAMESPACE_UNKNOWN),
+    std::make_tuple("NAMESPACE_SYSTEM", dagui::NAMESPACE_SYSTEM),
+    std::make_tuple("NAMESPACE_USER", dagui::NAMESPACE_USER)
+    ));

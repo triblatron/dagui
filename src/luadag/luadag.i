@@ -5,9 +5,13 @@
 #include "core/Port.h"
 #include "core/Status.h"
 #include "util/Name.h"
+#include "core/Scripting.h"
 %}
 
 %define DAGBASE_API
+%enddef
+
+%define DAGUI_API
 %enddef
 
 %define DAGBASE_REGISTER_ENUM
@@ -64,17 +68,18 @@
 
 %rename(toUInt32) dagbase::Name::operator std::uint32_t;
 %include "typemaps.i"
+%include "stdint.i"
 %typemap(out) uint32_t {
  lua_pushinteger(L, (lua_Integer)$1);
  SWIG_arg++;
 }
 
-%include "stdint.i"
 
 %include "core/Node.h"
 %include "core/Port.h"
 %include "core/Status.h"
 %include "util/Name.h"
+%include "core/Scripting.h"
 
 %template(NodeID) dagbase::Name<dagbase::Node>;
 %template(PortID) dagbase::Name<dagbase::Port>;

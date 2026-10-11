@@ -6,5 +6,5 @@ set_property(SOURCE luadag.i PROPERTY SWIG_FLAGS "-I${CMAKE_SOURCE_DIR}/include;
 set_property(SOURCE luadag.i PROPERTY USE_SWIG_DEPENDENCIES TRUE)
 swig_add_library(luadag TYPE MODULE LANGUAGE lua SOURCES luadag.i)
 set_target_properties(${SWIG_MODULE_luadag_REAL_NAME} PROPERTIES PREFIX "")
-target_include_directories(${SWIG_MODULE_luadag_REAL_NAME} PUBLIC ${LUA_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/ThirdParty/dag/thirdparty/dagbase/include)
-TARGET_LINK_LIBRARIES( luadag dagbase ${LUA_LIBRARIES} )
+target_include_directories(${SWIG_MODULE_luadag_REAL_NAME} PUBLIC ${LUA_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/ThirdParty/dag/include ${CMAKE_SOURCE_DIR}/ThirdParty/dag/thirdparty/dagbase/include)
+TARGET_LINK_LIBRARIES( luadag dagui dag dagbase ${LUA_LIBRARIES} )
