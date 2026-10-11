@@ -61,6 +61,8 @@
 
 %rename(toUInt32) dagbase::Name::operator std::uint32_t;
 
+%include "stdint.i"
+
 %include "core/Node.h"
 %include "core/Port.h"
 %include "util/Name.h"
