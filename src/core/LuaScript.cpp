@@ -42,19 +42,27 @@ namespace dagui
                 case STATE_INITIAL:
                     if (!_mainName.empty())
                     {
-                        _thread = dagbase::Coroutine::fromNamedFunction(_lua->get(), _mainName.c_str());
+                        if (!_thread)
+                            _thread = dagbase::Coroutine::fromNamedFunction(_lua->get(), _mainName.c_str());
+                        else
+                        {
+                            _thread->setMainFunction(_mainName.c_str());
+                        }
+                        if (_thread)
+                        {
+                            auto type = SWIG_TypeQuery(_thread->get(), "_p_dagbase__Node");
+                            if (type)
+                            {
+                                SWIG_NewPointerObj(_thread->get(), self, type, 0);
+                            }
+                            setState(STATE_THREAD_INITED);
+                        }
                     }
-                    setState(STATE_THREAD_INITED);
                     break;
                 case STATE_THREAD_INITED:
                 {
                     if (_thread)
                     {
-                        auto type = SWIG_TypeQuery(_thread->get(), "_p_dagbase__Node");
-                        if (type)
-                        {
-                            SWIG_NewPointerObj(_thread->get(), self, type, 0);
-                        }
                         int numResults = 0;
                         auto reason = _thread->resume(1, &numResults);
                         switch (reason)
@@ -100,6 +108,15 @@ namespace dagui
                 }
             }
         } while (_state!=prevState);
+    }
+
+    void LuaScript::reset()
+    {
+        if (_thread)
+        {
+            _thread->reset();
+            setState(STATE_INITIAL);
+        }
     }
 
     const char * LuaScript::stateName(State state)

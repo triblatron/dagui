@@ -36,6 +36,12 @@ TEST_P(Script_testExecute, testExpectedResult)
     ASSERT_EQ(1.0, std::get<double>(node->dynamicPort(0)->value().value()));
     sut.step(node);
     EXPECT_TRUE(sut.isFinished());
+    sut.reset();
+    sut.step(node);
+    ASSERT_EQ(2, node->totalPorts());
+    ASSERT_EQ(1.0, std::get<double>(node->dynamicPort(1)->value().value()));
+    sut.step(node);
+    EXPECT_TRUE(sut.isFinished());
 }
 
 INSTANTIATE_TEST_SUITE_P(Script, Script_testExecute, ::testing::Values(
