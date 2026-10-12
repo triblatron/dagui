@@ -207,7 +207,6 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         src/core/TestEditable.cpp
         src/core/Scripting.cpp
         src/core/LuaScript.cpp
-        ${SWIG_RUNTIME_HEADER}
 )
 
 SET(HEADERS_GROUP "Header Files")
@@ -229,8 +228,9 @@ ADD_LIBRARY( dagui SHARED ${DAGUI_SRC} )
 #INCLUDE_DIRECTORIES(PUBLIC ${CMAKE_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
 TARGET_INCLUDE_DIRECTORIES( dagui PUBLIC ${CMAKE_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/include ${LUA_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
 # The command must be in the directory that needs the generated file.
-ADD_CUSTOM_COMMAND( OUTPUT ${SWIG_RUNTIME_HEADER} COMMAND ${SWIG_EXECUTABLE} -lua -external-runtime lua_runtime.h
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include COMMENT "Building Lua interface header..." )
+ADD_CUSTOM_COMMAND( OUTPUT ${SWIG_RUNTIME_HEADER} 	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/include
+													COMMAND ${SWIG_EXECUTABLE} -lua -external-runtime lua_runtime.h
+													WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include COMMENT "Building Lua interface header..." )
 
 add_custom_target(luaRuntime DEPENDS ${SWIG_RUNTIME_HEADER})
 set_property(SOURCE ${SWIG_RUNTIME_HEADER} PROPERTY GENERATED TRUE)
