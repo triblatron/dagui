@@ -42,6 +42,11 @@ namespace dagui
 
         void step(dagbase::Node* self) override;
 
+        bool isFinished() const override
+        {
+            return _state == STATE_THREAD_FINISHED;
+        }
+
         static const char* stateName(State state);
     private:
         dagbase::Lua* _lua{nullptr};

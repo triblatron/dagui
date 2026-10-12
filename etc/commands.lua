@@ -13,7 +13,7 @@ end
 root=
 {
 	update=function(self)
-	
-		addPort("spoo", luadag.PortDirection_DIR_INTERNAL, luadag.Port_FLAGS_NONE, "TestEnumWrapper", "TEST_FOO")
+		local port = addPort("spoo", luadag.PortDirection_DIR_INTERNAL, luadag.Port_FLAGS_NONE, "TestEnumWrapper", "TEST_FOO")
+		assert(port~=nil)
 	end,
 }

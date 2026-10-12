@@ -70,13 +70,24 @@ namespace dagui
                                 {
                                     case ACTION_ADD_PORT:
                                     {
-                                        const char* name = lua_tostring(_thread->get(), 3);
-                                        auto dir = dagbase::PortDirection::Direction(_thread->integer(4));
-                                        auto flags = dagbase::Node::NodeFlags(_thread->integer(5));
-                                        auto value = _thread->number(6);//_thread->get(), 4));
-                                        dag::MemoryNodeLibrary nodeLib;
-                                        self->addDynamicPort(new dagbase::Port(nodeLib.nextPortID(), name, dir, dagbase::Port::FLAGS_NONE, dagbase::Value(value)), dagbase::MetaPort::FLAGS_OWN_BIT);
-                                        lua_pop(_thread->get(), 4);
+                                        if (lua_gettop(_thread->get())>=6)
+                                        {
+                                            const char* name = lua_tostring(_thread->get(), 3);
+                                            auto dir = dagbase::PortDirection::Direction(_thread->integer(4));
+                                            auto flags = dagbase::Node::NodeFlags(_thread->integer(5));
+                                            auto value = _thread->number(6);
+                                            dag::MemoryNodeLibrary nodeLib;
+                                            auto port = new dagbase::Port(nodeLib.nextPortID(), name, dir, dagbase::Port::FLAGS_NONE, dagbase::Value(value));
+                                            self->addDynamicPort(port, dagbase::MetaPort::FLAGS_OWN_BIT);
+                                            // Pop results of resume
+                                            lua_pop(_thread->get(), 6);
+                                            auto portType = SWIG_TypeQuery(_thread->get(), "_p_dagbase__Port");
+                                            // Push results of yield
+                                            if (portType)
+                                            {
+                                                SWIG_NewPointerObj(_thread->get(), port, portType, 0);
+                                            }
+                                        }
                                         break;
                                     }
                                 }

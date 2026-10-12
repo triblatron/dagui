@@ -34,8 +34,10 @@ TEST_P(Script_testExecute, testExpectedResult)
     sut.step(node);
     ASSERT_EQ(1, node->totalPorts());
     ASSERT_EQ(1.0, std::get<double>(node->dynamicPort(0)->value().value()));
+    sut.step(node);
+    EXPECT_TRUE(sut.isFinished());
 }
 
 INSTANTIATE_TEST_SUITE_P(Script, Script_testExecute, ::testing::Values(
-    std::make_tuple("data/tests/Coroutine/Resume.lua", "test2")
+    std::make_tuple("data/tests/Script/Resume.lua", "test2")
     ));
