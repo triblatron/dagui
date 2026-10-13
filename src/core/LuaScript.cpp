@@ -10,14 +10,14 @@
 #include "core/Scripting.h"
 #include "lua_runtime.h"
 #include "util/enums.h"
-
-#include <string>
-
 #include "MemoryNodeLibrary.h"
 #include "NodeEditorLive.h"
 #include "core/Node.h"
 #include "core/PortDirection.h"
 #include "core/ScriptProtocol.h"
+
+#include <string>
+#include <array>
 
 namespace dagui
 {
