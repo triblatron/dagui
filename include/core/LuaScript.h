@@ -16,6 +16,12 @@ namespace dagbase
     class ConfigurationElement;
     class Coroutine;
     class Lua;
+    class ScriptProtocol;
+}
+
+namespace dag
+{
+    class NodeEditorLive;
 }
 
 namespace dagui
@@ -31,7 +37,7 @@ namespace dagui
             STATE_THREAD_FINISHED
         };
     public:
-        LuaScript(dagbase::Lua* lua);
+        LuaScript(dagbase::Lua* lua, dag::NodeEditorLive* nodeEditor, dagbase::ScriptProtocol* proto);
 
         void configure(dagbase::ConfigurationElement& config);
 
@@ -53,6 +59,8 @@ namespace dagui
     private:
         dagbase::Lua* _lua{nullptr};
         dagbase::Coroutine* _thread{nullptr};
+        dag::NodeEditorLive* _nodeEditor{nullptr};
+        dagbase::ScriptProtocol* _proto{nullptr};
         State _state{STATE_INITIAL};
         std::string _mainName;
         void setState(State newState);

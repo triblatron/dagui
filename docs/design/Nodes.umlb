@@ -1,4 +1,5 @@
 {"_id":"0aE7cbqIA2ohQzq7","name":"{NODE_ID,PORT_ID,SIGNAL_PATH_ID}","kind":"StandardType","isMandatory":false}
+{"_id":"14VBzqjCWJndNS4B","isAbstract":false,"isFinal":false,"isInterface":true,"diagramId":"QLsgRJ3yAICrsRt9","name":"ScriptProtocol","kind":"Class","position":{"x":1141.5,"y":1023},"discriminator":"Class","stereotypes":[]}
 {"_id":"1oOIQhH98etHhWZx","name":"gen","isAbstract":false,"type":"7fllHjzks0FvPLO4","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"al46r2fpAgmrJ9Ou","discriminator":"Property","kind":"Property","index":1}
 {"_id":"308dTLU5D0KfrDVj","name":"ValueBuffer","kind":"StandardType","isMandatory":false}
 {"_id":"4776DEh64D7L6Vno","name":"StatusCode","kind":"StandardType","isMandatory":false}
@@ -8,9 +9,13 @@
 {"_id":"4xUSmuIfe7GWqwVX","name":"int32","kind":"StandardType","isMandatory":false}
 {"_id":"5CCpvBZaqqXgXSOg","name":"Variant","kind":"StandardType","isMandatory":false}
 {"_id":"5Nz47xyMirtzDvJP","name":"map of NodeID to Node","kind":"StandardType","isMandatory":false}
+{"_id":"5zeQH7hy7UIIVBeT","name":"Atom","kind":"StandardType","isMandatory":false}
 {"_id":"611sdafZilO22q36","name":"time","kind":"StandardType","isMandatory":false}
+{"methodId":"GRVffExwrv4BLl66","name":"dir","type":"6mnwSlSCUc30INbL","kind":"Parameter","discriminator":"Parameter","index":1,"_id":"613lENpDgAgoVNlD"}
 {"_id":"6TIQIPYlkWNN8aQB","name":"db","isAbstract":false,"type":"hx7Ayf3HIhvLwMYr","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"GJio1ZTbswlT5TNF","discriminator":"Property","kind":"Property","index":6}
+{"_id":"6mnwSlSCUc30INbL","name":"CompassDirection","kind":"StandardType","isMandatory":false}
 {"_id":"7fllHjzks0FvPLO4","name":"uint32","kind":"StandardType","isMandatory":false}
+{"methodId":"dRZepAq3bCII02BI","name":"opCode","type":"7fllHjzks0FvPLO4","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"7wWKwySaZX67qyNy","isDeleted":false}
 {"methodId":"pn8h9yKixdw6JMu9","name":"nodeId","type":"I32NbqJ2hyJnCr8b","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"7ypFPdBivXnrcQrJ"}
 {"methodId":"KbdHIdHz77xb1oRR","name":"mode","type":"fdUHGWGgKrnt2b7t","kind":"Parameter","discriminator":"Parameter","index":1,"_id":"8Owt4ahTYYNpKxad"}
 {"_id":"93iEpmLnzr90vf8V","name":"direction","isAbstract":false,"type":"HnrQIYTyuGGsAavW","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"Sp58E6cVo6iEMaet","discriminator":"Property","kind":"Property","index":2}
@@ -28,31 +33,43 @@
 {"methodId":"LwaX4HY6j2ToH4FE","name":"value","type":"ZwXSJWHK6Ltbd0Jz","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"DVJxfgLg4GZTr32p"}
 {"_id":"DssjpEXeiSISbk6R","name":"nodesPorts","isAbstract":false,"type":"ODE2c6rNrTJHmwKu","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"GJio1ZTbswlT5TNF","discriminator":"Property","kind":"Property","index":5}
 {"_id":"E4ZTfzfeZIP9IiRO","name":"port","isAbstract":false,"type":"Sp58E6cVo6iEMaet","visibility":"public","isStatic":false,"classifierId":"GJio1ZTbswlT5TNF","discriminator":"Method","kind":"Method","index":1}
+{"_id":"ED7psk4H2CuogiSi","name":"{INITIAL,THREAD_INITED,THREAD_FINISHED}","kind":"StandardType","isMandatory":false}
+{"methodId":"dRZepAq3bCII02BI","name":"args","type":"bU1d7gTfMPwIaS19","kind":"Parameter","discriminator":"Parameter","index":1,"_id":"EghyU3exDmy1uqvC","isDeleted":false}
 {"_id":"EhAzC9kdohJGa4r7","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"Gen","kind":"Class","position":{"x":1682.5,"y":667},"discriminator":"Class","stereotypes":[]}
 {"methodId":"ZBNYriAEb4j0Q8Ui","name":"id","type":"I32NbqJ2hyJnCr8b","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"FVCWYw7fDR3yuYUV"}
 {"_id":"GCgqqfkwtovHTM1A","name":"name","isAbstract":false,"type":"ibD0aI1HjqM53lps","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"Sjqwl0bfQRAuJQ8e","discriminator":"Property","kind":"Property","index":1}
 {"methodId":"E4ZTfzfeZIP9IiRO","name":"id","type":"MdOvSgkUqff9sozk","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"GJQOFjPudIqfEHOz"}
 {"_id":"GJio1ZTbswlT5TNF","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"Graph","kind":"Class","position":{"x":595.5,"y":387},"discriminator":"Class","stereotypes":[],"customDimension":{"width":365.65625,"height":173.234375}}
 {"_id":"GN4vBg1uVm6ypcSc","name":"optional<Result>","kind":"StandardType","isMandatory":false}
+{"_id":"GRVffExwrv4BLl66","name":"create","isAbstract":false,"type":"YmJp99HG0KLfpwUq","visibility":"public","isStatic":false,"classifierId":"eKtsQo34wLTCUkQO","discriminator":"Method","kind":"Method","index":1}
+{"_id":"Gzg6zRAOCiUJs4lW","name":"","diagramId":"QLsgRJ3yAICrsRt9","kind":"Relationship","relationshipKind":"Implementation","source":{"id":"JqhrFYICX5NGk1xL","isAutoDocking":false,"dockingSide":"TOP","positionInPercent":0.5},"target":{"id":"J4FKV7BV06o1hTFb","isAutoDocking":false,"dockingSide":"BOTTOM","positionInPercent":0.5,"isNavigable":false}}
+{"_id":"HgJNuiQwYdAdKhD7","name":"ReptolInterface","kind":"StandardType","isMandatory":false}
 {"_id":"HnrQIYTyuGGsAavW","name":"PortDirection","kind":"StandardType","isMandatory":false}
 {"_id":"Hx48lpOGXXbq9wOX","name":"id","isAbstract":false,"type":"MdOvSgkUqff9sozk","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"Sp58E6cVo6iEMaet","discriminator":"Property","kind":"Property","index":0}
 {"_id":"I32NbqJ2hyJnCr8b","name":"NodeID","kind":"StandardType","isMandatory":false}
 {"_id":"IRP4Jlg1bAhiZi1Q","name":"addPort","isAbstract":false,"type":"xnQSd2Oqhq08yPV8","visibility":"public","isStatic":false,"classifierId":"ODE2c6rNrTJHmwKu","discriminator":"Method","kind":"Method","index":1}
+{"methodId":"w1QnuxcGzFZkhxy9","name":"dir","type":"6mnwSlSCUc30INbL","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"IRkIprZVz608ybfw"}
 {"methodId":"Wf5HgKMaaPMIscx3","name":"id","type":"5Nz47xyMirtzDvJP","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"IrtB07tnmIc3gCC7"}
+{"_id":"J4FKV7BV06o1hTFb","isAbstract":false,"isFinal":false,"isInterface":true,"diagramId":"QLsgRJ3yAICrsRt9","name":"Script","kind":"Class","position":{"x":622.5,"y":939},"discriminator":"Class","stereotypes":[]}
 {"_id":"JDjuQNUx6cBWW9PT","name":"ports","isAbstract":false,"type":"gAOAKJ0TCZEzTqFv","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"GJio1ZTbswlT5TNF","discriminator":"Property","kind":"Property","index":2}
+{"_id":"JqhrFYICX5NGk1xL","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"CppScript","kind":"Class","position":{"x":812.5,"y":1165},"discriminator":"Class","stereotypes":[]}
 {"_id":"KbdHIdHz77xb1oRR","name":"select","isAbstract":false,"type":"pIoYy4mYDRISwggy","visibility":"public","isStatic":false,"classifierId":"hx7Ayf3HIhvLwMYr","discriminator":"Method","kind":"Method","index":3}
 {"_id":"Kdqp5wXIMmCGfsNq","name":"array of SignalPath","kind":"StandardType","isMandatory":false}
+{"_id":"KgOS9oO6boPoiISO","name":"","diagramId":"QLsgRJ3yAICrsRt9","kind":"Relationship","relationshipKind":"Implementation","source":{"id":"mW7JuDe5F5R8d175","isAutoDocking":false,"dockingSide":"TOP","positionInPercent":0.5},"target":{"id":"J4FKV7BV06o1hTFb","isAutoDocking":false,"dockingSide":"BOTTOM","positionInPercent":0.5,"isNavigable":false}}
 {"_id":"L3TsmaT2nFfiZZql","name":"PortType","kind":"StandardType","isMandatory":false}
 {"_id":"LQpJcQOdbTc6KOGb","name":"map of NodeID to array of PortID","kind":"StandardType","isMandatory":false}
 {"_id":"LwaX4HY6j2ToH4FE","name":"insert","isAbstract":false,"type":"xnQSd2Oqhq08yPV8","visibility":"public","isStatic":false,"classifierId":"9UsxRIF7h22HV1HF","discriminator":"Method","kind":"Method","index":0}
 {"_id":"LzMpbvDqVTckcfoG","name":"template","kind":"Stereotype","diagramId":"QLsgRJ3yAICrsRt9"}
+{"_id":"M6l05u7gj6SMaw88","name":"reset","isAbstract":false,"type":"xnQSd2Oqhq08yPV8","visibility":"public","isStatic":false,"classifierId":"J4FKV7BV06o1hTFb","discriminator":"Method","kind":"Method","index":2}
 {"_id":"MdOvSgkUqff9sozk","name":"PortID","kind":"StandardType","isMandatory":false}
+{"_id":"MvuvNozkGbKpQPSN","name":"CharacterDef","kind":"StandardType","isMandatory":false}
 {"methodId":"gyctydQAq0p6TGb4","name":"signalPaths","type":"Kdqp5wXIMmCGfsNq","kind":"Parameter","discriminator":"Parameter","index":1,"_id":"NR03yiKQuznUqsyl"}
 {"_id":"NZ2eAtp276lTqeJU","name":"pair<iterator,bool>","kind":"StandardType","isMandatory":false}
 {"_id":"NcCPXT0P7eyFmEAD","name":"initialValue","isAbstract":false,"type":"xVVFFrr5aF2325or","visibility":"public","isStatic":false,"classifierId":"Sp58E6cVo6iEMaet","discriminator":"Method","kind":"Method","index":1}
 {"_id":"ODE2c6rNrTJHmwKu","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"NodesPortsTable","kind":"Class","position":{"x":1824.5,"y":387},"discriminator":"Class","stereotypes":[],"customDimension":{"width":680.90625,"height":164.0234375}}
 {"_id":"OWylL863dNo3Xb08","name":"children","isAbstract":false,"type":"U3AhnmzbVxPOKRf2","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"GJio1ZTbswlT5TNF","discriminator":"Property","kind":"Property","index":4}
 {"_id":"OhU6swUZlGfRd9tf","name":"id","isAbstract":false,"type":"4xUSmuIfe7GWqwVX","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"al46r2fpAgmrJ9Ou","discriminator":"Property","kind":"Property","index":0}
+{"_id":"PF3PvIXpl0YrA5cS","name":"thread","isAbstract":false,"type":"g1pnB9ZL8wL2dYcB","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"mW7JuDe5F5R8d175","discriminator":"Property","kind":"Property","index":0}
 {"_id":"PQF2ykDvfkFOTqwJ","name":"parentGraph","isAbstract":false,"type":"qd1dcmVVRPRSgVZu","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"Sjqwl0bfQRAuJQ8e","discriminator":"Property","kind":"Property","index":2}
 {"_id":"QLsgRJ3yAICrsRt9","name":"Nodes","kind":"ClassDiagram","titlePosition":{"x":550,"y":24},"version":"1.13.0","dimension":{"width":4000,"height":4000}}
 {"_id":"QdXZFPcwVDej17eg","name":"SignalPathTable","kind":"StandardType","isMandatory":false}
@@ -70,6 +87,8 @@
 {"_id":"U3AhnmzbVxPOKRf2","name":"map of GraphID to Graph","kind":"StandardType","isMandatory":false}
 {"_id":"UE7gF35RahVF5MXi","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"SignalPath","kind":"Class","position":{"x":1142.5,"y":127},"discriminator":"Class","stereotypes":[],"customDimension":{"width":336.8515625,"height":147.234375}}
 {"methodId":"WQY1SR1cJlkRNqZX","name":"to","type":"SadPS8pvT32LOsTP","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"UEWKUj2N6TW7QuzX"}
+{"_id":"UqEDD5R6W83DtY3M","name":"","diagramId":"QLsgRJ3yAICrsRt9","kind":"Relationship","relationshipKind":"Implementation","source":{"id":"ti20dYEElHTqct2R","isAutoDocking":false,"dockingSide":"TOP","positionInPercent":0.5},"target":{"id":"14VBzqjCWJndNS4B","isAutoDocking":false,"dockingSide":"BOTTOM","positionInPercent":0.5,"isNavigable":false}}
+{"_id":"VTmBFUJhtSwtiiCq","name":"isFinished","isAbstract":false,"type":"i00vn8WMeLJrTWmv","visibility":"public","isStatic":false,"classifierId":"J4FKV7BV06o1hTFb","discriminator":"Method","kind":"Method","index":1}
 {"_id":"WKx6HR6LNEkk2ZIy","name":"values","isAbstract":false,"type":"m6LkYAqSS05IB6ru","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"Sjqwl0bfQRAuJQ8e","discriminator":"Property","kind":"Property","index":6}
 {"_id":"WQY1SR1cJlkRNqZX","name":"findWithTo","isAbstract":false,"type":"xnQSd2Oqhq08yPV8","visibility":"public","isStatic":false,"classifierId":"icYteybSaZkPLH2D","discriminator":"Method","kind":"Method","index":3}
 {"_id":"Wf5HgKMaaPMIscx3","name":"deleteNode","isAbstract":false,"type":"pIoYy4mYDRISwggy","visibility":"public","isStatic":false,"classifierId":"hx7Ayf3HIhvLwMYr","discriminator":"Method","kind":"Method","index":2}
@@ -79,7 +98,9 @@
 {"_id":"XkJEAFsjueVSvizM","name":"char","kind":"StandardType","isMandatory":false}
 {"_id":"YEiRuEakrEDKWQxZ","name":"initialValue","isAbstract":false,"type":"xVVFFrr5aF2325or","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"Sp58E6cVo6iEMaet","discriminator":"Property","kind":"Property","index":3}
 {"_id":"YSRNGLt0XarbLIRJ","name":"id","isAbstract":false,"type":"SadPS8pvT32LOsTP","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"UE7gF35RahVF5MXi","discriminator":"Property","kind":"Property","index":0}
+{"_id":"YmJp99HG0KLfpwUq","name":"Character","kind":"StandardType","isMandatory":false}
 {"_id":"Yp8YSZkOX1ukJMii","name":"FindResult<PortID>","kind":"StandardType","isMandatory":false}
+{"_id":"Z7ZwApuzeWlhdltq","discriminator":"Note","position":{"x":1776,"y":1081},"diagramId":"QLsgRJ3yAICrsRt9","text":"The vector of Variant can be backed by a stack buffer to avoid dynamic allocation.","kind":"Note","showNoteBackgroundTexture":true,"autosize":false,"supportMarkdown":true}
 {"_id":"Z7hh5V3MaUaUwHht","name":"map of SignalPathID to SignalPath","kind":"StandardType","isMandatory":false}
 {"_id":"ZBNYriAEb4j0Q8Ui","name":"portsForNode","isAbstract":false,"type":"Yp8YSZkOX1ukJMii","visibility":"public","isStatic":false,"classifierId":"ODE2c6rNrTJHmwKu","discriminator":"Method","kind":"Method","index":0}
 {"methodId":"IRP4Jlg1bAhiZi1Q","name":"portId","type":"MdOvSgkUqff9sozk","kind":"Parameter","discriminator":"Parameter","index":1,"_id":"ZCKPwOeZrW9Rbsye"}
@@ -89,42 +110,57 @@
 {"methodId":"pn8h9yKixdw6JMu9","name":"portId","type":"MdOvSgkUqff9sozk","kind":"Parameter","discriminator":"Parameter","index":1,"_id":"a50daSk6bEoAZ6JS"}
 {"_id":"al46r2fpAgmrJ9Ou","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"Key","kind":"Class","position":{"x":1915.5,"y":833},"discriminator":"Class","stereotypes":[],"customDimension":{"width":135.21875,"height":70.0234375}}
 {"methodId":"gyctydQAq0p6TGb4","name":"from","type":"SadPS8pvT32LOsTP","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"alsR7xXvzWUIW76P"}
+{"_id":"bU1d7gTfMPwIaS19","name":"vector of Variant","kind":"StandardType","isMandatory":false}
+{"methodId":"ynwK3xVDqgWsaA8p","name":"node","type":"Sjqwl0bfQRAuJQ8e","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"byBVJxvag4V7W7VU"}
 {"methodId":"Ci5jasGvfLd6Ywpt","name":"node","type":"Sjqwl0bfQRAuJQ8e","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"bz0As8ZXilNV3Xnx"}
 {"_id":"cfaT8JJIsPuhcujX","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"Status","kind":"Class","position":{"x":525.5,"y":763},"discriminator":"Class","stereotypes":["DV8a00h4Rdyq3pLy"],"customDimension":{"width":557.6875,"height":142.2578125}}
 {"_id":"d4mqV2UjZ5vGQuyt","name":"id","isAbstract":false,"type":"qd1dcmVVRPRSgVZu","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"GJio1ZTbswlT5TNF","discriminator":"Property","kind":"Property","index":0}
 {"methodId":"WQY1SR1cJlkRNqZX","name":"signalPaths","type":"Kdqp5wXIMmCGfsNq","kind":"Parameter","discriminator":"Parameter","index":1,"_id":"dEiSbOPrdMRdeYge"}
+{"_id":"dRZepAq3bCII02BI","name":"request","isAbstract":false,"type":"xnQSd2Oqhq08yPV8","visibility":"public","isStatic":false,"classifierId":"14VBzqjCWJndNS4B","discriminator":"Method","kind":"Method","index":0,"isDeleted":false}
 {"_id":"eIMqE3DtHqCVVLBz","name":"signalPaths","isAbstract":false,"type":"QdXZFPcwVDej17eg","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"GJio1ZTbswlT5TNF","discriminator":"Property","kind":"Property","index":3}
+{"_id":"eKtsQo34wLTCUkQO","isAbstract":false,"isFinal":false,"isInterface":true,"diagramId":"QLsgRJ3yAICrsRt9","name":"ReptolInterface","kind":"Class","position":{"x":628.5,"y":1459},"discriminator":"Class","stereotypes":[]}
 {"methodId":"g0lwGIBn1S0Gfg4B","name":"id","type":"I32NbqJ2hyJnCr8b","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"eQzk5yFjIolXMdVu"}
 {"methodId":"rX8UHuQWxMf7fO2o","name":"id","type":"SadPS8pvT32LOsTP","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"eSaSeFbxDB47Oxuc"}
 {"_id":"exPiwbqhSnLa9hk3","name":"createChild","isAbstract":false,"type":"pIoYy4mYDRISwggy","visibility":"public","isStatic":false,"classifierId":"hx7Ayf3HIhvLwMYr","discriminator":"Method","kind":"Method","index":4}
 {"_id":"fdUHGWGgKrnt2b7t","name":"SelectionMode","kind":"StandardType","isMandatory":false}
 {"_id":"g0lwGIBn1S0Gfg4B","name":"node","isAbstract":false,"type":"Sjqwl0bfQRAuJQ8e","visibility":"public","isStatic":false,"classifierId":"GJio1ZTbswlT5TNF","discriminator":"Method","kind":"Method","index":0}
+{"_id":"g1pnB9ZL8wL2dYcB","name":"Coroutine","kind":"StandardType","isMandatory":false}
 {"_id":"gAOAKJ0TCZEzTqFv","name":"map of PortID to Port","kind":"StandardType","isMandatory":false}
 {"_id":"gVvQ1djo9SPxtB2i","name":"any","kind":"StandardType","isMandatory":true,"defaultRole":"parameterType"}
 {"_id":"gtiwsT01cv2Xk70X","name":"resultType","isAbstract":false,"type":"AzGmssYv6AFrjrCQ","isReadOnly":false,"visibility":"public","isStatic":false,"classifierId":"cfaT8JJIsPuhcujX","discriminator":"Property","kind":"Property","index":1}
 {"_id":"gyctydQAq0p6TGb4","name":"findWithFrom","isAbstract":false,"type":"xnQSd2Oqhq08yPV8","visibility":"public","isStatic":false,"classifierId":"icYteybSaZkPLH2D","discriminator":"Method","kind":"Method","index":2}
-{"_id":"hx7Ayf3HIhvLwMYr","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"GraphDatabase","kind":"Class","position":{"x":1113.5,"y":318},"discriminator":"Class","stereotypes":[],"customDimension":{"width":641.5,"height":319.21875}}
+{"_id":"h6oXdwsFTiHjOiXd","name":"reptol","isAbstract":false,"type":"HgJNuiQwYdAdKhD7","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"ti20dYEElHTqct2R","discriminator":"Property","kind":"Property","index":0}
+{"_id":"hx7Ayf3HIhvLwMYr","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"GraphDatabase","kind":"Class","position":{"x":1129.5,"y":314},"discriminator":"Class","stereotypes":[],"customDimension":{"width":641.5,"height":319.21875}}
 {"_id":"i00vn8WMeLJrTWmv","name":"boolean","kind":"StandardType","isMandatory":false}
 {"_id":"ibD0aI1HjqM53lps","name":"string","kind":"StandardType","isMandatory":true,"defaultRole":"propertyType"}
 {"_id":"icYteybSaZkPLH2D","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"SignalPathTable","kind":"Class","position":{"x":1547,"y":80},"discriminator":"Class","stereotypes":[],"customDimension":{"width":765.3203125,"height":137.234375}}
+{"_id":"jCgZghS73eCZTjsE","name":"proto","isAbstract":false,"type":"14VBzqjCWJndNS4B","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"JqhrFYICX5NGk1xL","discriminator":"Property","kind":"Property","index":0}
 {"_id":"jREX8h6BRSY6yF8i","name":"parent","isAbstract":false,"type":"I32NbqJ2hyJnCr8b","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"Sp58E6cVo6iEMaet","discriminator":"Property","kind":"Property","index":1}
+{"_id":"jl0CaCw64tATjh7n","name":"proto","isAbstract":false,"type":"14VBzqjCWJndNS4B","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"mW7JuDe5F5R8d175","discriminator":"Property","kind":"Property","index":2}
 {"_id":"jvluRDN7Dd9M05Qg","name":"compareNodes","isAbstract":false,"type":"pIoYy4mYDRISwggy","visibility":"public","isStatic":false,"classifierId":"hx7Ayf3HIhvLwMYr","discriminator":"Method","kind":"Method","index":7}
 {"_id":"l7r9wnhuknBl1oy7","name":"Node)","kind":"StandardType","isMandatory":false}
 {"_id":"lQ0LY5BqpJz1POEG","name":"status","isAbstract":false,"type":"4776DEh64D7L6Vno","isReadOnly":false,"visibility":"public","isStatic":false,"classifierId":"cfaT8JJIsPuhcujX","discriminator":"Property","kind":"Property","index":0}
 {"_id":"m6LkYAqSS05IB6ru","name":"SlotMap<Value>","kind":"StandardType","isMandatory":false}
+{"_id":"mW7JuDe5F5R8d175","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"LuaScript","kind":"Class","position":{"x":89.5,"y":1165},"discriminator":"Class","stereotypes":[]}
+{"methodId":"GRVffExwrv4BLl66","name":"defName","type":"5zeQH7hy7UIIVBeT","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"o328x6uYL6SqqbBX"}
 {"_id":"oJD0h3Vp2bf3Umul","name":"template","isAbstract":false,"type":"I32NbqJ2hyJnCr8b","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"Sjqwl0bfQRAuJQ8e","discriminator":"Property","kind":"Property","index":4}
 {"_id":"oKJwPfSTtmoZqSP6","name":"signalPath","isAbstract":false,"type":"UE7gF35RahVF5MXi","visibility":"public","isStatic":false,"classifierId":"GJio1ZTbswlT5TNF","discriminator":"Method","kind":"Method","index":2}
 {"_id":"pIoYy4mYDRISwggy","name":"Status","kind":"StandardType","isMandatory":false}
 {"_id":"pXpUxebaLpCv1K2C","name":"createTemplate","isAbstract":false,"type":"pIoYy4mYDRISwggy","visibility":"public","isStatic":false,"classifierId":"hx7Ayf3HIhvLwMYr","discriminator":"Method","kind":"Method","index":5}
+{"_id":"pY6RE1Cl7EnVJE5E","name":"","diagramId":"QLsgRJ3yAICrsRt9","kind":"Relationship","relationshipKind":"NoteLink","source":{"id":"Z7ZwApuzeWlhdltq","isAutoDocking":false,"dockingSide":"LEFT","positionInPercent":0.5},"target":{"isAutoDocking":false,"id":"14VBzqjCWJndNS4B","positionInPercent":0.5,"isNavigable":false}}
 {"_id":"pn8h9yKixdw6JMu9","name":"removePort","isAbstract":false,"type":"xnQSd2Oqhq08yPV8","visibility":"public","isStatic":false,"classifierId":"ODE2c6rNrTJHmwKu","discriminator":"Method","kind":"Method","index":2}
 {"_id":"qM9teO8TVGzCBEN4","name":"base","isAbstract":false,"type":"I32NbqJ2hyJnCr8b","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"Sjqwl0bfQRAuJQ8e","discriminator":"Property","kind":"Property","index":5}
+{"_id":"qYdGqgRQ4ODTJObI","name":"state","isAbstract":false,"type":"ED7psk4H2CuogiSi","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"mW7JuDe5F5R8d175","discriminator":"Property","kind":"Property","index":1}
 {"_id":"qd1dcmVVRPRSgVZu","name":"GraphID","kind":"StandardType","isMandatory":false}
 {"_id":"rX8UHuQWxMf7fO2o","name":"remove","isAbstract":false,"type":"xnQSd2Oqhq08yPV8","visibility":"public","isStatic":false,"classifierId":"icYteybSaZkPLH2D","discriminator":"Method","kind":"Method","index":1}
 {"_id":"rkJeokTdUZj69Ce1","name":"set of SignalPath","kind":"StandardType","isMandatory":false}
 {"_id":"rrfaiO6cqxyAwhv0","name":"lut","isAbstract":false,"type":"LQpJcQOdbTc6KOGb","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"ODE2c6rNrTJHmwKu","discriminator":"Property","kind":"Property","index":0}
+{"_id":"ti20dYEElHTqct2R","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"ReptolProtocol","kind":"Class","position":{"x":1299.5,"y":1235},"discriminator":"Class","stereotypes":[]}
+{"_id":"ticGGChBPxMhUCab","discriminator":"Note","position":{"x":1650,"y":1298},"diagramId":"QLsgRJ3yAICrsRt9","text":"The ReptolProtocol knows how to interpret commands for REPTOL and marshalls the arguments and results","kind":"Note","showNoteBackgroundTexture":true,"autosize":false,"customDimension":{"width":250,"height":150},"supportMarkdown":true}
 {"methodId":"oKJwPfSTtmoZqSP6","name":"id","type":"SadPS8pvT32LOsTP","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"uJWAyIGCSLAKNyts"}
 {"_id":"vtf3Hdf1gQJLub1s","name":"copyNodes","isAbstract":false,"type":"pIoYy4mYDRISwggy","visibility":"public","isStatic":false,"classifierId":"hx7Ayf3HIhvLwMYr","discriminator":"Method","kind":"Method","index":6}
 {"_id":"w1EmGy5M69CD8UsH","name":"signalPaths","isAbstract":false,"type":"rkJeokTdUZj69Ce1","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"icYteybSaZkPLH2D","discriminator":"Property","kind":"Property","index":0}
+{"_id":"w1QnuxcGzFZkhxy9","name":"look","isAbstract":false,"type":"YmJp99HG0KLfpwUq","visibility":"public","isStatic":false,"classifierId":"eKtsQo34wLTCUkQO","discriminator":"Method","kind":"Method","index":0}
 {"_id":"wBjYSIr2YbaImECD","name":"nodes","isAbstract":false,"type":"5Nz47xyMirtzDvJP","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"GJio1ZTbswlT5TNF","discriminator":"Property","kind":"Property","index":1}
 {"methodId":"KbdHIdHz77xb1oRR","name":"nodes","type":"TTOFAIyTygU6iOI5","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"wqLl9vRZp0qYS3V6"}
 {"_id":"x0sryjxNMlvTmvxH","name":"type","isAbstract":false,"type":"4Rz2J5N9RJBDOEv1","visibility":"public","isStatic":false,"classifierId":"Sp58E6cVo6iEMaet","discriminator":"Method","kind":"Method","index":0}
@@ -134,5 +170,6 @@
 {"_id":"xzZdxIocGPaxSfG9","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"QLsgRJ3yAICrsRt9","name":"Value","kind":"Class","position":{"x":1803.5,"y":692},"discriminator":"Class","stereotypes":[],"customDimension":{"width":164.0234375,"height":69.0234375}}
 {"methodId":"IRP4Jlg1bAhiZi1Q","name":"nodeId","type":"I32NbqJ2hyJnCr8b","kind":"Parameter","discriminator":"Parameter","index":0,"_id":"yVyBnpD0KdIiHXmB"}
 {"_id":"yai5gAHrQ0aaGu0N","name":"array of PortID","kind":"StandardType","isMandatory":false}
+{"_id":"ynwK3xVDqgWsaA8p","name":"step","isAbstract":false,"type":"xnQSd2Oqhq08yPV8","visibility":"public","isStatic":false,"classifierId":"J4FKV7BV06o1hTFb","discriminator":"Method","kind":"Method","index":0}
 {"methodId":"RVa3SZeIAATPwYXK","name":"signalPath","type":"UE7gF35RahVF5MXi","kind":"Parameter","discriminator":"Parameter","index":1,"_id":"yseEDO8Tv1IVl8bl"}
 {"_id":"z54bPAzN00qQU37x","name":"id","isAbstract":false,"type":"I32NbqJ2hyJnCr8b","isReadOnly":false,"visibility":"private","isStatic":false,"classifierId":"Sjqwl0bfQRAuJQ8e","discriminator":"Property","kind":"Property","index":0}

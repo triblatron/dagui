@@ -9,11 +9,3 @@ end
 function look(direction)
 	return coroutine.yield(luadag.NAMESPACE_USER, reptol.ACTION_LOOK, direction)
 end
-
-root=
-{
-	update=function(self)
-		local port = addPort("spoo", luadag.PortDirection_DIR_INTERNAL, luadag.Port_FLAGS_NONE, "TestEnumWrapper", "TEST_FOO")
-		assert(port~=nil)
-	end,
-}

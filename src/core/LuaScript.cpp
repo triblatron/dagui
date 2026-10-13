@@ -14,14 +14,18 @@
 #include <string>
 
 #include "MemoryNodeLibrary.h"
+#include "NodeEditorLive.h"
 #include "core/Node.h"
 #include "core/PortDirection.h"
+#include "core/ScriptProtocol.h"
 
 namespace dagui
 {
-    LuaScript::LuaScript(dagbase::Lua *lua)
+    LuaScript::LuaScript(dagbase::Lua *lua, dag::NodeEditorLive* nodeEditor, dagbase::ScriptProtocol* proto)
         :
-    _lua(lua)
+    _lua(lua),
+    _nodeEditor(nodeEditor),
+    _proto(proto)
     {
         // Do nothing.
     }
@@ -74,6 +78,19 @@ namespace dagui
                             {
                                 int nspace = _thread->integer(1);
                                 int action = _thread->integer(2);
+                                if (_proto)
+                                {
+                                    std::array<std::byte, sizeof(dagbase::Variant)*4> buffer;
+                                    std::pmr::monotonic_buffer_resource pool{buffer.data(), buffer.size()};
+                                    std::pmr::vector<dagbase::Variant> args{&pool};
+                                    // Copy args into buffer
+                                    for (int i=3; i<=_thread->top(); ++i)
+                                    {
+                                        dagbase::Variant arg;
+                                        arg.fromLua(*_thread, i);
+                                    }
+                                    _proto->request(action, args);
+                                }
                                 switch (action)
                                 {
                                     case ACTION_ADD_PORT:
@@ -84,17 +101,21 @@ namespace dagui
                                             auto dir = dagbase::PortDirection::Direction(_thread->integer(4));
                                             auto flags = dagbase::Node::NodeFlags(_thread->integer(5));
                                             auto value = _thread->number(6);
-                                            dag::MemoryNodeLibrary nodeLib;
-                                            auto port = new dagbase::Port(nodeLib.nextPortID(), name, dir, dagbase::Port::FLAGS_NONE, dagbase::Value(value));
-                                            self->addDynamicPort(port, dagbase::MetaPort::FLAGS_OWN_BIT);
+                                            if (_nodeEditor)
+                                            {
+                                                auto status = _nodeEditor->addPort(self->id(), name, dir, dagbase::Port::FLAGS_NONE, dagbase::Value(value));
+                                                auto port = _nodeEditor->activeGraph()->port(std::get<dagbase::PortID>(status.result.value()));
+                                                auto portType = SWIG_TypeQuery(_thread->get(), "_p_dagbase__Port");
+                                                // Push results of yield
+                                                if (portType)
+                                                {
+                                                    SWIG_NewPointerObj(_thread->get(), port, portType, 0);
+                                                }
+                                            }
+                                            //auto port = new dagbase::Port(nodeLib.nextPortID(), name, dir, dagbase::Port::FLAGS_NONE, dagbase::Value(value));
+                                            //self->addDynamicPort(port, dagbase::MetaPort::FLAGS_OWN_BIT);
                                             // Pop results of resume
                                             lua_pop(_thread->get(), 6);
-                                            auto portType = SWIG_TypeQuery(_thread->get(), "_p_dagbase__Port");
-                                            // Push results of yield
-                                            if (portType)
-                                            {
-                                                SWIG_NewPointerObj(_thread->get(), port, portType, 0);
-                                            }
                                         }
                                         break;
                                     }
