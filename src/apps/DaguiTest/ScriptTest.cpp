@@ -13,6 +13,7 @@
 #include "core/ScriptProtocol.h"
 #include "core/Graph.h"
 #include "NodeEditorLive.h"
+#include "util/enums.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
@@ -120,24 +121,94 @@ struct ScriptExistingItem
     std::string className;
 };
 
+struct ScriptCommand
+{
+    enum Command : std::uint32_t
+    {
+        CMD_UNKNOWN,
+        CMD_STEP_UNTIL_FINISHED,
+        CMD_RESET
+    };
+
+    void configure(dagbase::ConfigurationElement& config)
+    {
+        dagbase::ConfigurationElement::readConfig<Command>(config, "cmd", &parseCommand, &cmd);
+        dagbase::ConfigurationElement::readConfigVector(config, "existing", &existing);
+    }
+
+    void makeItSo(dagbase::Script& sut, dagbase::Node* self, dag::NodeEditorLive& nodeEditor)
+    {
+        switch (cmd)
+        {
+            case CMD_STEP_UNTIL_FINISHED:
+            {
+                while (!sut.isFinished())
+                {
+                    sut.step(self);
+                }
+                break;
+            }
+            case CMD_RESET:
+            {
+                sut.reset();
+                break;
+            }
+            default:
+                FAIL() << "Got into handler for unknown command " << commandToString(cmd);
+                break;
+        }
+
+        for (auto& e : existing)
+        {
+            e.makeItSo(nodeEditor);
+        }
+
+    }
+
+    Command cmd{CMD_UNKNOWN};
+    using ExistingItemArray = std::vector<ScriptExistingItem>;
+    ExistingItemArray existing;
+
+    static const char* commandToString(Command value)
+    {
+        switch (value)
+        {
+            ENUM_NAME(CMD_UNKNOWN)
+            ENUM_NAME(CMD_STEP_UNTIL_FINISHED)
+            ENUM_NAME(CMD_RESET)
+        }
+
+        return "<error>";
+    }
+
+    static Command parseCommand(const char* str)
+    {
+        TEST_ENUM(CMD_UNKNOWN, str)
+        TEST_ENUM(CMD_STEP_UNTIL_FINISHED, str)
+        TEST_ENUM(CMD_RESET, str)
+
+        return CMD_UNKNOWN;
+    }
+};
+
 class Script_testExecute : public ::testing::TestWithParam<std::tuple<const char*, const char*>>
 {
 public:
     void configure(dagbase::ConfigurationElement& config)
     {
-        dagbase::ConfigurationElement::readConfigVector(config, "existing", &_existing);
+        dagbase::ConfigurationElement::readConfigVector(config, "cmds", &_cmds);
     }
 
-    void makeItSo(dag::NodeEditorLive& nodeEditor)
+    void makeItSo(dagbase::Script& sut, dagbase::Node* self, dag::NodeEditorLive& nodeEditor)
     {
-        for (auto& e : _existing)
+        for (auto cmd : _cmds)
         {
-            e.makeItSo(nodeEditor);
+            cmd.makeItSo(sut, self, nodeEditor);
         }
     }
 protected:
-    using ExistingItemArray = std::vector<ScriptExistingItem>;
-    ExistingItemArray _existing;
+    using CommandArray = std::vector<ScriptCommand>;
+    CommandArray _cmds;
 };
 
 TEST_P(Script_testExecute, testExpectedResult)
@@ -150,24 +221,18 @@ TEST_P(Script_testExecute, testExpectedResult)
     configure(*config);
     ASSERT_TRUE(lua.ok());
     MockScriptProtocol proto;
-    EXPECT_CALL(proto, request(1, ::testing::_)).Times(1);
+    std::uint32_t numRequests{0};
+    dagbase::ConfigurationElement::readConfig(*config, "numRequests", &numRequests);
+    EXPECT_CALL(proto, request(1, ::testing::_)).Times(numRequests);
     dag::NodeEditorLive nodeEditor;
     dagui::LuaScript sut(&lua, &nodeEditor, &proto);
 
     sut.setMainName(mainName);
     auto status = nodeEditor.createNode("Boundary", "test1");
-    sut.step(nodeEditor.activeGraph()->node(std::get<dagbase::NodeID>(status.result.value())));
-    makeItSo(nodeEditor);
-    // ASSERT_EQ(1, node->totalPorts());
-    // ASSERT_EQ(1.0, std::get<double>(node->dynamicPort(0)->value().value()));
-    // sut.step(node);
-    // EXPECT_TRUE(sut.isFinished());
-    // sut.reset();
-    // sut.step(node);
-    // ASSERT_EQ(2, node->totalPorts());
-    // ASSERT_EQ(1.0, std::get<double>(node->dynamicPort(1)->value().value()));
-    // sut.step(node);
-    // EXPECT_TRUE(sut.isFinished());
+    ASSERT_EQ(dagbase::Status::STATUS_OK, status.status);
+    auto self = nodeEditor.activeGraph()->node(std::get<dagbase::NodeID>(status.result.value()));
+    ASSERT_NE(nullptr, self);
+    makeItSo(sut, self, nodeEditor);
 }
 
 INSTANTIATE_TEST_SUITE_P(Script, Script_testExecute, ::testing::Values(

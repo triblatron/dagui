@@ -12,20 +12,51 @@ end
 
 root=
 {
-	existing=
+	numRequests=2,
+	cmds=
 	{
 		{
-			class="Node",
-			properties=
+			cmd="CMD_STEP_UNTIL_FINISHED",
+			existing=
 			{
-				totalPorts=1,
+				{
+					class="Node",
+					properties=
+					{
+						totalPorts=1,
+					},
+				},
+				{
+					class="Port",
+					properties=
+					{
+						value=1.0,
+					},
+				},
 			},
 		},
 		{
-			class="Port",
-			properties=
+			cmd="CMD_RESET",
+		},
+		{
+			cmd="CMD_STEP_UNTIL_FINISHED",
+			existing=
 			{
-				value=1.0,
+				{
+					class="Node",
+					properties=
+					{
+						totalPorts=2,
+					},
+				},
+				{
+					class="Port",
+					properties=
+					{
+						value=1.0,
+					},
+					count=2,
+				},
 			},
 		},
 	},
