@@ -121,6 +121,17 @@ struct ScriptExistingItem
     std::string className;
 };
 
+class HelloService
+{
+public:
+    void hello()
+    {
+        ++_helloCount;
+    }
+private:
+    int _helloCount{0};
+};
+
 struct ScriptCommand
 {
     enum Command : std::uint32_t
@@ -162,7 +173,6 @@ struct ScriptCommand
         {
             e.makeItSo(nodeEditor);
         }
-
     }
 
     Command cmd{CMD_UNKNOWN};
@@ -228,6 +238,8 @@ TEST_P(Script_testExecute, testExpectedResult)
     dagui::LuaScript sut(&lua, &nodeEditor, &proto);
 
     sut.setMainName(mainName);
+    auto service = new HelloService();
+    nodeEditor.setService(service);
     auto status = nodeEditor.createNode("Boundary", "test1");
     ASSERT_EQ(dagbase::Status::STATUS_OK, status.status);
     auto self = nodeEditor.activeGraph()->node(std::get<dagbase::NodeID>(status.result.value()));
