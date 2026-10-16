@@ -1,5 +1,5 @@
-function addPort(name, direction, flags, typeName, initialValue)
-	return coroutine.yield(luadag.NAMESPACE_SYSTEM, luadag.ACTION_ADD_PORT, name, direction, flags, typeName, initialValue)
+function addPort(name, direction, flags, initialValue)
+	return coroutine.yield(luadag.NAMESPACE_SYSTEM, luadag.ACTION_ADD_PORT, name, direction, flags, initialValue)
 end
 
 function deletePort(id)

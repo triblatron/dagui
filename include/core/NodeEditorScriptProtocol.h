@@ -21,7 +21,7 @@ namespace dagui
     public:
         NodeEditorScriptProtocol(dag::NodeEditorLive* editor);
 
-        void request(dagbase::Node* self, dagbase::Lua& lua, std::uint32_t opCode, const std::pmr::vector<dagbase::Variant> &args, std::vector<dagbase::Variant> *results) override;
+        void request(dagbase::Node* self, std::uint32_t opCode, const std::pmr::vector<dagbase::Variant> &args, std::vector<dagbase::Variant> *results) override;
     private:
         dag::NodeEditorLive* _nodeEditor{nullptr};
     };

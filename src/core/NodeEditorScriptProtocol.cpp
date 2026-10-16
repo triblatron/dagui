@@ -17,34 +17,31 @@ namespace dagui
         // Do nothing.
     }
 
-    void NodeEditorScriptProtocol::request(dagbase::Node* self, dagbase::Lua& lua, std::uint32_t opCode, const std::pmr::vector<dagbase::Variant> &args,
+    void NodeEditorScriptProtocol::request(dagbase::Node* self, std::uint32_t opCode, const std::pmr::vector<dagbase::Variant> &args,
                                            std::vector<dagbase::Variant> *results)
     {
         switch (opCode)
         {
             case ACTION_ADD_PORT:
             {
-                if (lua_gettop(lua.get())>=6)
+                if (args.size()==4)
                 {
-                    const char* name = lua_tostring(lua.get(), 3);
-                    auto dir = dagbase::PortDirection::Direction(lua.integer(4));
-                    auto flags = dagbase::Node::NodeFlags(lua.integer(5));
-                    auto value = lua.number(6);
+                    auto name = args[0].asString();
+                    auto dir = dagbase::PortDirection::Direction(args[1].asUint32());
+                    auto flags = dagbase::Node::NodeFlags(args[2].asUint32());
+                    auto value = args[3].asDouble();
                     if (_nodeEditor)
                     {
                         auto status = _nodeEditor->addPort(self->id(), name, dir, dagbase::Port::FLAGS_NONE, dagbase::Value(value));
                         auto port = _nodeEditor->activeGraph()->port(std::get<dagbase::PortID>(status.result.value()));
-                        auto portType = lua.typeQuery("_p_dagbase__Port");
-                        // Push results of yield
-                        if (portType)
+                        if (results)
                         {
-                            lua.pushObj(port, portType, 0);
+                            results->emplace_back(port);
                         }
                     }
                     //auto port = new dagbase::Port(nodeLib.nextPortID(), name, dir, dagbase::Port::FLAGS_NONE, dagbase::Value(value));
                     //self->addDynamicPort(port, dagbase::MetaPort::FLAGS_OWN_BIT);
                     // Pop results of resume
-                    lua_pop(lua.get(), 6);
                 }
                 break;
             }

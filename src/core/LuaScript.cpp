@@ -87,9 +87,16 @@ namespace dagui
                                     {
                                         dagbase::Variant arg;
                                         arg.fromLua(*_thread, i);
+                                        args.emplace_back(arg);
                                     }
                                     _results.clear();
-                                    _proto->request(self, *_thread, action, args, &_results);
+                                    _proto->request(self, action, args, &_results);
+                                    for (auto result : _results)
+                                    {
+                                        result.toLua(*_thread);
+                                    }
+                                    lua_pop(_thread->get(), _thread->top()-2);
+
                                 }
                                 break;
                             }

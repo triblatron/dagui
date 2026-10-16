@@ -24,7 +24,7 @@
 class MockScriptProtocol : public dagbase::ScriptProtocol
 {
 public:
-    MOCK_METHOD(void, request, (dagbase::Node*, dagbase::Lua&, std::uint32_t, const std::pmr::vector<dagbase::Variant>&, std::vector<dagbase::Variant>*), (override));
+    MOCK_METHOD(void, request, (dagbase::Node*, std::uint32_t, const std::pmr::vector<dagbase::Variant>&, std::vector<dagbase::Variant>*), (override));
 };
 
 class FakeScriptProtocol : public dagbase::ScriptProtocol
@@ -34,15 +34,15 @@ public:
         :
     _proto(proto)
     {
-        ON_CALL(*this, request).WillByDefault([this](dagbase::Node* self, dagbase::Lua& lua, std::uint32_t opCode, const std::pmr::vector<dagbase::Variant>& args, std::vector<dagbase::Variant>* results) {
+        ON_CALL(*this, request).WillByDefault([this](dagbase::Node* self, std::uint32_t opCode, const std::pmr::vector<dagbase::Variant>& args, std::vector<dagbase::Variant>* results) {
             if (_proto)
             {
-                _proto->request(self, lua, opCode, args, results);
+                _proto->request(self, opCode, args, results);
             }
         });
     }
 
-    MOCK_METHOD(void, request, (dagbase::Node*, dagbase::Lua&, std::uint32_t, const std::pmr::vector<dagbase::Variant>&, std::vector<dagbase::Variant>*), (override));
+    MOCK_METHOD(void, request, (dagbase::Node*, std::uint32_t, const std::pmr::vector<dagbase::Variant>&, std::vector<dagbase::Variant>*), (override));
 private:
     ScriptProtocol* _proto{nullptr};
 };
@@ -257,7 +257,7 @@ TEST_P(Script_testExecute, testExpectedResult)
     FakeScriptProtocol fakeProto(&proto);
     std::uint32_t numRequests{0};
     dagbase::ConfigurationElement::readConfig(*config, "numRequests", &numRequests);
-    EXPECT_CALL(fakeProto, request(::testing::_, ::testing::_, 1, ::testing::_, ::testing::_)).Times(numRequests);
+    EXPECT_CALL(fakeProto, request(::testing::_, 1, ::testing::_, ::testing::_)).Times(numRequests);
     dagui::LuaScript sut(&lua, &fakeProto);
 
     sut.setMainName(mainName);
@@ -284,8 +284,8 @@ TEST(Script, testConvertObj)
     auto node = nodeEditor.activeGraph()->node(std::get<dagbase::NodeID>(status.result.value()));
     auto nodeType = SWIG_TypeQuery(sut.get(),"_p_dagbase__Node");
     ASSERT_NE(nullptr, nodeType);
-    sut.pushObj(node, nodeType);
+    sut.pushObj(node, nodeType, 0);
     dagbase::Node* node2 = nullptr;
-    sut.convertObj((void**)&node2, nodeType);
+    sut.convertObj((void**)&node2, nodeType, 0);
     ASSERT_EQ(node, node2);
 }
