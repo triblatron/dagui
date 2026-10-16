@@ -4,12 +4,14 @@
 
 #pragma once
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "core/Script.h"
+#include "core/Variant.h"
 
 #include <string>
 #include <cstdint>
+#include <vector>
 
 namespace dagbase
 {
@@ -37,7 +39,7 @@ namespace dagui
             STATE_THREAD_FINISHED
         };
     public:
-        LuaScript(dagbase::Lua* lua, dag::NodeEditorLive* nodeEditor, dagbase::ScriptProtocol* proto);
+        LuaScript(dagbase::Lua* lua, dagbase::ScriptProtocol* proto);
 
         void configure(dagbase::ConfigurationElement& config);
 
@@ -59,10 +61,10 @@ namespace dagui
     private:
         dagbase::Lua* _lua{nullptr};
         dagbase::Coroutine* _thread{nullptr};
-        dag::NodeEditorLive* _nodeEditor{nullptr};
         dagbase::ScriptProtocol* _proto{nullptr};
         State _state{STATE_INITIAL};
         std::string _mainName;
+        std::vector<dagbase::Variant> _results;
         void setState(State newState);
     };
 }

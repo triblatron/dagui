@@ -7,7 +7,7 @@
 #include <limits>
 
 #include "Validator.h"
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include <cstdint>
 #include <limits>

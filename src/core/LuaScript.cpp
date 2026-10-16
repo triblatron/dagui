@@ -21,10 +21,9 @@
 
 namespace dagui
 {
-    LuaScript::LuaScript(dagbase::Lua *lua, dag::NodeEditorLive* nodeEditor, dagbase::ScriptProtocol* proto)
+    LuaScript::LuaScript(dagbase::Lua *lua, dagbase::ScriptProtocol* proto)
         :
     _lua(lua),
-    _nodeEditor(nodeEditor),
     _proto(proto)
     {
         // Do nothing.
@@ -89,36 +88,8 @@ namespace dagui
                                         dagbase::Variant arg;
                                         arg.fromLua(*_thread, i);
                                     }
-                                    _proto->request(action, args);
-                                }
-                                switch (action)
-                                {
-                                    case ACTION_ADD_PORT:
-                                    {
-                                        if (lua_gettop(_thread->get())>=6)
-                                        {
-                                            const char* name = lua_tostring(_thread->get(), 3);
-                                            auto dir = dagbase::PortDirection::Direction(_thread->integer(4));
-                                            auto flags = dagbase::Node::NodeFlags(_thread->integer(5));
-                                            auto value = _thread->number(6);
-                                            if (_nodeEditor)
-                                            {
-                                                auto status = _nodeEditor->addPort(self->id(), name, dir, dagbase::Port::FLAGS_NONE, dagbase::Value(value));
-                                                auto port = _nodeEditor->activeGraph()->port(std::get<dagbase::PortID>(status.result.value()));
-                                                auto portType = SWIG_TypeQuery(_thread->get(), "_p_dagbase__Port");
-                                                // Push results of yield
-                                                if (portType)
-                                                {
-                                                    SWIG_NewPointerObj(_thread->get(), port, portType, 0);
-                                                }
-                                            }
-                                            //auto port = new dagbase::Port(nodeLib.nextPortID(), name, dir, dagbase::Port::FLAGS_NONE, dagbase::Value(value));
-                                            //self->addDynamicPort(port, dagbase::MetaPort::FLAGS_OWN_BIT);
-                                            // Pop results of resume
-                                            lua_pop(_thread->get(), 6);
-                                        }
-                                        break;
-                                    }
+                                    _results.clear();
+                                    _proto->request(self, *_thread, action, args, &_results);
                                 }
                                 break;
                             }

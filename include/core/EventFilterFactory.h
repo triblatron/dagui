@@ -5,7 +5,7 @@
 #ifndef DAGUI_EVENTFILTERFACTORY_H
 #define DAGUI_EVENTFILTERFACTORY_H
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include <string_view>
 

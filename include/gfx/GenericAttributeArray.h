@@ -5,7 +5,7 @@
 #pragma once
 
 #include "AttributeDescriptor.h"
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 #include "gfx/AttributeArray.h"
 
 #include <cstring>

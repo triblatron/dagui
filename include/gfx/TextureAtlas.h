@@ -1,6 +1,6 @@
 #pragma once
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "core/Atlas.h"
 #include "gfx/BinImageDef.h"

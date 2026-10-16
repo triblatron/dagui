@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "gfx/Mesh2D.h"
 #include "gfx/OpenGL.h"

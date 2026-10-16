@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #ifndef NOMINMAX
 #define NOMINMAX

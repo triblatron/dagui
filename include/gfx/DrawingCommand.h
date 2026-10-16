@@ -6,7 +6,7 @@
 
 #include "Mesh2D.h"
 #include "OpenGL.h"
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 namespace dagui
 {

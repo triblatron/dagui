@@ -5,7 +5,7 @@
 #ifndef DAGUI_EDITORPARAMETERS_H
 #define DAGUI_EDITORPARAMETERS_H
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "core/Atom.h"
 

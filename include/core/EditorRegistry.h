@@ -5,7 +5,7 @@
 #ifndef DAGUI_TUI_H
 #define DAGUI_TUI_H
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "core/TypeRegistry.h"
 #include "core/Atom.h"

@@ -2,7 +2,7 @@
 // Created by tony on 07/08/24.
 //
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "core/Shape.h"
 

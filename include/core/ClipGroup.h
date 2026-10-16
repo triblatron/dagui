@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "core/Group.h"
 #include "core/Vec2.h"

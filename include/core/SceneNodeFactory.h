@@ -2,7 +2,7 @@
 // Created by Tony Horrobin on 18/04/2025.
 //
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "core/Atom.h"
 #include "Widget.h"

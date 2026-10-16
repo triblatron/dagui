@@ -2,7 +2,7 @@
 // Created by tony on 30/07/24.
 //
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "core/Shape.h"
 #include <glm/glm.hpp>

@@ -5,7 +5,7 @@
 #pragma once
 
 #include "Widget.h"
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 #include "util/Searchable.h"
 #include <unordered_map>
 #include <memory>

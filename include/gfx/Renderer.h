@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H

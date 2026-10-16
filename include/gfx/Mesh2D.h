@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 #include "core/Vec2f.h"
 #include "util/Searchable.h"
 

@@ -18,11 +18,33 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include "core/NodeEditorScriptProtocol.h"
+
 
 class MockScriptProtocol : public dagbase::ScriptProtocol
 {
 public:
-    MOCK_METHOD(void, request, (std::uint32_t, const std::pmr::vector<dagbase::Variant>&), (override));
+    MOCK_METHOD(void, request, (dagbase::Node*, dagbase::Lua&, std::uint32_t, const std::pmr::vector<dagbase::Variant>&, std::vector<dagbase::Variant>*), (override));
+};
+
+class FakeScriptProtocol : public dagbase::ScriptProtocol
+{
+public:
+    FakeScriptProtocol(ScriptProtocol* proto)
+        :
+    _proto(proto)
+    {
+        ON_CALL(*this, request).WillByDefault([this](dagbase::Node* self, dagbase::Lua& lua, std::uint32_t opCode, const std::pmr::vector<dagbase::Variant>& args, std::vector<dagbase::Variant>* results) {
+            if (_proto)
+            {
+                _proto->request(self, lua, opCode, args, results);
+            }
+        });
+    }
+
+    MOCK_METHOD(void, request, (dagbase::Node*, dagbase::Lua&, std::uint32_t, const std::pmr::vector<dagbase::Variant>&, std::vector<dagbase::Variant>*), (override));
+private:
+    ScriptProtocol* _proto{nullptr};
 };
 
 struct ScriptExistingItem
@@ -230,12 +252,13 @@ TEST_P(Script_testExecute, testExpectedResult)
     ASSERT_NE(nullptr, config);
     configure(*config);
     ASSERT_TRUE(lua.ok());
-    MockScriptProtocol proto;
+    dag::NodeEditorLive nodeEditor;
+    dagui::NodeEditorScriptProtocol proto(&nodeEditor);
+    FakeScriptProtocol fakeProto(&proto);
     std::uint32_t numRequests{0};
     dagbase::ConfigurationElement::readConfig(*config, "numRequests", &numRequests);
-    EXPECT_CALL(proto, request(1, ::testing::_)).Times(numRequests);
-    dag::NodeEditorLive nodeEditor;
-    dagui::LuaScript sut(&lua, &nodeEditor, &proto);
+    EXPECT_CALL(fakeProto, request(::testing::_, ::testing::_, 1, ::testing::_, ::testing::_)).Times(numRequests);
+    dagui::LuaScript sut(&lua, &fakeProto);
 
     sut.setMainName(mainName);
     auto service = new HelloService();

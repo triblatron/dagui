@@ -2,7 +2,7 @@
 // Created by Tony Horrobin on 19/07/2025.
 //
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "core/GraphicsBackendFactory.h"
 

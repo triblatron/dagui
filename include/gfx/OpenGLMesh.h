@@ -2,7 +2,7 @@
 // Created by Tony Horrobin on 16/07/2025.
 //
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "gfx/MeshBackend.h"
 #include "gfx/OpenGL.h"

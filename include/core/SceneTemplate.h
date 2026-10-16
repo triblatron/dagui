@@ -2,7 +2,7 @@
 // Created by Tony Horrobin on 29/04/2025.
 //
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "util/SearchableArray.h"
 #include "util/SearchableMap.h"

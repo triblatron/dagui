@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "core/DynamicVisitor.h"
 #include "core/Variant.h"

@@ -5,7 +5,7 @@
 #ifndef DAGUI_BOOLEDITORIMGUI_H
 #define DAGUI_BOOLEDITORIMGUI_H
 
-#include "config/Export.h"
+#include "config/DaguiExport.h"
 
 #include "core/BoolEditor.h"
 
