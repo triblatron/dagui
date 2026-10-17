@@ -211,7 +211,8 @@ struct ScriptCommand
             case CMD_RESET:
             {
                 sut.reset();
-                sut.setMainFunction(mainFunction);
+                if (!mainFunction.empty())
+                    sut.setMainFunction(mainFunction);
 
                 break;
             }

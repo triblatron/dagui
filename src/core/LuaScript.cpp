@@ -78,6 +78,10 @@ namespace dagui
                             setState(STATE_THREAD_INITED);
                         }
                     }
+                    else
+                    {
+                        setState(STATE_THREAD_ERROR);
+                    }
                     break;
                 case STATE_THREAD_INITED:
                 {
@@ -135,6 +139,8 @@ namespace dagui
         if (_thread)
         {
             _thread->reset();
+            if (_thread->top()>=1 && _thread->isFunction(-1))
+                _thread->pop(1);
             setState(STATE_INITIAL);
         }
     }
@@ -191,7 +197,12 @@ namespace dagui
             }
             case STATE_THREAD_ERROR:
             {
-                std::cerr << "LuaScript:A Lua error occurred executing the script:" << _mainName << ':' << _thread->errorMessage() << '\n';
+                if (_thread && !_thread->ok())
+                    std::cerr << "LuaScript:A Lua error occurred executing the script:" << _mainName << ':' << _thread->errorMessage() << '\n';
+                else if (!_thread)
+                {
+                    std::cerr << "LuaScript:An error occurred creating the Coroutine from \"" << _mainName << "\"\n";
+                }
                 break;
             }
             default:
