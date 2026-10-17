@@ -53,12 +53,22 @@ namespace dagui
                     if (!_mainName.empty())
                     {
                         if (!_thread)
+                        {
                             _thread = dagbase::Coroutine::fromNamedFunction(_lua->get(), _mainName.c_str());
+                            if (!_thread)
+                            {
+                                setState(STATE_THREAD_ERROR);
+                            }
+                        }
                         else
                         {
                             _thread->setMainFunction(_mainName.c_str());
+                            if (!_thread->ok())
+                            {
+                                setState(STATE_THREAD_ERROR);
+                            }
                         }
-                        if (_thread)
+                        if (_thread && _thread->ok())
                         {
                             auto type = SWIG_TypeQuery(_thread->get(), "_p_dagbase__Node");
                             if (type)
@@ -108,7 +118,6 @@ namespace dagui
                             }
                             default:
                             {
-                                std::cerr << "LuaScript::step():Error from resume:" << _thread->errorMessage() << '\n';
                                 setState(STATE_THREAD_ERROR);
                                 break;
                             }
@@ -170,5 +179,23 @@ namespace dagui
     {
         std::cout << "LuaScript:" << this << ":Changing state from " << stateName(_state) << " to " << stateName(newState) << std::endl;
         _state = newState;
+        switch (_state)
+        {
+            case STATE_INITIAL:
+            {
+                if (_thread)
+                {
+                    _thread->clearError();
+                }
+                break;
+            }
+            case STATE_THREAD_ERROR:
+            {
+                std::cerr << "LuaScript:A Lua error occurred executing the script:" << _mainName << ':' << _thread->errorMessage() << '\n';
+                break;
+            }
+            default:
+                break;
+        }
     }
 }

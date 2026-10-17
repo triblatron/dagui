@@ -1,13 +1,5 @@
 require "etc/commands"
 
-function test()
-	return 1
-end
-
-function test2(self)
-	assert(false)
-end
-
 root=
 {
 	numRequests=0,

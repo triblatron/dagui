@@ -193,6 +193,7 @@ struct ScriptCommand
         dagbase::ConfigurationElement::readConfig<Command>(config, "cmd", &parseCommand, &cmd);
         dagbase::ConfigurationElement::readConfigVector(config, "existing", &existing);
         dagbase::ConfigurationElement::readConfigVector(config, "assertions", &assertions);
+        dagbase::ConfigurationElement::readConfig(config, "mainFunction", &mainFunction);
     }
 
     void makeItSo(dagbase::Script& sut, dagbase::Node* self, dag::NodeEditorLive& nodeEditor)
@@ -210,6 +211,8 @@ struct ScriptCommand
             case CMD_RESET:
             {
                 sut.reset();
+                sut.setMainFunction(mainFunction);
+
                 break;
             }
             default:
@@ -228,6 +231,7 @@ struct ScriptCommand
     }
 
     Command cmd{CMD_UNKNOWN};
+    std::string mainFunction;
     using ExistingItemArray = std::vector<ScriptExistingItem>;
     ExistingItemArray existing;
 
@@ -294,7 +298,7 @@ TEST_P(Script_testExecute, testExpectedResult)
     EXPECT_CALL(fakeProto, request(::testing::_, 1, ::testing::_, ::testing::_)).Times(numRequests);
     dagui::LuaScript sut(&lua, &fakeProto);
 
-    sut.setMainName(mainName);
+    sut.setMainFunction(mainName);
     auto service = new HelloService();
     nodeEditor.setService(service);
     auto status = nodeEditor.createNode("Boundary", "test1");
@@ -306,7 +310,9 @@ TEST_P(Script_testExecute, testExpectedResult)
 
 INSTANTIATE_TEST_SUITE_P(Script, Script_testExecute, ::testing::Values(
     std::make_tuple("data/tests/Script/Resume.lua", "test2"),
-    std::make_tuple("data/tests/Script/Error.lua", "test2")
+    std::make_tuple("data/tests/Script/ResumeError.lua", "test2"),
+    std::make_tuple("data/tests/Script/NonExistentFunctionError.lua", "nonExistentFunction"),
+    std::make_tuple("data/tests/Script/ResumeErrorThenNonExistentFunctionError.lua", "test2")
     ));
 
 TEST(Script, testConvertObj)

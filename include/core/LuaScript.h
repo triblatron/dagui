@@ -45,7 +45,7 @@ namespace dagui
 
         void configure(dagbase::ConfigurationElement& config);
 
-        void setMainName(const std::string& name)
+        void setMainFunction(const std::string& name) override
         {
             _mainName = name;
         }
