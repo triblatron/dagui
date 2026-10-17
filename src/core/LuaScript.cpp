@@ -15,6 +15,7 @@
 #include "core/Node.h"
 #include "core/PortDirection.h"
 #include "core/ScriptProtocol.h"
+#include "util/Searchable.h"
 
 #include <string>
 #include <array>
@@ -26,7 +27,13 @@ namespace dagui
     _lua(lua),
     _proto(proto)
     {
-        // Do nothing.
+        // There will typically be one result, so pre-allocate it here.
+        _results.reserve(1);
+    }
+
+    LuaScript::~LuaScript()
+    {
+        delete _thread;
     }
 
     void LuaScript::configure(dagbase::ConfigurationElement &config)
@@ -95,9 +102,14 @@ namespace dagui
                                     {
                                         result.toLua(*_thread);
                                     }
-                                    lua_pop(_thread->get(), _thread->top()-2);
-
+                                    lua_pop(_thread->get(), numResults);
                                 }
+                                break;
+                            }
+                            default:
+                            {
+                                std::cerr << "LuaScript::step():Error from resume:" << _thread->errorMessage() << '\n';
+                                setState(STATE_THREAD_ERROR);
                                 break;
                             }
                         }
@@ -118,16 +130,40 @@ namespace dagui
         }
     }
 
+    dagbase::Variant LuaScript::find(std::string_view path) const
+    {
+        dagbase::Variant retval;
+
+        retval = dagbase::findEndpoint(path, "state", stateName(_state));
+        if (retval.has_value())
+            return retval;
+
+        return {};
+    }
+
     const char * LuaScript::stateName(State state)
     {
         switch (state)
         {
+            ENUM_NAME(STATE_UNKNOWN)
             ENUM_NAME(STATE_INITIAL)
             ENUM_NAME(STATE_THREAD_INITED)
             ENUM_NAME(STATE_THREAD_FINISHED)
+            ENUM_NAME(STATE_THREAD_ERROR)
         }
 
         return "<error>";
+    }
+
+    LuaScript::State LuaScript::parseState(const char *str)
+    {
+        TEST_ENUM(STATE_UNKNOWN, str)
+        TEST_ENUM(STATE_INITIAL, str)
+        TEST_ENUM(STATE_THREAD_INITED, str)
+        TEST_ENUM(STATE_THREAD_FINISHED, str)
+        TEST_ENUM(STATE_THREAD_ERROR, str)
+
+        return STATE_UNKNOWN;
     }
 
     void LuaScript::setState(State newState)

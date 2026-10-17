@@ -19,6 +19,8 @@
 #include <gmock/gmock.h>
 
 #include "core/NodeEditorScriptProtocol.h"
+#include "test/TestUtils.h"
+#include "util/CharConv.h"
 
 
 class MockScriptProtocol : public dagbase::ScriptProtocol
@@ -27,6 +29,7 @@ public:
     MOCK_METHOD(void, request, (dagbase::Node*, std::uint32_t, const std::pmr::vector<dagbase::Variant>&, std::vector<dagbase::Variant>*), (override));
 };
 
+//! An implementation of ScriptProtocol that records calls and forwards to another implementation to do the work.
 class FakeScriptProtocol : public dagbase::ScriptProtocol
 {
 public:
@@ -154,6 +157,28 @@ private:
     int _helloCount{0};
 };
 
+struct ScriptAssertion
+{
+    void configure(dagbase::ConfigurationElement& config)
+    {
+        dagbase::ConfigurationElement::readConfig(config, "path", &path);
+        dagbase::ConfigurationElement::readConfig(config, "value", &value);
+        dagbase::ConfigurationElement::readConfig<dagbase::ConfigurationElement::RelOp>(config, "op", &dagbase::ConfigurationElement::parseRelOp, &op);
+        dagbase::ConfigurationElement::readConfig(config, "tolerance", &tolerance);
+    }
+
+    void makeItSo(dagbase::Script& sut)
+    {
+        auto actual = sut.find(path);
+        assertComparison(value, actual, tolerance, op, path.c_str());
+    }
+
+    std::string path;
+    dagbase::Variant value;
+    dagbase::ConfigurationElement::RelOp op{dagbase::ConfigurationElement::RELOP_EQ};
+    double tolerance{0.0};
+};
+
 struct ScriptCommand
 {
     enum Command : std::uint32_t
@@ -167,6 +192,7 @@ struct ScriptCommand
     {
         dagbase::ConfigurationElement::readConfig<Command>(config, "cmd", &parseCommand, &cmd);
         dagbase::ConfigurationElement::readConfigVector(config, "existing", &existing);
+        dagbase::ConfigurationElement::readConfigVector(config, "assertions", &assertions);
     }
 
     void makeItSo(dagbase::Script& sut, dagbase::Node* self, dag::NodeEditorLive& nodeEditor)
@@ -191,6 +217,10 @@ struct ScriptCommand
                 break;
         }
 
+        for (auto& a : assertions)
+        {
+            a.makeItSo(sut);
+        }
         for (auto& e : existing)
         {
             e.makeItSo(nodeEditor);
@@ -200,6 +230,9 @@ struct ScriptCommand
     Command cmd{CMD_UNKNOWN};
     using ExistingItemArray = std::vector<ScriptExistingItem>;
     ExistingItemArray existing;
+
+    using AssertionArray = std::vector<ScriptAssertion>;
+    AssertionArray assertions;
 
     static const char* commandToString(Command value)
     {
@@ -248,6 +281,7 @@ TEST_P(Script_testExecute, testExpectedResult)
     auto scriptFilename = std::get<0>(GetParam());
     auto mainName = std::get<1>(GetParam());
     dagbase::Lua lua;
+    lua.eval("require \"luadag\"");
     auto config = dagbase::ConfigurationElement::fromFile(lua, scriptFilename);
     ASSERT_NE(nullptr, config);
     configure(*config);
@@ -271,7 +305,8 @@ TEST_P(Script_testExecute, testExpectedResult)
 }
 
 INSTANTIATE_TEST_SUITE_P(Script, Script_testExecute, ::testing::Values(
-    std::make_tuple("data/tests/Script/Resume.lua", "test2")
+    std::make_tuple("data/tests/Script/Resume.lua", "test2"),
+    std::make_tuple("data/tests/Script/Error.lua", "test2")
     ));
 
 TEST(Script, testConvertObj)

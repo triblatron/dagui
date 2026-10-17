@@ -11,6 +11,7 @@
 
 #include <gtest/gtest.h>
 
+#include "core/LuaScript.h"
 #include "core/Scripting.h"
 #include "core/ValidatorNumber.h"
 #include "gfx/AttributeDescriptor.h"
@@ -796,4 +797,26 @@ INSTANTIATE_TEST_SUITE_P(Namespace, Namespace_testRoundTrip, ::testing::Values(
     std::make_tuple("NAMESPACE_UNKNOWN", dagui::NAMESPACE_UNKNOWN),
     std::make_tuple("NAMESPACE_SYSTEM", dagui::NAMESPACE_SYSTEM),
     std::make_tuple("NAMESPACE_USER", dagui::NAMESPACE_USER)
+    ));
+
+class LuaScriptState_testRoundTrip : public ::testing::TestWithParam<std::tuple<const char*, dagui::LuaScript::State>>
+{
+
+};
+
+TEST_P(LuaScriptState_testRoundTrip, testRoundTrip)
+{
+    auto str = std::get<0>(GetParam());
+    auto value = std::get<1>(GetParam());
+
+    EXPECT_STREQ(str, dagui::LuaScript::stateName(value));
+    EXPECT_EQ(value, dagui::LuaScript::parseState(str));
+}
+
+INSTANTIATE_TEST_SUITE_P(LuaScript, LuaScriptState_testRoundTrip, ::testing::Values(
+    std::make_tuple("STATE_UNKNOWN", dagui::LuaScript::STATE_UNKNOWN),
+    std::make_tuple("STATE_INITIAL", dagui::LuaScript::STATE_INITIAL),
+    std::make_tuple("STATE_THREAD_INITED", dagui::LuaScript::STATE_THREAD_INITED),
+    std::make_tuple("STATE_THREAD_FINISHED", dagui::LuaScript::STATE_THREAD_FINISHED),
+    std::make_tuple("STATE_THREAD_ERROR", dagui::LuaScript::STATE_THREAD_ERROR)
     ));

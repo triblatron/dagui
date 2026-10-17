@@ -33,15 +33,15 @@ namespace dagui
                     if (_nodeEditor)
                     {
                         auto status = _nodeEditor->addPort(self->id(), name, dir, dagbase::Port::FLAGS_NONE, dagbase::Value(value));
-                        auto port = _nodeEditor->activeGraph()->port(std::get<dagbase::PortID>(status.result.value()));
-                        if (results)
+                        if (status.status == dagbase::Status::STATUS_OK && status.resultType == dagbase::Status::RESULT_PORT_ID)
                         {
-                            results->emplace_back(port);
+                            auto port = _nodeEditor->activeGraph()->port(std::get<dagbase::PortID>(status.result.value()));
+                            if (results)
+                            {
+                                results->emplace_back(port);
+                            }
                         }
                     }
-                    //auto port = new dagbase::Port(nodeLib.nextPortID(), name, dir, dagbase::Port::FLAGS_NONE, dagbase::Value(value));
-                    //self->addDynamicPort(port, dagbase::MetaPort::FLAGS_OWN_BIT);
-                    // Pop results of resume
                 }
                 break;
             }

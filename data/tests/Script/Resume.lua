@@ -1,5 +1,4 @@
 require "etc/commands"
-require "luadag"
 
 function test()
 	return 1
