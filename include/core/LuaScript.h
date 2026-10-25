@@ -50,6 +50,8 @@ namespace dagui
             _mainName = name;
         }
 
+        void setPortValues(dagbase::Node* self, int numResults);
+
         void step(dagbase::Node* self) override;
 
         bool isFinished() const override

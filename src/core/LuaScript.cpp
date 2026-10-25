@@ -41,6 +41,28 @@ namespace dagui
         dagbase::ConfigurationElement::readConfig(config, "main", &_mainName);
     }
 
+    void LuaScript::setPortValues(dagbase::Node* self, int numResults)
+    {
+        if (_thread)
+        {
+            std::size_t portIndex=0;
+            if (portIndex<self->totalPorts())
+            {
+                for (int i=1; i<=numResults; ++i)
+                {
+                    dagbase::Variant v;
+                    v.fromLua(*_thread, i);
+                    auto value = v.cast(dagbase::Variant::TYPE_VALUE).as<dagbase::Value>();
+                    if (self->dynamicPort(portIndex)->dir() == dagbase::PortDirection::DIR_INTERNAL || self->dynamicPort(portIndex)->dir() == dagbase::PortDirection::DIR_OUT)
+                    {
+                        self->dynamicPort(portIndex)->setValue(value);
+                        ++portIndex;
+                    }
+                }
+            }
+        }
+    }
+
     void LuaScript::step(dagbase::Node *self)
     {
         State prevState = _state;
@@ -92,8 +114,11 @@ namespace dagui
                         switch (reason)
                         {
                             case LUA_OK:
+                            {
+                                setPortValues(self, numResults);
                                 setState(STATE_THREAD_FINISHED);
                                 break;
+                            }
                             case LUA_YIELD:
                             {
                                 int nspace = _thread->integer(1);
