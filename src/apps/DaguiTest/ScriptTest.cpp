@@ -186,7 +186,8 @@ struct ScriptCommand
         CMD_UNKNOWN,
         CMD_CONFIGURE,
         CMD_STEP_UNTIL_FINISHED,
-        CMD_RESET
+        CMD_RESET,
+        CMD_UPDATE
     };
 
     void configure(dagbase::ConfigurationElement& config)
@@ -226,6 +227,12 @@ struct ScriptCommand
 
                 break;
             }
+            case CMD_UPDATE:
+            {
+                self->update();
+
+                break;
+            }
             default:
                 FAIL() << "Got into handler for unknown command " << commandToString(cmd);
                 break;
@@ -257,6 +264,7 @@ struct ScriptCommand
             ENUM_NAME(CMD_CONFIGURE)
             ENUM_NAME(CMD_STEP_UNTIL_FINISHED)
             ENUM_NAME(CMD_RESET)
+            ENUM_NAME(CMD_UPDATE)
         }
 
         return "<error>";
@@ -268,6 +276,7 @@ struct ScriptCommand
         TEST_ENUM(CMD_CONFIGURE, str)
         TEST_ENUM(CMD_STEP_UNTIL_FINISHED, str)
         TEST_ENUM(CMD_RESET, str)
+        TEST_ENUM(CMD_UPDATE, str)
 
         return CMD_UNKNOWN;
     }
@@ -324,6 +333,7 @@ TEST_P(Script_testExecute, testExpectedResult)
     auto status = nodeEditor.createNode("Boundary", "test1");
     ASSERT_EQ(dagbase::Status::STATUS_OK, status.status);
     auto self = nodeEditor.activeGraph()->node(std::get<dagbase::NodeID>(status.result.value()));
+    self->setScript(&sut);
     ASSERT_NE(nullptr, self);
     makeItSo(sut, self, nodeEditor);
 }
@@ -332,7 +342,8 @@ INSTANTIATE_TEST_SUITE_P(Script, Script_testExecute, ::testing::Values(
     std::make_tuple("data/tests/Script/Resume.lua", "test2"),
     std::make_tuple("data/tests/Script/ResumeError.lua", "test2"),
     std::make_tuple("data/tests/Script/NonExistentFunctionError.lua", "nonExistentFunction"),
-    std::make_tuple("data/tests/Script/ResumeErrorThenNonExistentFunctionError.lua", "test2")
+    std::make_tuple("data/tests/Script/ResumeErrorThenNonExistentFunctionError.lua", "test2"),
+    std::make_tuple("data/tests/Script/Update.lua", "test2")
     ));
 
 TEST(Script, testConvertObj)
