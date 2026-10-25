@@ -282,7 +282,7 @@ struct ScriptCommand
     }
 };
 
-class Script_testExecute : public ::testing::TestWithParam<std::tuple<const char*, const char*>>
+class Script_testExecute : public ::testing::TestWithParam<std::tuple<const char*>>
 {
 public:
     void configure(dagbase::ConfigurationElement& config)
@@ -313,7 +313,6 @@ protected:
 TEST_P(Script_testExecute, testExpectedResult)
 {
     auto scriptFilename = std::get<0>(GetParam());
-    auto mainName = std::get<1>(GetParam());
     dagbase::Lua lua;
     lua.eval("require \"luadag\"");
     auto config = dagbase::ConfigurationElement::fromFile(lua, scriptFilename);
@@ -339,11 +338,11 @@ TEST_P(Script_testExecute, testExpectedResult)
 }
 
 INSTANTIATE_TEST_SUITE_P(Script, Script_testExecute, ::testing::Values(
-    std::make_tuple("data/tests/Script/Resume.lua", "test2"),
-    std::make_tuple("data/tests/Script/ResumeError.lua", "test2"),
-    std::make_tuple("data/tests/Script/NonExistentFunctionError.lua", "nonExistentFunction"),
-    std::make_tuple("data/tests/Script/ResumeErrorThenNonExistentFunctionError.lua", "test2"),
-    std::make_tuple("data/tests/Script/Update.lua", "test2")
+    std::make_tuple("data/tests/Script/Resume.lua"),
+    std::make_tuple("data/tests/Script/ResumeError.lua"),
+    std::make_tuple("data/tests/Script/NonExistentFunctionError.lua"),
+    std::make_tuple("data/tests/Script/ResumeErrorThenNonExistentFunctionError.lua"),
+    std::make_tuple("data/tests/Script/Update.lua")
     ));
 
 TEST(Script, testConvertObj)
