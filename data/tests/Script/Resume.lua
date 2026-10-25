@@ -16,6 +16,10 @@ root=
 	cmds=
 	{
 		{
+			cmd="CMD_CONFIGURE",
+			code="test2",
+		},
+		{
 			cmd="CMD_STEP_UNTIL_FINISHED",
 			existing=
 			{
@@ -38,6 +42,12 @@ root=
 		},
 		{
 			cmd="CMD_RESET",
+		},
+		{
+			cmd="CMD_CONFIGURE",
+			code=function(self)
+				return test2(self)
+			end,
 		},
 		{
 			cmd="CMD_STEP_UNTIL_FINISHED",

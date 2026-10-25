@@ -14,6 +14,10 @@ root=
 	cmds=
 	{
 		{
+			cmd="CMD_CONFIGURE",
+			code="test2",
+		},
+		{
 			cmd="CMD_STEP_UNTIL_FINISHED",
 			assertions=
 			{
@@ -25,7 +29,10 @@ root=
 		},
         {
             cmd="CMD_RESET",
-            mainFunction="nonExistentFunction",
+        },
+        {
+			cmd="CMD_CONFIGURE",
+			code="nonExistentFunction",
         },
         {
             cmd="CMD_STEP_UNTIL_FINISHED",

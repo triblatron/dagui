@@ -38,7 +38,41 @@ namespace dagui
 
     void LuaScript::configure(dagbase::ConfigurationElement &config)
     {
-        dagbase::ConfigurationElement::readConfig(config, "main", &_mainName);
+        if (auto element = config.findElement("code"); element)
+        {
+            if (auto func = element->asFunction(); func)
+            {
+                func->push(*_lua);
+                _thread = dagbase::Coroutine::fromFunction(_lua->get());
+            }
+            else if (auto name = element->asString(); !name.empty())
+            {
+                _mainName = name;
+            }
+        }
+        if (!_mainName.empty())
+        {
+            if (!_thread)
+            {
+                _thread = dagbase::Coroutine::fromNamedFunction(_lua->get(), _mainName.c_str());
+                if (!_thread)
+                {
+                    setState(STATE_THREAD_ERROR);
+                }
+            }
+            else
+            {
+                _thread->setMainFunction(_mainName.c_str());
+                if (!_thread->ok())
+                {
+                    setState(STATE_THREAD_ERROR);
+                }
+            }
+        }
+        if (!_thread || !_thread->ok())
+        {
+            setState(STATE_THREAD_ERROR);
+        }
     }
 
     void LuaScript::setPortValues(dagbase::Node* self, int numResults)
@@ -53,7 +87,7 @@ namespace dagui
                     dagbase::Variant v;
                     v.fromLua(*_thread, i);
                     auto value = v.cast(dagbase::Variant::TYPE_VALUE).as<dagbase::Value>();
-                    if (self->dynamicPort(portIndex)->dir() == dagbase::PortDirection::DIR_INTERNAL || self->dynamicPort(portIndex)->dir() == dagbase::PortDirection::DIR_OUT)
+                    if (portIndex<self->totalPorts() && (self->dynamicPort(portIndex)->dir() == dagbase::PortDirection::DIR_INTERNAL || self->dynamicPort(portIndex)->dir() == dagbase::PortDirection::DIR_OUT))
                     {
                         self->dynamicPort(portIndex)->setValue(value);
                         ++portIndex;
@@ -72,32 +106,17 @@ namespace dagui
             switch (_state)
             {
                 case STATE_INITIAL:
-                    if (!_mainName.empty())
+                    if (_thread && _thread->ok())
                     {
-                        if (!_thread)
+                        auto type = SWIG_TypeQuery(_thread->get(), "_p_dagbase__Node");
+                        if (type)
                         {
-                            _thread = dagbase::Coroutine::fromNamedFunction(_lua->get(), _mainName.c_str());
-                            if (!_thread)
-                            {
-                                setState(STATE_THREAD_ERROR);
-                            }
+                            _thread->pushObj(self, type, 0);
+                            setState(STATE_THREAD_INITED);
                         }
                         else
                         {
-                            _thread->setMainFunction(_mainName.c_str());
-                            if (!_thread->ok())
-                            {
-                                setState(STATE_THREAD_ERROR);
-                            }
-                        }
-                        if (_thread && _thread->ok())
-                        {
-                            auto type = SWIG_TypeQuery(_thread->get(), "_p_dagbase__Node");
-                            if (type)
-                            {
-                                SWIG_NewPointerObj(_thread->get(), self, type, 0);
-                            }
-                            setState(STATE_THREAD_INITED);
+                            setState(STATE_THREAD_ERROR);
                         }
                     }
                     else

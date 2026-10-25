@@ -184,6 +184,7 @@ struct ScriptCommand
     enum Command : std::uint32_t
     {
         CMD_UNKNOWN,
+        CMD_CONFIGURE,
         CMD_STEP_UNTIL_FINISHED,
         CMD_RESET
     };
@@ -193,13 +194,24 @@ struct ScriptCommand
         dagbase::ConfigurationElement::readConfig<Command>(config, "cmd", &parseCommand, &cmd);
         dagbase::ConfigurationElement::readConfigVector(config, "existing", &existing);
         dagbase::ConfigurationElement::readConfigVector(config, "assertions", &assertions);
-        dagbase::ConfigurationElement::readConfig(config, "mainFunction", &mainFunction);
+        _scriptConfig = &config;
     }
 
     void makeItSo(dagbase::Script& sut, dagbase::Node* self, dag::NodeEditorLive& nodeEditor)
     {
         switch (cmd)
         {
+            case CMD_CONFIGURE:
+            {
+                if (_scriptConfig)
+                {
+                    sut.configure(*_scriptConfig);
+                }
+                else
+                {
+                    FAIL() << "Expected valid scriptConfig";
+                }
+            }
             case CMD_STEP_UNTIL_FINISHED:
             {
                 while (!sut.isFinished())
@@ -211,8 +223,6 @@ struct ScriptCommand
             case CMD_RESET:
             {
                 sut.reset();
-                if (!mainFunction.empty())
-                    sut.setMainFunction(mainFunction);
 
                 break;
             }
@@ -232,18 +242,19 @@ struct ScriptCommand
     }
 
     Command cmd{CMD_UNKNOWN};
-    std::string mainFunction;
     using ExistingItemArray = std::vector<ScriptExistingItem>;
     ExistingItemArray existing;
 
     using AssertionArray = std::vector<ScriptAssertion>;
     AssertionArray assertions;
+    dagbase::ConfigurationElement* _scriptConfig{nullptr};
 
     static const char* commandToString(Command value)
     {
         switch (value)
         {
             ENUM_NAME(CMD_UNKNOWN)
+            ENUM_NAME(CMD_CONFIGURE)
             ENUM_NAME(CMD_STEP_UNTIL_FINISHED)
             ENUM_NAME(CMD_RESET)
         }
@@ -254,6 +265,7 @@ struct ScriptCommand
     static Command parseCommand(const char* str)
     {
         TEST_ENUM(CMD_UNKNOWN, str)
+        TEST_ENUM(CMD_CONFIGURE, str)
         TEST_ENUM(CMD_STEP_UNTIL_FINISHED, str)
         TEST_ENUM(CMD_RESET, str)
 
@@ -266,7 +278,15 @@ class Script_testExecute : public ::testing::TestWithParam<std::tuple<const char
 public:
     void configure(dagbase::ConfigurationElement& config)
     {
-        dagbase::ConfigurationElement::readConfigVector(config, "cmds", &_cmds);
+        if (auto element = config.findElement("cmds"); element)
+        {
+            element->eachChild([this](dagbase::ConfigurationElement& child) {
+                ScriptCommand item;
+                item.configure(child);
+                _cmds.emplace_back(item);
+                return true;
+            });
+        }
     }
 
     void makeItSo(dagbase::Script& sut, dagbase::Node* self, dag::NodeEditorLive& nodeEditor)
@@ -289,17 +309,16 @@ TEST_P(Script_testExecute, testExpectedResult)
     lua.eval("require \"luadag\"");
     auto config = dagbase::ConfigurationElement::fromFile(lua, scriptFilename);
     ASSERT_NE(nullptr, config);
-    configure(*config);
     ASSERT_TRUE(lua.ok());
     dag::NodeEditorLive nodeEditor;
     dagui::NodeEditorScriptProtocol proto(&nodeEditor);
     FakeScriptProtocol fakeProto(&proto);
-    std::uint32_t numRequests{0};
+    int numRequests{0};
     dagbase::ConfigurationElement::readConfig(*config, "numRequests", &numRequests);
     EXPECT_CALL(fakeProto, request(::testing::_, 1, ::testing::_, ::testing::_)).Times(numRequests);
     dagui::LuaScript sut(&lua, &fakeProto);
+    configure(*config);
 
-    sut.setMainFunction(mainName);
     auto service = new HelloService();
     nodeEditor.setService(service);
     auto status = nodeEditor.createNode("Boundary", "test1");
@@ -331,3 +350,28 @@ TEST(Script, testConvertObj)
     sut.convertObj((void**)&node2, nodeType, 0);
     ASSERT_EQ(node, node2);
 }
+
+class Script_testConfigure : public ::testing::TestWithParam<std::tuple<const char*, bool>>
+{
+
+};
+
+TEST_P(Script_testConfigure, testExpectedResult)
+{
+    dagbase::Lua lua;
+    lua.eval("require \"luadag\"");
+    auto configFilename = std::get<0>(GetParam());
+    auto exists = std::get<1>(GetParam());
+    auto config = dagbase::ConfigurationElement::fromFile(lua, configFilename);
+    ASSERT_NE(nullptr, config);
+    MockScriptProtocol proto;
+    dagui::LuaScript sut(&lua, &proto);
+    sut.configure(*config);
+    ASSERT_EQ(exists, nullptr!=sut.thread());
+}
+
+INSTANTIATE_TEST_SUITE_P(LuaScript, Script_testConfigure, ::testing::Values(
+    std::make_tuple("data/tests/Script/FromFunction.lua", true),
+    std::make_tuple("data/tests/Script/FromBadFunction.lua", false),
+    std::make_tuple("data/tests/Script/FromNamedFunction.lua", true)
+    ));

@@ -43,7 +43,7 @@ namespace dagui
 
         ~LuaScript() override;
 
-        void configure(dagbase::ConfigurationElement& config);
+        void configure(dagbase::ConfigurationElement& config) override;
 
         void setMainFunction(const std::string& name) override
         {
@@ -51,6 +51,11 @@ namespace dagui
         }
 
         void setPortValues(dagbase::Node* self, int numResults);
+
+        dagbase::Coroutine* thread()
+        {
+            return _thread;
+        }
 
         void step(dagbase::Node* self) override;
 
