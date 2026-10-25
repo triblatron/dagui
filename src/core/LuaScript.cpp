@@ -69,10 +69,10 @@ namespace dagui
                 }
             }
         }
-        if (!_thread || !_thread->ok())
-        {
-            setState(STATE_THREAD_ERROR);
-        }
+        //if (!_thread || !_thread->ok())
+        //{
+        //    setState(STATE_THREAD_ERROR);
+        //}
     }
 
     void LuaScript::setPortValues(dagbase::Node* self, int numResults)
