@@ -18,7 +18,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "core/NodeEditorScriptProtocol.h"
+#include "NodeEditorScriptProtocol.h"
 #include "test/TestUtils.h"
 #include "util/CharConv.h"
 
@@ -319,12 +319,12 @@ TEST_P(Script_testExecute, testExpectedResult)
     ASSERT_NE(nullptr, config);
     ASSERT_TRUE(lua.ok());
     dag::NodeEditorLive nodeEditor;
-    dagui::NodeEditorScriptProtocol proto(&nodeEditor);
+    dag::NodeEditorScriptProtocol proto(&nodeEditor);
     FakeScriptProtocol fakeProto(&proto);
     int numRequests{0};
     dagbase::ConfigurationElement::readConfig(*config, "numRequests", &numRequests);
     EXPECT_CALL(fakeProto, request(::testing::_, 1, ::testing::_, ::testing::_)).Times(numRequests);
-    dagui::LuaScript sut(&lua, &fakeProto);
+    dag::LuaScript sut(&lua, &fakeProto);
     configure(*config);
 
     auto service = new HelloService();
@@ -375,7 +375,7 @@ TEST_P(Script_testConfigure, testExpectedResult)
     auto config = dagbase::ConfigurationElement::fromFile(lua, configFilename);
     ASSERT_NE(nullptr, config);
     MockScriptProtocol proto;
-    dagui::LuaScript sut(&lua, &proto);
+    dag::LuaScript sut(&lua, &proto);
     sut.configure(*config);
     ASSERT_EQ(exists, nullptr!=sut.thread());
 }

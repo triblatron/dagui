@@ -108,7 +108,7 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/core/EditorParameters.h
         include/imgui/BoolEditorImGui.h
         include/imgui/EditorRegistryImGui.h
-        include/core/NodeEditorScriptProtocol.h
+        ThirdParty/dag/include/NodeEditorScriptProtocol.h
         # ThirdParty/imgui/imconfig.h
 		# ThirdParty/imgui/imgui.h
 		# ThirdParty/imgui/imgui_internal.h
@@ -203,7 +203,7 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         # ThirdParty/imgui/imgui_widgets.cpp
         src/imgui/EditorRegistryImGui.cpp
         src/core/TestEditable.cpp
-        src/core/NodeEditorScriptProtocol.cpp
+        ThirdParty/dag/src/NodeEditorScriptProtocol.cpp
 )
 
 SET(HEADERS_GROUP "Header Files")
