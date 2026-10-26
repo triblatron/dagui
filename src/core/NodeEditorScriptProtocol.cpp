@@ -5,7 +5,7 @@
 #include "config/config.h"
 
 #include "core/NodeEditorScriptProtocol.h"
-#include "core/Scripting.h"
+#include "Scripting.h"
 #include "lua_runtime.h"
 
 namespace dagui

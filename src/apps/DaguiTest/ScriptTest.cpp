@@ -7,7 +7,7 @@
 #include "config/config.h"
 
 #include "core/LuaInterface.h"
-#include "core/LuaScript.h"
+#include "LuaScript.h"
 #include "MemoryNodeLibrary.h"
 #include "core/Node.h"
 #include "core/ScriptProtocol.h"

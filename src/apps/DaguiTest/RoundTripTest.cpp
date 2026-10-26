@@ -11,8 +11,8 @@
 
 #include <gtest/gtest.h>
 
-#include "core/LuaScript.h"
-#include "core/Scripting.h"
+#include "LuaScript.h"
+#include "Scripting.h"
 #include "core/ValidatorNumber.h"
 #include "gfx/AttributeDescriptor.h"
 

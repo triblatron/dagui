@@ -108,8 +108,6 @@ SET( ALL_PUBLIC_HEADERS include/core/Circle.h include/core/Container.h include/c
         include/core/EditorParameters.h
         include/imgui/BoolEditorImGui.h
         include/imgui/EditorRegistryImGui.h
-        include/core/Scripting.h
-        include/core/LuaScript.h
         include/core/NodeEditorScriptProtocol.h
         # ThirdParty/imgui/imconfig.h
 		# ThirdParty/imgui/imgui.h
@@ -205,8 +203,6 @@ SET( DAGUI_SRC src/core/Circle.cpp src/core/Container.cpp src/core/Rectangle.cpp
         # ThirdParty/imgui/imgui_widgets.cpp
         src/imgui/EditorRegistryImGui.cpp
         src/core/TestEditable.cpp
-        src/core/Scripting.cpp
-        src/core/LuaScript.cpp
         src/core/NodeEditorScriptProtocol.cpp
 )
 
@@ -242,7 +238,6 @@ add_subdirectory(src/apps/BenchmarkDagui)
 add_subdirectory(src/demos/demoText)
 add_subdirectory(src/demos/demoRenderer)
 add_subdirectory(src/demos/demoImGUI)
-add_subdirectory(src/luadag)
 
 INCLUDE( CheckIncludeFile )
 INCLUDE( CheckIncludeFileCXX )
@@ -301,4 +296,3 @@ INSTALL( TARGETS dagui
         ARCHIVE DESTINATION lib)
 INSTALL(DIRECTORY data DESTINATION .)
 INSTALL(DIRECTORY etc DESTINATION .)
-INSTALL(TARGETS luadag DESTINATION ${CMAKE_INSTALL_PREFIX})
