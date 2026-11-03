@@ -7,7 +7,8 @@ end
 function test2(self, ...)
 	local port = addPort("spoo", "DIR_INTERNAL", "FLAGS_NONE", 1.0)
 	assert(port~=nil)
-	return 2.0
+	setPortValue(0,2.0)
+	return 0
 end
 
 root=

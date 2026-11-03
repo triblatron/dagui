@@ -11,6 +11,8 @@
 #include "MemoryNodeLibrary.h"
 #include "core/Node.h"
 #include "core/ScriptProtocol.h"
+#include "NodeEditorScriptProtocol.h"
+#include "Scripting.h"
 #include "core/Graph.h"
 #include "NodeEditorLive.h"
 #include "util/enums.h"
@@ -18,7 +20,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "NodeEditorScriptProtocol.h"
 #include "test/TestUtils.h"
 #include "util/CharConv.h"
 
@@ -323,7 +324,8 @@ TEST_P(Script_testExecute, testExpectedResult)
     FakeScriptProtocol fakeProto(&proto);
     int numRequests{0};
     dagbase::ConfigurationElement::readConfig(*config, "numRequests", &numRequests);
-    EXPECT_CALL(fakeProto, request(::testing::_, 1, ::testing::_, ::testing::_)).Times(numRequests);
+    EXPECT_CALL(fakeProto, request(::testing::_, dag::ACTION_ADD_PORT, ::testing::_, ::testing::_)).Times(numRequests);
+    EXPECT_CALL(fakeProto, request(::testing::_, dag::ACTION_SET_PORT_VALUE, ::testing::_, ::testing::_)).Times(::testing::AnyNumber());
     dag::LuaScript sut(&lua, &fakeProto);
     configure(*config);
 
