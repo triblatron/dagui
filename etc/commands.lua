@@ -10,6 +10,6 @@ function look(direction)
 	return coroutine.yield(luadag.NAMESPACE_USER, reptol.ACTION_LOOK, direction)
 end
 
-function setPortValue(index, value)
-	coroutine.yield(luadag.NAMESPACE_SYSTEM, luadag.ACTION_SET_PORT_VALUE, index, value)
+function setPortValue(...)
+	coroutine.yield(luadag.NAMESPACE_SYSTEM, luadag.ACTION_SET_PORT_VALUE, ...)
 end
