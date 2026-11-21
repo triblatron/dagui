@@ -23,7 +23,7 @@ namespace dagui
 
         BoolEditor(const EditorParameters& params);
 
-        void setName(dagbase::Atom name)
+        void setName(dagbase::Atom name) override
         {
             _name = name;
         }
